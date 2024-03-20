@@ -13,7 +13,7 @@ const SecondSection = () => {
             description={
               "La era de las redes sociales fue un verdadero Tsunami para el marketing tradicional ¿Estás preparado para surfear la ola? No te quedes debajo de ella, puede ser peligroso, además surfearla es mucho más divertido"
             }
-            link={"/#"}
+            link={"/services/BusinessAnalysis"}
           />
 
           <ServiceCard
@@ -22,7 +22,7 @@ const SecondSection = () => {
             description={
               " Los resultados son importantes, puedes alcanzarlos con estrategias de venta directa, pero si quieres tener un negocio sostenible en el tiempo debes consolidar una marca. Permití que nuestro equipo creativo genere las bases de un negocio próspero generando tu manual de marca. "
             }
-            link={"/#"}
+            link={"/services/GraphicDesign"}
             firstBullet={"Perfeccionamiento de tu identidad de marca"}
             secondtBullet={
               "Manual de identidad de marca: Simple, Estándar, Completo)"
@@ -37,7 +37,7 @@ const SecondSection = () => {
             description={
               "Enfócate en los aspectos operativos más importantes de tu negocio, la logística, contacto con proveedores, coordinación de tu equipo, atención al público, con la tranquilidad de que tus redes están activas y en manos de un equipo especializado. Nunca vas a perder el timón, vamos a estar siempre en contacto con vos"
             }
-            link={"/#"}
+            link={"/services/CommunityManager"}
             firstBullet={"Planificación de contenidos"}
             secondtBullet={"Publicaciones frecuentes en tus redes sociales"}
             thirdtBullet={"Descripciones seductoras"}
