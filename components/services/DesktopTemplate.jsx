@@ -28,21 +28,17 @@ const DesktopTemplate = ({
             </div>
           </div>
         </div>
-        <div className="relative max-w-[100vw] w-full h-56">
-          <Image
+        <div className="relative  w-full">
+          <img
             src={"/WaveBG.jpg"}
-            fill
-            priority
-            quality={100}
-            sizes="100vw"
-            className="object-cover object-top"
+            className="w-full"
           />
           <Image
             src={icon}
             priority
             width={200}
             height={200}
-            className="absolute left-[22%] bottom-0"
+            className="absolute left-[20%] bottom-0"
           />
         </div>
       </section>
