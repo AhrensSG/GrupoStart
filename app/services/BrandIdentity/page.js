@@ -1,4 +1,4 @@
-import BasicTemplate from "@/components/services/BasicTemplate";
+import BasicTemplate from "@/components/BasicTemplate";
 import BrandIdentitySection from "@/components/services/auxiliarComponents/BrandIdentitySection";
 import React from "react";
 

@@ -16,7 +16,7 @@ const NavBar = () => {
       </Link>
 
       <div className="w-full flex flex-row justify-end items-center gap-6">
-        <Link href={'/'}>
+        <Link href={'/courses'}>
           <button className="w-32 h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Cursos
           </button>
@@ -28,13 +28,13 @@ const NavBar = () => {
           </button>
         </Link>
 
-        <Link href={'/#about-us'}>
+        <Link href={'/about'}>
           <button className="w-32 h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Nosotros
           </button>
         </Link>
 
-        <Link href={'/'}>
+        <Link href={'/experiences'}>
           <button className="w-32 h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Experiencias
           </button>

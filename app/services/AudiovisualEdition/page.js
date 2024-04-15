@@ -1,4 +1,4 @@
-import BasicTemplate from "@/components/services/BasicTemplate";
+import BasicTemplate from "@/components/BasicTemplate";
 import AudiovisualEditionSection from "@/components/services/auxiliarComponents/AudiovisualEditionSection";
 import React from "react";
 
