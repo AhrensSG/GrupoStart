@@ -1,9 +1,29 @@
-import React from "react";
+"use client";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
+import { Context } from "@/app/context/GlobalContext";
+import { toast } from "sonner";
+import Modal from "@/components/login/Modal";
 
 const Course = () => {
+  const { state } = useContext(Context);
+  const [showLogin, setShowLogin] = useState(false);
+
+  const addToCartAndPay = async () => {
+    try {
+      if (!state.user) {
+        setShowLogin(true);
+      } else {
+        toast.info("Seras redirigido a la pagina de pago!");
+      }
+    } catch (error) {
+      return toast.error("Ocurrio un error al solicitar el pago!");
+    }
+  };
+
   return (
     <div className="py-20 p-2 grid place-items-center gap-10">
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       <h1 className="text-4xl font-medium text-[#0853FC]">Nombre del curso</h1>
       <div className="relative">
         <Image
@@ -38,7 +58,12 @@ const Course = () => {
           <li>Boolean effect edit union blur fill line slice</li>
         </ol>
       </div>
-      <button className="border-2 border-[#FB8A00] text-[#FB8A00] p-2 px-10 text-3xl font-medium rounded-md shadow-md shadow-[#FB8A00] mt-10">COMPRAR</button>
+      <button
+        onClick={addToCartAndPay}
+        className="border-2 border-[#FB8A00] text-[#FB8A00] p-2 px-10 text-3xl font-medium rounded-md shadow-md shadow-[#FB8A00] mt-10"
+      >
+        COMPRAR
+      </button>
     </div>
   );
 };

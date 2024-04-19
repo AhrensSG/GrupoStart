@@ -1,10 +1,14 @@
 "use client";
 import { useFormik } from "formik";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 import ToggleSwitch from "./auxiliarComponents/ToggleSwitch";
+import { logInWithGoogle } from "@/firebase/logInWithGoogle";
+import { Context } from "@/app/context/GlobalContext";
+import Modal from "../login/Modal";
 
 const CustomizedPlan = () => {
+  const { state, dispatch } = useContext(Context);
   const [dropDownValue, setDropDownValue] = useState("Seleccionar el servicio");
   const [facebookSwitch, setFacebookSwitch] = useState(false);
   const [instagramSwitch, setInstagramSwitch] = useState(false);
@@ -13,6 +17,8 @@ const CustomizedPlan = () => {
   const [postsQuantity, setPostsQuantity] = useState(0);
   const [carouselImagesQuantity, setCarouselImagesQuantity] = useState(0);
   const [reelsQuantity, setReelsQuantity] = useState(0);
+
+  const [showLogin, setShowLogin] = useState(false);
 
   const increasePosts = () => {
     return setPostsQuantity((prevPosts) => prevPosts + 1);
@@ -47,6 +53,18 @@ const CustomizedPlan = () => {
     setReelsQuantity((prevReels) => Math.max(prevReels - 1, 0));
   };
 
+  const addToCartAndPay = async () => {
+    try {
+      if (!state.user) {
+        setShowLogin(true);
+      } else {
+        toast.info("Seras redirigido a la pagina de pago!");
+      }
+    } catch (error) {
+      return toast.error("Ocurrio un error al solicitar el pago!");
+    }
+  };
+
   const initialValues = {
     fullName: "",
     email: "",
@@ -78,8 +96,9 @@ const CustomizedPlan = () => {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-16 w-full">
-      <div className="z-10 pt-[111px] pb-10">
+    <div className="flex flex-col justify-center items-center w-full">
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
+      <div className="z-10 pt-[111px] pb-[104px]">
         <h1 className="text-6xl font-medium text-white">
           Crea el plan perfecto para vos
         </h1>
@@ -87,7 +106,9 @@ const CustomizedPlan = () => {
       <div className="grid place-items-center gap-14 w-full bg-gradient-to-b from-slate-100 via-[#FB8A00] to-slate-100">
         <div className="bg-white max-w-screen-md w-full grid place-items-center p-4 py-10">
           <div className="w-full max-w-[420px] space-y-8">
-            <h2 className="text-xl font-medium">Elegi que tipo de redes queres que manejemos</h2>
+            <h2 className="text-xl font-medium">
+              Elegi que tipo de redes queres que manejemos
+            </h2>
             <div className="relative space-y-2">
               <span className="font-medium flex gap-2">
                 Instagram
@@ -111,7 +132,9 @@ const CustomizedPlan = () => {
             <div className="space-y-4">
               {/* POSTS QUANTITY */}
               <div className="flex flex-row justify-start items-center gap-4">
-                <span className="max-w-48 w-full font-medium">Cantidad de posteos:</span>
+                <span className="max-w-48 w-full font-medium">
+                  Cantidad de posteos:
+                </span>
                 <div
                   className={`flex flex-row items-center justify-between w-20 border-2 border-[#FB8A00] rounded p-1`}
                 >
@@ -203,7 +226,9 @@ const CustomizedPlan = () => {
               </div>
               {/* REELS QUANTITY */}
               <div className="flex flex-row justify-start items-center gap-4">
-                <span className="max-w-48 w-full font-medium">Cantidad de reels:</span>
+                <span className="max-w-48 w-full font-medium">
+                  Cantidad de reels:
+                </span>
                 <div
                   className={`flex flex-row items-center justify-between w-20 border-2 border-[#FB8A00] rounded p-1`}
                 >
@@ -304,7 +329,12 @@ const CustomizedPlan = () => {
                 </div>
               </div>
             </div>
-            <button className="text-center w-full bg-[#FB8A00] p-1 text-white font-medium rounded-tl-md rounded-br-md">PAGAR</button>
+            <button
+              onClick={addToCartAndPay}
+              className="text-center w-full bg-[#FB8A00] p-1 text-white font-medium rounded-tl-md rounded-br-md"
+            >
+              PAGAR
+            </button>
           </div>
         </div>
       </div>

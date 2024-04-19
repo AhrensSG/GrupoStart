@@ -1,12 +1,28 @@
 "use client";
+import { Context } from "@/app/context/GlobalContext";
+import Modal from "@/components/login/Modal";
 import { useFormik } from "formik";
 import { AnimatePresence, motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 
 const DesktopBusinessAnalysisSection = () => {
   const [openDropDown, setOpenDropDown] = useState(false);
   const [dropDownValue, setDropDownValue] = useState("Seleccionar");
+  const { state } = useContext(Context);
+  const [showLogin, setShowLogin] = useState(false);
+
+  const addToCartAndPay = async () => {
+    try {
+      if (!state.user) {
+        setShowLogin(true);
+      } else {
+        toast.info("Seras redirigido a la pagina de pago!");
+      }
+    } catch (error) {
+      return toast.error("Ocurrio un error al solicitar el pago!");
+    }
+  };
 
   const handleChangeDropDownValue = (e) => {
     setDropDownValue(e.target.id);
@@ -42,6 +58,8 @@ const DesktopBusinessAnalysisSection = () => {
   });
   return (
     <div className="w-full h-full flex flex-col justify-start items-center gap-16">
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
+
       <div>
         <h2 className="text-4xl font-medium text-[#0853FC] text-center">
           Solicita tu documento explicativo gratuito
@@ -87,6 +105,7 @@ const DesktopBusinessAnalysisSection = () => {
             />
           </div>
           <button
+            onClick={addToCartAndPay}
             type="submit"
             className="border w-full py-3 px-4 rounded-md bg-[#FB8A00] text-white font-medium mt-2 drop-shadow-lg"
           >
@@ -118,7 +137,7 @@ const DesktopBusinessAnalysisSection = () => {
           </div>
           <div className="w-full flex flex-col justify-center items-start relative pt-1">
             <label className="text-base px-1 text-[#0853FC]">
-            ¿Como nos conociste?
+              ¿Como nos conociste?
             </label>
             <div
               onClick={() => setOpenDropDown(!openDropDown)}
