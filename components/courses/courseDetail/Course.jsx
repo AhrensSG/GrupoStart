@@ -4,21 +4,38 @@ import Image from "next/image";
 import { Context } from "@/app/context/GlobalContext";
 import { toast } from "sonner";
 import Modal from "@/components/login/Modal";
+import { useRouter } from "next/navigation";
+import { addProductToCart } from "@/app/context/actions";
 
-const Course = () => {
-  const { state } = useContext(Context);
+const Course = ({
+  id = 1,
+  name = "Desarrollo Web",
+  description = "Curso de desarrollo Web",
+  duration = "3 meses",
+  type = "100% virtual",
+}) => {
+  const { state, dispatch } = useContext(Context);
   const [showLogin, setShowLogin] = useState(false);
+  const router = useRouter();
 
-  const addToCartAndPay = async () => {
-    try {
-      if (!state.user) {
-        setShowLogin(true);
-      } else {
-        toast.info("Seras redirigido a la pagina de pago!");
-      }
-    } catch (error) {
-      return toast.error("Ocurrio un error al solicitar el pago!");
+  const handleBuyNow = async () => {
+    const data = {
+      id,
+      name,
+      description,
+      duration,
+      type,
+      price: 10000,
+      items: 1,
+      productType: "course",
+    };
+    if (state.cart?.some((prod) => prod.id === id)) {
+      toast.info(`Se actualizó el producto en tu carrito!`);
+    } else {
+      toast.success(`Añadiste ${name} a tu carrito!`);
     }
+    await addProductToCart(data, dispatch);
+    return router.push("/payment");
   };
 
   return (
@@ -59,7 +76,7 @@ const Course = () => {
         </ol>
       </div>
       <button
-        onClick={addToCartAndPay}
+        onClick={handleBuyNow}
         className="border-2 border-[#FB8A00] text-[#FB8A00] p-2 px-10 text-3xl font-medium rounded-md shadow-md shadow-[#FB8A00] mt-10"
       >
         COMPRAR

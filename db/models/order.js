@@ -33,7 +33,6 @@ const orderInit = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      description: DataTypes.TEXT,
     },
     {
       sequelize,

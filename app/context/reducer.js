@@ -17,20 +17,23 @@ export const reducer = (state, action) => {
 
     case "ADD_PRODUCT_TO_CART":
       if (!state.cart) {
+        if (action.payload.productType === "course") {
+          const total = action.payload.price * action.payload.items;
+
+          return {
+            ...state,
+            cart: [action.payload],
+            cartPrice: total,
+            cartItems: action.payload.items,
+          };
+        }
         const total = action.payload.price * action.payload.items;
-        const discountedTotal =
-          action.payload.discountedPrice * action.payload.items;
-        const totalVolume =
-          action.payload.heigth *
-          action.payload.width *
-          action.payload.large *
-          action.payload.items;
-        const totalWeight = action.payload.weight * action.payload.items;
+        const totalVolume = 8 * 10 * 8 * action.payload.items;
+        const totalWeight = 0.25;
         return {
           ...state,
           cart: [action.payload],
           cartPrice: total,
-          discountedCartPrice: discountedTotal,
           cartItems: action.payload.items,
           payment: { totalVolume, totalWeight },
         };
@@ -46,28 +49,23 @@ export const reducer = (state, action) => {
         }
 
         let totalPrice = 0;
-        let discountedTotalPrice = 0;
         let totalItems = 0;
         let totalVolume = 0;
         let totalWeight = 0;
         products.forEach((product) => {
           const total = parseFloat(product.price) * product.items;
-          const discountedTotal =
-            parseFloat(product.discountedPrice) * product.items;
-
-          discountedTotalPrice += discountedTotal;
           totalPrice += total;
           totalItems += product.items;
-          totalVolume +=
-            product.heigth * product.width * product.large * product.items;
-          totalWeight += product.weight * product.items;
+          if (product.productType !== "course") {
+            totalVolume += 8 * 10 * 8 * product.items;
+            totalWeight += 0.25;
+          }
         });
 
         return {
           ...state,
           cart: products,
           cartPrice: totalPrice,
-          discountedCartPrice: discountedTotalPrice,
           cartItems: totalItems,
           payment: { ...state.payment, totalVolume, totalWeight },
         };
@@ -83,29 +81,25 @@ export const reducer = (state, action) => {
       }
 
       let totalPrice = 0;
-      let discountedTotalPrice = 0;
       let totalItems = 0;
       let totalVolume = 0;
       let totalWeight = 0;
 
       products.forEach((product) => {
         const total = parseFloat(product.price) * product.items;
-        const discountedTotal =
-          parseFloat(product.discountedPrice) * product.items;
 
-        discountedTotalPrice += discountedTotal;
         totalPrice += total;
         totalItems += product.items;
-        totalVolume +=
-          product.heigth * product.width * product.large * product.items;
-        totalWeight += product.weight * product.items;
+        if (product.productType !== "course") {
+          totalVolume += 8 * 10 * 8 * product.items;
+          totalWeight += 0.25;
+        }
       });
 
       return {
         ...state,
         cart: products,
         cartPrice: totalPrice,
-        discountedCartPrice: discountedTotalPrice,
         cartItems: totalItems,
         payment: { ...state.payment, totalVolume, totalWeight },
       };
@@ -115,7 +109,6 @@ export const reducer = (state, action) => {
         ...state,
         cart: [],
         cartPrice: 0,
-        discountedCartPrice: 0,
         cartItems: 0,
       };
 

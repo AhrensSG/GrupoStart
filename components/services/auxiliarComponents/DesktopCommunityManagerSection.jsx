@@ -1,7 +1,34 @@
+"use client";
+
+import { Context } from "@/app/context/GlobalContext";
+import { addProductToCart } from "@/app/context/actions";
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useContext } from "react";
+import { toast } from "sonner";
 
 const DesktopCommunityManagerSection = () => {
+  const { state, dispatch } = useContext(Context);
+  const router = useRouter();
+
+  const handleBuyNow = async (id, name, price) => {
+    const data = {
+      id,
+      name,
+      description: "Servicio gestion de redes",
+      price,
+      items: 1,
+      productType: "pack",
+    };
+    if (state.cart?.some((prod) => prod.id === id)) {
+      toast.info(`Se actualizó el producto en tu carrito!`);
+    } else {
+      toast.success(`Añadiste ${name} a tu carrito!`);
+    }
+    await addProductToCart(data, dispatch);
+    return router.push("/payment");
+  };
+
   return (
     <div className="w-full h-full flex flex-col justify-start items-center gap-16">
       <div>
@@ -65,7 +92,10 @@ const DesktopCommunityManagerSection = () => {
               </span>
             </div>
           </div>
-          <button className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl ">
+          <button
+            onClick={() => handleBuyNow(2, "Plan Emprendedor", 38000)}
+            className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl "
+          >
             COMPRAR
           </button>
         </div>
@@ -132,7 +162,10 @@ const DesktopCommunityManagerSection = () => {
               </span>
             </div>
           </div>
-          <button className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl ">
+          <button
+            onClick={() => handleBuyNow(3, "Plan Empresario", 56000)}
+            className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl "
+          >
             COMPRAR
           </button>
         </div>
@@ -208,12 +241,18 @@ const DesktopCommunityManagerSection = () => {
               </span>
             </div>
           </div>
-          <button className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl ">
+          <button
+            onClick={() => handleBuyNow(4, "Plan Corporativo", 110000)}
+            className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl "
+          >
             COMPRAR
           </button>
         </div>
       </div>
-      <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300"> Quiero mi plan Personalizado </button>
+      <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300">
+        {" "}
+        Quiero mi plan Personalizado{" "}
+      </button>
     </div>
   );
 };

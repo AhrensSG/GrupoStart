@@ -7,6 +7,8 @@ const User = require("./user");
   try {
     User.hasMany(Order);
     Order.belongsTo(User);
+    Order.hasMany(OrderProducts);
+    OrderProducts.belongsTo(Order);
     await connection.sync({ alter: true });
   } catch (error) {
     console.log(error);

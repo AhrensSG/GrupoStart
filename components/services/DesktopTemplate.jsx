@@ -13,51 +13,46 @@ const DesktopTemplate = ({
   footerImg = "/services/FooterJirafe1.svg",
 }) => {
   return (
-    <GlobalContext>
-      <main className="bg-slate-100 w-full h-full">
-        <Toaster
-          richColors
-          visibleToasts={3}
-          duration={5000}
-          position="bottom-right"
-          expand={false}
-        />
-        <section>
-          <div className="bg-gradient-to-b from-slate-100 to-[#0853FC] w-full h-[100vh] flex flex-col relative">
-            <NavBar />
-            <div className="w-full h-full flex justify-center items-center">
-              <div className="relative max-w-[850px] w-full max-h-96 h-full">
-                <Image src={media} fill alt="Mediaplayer" />
-              </div>
+    <main className="bg-slate-100 w-full h-full">
+      <Toaster
+        richColors
+        visibleToasts={3}
+        duration={5000}
+        position="bottom-right"
+        expand={false}
+      />
+      <section>
+        <div className="bg-gradient-to-b from-slate-100 to-[#0853FC] w-full h-[100vh] flex flex-col relative">
+          <NavBar />
+          <div className="w-full h-full flex justify-center items-center">
+            <div className="relative max-w-[850px] w-full max-h-96 h-full">
+              <Image src={media} fill alt="Mediaplayer" />
             </div>
           </div>
-          <div className="relative  w-full">
-            <img
-              src={"/WaveBG.jpg"}
-              className="w-full"
-            />
-            <Image
-              src={icon}
-              priority
-              width={200}
-              height={200}
-              className="absolute left-[20%] bottom-0"
-            />
-          </div>
-        </section>
-        <section className="py-16 px-4 w-full">{children}</section>
-        <section className="relative max-w-[100vw] w-full h-screen">
+        </div>
+        <div className="relative  w-full">
+          <img src={"/WaveBG.jpg"} className="w-full" />
           <Image
-            src={footerImg}
-            fill
+            src={icon}
             priority
-            quality={100}
-            className="object-cover object-top"
+            width={200}
+            height={200}
+            className="absolute left-[20%] bottom-0"
           />
-        </section>
-        <Footer />
-      </main>
-    </GlobalContext>
+        </div>
+      </section>
+      <section className="py-16 px-4 w-full">{children}</section>
+      <section className="relative max-w-[100vw] w-full h-screen">
+        <Image
+          src={footerImg}
+          fill
+          priority
+          quality={100}
+          className="object-cover object-top"
+        />
+      </section>
+      <Footer />
+    </main>
   );
 };
 
