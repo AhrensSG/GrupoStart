@@ -137,25 +137,20 @@ export const savePreferenceID = (id, dispatch) => {
 
 export const createOrder = async (data, deliveryCost) => {
   try {
+    console.log(data);
     const body = {
       userId: data.user.id,
       status: "Pending",
       totalPrice: data.cartTotalPrice,
-      deliveryCost: deliveryCost,
+      deliveryCost: Number(deliveryCost) || 0,
       cartPrice: data.cartPrice,
-      discountedCartPrice: data.discountedCartPrice,
       email: data.payment.email,
       name: data.payment.name,
       surname: data.payment.surname,
-      street: data.payment.street,
-      streetNumber: data.payment.streetNumber,
-      flat: data.payment.flat,
-      apartament: data.payment.apartament,
       postalCode: data.payment.postalCode,
       country: data.payment.country,
       province: data.payment.province,
-      city: data.payment.city,
-      dni: data.payment.dni,
+      fullAddress: data.payment.fullAddress,
       phone: data.payment.phone,
     };
     const res = await axios.post(SERVER_URL_ORDER_ENDPOINT, body);
@@ -167,7 +162,7 @@ export const createOrder = async (data, deliveryCost) => {
 
 export const addProductsToOrder = async (data) => {
   try {
-    const res = await axios.post(SERVER_URL_ORDER_PRODUCTS_ENDPOINT, data);
+    await axios.post(SERVER_URL_ORDER_PRODUCTS_ENDPOINT, data);
   } catch (error) {
     throw new Error("Error interno del servidor");
   }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import { Context } from "@/app/context/GlobalContext";
 import { toast } from "sonner";
@@ -19,6 +19,9 @@ const Course = ({
   const router = useRouter();
 
   const handleBuyNow = async () => {
+    if (!state.user) {
+      return setShowLogin(true);
+    }
     const data = {
       id,
       name,
@@ -37,6 +40,8 @@ const Course = ({
     await addProductToCart(data, dispatch);
     return router.push("/payment");
   };
+
+  useEffect(() => {}, [state.user]);
 
   return (
     <div className="py-20 p-2 grid place-items-center gap-10">

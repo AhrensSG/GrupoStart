@@ -5,7 +5,15 @@ import React, { useContext } from "react";
 import { toast } from "sonner";
 import Loader from "../Loader";
 import { useState } from "react";
-import { removeProductFromCart, updateUser } from "@/app/context/actions";
+import {
+  addProductsToOrder,
+  createOrder,
+  getDeliveryCost,
+  removeProductFromCart,
+  savePaymentInformation,
+  savePreferenceID,
+  updateUser,
+} from "@/app/context/actions";
 import { useEffect } from "react";
 
 const CartSection = () => {
@@ -28,28 +36,88 @@ const CartSection = () => {
     onSubmit: async (values) => {
       if (
         values.fullName === "" ||
-        values.fullName === null ||
         values.email === "" ||
-        values.email === null ||
+        !values.email ||
         values.phone === "" ||
-        values.phone === null ||
+        !values.phone ||
         values.province === "" ||
-        values.province === null ||
+        !values.province ||
         values.postalCode === "" ||
-        values.postalCode === null ||
+        !values.postalCode ||
         values.fullAddress === "" ||
-        values.fullAddress === null
+        !values.fullAddress
       ) {
         return toast.info("Recuerda completar todos los campos!");
       }
       setLoader(true);
-
       if (!state.user?.phone) {
         await updateUser(values, dispatch);
         toast.success("Solicitud realizada!", {
           description: "Pronto recibiras el documento",
         });
       }
+      try {
+        values.country = "Argentina";
+        await savePaymentInformation(values, dispatch);
+      } catch (error) {
+        return toast.error(
+          "Ocurrió un error al intentar guardar la información",
+          {
+            description: "Intenta nuevamente en unos minutos",
+          }
+        );
+      }
+
+      let delivery;
+      try {
+        if (
+          state.payment?.totalWeight &&
+          state.payment?.totalVolume &&
+          values.postalCode
+        ) {
+          delivery = await getDeliveryCost(
+            state.payment,
+            values.postalCode,
+            dispatch
+          );
+        }
+      } catch (error) {
+        return toast.error("Ocurrió un error al intentar cotizar el envío", {
+          description: "Verifica el Codigo Postal",
+        });
+      }
+
+      try {
+        const deli = delivery ? Number(delivery.tarifaConIva.total) : 0;
+        const orderData = {
+          ...state,
+          cartTotalPrice: state.cartPrice + state.cartPrice * 0.21 + deli,
+        };
+        const order = await createOrder(orderData, deli, dispatch);
+        const orderProductsData = {
+          orderId: order.id,
+          products: state.cart,
+        };
+        await addProductsToOrder(orderProductsData);
+        // const user = state?.user;
+        // const cart = state?.cart;
+        // const deliveryCost = delivery.tarifaConIva?.total;
+        // const paymentInfo = await createPayment(
+        //   user,
+        //   cart,
+        //   deliveryCost,
+        //   order.id
+        // );
+        // savePreferenceID(paymentInfo.id, dispatch);
+      } catch (error) {
+        setLoader(false);
+        return toast.error("Ocurrio un error al procesar la orden de compra", {
+          description: "Intenta nuevamente mas tarde",
+        });
+      } finally {
+        setLoader(false);
+      }
+
       setLoader(false);
     },
   });
@@ -142,22 +210,36 @@ const CartSection = () => {
                   <span className="text-lg">Informacion personal</span>
                 </div>
                 <div className="flex flex-col w-full max-w-72 gap-4">
-                  <div className="w-full flex flex-col">
-                    <label className="text-sm">Nombre y Apellido</label>
-                    <input
-                      type="text"
-                      name="fullName"
-                      value={
-                        state.user?.id
-                          ? formik.values.name + " " + formik.values.surname
-                          : formik.values.fullName || ""
-                      }
-                      onChange={formik.handleChange}
-                      className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                    />
+                  <div className="w-full flex flex-row gap-2">
+                    <div className="w-full flex flex-col">
+                      <label className="text-sm pl-1 text-gray-500">
+                        Nombre
+                      </label>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formik.values.name || ""}
+                        onChange={formik.handleChange}
+                        className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                      />
+                    </div>
+                    <div className="w-full flex flex-col">
+                      <label className="text-sm pl-1 text-gray-500">
+                        Apellido
+                      </label>
+                      <input
+                        type="text"
+                        name="surname"
+                        value={formik.values.surname || ""}
+                        onChange={formik.handleChange}
+                        className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                      />
+                    </div>
                   </div>
                   <div className="w-full flex flex-col">
-                    <label className="text-sm">Correo electronico</label>
+                    <label className="text-sm pl-1 text-gray-500">
+                      Correo electronico
+                    </label>
                     <input
                       type="text"
                       name="email"
@@ -167,7 +249,9 @@ const CartSection = () => {
                     />
                   </div>
                   <div className="w-full flex flex-col">
-                    <label className="text-sm">Telefono</label>
+                    <label className="text-sm pl-1 text-gray-500">
+                      Telefono
+                    </label>
                     <input
                       type="number"
                       name="phone"
@@ -188,7 +272,7 @@ const CartSection = () => {
                 </div>
                 <div className="flex flex-col w-full max-w-72 gap-4">
                   <div className="w-full flex flex-col">
-                    <label className="text-sm">Pais</label>
+                    <label className="text-sm pl-1 text-gray-500">Pais</label>
                     <input
                       type="text"
                       name="country"
@@ -199,7 +283,9 @@ const CartSection = () => {
                   </div>
                   <div className="w-full flex flex-row gap-2">
                     <div className="w-full flex flex-col">
-                      <label className="text-sm">Provincia</label>
+                      <label className="text-sm pl-1 text-gray-500">
+                        Provincia
+                      </label>
                       <input
                         type="text"
                         name="province"
@@ -209,7 +295,9 @@ const CartSection = () => {
                       />
                     </div>
                     <div className="w-full flex flex-col">
-                      <label className="text-sm">Codigo Postal</label>
+                      <label className="text-sm pl-1 text-gray-500">
+                        Codigo Postal
+                      </label>
                       <input
                         type="number"
                         name="postalCode"
@@ -220,7 +308,9 @@ const CartSection = () => {
                     </div>
                   </div>
                   <div className="w-full flex flex-col">
-                    <label className="text-sm">Calle / Altura</label>
+                    <label className="text-sm pl-1 text-gray-500">
+                      Calle / Altura
+                    </label>
                     <input
                       type="text"
                       name="fullAddress"

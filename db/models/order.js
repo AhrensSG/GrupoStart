@@ -25,7 +25,6 @@ const orderInit = (sequelize, DataTypes) => {
       postalCode: DataTypes.STRING,
       country: DataTypes.STRING,
       province: DataTypes.STRING,
-      city: DataTypes.STRING,
       fullAddress: DataTypes.TEXT,
 
       phone: DataTypes.BIGINT,
