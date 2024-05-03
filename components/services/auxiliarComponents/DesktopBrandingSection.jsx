@@ -1,5 +1,6 @@
 import React from "react";
 import CheckSpan from "./reusableComponents/CheckSpan";
+import Link from "next/link";
 
 const DesktopBrandingSection = () => {
   return (
@@ -102,9 +103,11 @@ const DesktopBrandingSection = () => {
           </div>
         </div>
         <div className="w-full flex flex-col justify-center items-center gap-12">
-          <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300">
-            Quiero mi pack Personalizado
-          </button>
+          <Link href={"/services/CustomizedBrandingPlan"}>
+            <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300">
+              Quiero mi pack Personalizado
+            </button>
+          </Link>
           <span className="text-4xl font-medium text-[#0853FC] text-center">
             ¡Te lo enviamos a donde estés!
           </span>

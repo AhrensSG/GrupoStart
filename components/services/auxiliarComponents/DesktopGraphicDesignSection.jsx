@@ -1,5 +1,6 @@
 "use client";
 import { useFormik } from "formik";
+import Link from "next/link";
 import React from "react";
 import { toast } from "sonner";
 
@@ -13,23 +14,29 @@ const DesktopGraphicDesignSection = () => {
       </div>
       <div className="w-full flex justify-center items-center">
         <div className="max-w-screen-md w-full grid grid-cols-2 gap-8 place-items-center">
-          <Card
-            title="Tu logo"
-            firstOption={"Manual de identidad simplificada"}
-            secondOption={"Manual de identidad estándar"}
-            thirdOption={"Manual de identidad completo"}
-          />
-          <Card
-            title="Piezas graficas(Flyer)"
-            firstOption={"Tarjetas de presentación personal"}
-            secondOption={"Banner"}
-          />
-          <Card
-            title="Audiovisual"
-            firstOption={"Manual de identidad simplificada"}
-            secondOption={"Manual de identidad estándar"}
-            thirdOption={"Manual de identidad completo"}
-          />
+          <Link href={"/services/BrandIdentity"}>
+            <Card
+              title="Tu logo"
+              firstOption={"Manual de identidad simplificada"}
+              secondOption={"Manual de identidad estándar"}
+              thirdOption={"Manual de identidad completo"}
+            />
+          </Link>
+          <Link href={"/services/DesktopBranding"}>
+            <Card
+              title="Piezas graficas(Flyer)"
+              firstOption={"Tarjetas de presentación personal"}
+              secondOption={"Banner"}
+            />
+          </Link>
+          <Link href={"/services/CustomizedPlan"}>
+            <Card
+              title="Audiovisual"
+              firstOption={"Manual de identidad simplificada"}
+              secondOption={"Manual de identidad estándar"}
+              thirdOption={"Manual de identidad completo"}
+            />
+          </Link>
           <Card title="Contanos tu proyecto" form={true} hover={false} />
         </div>
       </div>

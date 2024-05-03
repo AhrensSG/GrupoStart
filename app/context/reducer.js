@@ -127,7 +127,7 @@ export const reducer = (state, action) => {
         payment: { ...state.payment, deliveryCost },
       };
     case "DELETE_DELIVERY_COST_INFORMATION":
-      state.payment.deliveryCost = false;
+      state.payment?.deliveryCost ? (state.payment.deliveryCost = false) : null;
       return {
         ...state,
       };

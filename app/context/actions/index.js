@@ -83,28 +83,13 @@ export const createPayment = async (
 ) => {
   try {
     const productsPayment = productsCart.map((p) => {
-      if (p.discount !== 0) {
-        const price = p.price - (p.price * p.discount) / 100;
-        return {
-          id: p.id,
-          description: p.description,
-          title: p.name,
-          quantity: p.items,
-          unit_price: parseFloat(price),
-          currency_id: "ARS",
-          picture_url: p.ProductImages[0].url || "",
-          category_id: p.Categories[0].name || "",
-        };
-      }
       return {
         id: p.id,
         description: p.description,
         title: p.name,
         quantity: p.items,
-        unit_price: parseFloat(p.price),
+        unit_price: parseFloat(p.price + p.price * 0.21),
         currency_id: "ARS",
-        picture_url: p.ProductImages[0].url || "",
-        category_id: p.Categories[0].name || "",
       };
     });
 
@@ -137,7 +122,6 @@ export const savePreferenceID = (id, dispatch) => {
 
 export const createOrder = async (data, deliveryCost) => {
   try {
-    console.log(data);
     const body = {
       userId: data.user.id,
       status: "Pending",

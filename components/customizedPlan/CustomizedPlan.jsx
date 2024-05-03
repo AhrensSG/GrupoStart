@@ -1,6 +1,5 @@
-"use client";
 import { useFormik } from "formik";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import ToggleSwitch from "./auxiliarComponents/ToggleSwitch";
 import { logInWithGoogle } from "@/firebase/logInWithGoogle";
@@ -8,6 +7,7 @@ import { Context } from "@/app/context/GlobalContext";
 import Modal from "../login/Modal";
 
 const CustomizedPlan = () => {
+  const [totalCost, setTotalCost] = useState(0);
   const { state, dispatch } = useContext(Context);
   const [dropDownValue, setDropDownValue] = useState("Seleccionar el servicio");
   const [facebookSwitch, setFacebookSwitch] = useState(false);
@@ -94,6 +94,40 @@ const CustomizedPlan = () => {
       }
     },
   });
+  // Función para calcular el costo total
+  const calculateTotalCost = () => {
+    let cost = 0;
+
+    // Suma el costo de TikTok si está seleccionado
+    if (TikTokSwitch) {
+      cost += 7000;
+    }
+
+    // Suma el costo por cada posteo
+    cost += postsQuantity * 2200;
+
+    // Suma el costo por cada imagen en el carrusel
+    cost += carouselImagesQuantity * 1100;
+
+    // Suma el costo si se seleccionan efemérides
+    if (formik.values.efemerides === 'yes') {
+      cost += 4900;
+    }
+
+    // Suma el costo por cada reel
+    cost += reelsQuantity * 6800;
+
+    // Suma el presupuesto para campañas ads ingresado por el usuario
+    cost += Number(formik.values.adds);
+
+    // Actualiza el estado con el costo total
+    setTotalCost(cost);
+  };
+  // Llama a calculateTotalCost cada vez que se actualiza un valor relevante
+  useEffect(() => {
+    calculateTotalCost();
+  }, [TikTokSwitch, postsQuantity, carouselImagesQuantity, formik.values.efemerides, reelsQuantity, formik.values.adds]);
+
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
@@ -111,23 +145,27 @@ const CustomizedPlan = () => {
             </h2>
             <div className="relative space-y-2">
               <span className="font-medium flex gap-2">
-                Instagram
+                Instagram y Facebook
                 <ToggleSwitch
                   value={instagramSwitch}
                   setValue={setInstagramSwitch}
                 />
-              </span>
-              <span className="font-medium flex gap-[11px]">
-                Facebook
-                <ToggleSwitch
-                  value={facebookSwitch}
-                  setValue={setFacebookSwitch}
-                />
+                <button
+                  className="text-black cursor-pointer"
+                  title="Elegí las redes que quieres que gestionemos"
+                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
               </span>
               <span className="font-medium flex gap-[29px]">
                 Tik Tok
                 <ToggleSwitch value={TikTokSwitch} setValue={setTikTokSwitch} />
+                <button
+                  className="text-black cursor-pointer"
+                  title="Elegí las redes que quieres que gestionemos"
+                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </button>
               </span>
+              
             </div>
             <div className="space-y-4">
               {/* POSTS QUANTITY */}
@@ -176,6 +214,11 @@ const CustomizedPlan = () => {
                     </svg>
                   </button>
                 </div>
+                <button
+                  className="text-black cursor-pointer"
+                  title="son posteos de una sola imagen, pueden tener distintos objetivos, como ser informativos, de ventas, sobre promociones, dinámicas con el público entre otras"
+                >&nbsp; ? &nbsp;
+                </button>
               </div>
               {/* CAROUSEL IMAGES QUANTTY */}
               <div className="flex flex-row justify-start items-center gap-4">
@@ -223,6 +266,11 @@ const CustomizedPlan = () => {
                     </svg>
                   </button>
                 </div>
+                <button
+                  className="text-black cursor-pointer"
+                  title="esto es opcional pero altamente recomendable, aquí eligiras cuántas imágenes te gustaría que tuvieran tus posteos, se recomienda un mínimo de 3 imágenes para aparecer repetidamente en el feed de tus seguidores 🙌🏻"
+                >&nbsp; ? &nbsp;
+                </button>
               </div>
               {/* REELS QUANTITY */}
               <div className="flex flex-row justify-start items-center gap-4">
@@ -270,6 +318,11 @@ const CustomizedPlan = () => {
                     </svg>
                   </button>
                 </div>
+                <button
+                  className="text-black cursor-pointer"
+                  title="está opción es también opcional pero muy recomendable, los posteos en formato video son la tendencia del momento ¿Que obtendrás si tildas está opción? Guiones para tus videos y edición para que tu vídeo dure 30 segundos además de asesoramiento y acompañamiento total para que el material que nos entregues sea óptimo"
+                >&nbsp; ? &nbsp;
+                </button>
               </div>
               {/* EFEMERIDES */}
               <div className="flex flex-row justify-start items-center gap-4">
@@ -308,6 +361,11 @@ const CustomizedPlan = () => {
                     No
                   </label>
                 </div>
+                <button
+                  className="text-black cursor-pointer"
+                  title="Las efemérides son importantes puesto que son flyers que se postean por ocasiones especiales relacionadas a tu rubro. Por ejemplo si tu empresa es una ferretería un posteo especial por el día del ferretero para hacer sentir especial a todo tu equipo y colegas 🥹"
+                >&nbsp; ? &nbsp;
+                </button>
               </div>
               {/* CAMPAIGN ADDS */}
               <div className="flex flex-row justify-start items-center gap-2">
@@ -327,7 +385,15 @@ const CustomizedPlan = () => {
                     className="outline-none p-1 w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
+                <button
+                  className="text-black cursor-pointer"
+                  title="esta opción es obligatoria puesto que es una herramienta fundamental para poder promocionar tu proyecto, cuanto mayor presupuesto asignes a esta categoría mayores son las chances de un rápido posicionamiento en las redes 🚀 el monto final invertido en tu cuenta será el total que asignes a esta categoría - el 15% de comisión asignado para el creativo publicitario que realizará tu campaña publicitaria - impuestos"
+                >&nbsp; ? &nbsp;
+                </button>
               </div>
+            </div>
+            <div className="text-center w-full bg-[#FB8A00] p-1 text-white font-medium rounded-tl-md rounded-br-md">
+              Costo Total: ${totalCost}
             </div>
             <button
               onClick={addToCartAndPay}

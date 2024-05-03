@@ -24,32 +24,38 @@ const About = () => {
         <div className="flex flex-row justify-center items-center max-w-6xl gap-20">
           <Image src={"/Founder.svg"} width={200} height={200} alt="Founder" />
           <p className="text-justify text-xl">
-            Figma ipsum component variant main layer. Strikethrough create ipsum
-            arrow overflow asset. Boolean effect edit union blur fill line slice
-            device create. Line asset invite connection bold library polygon.
-            Prototype boolean union boolean draft union.
+            Ivan Ayala, fundador y coordinador.Estudié comercio exterior y
+            emprendo desde los 18 años. Lideró con pasión el área de Community
+            Managers en Grupo Start, donde mi mayor talento radica en crear
+            estructuras de trabajo funcionales que optimicen los procesos
+            contemplando a las personas y sus talentos. Siempre impulsó a mi
+            equipo y a mis clientes a alcanzar nuevas alturas, integrando la
+            tecnología y la innovación en cada estrategia. Creo firmemente que
+            alinear nuestras pasiones con nuestras tareas diarias es el camino
+            hacia el éxito y la libertad
           </p>
         </div>
         <div className="flex flex-row justify-center items-center max-w-6xl gap-20">
           <Image src={"/Founder.svg"} width={200} height={200} alt="Founder" />
           <p className="text-justify text-xl">
-            Figma ipsum component variant main layer. Strikethrough create ipsum
-            arrow overflow asset. Boolean effect edit union blur fill line slice
-            device create. Line asset invite connection bold library polygon.
-            Prototype boolean union boolean draft union.
+            Sebastian Vera: Visionario emprendedor, diseñador gráfico y
+            publicista con amplia trayectoria en la industria, lidero y coordino
+            con éxito las áreas de diseño gráfico, marketing y ventas.
+            Apasionado por la innovación y el crecimiento, “hacer que suceda” es
+            mi frase favorita, colaboré con marcas en su identidad y expansión,
+            también con autores en el lanzamiento de sus libros, creo firmemente
+            en el trabajo en equipo, estoy activamente para lograr brindar un
+            servicio de calidad.
           </p>
         </div>
         <div className="flex flex-row justify-center items-center max-w-6xl gap-20">
           <Image src={"/Founder.svg"} width={200} height={200} alt="Founder" />
           <p className="text-justify text-xl">
-            Figma ipsum component variant main layer. Strikethrough create ipsum
-            arrow overflow asset. Boolean effect edit union blur fill line slice
-            device create. Line asset invite connection bold library polygon.
-            Prototype boolean union boolean draft union.
+            Guillermo Ahrens: Soy un programador emprendedor con visión de futuro. Mi pasión por la tecnología y la innovación impulsa mi búsqueda constante de soluciones creativas. Busco desafíos que me permitan crecer y crear valor. Estoy comprometido a liderar el cambio y adaptarme a las últimas tendencias. Mi objetivo es transformar ideas en realidad y hacer una diferencia en el mundo.
           </p>
         </div>
       </div>
-      <Link href={'/experiences'}>
+      <Link href={"/experiences"}>
         <button className="bg-[#FB8A00] p-2 px-6 text-xl text-white rounded-tl-xl rounded-br-xl shadow-lg shadow-gray-400 hover:shadow-xl hover:shadow-gray-400 duration-500">
           Nuestra experiencia
         </button>

@@ -3,6 +3,7 @@
 import { Context } from "@/app/context/GlobalContext";
 import { addProductToCart } from "@/app/context/actions";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import { toast } from "sonner";
@@ -249,10 +250,12 @@ const DesktopCommunityManagerSection = () => {
           </button>
         </div>
       </div>
-      <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300">
-        {" "}
-        Quiero mi plan Personalizado{" "}
-      </button>
+      <Link href={"/services/CustomizedPlan"}>
+        <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300">
+          {" "}
+          Quiero mi plan Personalizado{" "}
+        </button>
+      </Link>
     </div>
   );
 };

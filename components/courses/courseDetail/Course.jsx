@@ -42,6 +42,7 @@ const Course = ({
   };
 
   useEffect(() => {}, [state.user]);
+  console.log(state)
 
   return (
     <div className="py-20 p-2 grid place-items-center gap-10">

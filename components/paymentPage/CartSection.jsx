@@ -8,6 +8,8 @@ import { useState } from "react";
 import {
   addProductsToOrder,
   createOrder,
+  createPayment,
+  deleteDeliveryCostInformation,
   getDeliveryCost,
   removeProductFromCart,
   savePaymentInformation,
@@ -15,10 +17,12 @@ import {
   updateUser,
 } from "@/app/context/actions";
 import { useEffect } from "react";
+import PaymentModal from "../payment/PaymentModal";
 
 const CartSection = () => {
   const { state, dispatch } = useContext(Context);
   const [loader, setLoader] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const initialValues = state.user || {
     fullName: "",
@@ -89,6 +93,7 @@ const CartSection = () => {
 
       try {
         const deli = delivery ? Number(delivery.tarifaConIva.total) : 0;
+        state.payment = { ...state.payment, ...values };
         const orderData = {
           ...state,
           cartTotalPrice: state.cartPrice + state.cartPrice * 0.21 + deli,
@@ -99,16 +104,19 @@ const CartSection = () => {
           products: state.cart,
         };
         await addProductsToOrder(orderProductsData);
-        // const user = state?.user;
-        // const cart = state?.cart;
-        // const deliveryCost = delivery.tarifaConIva?.total;
-        // const paymentInfo = await createPayment(
-        //   user,
-        //   cart,
-        //   deliveryCost,
-        //   order.id
-        // );
-        // savePreferenceID(paymentInfo.id, dispatch);
+        state.user.postalCode = values.postalCode;
+        const user = state?.user;
+        const cart = state?.cart;
+        const deliveryCost = deli;
+
+        const paymentInfo = await createPayment(
+          user,
+          cart,
+          deliveryCost,
+          order.id
+        );
+        savePreferenceID(paymentInfo.id, dispatch);
+        paymentInfo.id ? setShowPaymentModal(true) : setShowPaymentModal(false);
       } catch (error) {
         setLoader(false);
         return toast.error("Ocurrio un error al procesar la orden de compra", {
@@ -124,8 +132,20 @@ const CartSection = () => {
 
   useEffect(() => {}, [state.cart]);
 
+  useEffect(() => {
+    return () => deleteDeliveryCostInformation(dispatch);
+  }, []);
+
+  useEffect(() => {
+    return () => savePreferenceID(false, dispatch);
+  }, []);
+
   return (
     <div className="w-full flex flex-col justify-center items-center p-2 py-10">
+      {/* PAYMENT MODAL */}
+      {showPaymentModal ? (
+        <PaymentModal setShowPaymentModal={setShowPaymentModal} />
+      ) : null}
       <div className="max-w-screen-lg w-full">
         {/* TOP SECTION  */}
         <div className="w-full flex justify-between">
@@ -324,9 +344,9 @@ const CartSection = () => {
             </div>
             <button
               type="submit"
-              className="max-w-52 w-full p-2 text-lg font-bold text-white bg-[#FB8A00] rounded-md"
+              className="max-w-52 w-full h-11 p-2 text-lg font-bold text-white bg-[#FB8A00] rounded-md"
             >
-              {loader ? <Loader size={24} /> : "Ir al Pago"}
+              {loader ? <Loader size={26} /> : "Ir al Pago"}
             </button>
           </form>
         </div>
