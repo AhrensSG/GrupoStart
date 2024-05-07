@@ -14,12 +14,12 @@ const ThirdSection = () => {
         priority={true}
         quality={100}
       />
-      <div className="w-full h-full flex justify-end items-center z-10">
+      <div className="w-full h-full flex justify-center sm:justify-end items-center z-10">
         <div className="w-1/2 h-full flex flex-col justify-center items-start">
-          <span className="text-white text-7xl font-extrabold">
+          <span className="text-white text-5xl sm:text-7xl font-extrabold">
             EL FUTURO <br /> ESTA AQUI
           </span>
-          <span className="text-[#FB8A00] text-7xl font-extrabold">
+          <span className="text-[#FB8A00] text-5xl sm:text-7xl font-extrabold">
             NO TE QUEDES <br /> VIENDO <br /> ¡SUMATE!
           </span>
         </div>

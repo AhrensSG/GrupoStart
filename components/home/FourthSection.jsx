@@ -5,7 +5,7 @@ const FourthSection = () => {
   return (
     <section id="about-us" className="w-full bg-gradient-to-b from-[#FB8A00] p-4">
       <div className="w-full h-full flex flex-col items-center gap-6 py-4">
-        <h2 className="text-6xl text-black">Fundadores</h2>
+        <h2 className="text-5xl xs:text-5xl text-black">Fundadores</h2>
 
         <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-16">
           <FounderCard
