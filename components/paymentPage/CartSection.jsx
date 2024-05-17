@@ -138,7 +138,7 @@ const CartSection = () => {
 
   useEffect(() => {
     return () => savePreferenceID(false, dispatch);
-  }, []);
+  }, []); 
 
   return (
     <div className="w-full flex flex-col justify-center items-center p-2 py-10">
@@ -391,6 +391,25 @@ const CourseCard = ({ id, name, duration, type, price, dispatch }) => {
 };
 
 const PackCard = ({ id, name, price, dispatch }) => {
+  return (
+    <div className="relative flex flex-row max-w-[580px] w-full gap-4 border rounded-md shadow-md">
+      <button
+        onClick={() => removeProductFromCart({ id }, dispatch)}
+        className="absolute text-xs top-0.5 right-1.5 text-gray-600"
+      >
+        x
+      </button>
+      <div className="p-4 flex flex-row justify-between items-center w-full">
+        <span className="text-xl font-medium">{name}</span>
+        <p className="text-xl font-medium">
+          Precio: <span className="font-normal">$ {price}</span>
+        </p>
+      </div>
+    </div>
+  );
+};
+
+const AddsPackCard = ({ id, name, price, post, reels, IgyFace, carrucel, efemerides, adds, dispatch }) => {
   return (
     <div className="relative flex flex-row max-w-[580px] w-full gap-4 border rounded-md shadow-md">
       <button

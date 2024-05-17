@@ -32,29 +32,28 @@ const SecondSection = () => {
             img={"/services/Jirafe2.svg"}
             title={"Desarrollo Web"}
             description={
-              "Enfócate en los aspectos operativos más importantes de tu negocio, la logística, contacto con proveedores, coordinación de tu equipo, atención al público, con la tranquilidad de que tus redes están activas y en manos de un equipo especializado. Nunca vas a perder el timón, vamos a estar siempre en contacto con vos"
+              "Tener tu negocio activo las 24 hs. generándote ingresos es posible. Desarrollamos tu página web personalizada con estrategias de SEO para posicionarte en las búsquedas de google. ¿Buscas algo más simple como un blog o una landing page? No hay problema, nosotros lo hacemos posible."
             }
             link={"/services/DesktopWebDevelopment"}
-            firstBullet={"Planificación de contenidos"}
-            secondtBullet={"Publicaciones frecuentes en tus redes sociales"}
-            thirdtBullet={"Descripciones seductoras"}
-            fourthtBullet={"Campañas publicitarias"}
-            fifthtBullet={"Soporte siempre en contacto con vos"}
+            firstBullet={"Desarrollo propio"}
+            secondtBullet={"Diseño responsive"}
+            thirdtBullet={"Base de datos"}
+            fourthtBullet={"Soporte siempre en contacto con vos"}
           />
 
           <ServiceCard
             img={"/services/Jirafe1.svg"}
             title={"Herramientas Utiles"}
             description={
-              " Los resultados son importantes, puedes alcanzarlos con estrategias de venta directa, pero si quieres tener un negocio sostenible en el tiempo debes consolidar una marca. Permití que nuestro equipo creativo genere las bases de un negocio próspero generando tu manual de marca. "
+              "Preséntate como un verdadero profesional con nuestras tarjetas personales con QR, Incluye:"
             }
             link={"/services/DesktopBranding"}
-            firstBullet={"Perfeccionamiento de tu identidad de marca"}
+            firstBullet={"Diseño personalizado"}
             secondtBullet={
-              "Manual de identidad de marca: Simple, Estándar, Completo)"
+              "- El Qr direcciona a los interesados en tu producto/servicio a una landing page donde tendrás una presentación ampliada además de botones de acceso rápido a un chat con vos, tu ubicación en Google maps y tus redes sociales"
             }
             thirdtBullet={"Tarjetería"}
-            fourthtBullet={"Flyers"}
+            fourthtBullet={"Realizamos envíos a todo el país"}
           />
 
           {/* <ServiceCard

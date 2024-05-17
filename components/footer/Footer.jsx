@@ -8,25 +8,45 @@ const Footer = () => {
       <div className="w-full px-12 sm:px-0 flex flex-row flex-wrap justify-start sm:justify-around items-start gap-4">
         <div className="flex flex-col justify-center items-start gap-2">
           <span className="text-xl text-white">Seguinos en</span>
-          <div className="flex gap-2 items-center text-white">
-            <Image
-              src={"/FooterInstagramIcon.svg"}
-              width={30}
-              height={30}
-              alt="WhatsAppIcon"
-              className="cursor-pointer"
-            />
-            <span>Instagram</span>
+          <div className="flex gap-2 items-center text-white cursor-pointer">
+            <Link
+              href={"https://www.instagram.com/grupostart.ok/"}
+              target="_blank"
+            >
+              <Image
+                src="/FooterInstagramIcon.svg"
+                width={30}
+                height={30}
+                alt="InstagramIcon"
+                className="cursor-pointer"
+              />
+            </Link>
+            <Link
+              href={"https://www.instagram.com/grupostart.ok/"}
+              target="_blank"
+            >
+              <span>Instagram</span>
+            </Link>
           </div>
-          <div className="flex gap-2 items-center text-white">
-            <Image
-              src={"/FooterFacebookIcon.svg"}
-              width={30}
-              height={30}
-              alt="InstagramIcon"
-              className="cursor-pointer"
-            />
-            <span>Facebook</span>
+          <div className="flex gap-2 items-center text-white cursor-pointer">
+            <Link
+              href={"https://www.facebook.com/profile.php?id=100091823826062"}
+              target="_blank"
+            >
+              <Image
+                src="/FooterFacebookIcon.svg"
+                width={30}
+                height={30}
+                alt="FacebookIcon"
+                className="cursor-pointer"
+              />
+            </Link>
+            <Link
+              href={"https://www.facebook.com/profile.php?id=100091823826062"}
+              target="_blank"
+            >
+              <span>Facebook</span>
+            </Link>
           </div>
           <div className="flex gap-2 items-center text-white">
             <Image
@@ -51,7 +71,7 @@ const Footer = () => {
               alt="WhatsAppIcon"
               className="cursor-pointer"
             />
-            <span>grupostart@gmail.com</span>
+            <span>grupostartfsa@gmail.com</span>
           </div>
           <div className="flex gap-2 text-white">
             <Image
@@ -61,7 +81,7 @@ const Footer = () => {
               alt="WhatsAppIcon"
               className="cursor-pointer"
             />
-            <span>+54 3704-561550</span>
+            <span>+54 3704-619402</span>
           </div>
         </div>
         <div className="max-w-52 flex flex-col justify-start items-start gap-2">
@@ -74,7 +94,7 @@ const Footer = () => {
             className="cursor-pointer"
           />
           <span className="text-white">
-            P. Sherman calle wallaby 42 Sydney{" "}
+            Hipólito Yrigoyen 342, P3600JGA Formosa, Argentina{" "}
           </span>
         </div>
       </div>
@@ -88,9 +108,16 @@ const Footer = () => {
             className="cursor-pointer"
           />
         </Link>
-        <span className="text-white">
-          2024 GrupoStart - Todos los derechos reservados
-        </span>
+        <p className="text-white flex gap-1 items-center justify-center">
+          2024 GrupoStart -{" "}
+          <Image
+            src={"/Copyright.png"}
+            width={24}
+            height={24}
+            alt="Copyright"
+          ></Image>{" "}
+          Todos los derechos reservados
+        </p>
       </div>
     </footer>
   );

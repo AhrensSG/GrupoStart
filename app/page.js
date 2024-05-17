@@ -15,7 +15,7 @@ export default function Home() {
       <FourthSection />
       <section className="w-full h-screen relative">
         <Image
-          src={"/ContactSection.svg"}
+          src={"/ContactSection.png"}
           fill
           alt="FutureJirafe"
           className="object-cover object-top  transition-opacity opacity-0 duration-500 z-0"

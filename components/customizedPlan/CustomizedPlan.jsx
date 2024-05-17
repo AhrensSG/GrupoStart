@@ -2,17 +2,18 @@ import { useFormik } from "formik";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
 import ToggleSwitch from "./auxiliarComponents/ToggleSwitch";
-import { logInWithGoogle } from "@/firebase/logInWithGoogle";
 import { Context } from "@/app/context/GlobalContext";
 import Modal from "../login/Modal";
+import { useRouter } from "next/navigation";
+import { addProductToCart } from "@/app/context/actions";
 
 const CustomizedPlan = () => {
   const [totalCost, setTotalCost] = useState(0);
   const { state, dispatch } = useContext(Context);
-  const [dropDownValue, setDropDownValue] = useState("Seleccionar el servicio");
-  const [facebookSwitch, setFacebookSwitch] = useState(false);
   const [instagramSwitch, setInstagramSwitch] = useState(false);
   const [TikTokSwitch, setTikTokSwitch] = useState(false);
+
+  const router = useRouter();
 
   const [postsQuantity, setPostsQuantity] = useState(0);
   const [carouselImagesQuantity, setCarouselImagesQuantity] = useState(0);
@@ -53,44 +54,56 @@ const CustomizedPlan = () => {
     setReelsQuantity((prevReels) => Math.max(prevReels - 1, 0));
   };
 
-  const addToCartAndPay = async () => {
-    try {
-      if (!state.user) {
-        setShowLogin(true);
-      } else {
-        toast.info("Seras redirigido a la pagina de pago!");
-      }
-    } catch (error) {
-      return toast.error("Ocurrio un error al solicitar el pago!");
+  const handleBuyNow = async (post, reels, price, IgyFace, carrucel, efemerides, adds) => {
+    if (!state.user) {
+      return setShowLogin(true);
     }
+    const data = {
+      id: 10,
+      name: "Plan Personalizado",
+      post: post,
+      reels: reels,
+      IgyFace: IgyFace,
+      carrucel: carrucel,
+      efemerides: efemerides,
+      adds: adds,
+      price: price,
+      items: 1,
+      productType: "customPlan",
+    };
+    if (state.cart?.some((prod) => prod.id === id)) {
+      toast.info(`Se actualizó el producto en tu carrito!`);
+    } else {
+      toast.success(`Añadiste ${name} a tu carrito!`);
+    }
+    await addProductToCart(data, dispatch);
+    return router.push("/payment");
   };
 
   const initialValues = {
-    fullName: "",
-    email: "",
-    phone: "",
-    message: "",
-    efemerides: "",
-    adds: 0,
+    efemerides: false,
+    adds: 5000,
   };
 
   const formik = useFormik({
     initialValues,
     onSubmit: (values) => {
-      if (
-        values.fullName === "" ||
-        values.email === "" ||
-        values.phone === "" ||
-        values.message === "" ||
-        dropDownValue === "Seleccionar el servicio"
-      ) {
-        return toast.info(
-          "Recuerda completar todos los campos y seleccionar el servicio!"
-        );
-      } else {
-        return toast.success("Solicitud realizada!", {
-          description: "Pronto recibiras el documento",
-        });
+      try {
+        if (!state.user) {
+          setShowLogin(true);
+        } else if (values.adds < 5000) {
+          return toast.info(
+            "El presupuesto minimo para las campañas Adds es de $5000"
+          );
+        } else {
+          const efe= values.efemerides;
+          const ads= values.adds;
+          handleBuyNow(postsQuantity, reelsQuantity, totalCost, instagramSwitch, carouselImagesQuantity, efe, ads )
+          toast.info("Seras redirigido a la pagina de pago!");
+          return router.push("/payment");
+        }
+      } catch (error) {
+        return toast.error("Ocurrio un error al solicitar el pago!");
       }
     },
   });
@@ -110,7 +123,7 @@ const CustomizedPlan = () => {
     cost += carouselImagesQuantity * 1100;
 
     // Suma el costo si se seleccionan efemérides
-    if (formik.values.efemerides === 'yes') {
+    if (formik.values.efemerides === "yes") {
       cost += 4900;
     }
 
@@ -123,11 +136,18 @@ const CustomizedPlan = () => {
     // Actualiza el estado con el costo total
     setTotalCost(cost);
   };
+
   // Llama a calculateTotalCost cada vez que se actualiza un valor relevante
   useEffect(() => {
     calculateTotalCost();
-  }, [TikTokSwitch, postsQuantity, carouselImagesQuantity, formik.values.efemerides, reelsQuantity, formik.values.adds]);
-
+  }, [
+    TikTokSwitch,
+    postsQuantity,
+    carouselImagesQuantity,
+    formik.values.efemerides,
+    reelsQuantity,
+    formik.values.adds,
+  ]);
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
@@ -139,7 +159,10 @@ const CustomizedPlan = () => {
       </div>
       <div className="grid place-items-center gap-14 w-full bg-gradient-to-b from-slate-100 via-[#FB8A00] to-slate-100">
         <div className="bg-white max-w-screen-md w-full grid place-items-center p-4 py-10">
-          <div className="w-full max-w-[420px] space-y-8">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="w-full max-w-[420px] space-y-8"
+          >
             <h2 className="text-xl font-medium">
               Elegi que tipo de redes queres que manejemos
             </h2>
@@ -150,22 +173,26 @@ const CustomizedPlan = () => {
                   value={instagramSwitch}
                   setValue={setInstagramSwitch}
                 />
-                <button
+                <span
                   className="text-black cursor-pointer"
                   title="Elegí las redes que quieres que gestionemos"
-                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
+                >
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  ?
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
               </span>
               <span className="font-medium flex gap-[29px]">
                 Tik Tok
                 <ToggleSwitch value={TikTokSwitch} setValue={setTikTokSwitch} />
-                <button
-                  className="text-black cursor-pointer"
+                <span
+                  className="text-black cursor-pointer font-bold"
                   title="Elegí las redes que quieres que gestionemos"
-                >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ? &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
+                >
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ?
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
               </span>
-              
             </div>
             <div className="space-y-4">
               {/* POSTS QUANTITY */}
@@ -176,7 +203,7 @@ const CustomizedPlan = () => {
                 <div
                   className={`flex flex-row items-center justify-between w-20 border-2 border-[#FB8A00] rounded p-1`}
                 >
-                  <button onClick={decreasePosts}>
+                  <span onClick={decreasePosts}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -191,13 +218,13 @@ const CustomizedPlan = () => {
                         d="M5 12h14"
                       />
                     </svg>
-                  </button>
+                  </span>
                   <div className="w-full flex flex-row justify-center items-center">
                     <span className="text-black/70 font-medium">
                       {postsQuantity}
                     </span>
                   </div>
-                  <button onClick={increasePosts}>
+                  <span onClick={increasePosts}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -212,13 +239,14 @@ const CustomizedPlan = () => {
                         d="M12 4.5v15m7.5-7.5h-15"
                       />
                     </svg>
-                  </button>
+                  </span>
                 </div>
-                <button
-                  className="text-black cursor-pointer"
+                <span
+                  className="text-black cursor-pointer font-bold"
                   title="son posteos de una sola imagen, pueden tener distintos objetivos, como ser informativos, de ventas, sobre promociones, dinámicas con el público entre otras"
-                >&nbsp; ? &nbsp;
-                </button>
+                >
+                  &nbsp; ? &nbsp;
+                </span>
               </div>
               {/* CAROUSEL IMAGES QUANTTY */}
               <div className="flex flex-row justify-start items-center gap-4">
@@ -228,7 +256,7 @@ const CustomizedPlan = () => {
                 <div
                   className={`flex flex-row items-center justify-between w-20 border-2 border-[#FB8A00] rounded p-1`}
                 >
-                  <button onClick={decreaseCarouselImages}>
+                  <span onClick={decreaseCarouselImages}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -243,13 +271,13 @@ const CustomizedPlan = () => {
                         d="M5 12h14"
                       />
                     </svg>
-                  </button>
+                  </span>
                   <div className="w-full flex flex-row justify-center items-center">
                     <span className="text-black/70 font-medium">
                       {carouselImagesQuantity}
                     </span>
                   </div>
-                  <button onClick={increaseCarouselImages}>
+                  <span onClick={increaseCarouselImages}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -264,13 +292,14 @@ const CustomizedPlan = () => {
                         d="M12 4.5v15m7.5-7.5h-15"
                       />
                     </svg>
-                  </button>
+                  </span>
                 </div>
-                <button
-                  className="text-black cursor-pointer"
+                <span
+                  className="text-black cursor-pointer font-bold"
                   title="esto es opcional pero altamente recomendable, aquí eligiras cuántas imágenes te gustaría que tuvieran tus posteos, se recomienda un mínimo de 3 imágenes para aparecer repetidamente en el feed de tus seguidores 🙌🏻"
-                >&nbsp; ? &nbsp;
-                </button>
+                >
+                  &nbsp; ? &nbsp;
+                </span>
               </div>
               {/* REELS QUANTITY */}
               <div className="flex flex-row justify-start items-center gap-4">
@@ -280,7 +309,7 @@ const CustomizedPlan = () => {
                 <div
                   className={`flex flex-row items-center justify-between w-20 border-2 border-[#FB8A00] rounded p-1`}
                 >
-                  <button onClick={decreaseReels}>
+                  <span onClick={decreaseReels}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -295,13 +324,13 @@ const CustomizedPlan = () => {
                         d="M5 12h14"
                       />
                     </svg>
-                  </button>
+                  </span>
                   <div className="w-full flex flex-row justify-center items-center">
                     <span className="text-black/70 font-medium">
                       {reelsQuantity}
                     </span>
                   </div>
-                  <button onClick={increaseReels}>
+                  <span onClick={increaseReels}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -316,13 +345,14 @@ const CustomizedPlan = () => {
                         d="M12 4.5v15m7.5-7.5h-15"
                       />
                     </svg>
-                  </button>
+                  </span>
                 </div>
-                <button
-                  className="text-black cursor-pointer"
+                <span
+                  className="text-black cursor-pointer font-bold"
                   title="está opción es también opcional pero muy recomendable, los posteos en formato video son la tendencia del momento ¿Que obtendrás si tildas está opción? Guiones para tus videos y edición para que tu vídeo dure 30 segundos además de asesoramiento y acompañamiento total para que el material que nos entregues sea óptimo"
-                >&nbsp; ? &nbsp;
-                </button>
+                >
+                  &nbsp; ? &nbsp;
+                </span>
               </div>
               {/* EFEMERIDES */}
               <div className="flex flex-row justify-start items-center gap-4">
@@ -361,11 +391,12 @@ const CustomizedPlan = () => {
                     No
                   </label>
                 </div>
-                <button
-                  className="text-black cursor-pointer"
+                <span
+                  className="text-black cursor-pointer font-bold"
                   title="Las efemérides son importantes puesto que son flyers que se postean por ocasiones especiales relacionadas a tu rubro. Por ejemplo si tu empresa es una ferretería un posteo especial por el día del ferretero para hacer sentir especial a todo tu equipo y colegas 🥹"
-                >&nbsp; ? &nbsp;
-                </button>
+                >
+                  &nbsp; ? &nbsp;
+                </span>
               </div>
               {/* CAMPAIGN ADDS */}
               <div className="flex flex-row justify-start items-center gap-2">
@@ -385,23 +416,24 @@ const CustomizedPlan = () => {
                     className="outline-none p-1 w-full [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
-                <button
-                  className="text-black cursor-pointer"
+                <span
+                  className="text-black cursor-pointer font-bold"
                   title="esta opción es obligatoria puesto que es una herramienta fundamental para poder promocionar tu proyecto, cuanto mayor presupuesto asignes a esta categoría mayores son las chances de un rápido posicionamiento en las redes 🚀 el monto final invertido en tu cuenta será el total que asignes a esta categoría - el 15% de comisión asignado para el creativo publicitario que realizará tu campaña publicitaria - impuestos"
-                >&nbsp; ? &nbsp;
-                </button>
+                >
+                  &nbsp; ? &nbsp;
+                </span>
               </div>
             </div>
             <div className="text-center w-full bg-[#FB8A00] p-1 text-white font-medium rounded-tl-md rounded-br-md">
               Costo Total: ${totalCost}
             </div>
             <button
-              onClick={addToCartAndPay}
+              type="submit"
               className="text-center w-full bg-[#FB8A00] p-1 text-white font-medium rounded-tl-md rounded-br-md"
             >
               PAGAR
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>

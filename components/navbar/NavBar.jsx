@@ -13,9 +13,15 @@ const NavBar = () => {
       </Link>
 
       <div className="w-full hidden lg:flex flex-row justify-end items-center gap-4">
-        <Link className="max-w-32 w-full" href={"/courses"}>
+        {/* <Link className="max-w-32 w-full" href={"/experiences"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
-            Cursos
+            Experiencias
+          </button>
+        </Link> */}
+
+        <Link className="max-w-32 w-full" href={"/"}>
+          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+            Inicio
           </button>
         </Link>
 
@@ -31,13 +37,7 @@ const NavBar = () => {
           </button>
         </Link>
 
-        <Link className="max-w-32 w-full" href={"/experiences"}>
-          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
-            Experiencias
-          </button>
-        </Link>
-
-        <Link className="max-w-32 w-full" href={"/"}>
+        <Link className="max-w-32 w-full" href={"/about#contactAbout"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Contacto
           </button>
@@ -76,31 +76,46 @@ const NavBar = () => {
               </button>
               <div className="w-full h-full py-20 px-10 gap-4 flex flex-col justify-start items-start">
                 <Link className="max-w-32 w-full" href={"/courses"}>
-                  <button onClick={() => setShowSideBar(false)} className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
+                  <button
+                    onClick={() => setShowSideBar(false)}
+                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                  >
                     Cursos
                   </button>
                 </Link>
 
                 <Link className="max-w-32 w-full" href={"/#services"}>
-                  <button onClick={() => setShowSideBar(false)} className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
+                  <button
+                    onClick={() => setShowSideBar(false)}
+                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                  >
                     Servicios
                   </button>
                 </Link>
 
                 <Link className="max-w-32 w-full" href={"/about"}>
-                  <button onClick={() => setShowSideBar(false)} className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
+                  <button
+                    onClick={() => setShowSideBar(false)}
+                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                  >
                     Nosotros
                   </button>
                 </Link>
 
                 <Link className="max-w-32 w-full" href={"/experiences"}>
-                  <button onClick={() => setShowSideBar(false)} className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
+                  <button
+                    onClick={() => setShowSideBar(false)}
+                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                  >
                     Experiencias
                   </button>
                 </Link>
 
                 <Link className="max-w-32 w-full" href={"/"}>
-                  <button onClick={() => setShowSideBar(false)} className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
+                  <button
+                    onClick={() => setShowSideBar(false)}
+                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                  >
                     Contacto
                   </button>
                 </Link>
