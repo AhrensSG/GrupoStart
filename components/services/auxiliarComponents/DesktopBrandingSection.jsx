@@ -1,8 +1,35 @@
+"use client";
 import React from "react";
 import CheckSpan from "./reusableComponents/CheckSpan";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { Context } from "@/app/context/GlobalContext";
+import { toast } from "sonner";
+import { addProductToCart } from "@/app/context/actions";
 
 const DesktopBrandingSection = () => {
+  const { state, dispatch } = useContext(Context);
+  const router = useRouter();
+
+  const handleBuyNow = async (id, name, price) => {
+    const data = {
+      id,
+      name,
+      description: "Servicio gestion de redes",
+      price,
+      items: 1,
+      productType: "pack",
+    };
+    if (state.cart?.some((prod) => prod.id === id)) {
+      toast.info(`Se actualizó el producto en tu carrito!`);
+    } else {
+      toast.success(`Añadiste ${name} a tu carrito!`);
+    }
+    await addProductToCart(data, dispatch);
+    return router.push("/payment");
+  };
+
   return (
     <div>
       <div className="w-full h-full flex flex-col justify-start items-center gap-16">
@@ -46,7 +73,10 @@ const DesktopBrandingSection = () => {
                   <CheckSpan title="Carrusel de imagenes" />
                 </div>
               </div>
-              <button className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white">
+              <button
+                onClick={() => handleBuyNow(15, "Pack 1", 12000)}
+                className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white"
+              >
                 COMPRAR
               </button>
             </div>
@@ -71,7 +101,10 @@ const DesktopBrandingSection = () => {
                   <CheckSpan title="Carrusel de imagenes" />
                 </div>
               </div>
-              <button className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white">
+              <button
+                onClick={() => handleBuyNow(16, "Pack 2", 23000)}
+                className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white"
+              >
                 COMPRAR
               </button>
             </div>
@@ -96,7 +129,10 @@ const DesktopBrandingSection = () => {
                   <CheckSpan title="Carrusel de imagenes" />
                 </div>
               </div>
-              <button className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white">
+              <button
+                onClick={() => handleBuyNow(17, "Pack 3", 46000)}
+                className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white"
+              >
                 COMPRAR
               </button>
             </div>

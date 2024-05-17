@@ -1,9 +1,15 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import NavBar from "../navbar/NavBar";
 import Link from "next/link";
 
 const FirstSection = () => {
+  const [showFullText, setShowFullText] = useState(false);
+
+  const handleToggleText = () => {
+    setShowFullText(!showFullText);
+  };
+
   return (
     <section className="w-full xl:h-screen 2xl:h-full relative flex flex-col justify-start items-center overflow-hidden 2xl:pb-20">
       <NavBar />
@@ -21,12 +27,12 @@ const FirstSection = () => {
               </span>
               de marketing <br /> y desarrollo web <br /> 360°
             </p>
-            <span className="hidden md:block text-black text-[3.5vw] md:text-3xl font-light">
+            <span className={`hidden md:block text-black text-[3.5vw] md:text-3xl font-light ${!showFullText ? 'truncate' : ''}`}>
               Enfocada en conectarte al mundo digital, trabajos con
               emprendedores y empresarios de todos los niveles;
             </span>
             <div className="md:flex justify-center hidden">
-              <Link href={"/#services"}>
+              <button onClick={handleToggleText}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={50}
@@ -39,7 +45,7 @@ const FirstSection = () => {
                     d="m50 6.667-25 25-25-25L5.833.833 25 20 44.167.833 50 6.667Z"
                   />
                 </svg>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -56,13 +62,13 @@ const FirstSection = () => {
           />
         </div>
         <div className="md:hidden w-full grid place-items-center">
-          <span className="text-black text-[3.5vw] md:text-3xl font-light max-w-screen-xs">
+          <span className={`text-black text-[3.5vw] md:text-3xl font-light max-w-screen-xs ${!showFullText ? 'truncate' : ''}`}>
             Enfocada en conectarte al mundo digital, trabajos con emprendedores
             y empresarios de todos los niveles;
           </span>
         </div>
         <div className="flex justify-center md:hidden">
-          <Link href={"/#services"}>
+          <button onClick={handleToggleText}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width={50}
@@ -75,7 +81,7 @@ const FirstSection = () => {
                 d="m50 6.667-25 25-25-25L5.833.833 25 20 44.167.833 50 6.667Z"
               />
             </svg>
-          </Link>
+          </button>
         </div>
       </div>
     </section>
@@ -83,3 +89,4 @@ const FirstSection = () => {
 };
 
 export default FirstSection;
+

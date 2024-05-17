@@ -9,22 +9,22 @@ const FourthSection = () => {
 
         <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-16">
           <FounderCard
-            img={"/Founder.svg"}
+            img={"/seba.jpeg"}
             name={"El Sebas"}
             profession={"Diseñador Grafico"}
-            description={"Figma ipsum component e variant main layer."}
+            description={""}
           />
           <FounderCard
-            img={"/Founder.svg"}
+            img={"/guille.jpeg"}
             name={"Cabezón"}
             profession={"Programador"}
-            description={"Figma ipsum component e variant main layer."}
+            description={""}
           />
           <FounderCard
-            img={"/Founder.svg"}
+            img={"/ivan.jpeg"}
             name={"Ivan"}
             profession={"Marketing"}
-            description={"Figma ipsum component e variant main layer."}
+            description={""}
           />
         </div>
 

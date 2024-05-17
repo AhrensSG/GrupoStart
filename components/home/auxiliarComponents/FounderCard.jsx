@@ -6,7 +6,7 @@ const FounderCard = ({ img, name, profession, description }) => {
     <div className="flex justify-start items-end h-[435px]">
       <div className="w-60 p-5 flex flex-col justify-start items-center relative bg-white rounded-md shadow-[10px_0px_20px_0.1px_rgba(0,0,0,0.3)]">
         <div className="absolute -top-36">
-          <Image src={img} width={225} height={225} alt="FounderPhoto" />
+          <Image src={img} width={225} height={225} alt="FounderPhoto" className="rounded-full" />
         </div>
 
         <div className="w-48 h-full flex flex-col gap-6 mt-16">
