@@ -6,8 +6,8 @@ const Footer = () => {
   return (
     <footer className="w-full flex flex-col justify-center items-center bg-[#0853FC] py-6 px-2 gap-0">
       <div className="w-full px-12 sm:px-0 flex flex-row flex-wrap justify-start sm:justify-around items-start gap-4">
-        <div className="flex flex-col justify-center items-start gap-2">
-          <span className="text-xl text-white">Seguinos en</span>
+        <div className="flex flex-col justify-center items-start gap-2 md:gap-4 lg:gap-6">
+          <span className="text-xl md:text-xl lg:text-2xl text-white font-bold">Seguinos en</span>
           <div className="flex gap-2 items-center text-white cursor-pointer">
             <Link
               href={"https://www.instagram.com/grupostart.ok/"}
@@ -59,8 +59,8 @@ const Footer = () => {
             <span>LinkedIn</span>
           </div>
         </div>
-        <div className="flex flex-col justify-start items-start gap-2">
-          <span className="text-center w-full text-xl text-white">
+        <div className="flex flex-col justify-start items-start gap-2 md:gap-4 lg:gap-6">
+          <span className="text-center w-full text-xl md:text-xl lg:text-2xl text-white font-bold">
             Contáctanos
           </span>
           <div className="flex gap-2 text-white">
@@ -84,8 +84,10 @@ const Footer = () => {
             <span>+54 3704-619402</span>
           </div>
         </div>
-        <div className="max-w-52 flex flex-col justify-start items-start gap-2">
-          <span className="text-xl text-white">Visitanos</span>
+
+        <div className="max-w-52 flex flex-col justify-start items-start gap-2 md:gap-4 lg:gap-6">
+          <span className="text-xl md:text-xl lg:text-2xl text-white font-bold">Visitanos</span>
+          <Link href="https://www.google.com/maps/place/Hip%C3%B3lito+Yrigoyen+342,+P3600JGA+Formosa,+Argentina" passHref target="_blank" rel="noopener noreferrer">
           <Image
             src={"/Location.svg"}
             width={200}
@@ -93,10 +95,12 @@ const Footer = () => {
             alt="WhatsAppIcon"
             className="cursor-pointer"
           />
+          </Link>
           <span className="text-white">
             Hipólito Yrigoyen 342, P3600JGA Formosa, Argentina{" "}
           </span>
         </div>
+        
       </div>
       <div className="flex flex-col items-center">
         <Link href={"/#home"}>
@@ -105,18 +109,18 @@ const Footer = () => {
             width={180}
             height={120}
             alt="FacebookIcon"
-            className="cursor-pointer"
+            className="cursor-pointer w-40 md:w-60"
           />
         </Link>
         <p className="text-white flex gap-1 items-center justify-center">
           2024 GrupoStart -{" "}
-          <Image
+          {/*<Image
             src={"/Copyright.png"}
             width={24}
             height={24}
             alt="Copyright"
-          ></Image>{" "}
-          Todos los derechos reservados
+  ></Image>*/}{" "}
+          &copy;Todos los derechos reservados
         </p>
       </div>
     </footer>
