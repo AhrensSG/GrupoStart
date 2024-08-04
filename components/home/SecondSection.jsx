@@ -5,7 +5,7 @@ const SecondSection = () => {
   return (
     <section id="services" className="w-full h-full bg-[#0853FC] p-4">
       <div className="w-full h-full flex flex-col items-center gap-6 py-4 pb-8">
-        <h2 className="text-6xl text-white">Nuestros servicios </h2>
+        <h2 className=" my-6 text-5xl text-white font-bold">CONOCÉ NUESTROS SERVICIOS </h2>
         <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-8">
           {/* <ServiceCard
             img={"/services/Jirafe1.svg"}
@@ -30,14 +30,14 @@ const SecondSection = () => {
           />
           <ServiceCard
             img={"/services/Jirafe2.svg"}
-            title={"Desarrollo Web"}
+            title={"Media"}
             description={
-              "Tener tu negocio activo las 24 hs. generándote ingresos es posible. Desarrollamos tu página web personalizada con estrategias de SEO para posicionarte en las búsquedas de google. ¿Buscas algo más simple como un blog o una landing page? No hay problema, nosotros lo hacemos posible."
+                "Permití que nuestros equipo creativo genere las piezas comunicativas de tu negocio. Logra presentarte como profecionalmente y atrevete a nuevas experiencias con nuetro acompañamiento y asesoramiento continuo en el proceso."
             }
             link={"/services/DesktopWebDevelopment"}
-            firstBullet={"Desarrollo propio"}
-            secondtBullet={"Diseño responsive"}
-            thirdtBullet={"Base de datos"}
+            firstBullet={"Identidad de marca (Creamos tu logo)"}
+            secondtBullet={"Creacion de Flyers (Imagenes para redes y mas)"}
+            thirdtBullet={"Redacci"}
             fourthtBullet={"Soporte siempre en contacto con vos"}
           />
 
@@ -45,15 +45,14 @@ const SecondSection = () => {
             img={"/services/Jirafe1.svg"}
             title={"Herramientas Utiles"}
             description={
-              "Preséntate como un verdadero profesional con nuestras tarjetas personales con QR, Incluye:"
+              "Preséntate como un verdadero profesional con nuestras tarjetas personales con QR, Incluye: El Qr direcciona a los interesados en tu producto/servicio a una web donde tendrás una presentación ampliada además de botones con acceso rápido a un chat con vos, tu ubicación en Google maps y todas tus redes sociales"
             }
             link={"/services/DesktopBranding"}
             firstBullet={"Diseño personalizado"}
             secondtBullet={
-              "- El Qr direcciona a los interesados en tu producto/servicio a una landing page donde tendrás una presentación ampliada además de botones de acceso rápido a un chat con vos, tu ubicación en Google maps y tus redes sociales"
+              "Landing page completa"
             }
-            thirdtBullet={"Tarjetería"}
-            fourthtBullet={"Realizamos envíos a todo el país"}
+            thirdtBullet={"Envios a tu domicilio"}
           />
 
           {/* <ServiceCard

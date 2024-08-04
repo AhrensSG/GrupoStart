@@ -12,18 +12,18 @@ const NavBar = () => {
         <Image src="/Logo.png" alt="Logo" width={122} height={81} priority />
       </Link>
 
-      <div className="w-full hidden lg:flex flex-row justify-end items-center gap-4">
+      <div className="w-full hidden lg:flex flex-row justify-end items-center gap-12">
         {/* <Link className="max-w-32 w-full" href={"/experiences"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Experiencias
           </button>
         </Link> */}
 
-        <Link className="max-w-32 w-full" href={"/"}>
+        {/* <Link className="max-w-32 w-full" href={"/"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Inicio
           </button>
-        </Link>
+        </Link> */}
 
         <Link className="max-w-32 w-full" href={"/#services"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
