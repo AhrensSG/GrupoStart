@@ -4,6 +4,7 @@ import FirstSection from "@/components/home/FirstSection";
 import FourthSection from "@/components/home/FourthSection";
 import SecondSection from "@/components/home/SecondSection";
 import ThirdSection from "@/components/home/ThirdSection";
+import InfoViewMore from "@/components/home/auxiliarEstaticComp/InfoViewMore"
 import Image from "next/image";
 
 export default function Home() {
@@ -13,7 +14,8 @@ export default function Home() {
       <SecondSection />
       <ThirdSection />
       <FourthSection />
-      <section className="w-full h-screen relative">
+      <InfoViewMore />
+      {/*<section className="w-full h-screen relative">
         <Image
           src={"/ContactSection.png"}
           fill
@@ -24,7 +26,7 @@ export default function Home() {
           priority={true}
           quality={100}
         />
-      </section>
+  </section>*/}
       <Footer />
     </main>
   );

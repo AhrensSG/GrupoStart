@@ -6,6 +6,7 @@ const Footer = () => {
   return (
     <footer className="w-full flex flex-col justify-center items-center bg-[#0853FC] py-6 px-2 gap-0">
       <div className="w-full px-12 sm:px-0 flex flex-row flex-wrap justify-start sm:justify-around items-start gap-4">
+        {/*Redes*/}
         <div className="flex flex-col justify-center items-start gap-2 md:gap-4 lg:gap-6">
           <span className="text-xl md:text-xl lg:text-2xl text-white font-bold">Seguinos en</span>
           <div className="flex gap-2 items-center text-white cursor-pointer">
@@ -56,9 +57,15 @@ const Footer = () => {
               alt="FacebookIcon"
               className="cursor-pointer"
             />
+            <Link
+              href={"https://www.linkedin.com/"}
+              target="_blank"
+              >
             <span>LinkedIn</span>
+            </Link>
           </div>
         </div>
+        {/*Contacto*/}
         <div className="flex flex-col justify-start items-start gap-2 md:gap-4 lg:gap-6">
           <span className="text-center w-full text-xl md:text-xl lg:text-2xl text-white font-bold">
             Contáctanos
@@ -84,7 +91,7 @@ const Footer = () => {
             <span>+54 3704-619402</span>
           </div>
         </div>
-
+        {/*Ubicacion*/}
         <div className="max-w-52 flex flex-col justify-start items-start gap-2 md:gap-4 lg:gap-6">
           <span className="text-xl md:text-xl lg:text-2xl text-white font-bold">Visitanos</span>
           <Link href="https://www.google.com/maps/place/Hip%C3%B3lito+Yrigoyen+342,+P3600JGA+Formosa,+Argentina" passHref target="_blank" rel="noopener noreferrer">
@@ -102,6 +109,7 @@ const Footer = () => {
         </div>
         
       </div>
+      {/*Logo y Derechos*/}
       <div className="flex flex-col items-center">
         <Link href={"/#home"}>
           <Image
