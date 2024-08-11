@@ -14,7 +14,7 @@ export default function Home() {
       <SecondSection />
       <ThirdSection />
       <FourthSection />
-      <InfoViewMore />
+      <InfoViewMore  />
       {/*<section className="w-full h-screen relative">
         <Image
           src={"/ContactSection.png"}

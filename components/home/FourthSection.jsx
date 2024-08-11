@@ -1,5 +1,6 @@
 import React from "react";
 import FounderCard from "./auxiliarComponents/FounderCard";
+import Link from "next/link";
 //import Image from "next/image";
 //import InfoViewMore from "../home/auxiliarEstaticComp/InfoViewMore";
 
@@ -15,7 +16,7 @@ const FourthSection = () => {
             name={"El Sebas"}
             profession={"Diseñador Grafico"}
             description={""}
-            className="rounded-full border-80 img-border-blue-500"
+            imgClassName="rounded-full border-3 border-blue-500"
           />
           {/*<FounderCard
             img={"/guille.jpeg"}
@@ -33,6 +34,7 @@ const FourthSection = () => {
 
         <div className="w-full flex flex-col justify-center items-center py-6 gap-8">
           <div>
+            <Link href="/about">
             <button className="flex flex-row gap-2 items-center justify-center bg-[#0853FC] p-1 px-10 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +50,7 @@ const FourthSection = () => {
               </svg>
               Sobre Nosotros
             </button>
+            </Link>
           </div>
           {/*<span className="text-3xl font-normal tracking-wider">
             ! Somos el futuro de tu proyecto !

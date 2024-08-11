@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import NavBar from "../navbar/NavBar";
+import NavBarV2 from "../navbar/NavBarV2";
 import Footer from "../footer/Footer";
 import { Toaster } from "sonner";
 import GlobalContext from "@/app/context/GlobalContext";
@@ -23,7 +23,8 @@ const DesktopTemplate = ({
       />
       <section>
         <div className="bg-[#0853FC] from-slate-100 w-full h-[100vh] flex flex-col relative mb-1">
-          <NavBar />
+          <NavBarV2 />
+
           <div className="w-full h-full flex flex-col justify-center items-center my-1">
             {/*Text*/}
 
@@ -56,10 +57,10 @@ const DesktopTemplate = ({
                 style={{ position: 'absolute', top: 0, left: 0 }}
               />
             </div>*/}
+          
+          
           </div>
         </div>
-
-
       </section>
 
       {/*Text Personalized*/}
