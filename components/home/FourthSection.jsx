@@ -10,13 +10,12 @@ const FourthSection = () => {
       <div className="w-full h-full flex flex-col items-center gap-6 py-4">
         <h2 className="text-5xl xs:text-5xl text-white font-extrabold">Fundadores</h2>
 
-        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-16">
+        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[575px] sm:gap-16 pt-[17px]" >
           <FounderCard
             img={"/seba.jpeg"}
             name={"El Sebas"}
             profession={"Diseñador Grafico"}
             description={""}
-            imgClassName="rounded-full border-3 border-blue-500"
           />
           {/*<FounderCard
             img={"/guille.jpeg"}
@@ -33,7 +32,7 @@ const FourthSection = () => {
         </div>
 
         <div className="w-full flex flex-col justify-center items-center py-6 gap-8">
-          <div>
+          <div className="relative md:-top-[108px] sm:-top-[34px]">
             <Link href="/about">
             <button className="flex flex-row gap-2 items-center justify-center bg-[#0853FC] p-1 px-10 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
               <svg

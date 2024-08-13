@@ -8,21 +8,21 @@ const FounderCard = ({ img, name, profession, description }) => {
         <div className="absolute -top-36">
           <Image
           src={img}
-          width={225}
+          width={328}
           height={225}
           alt="FounderPhoto"
-          className="rounded-full !border-[#0853FC]"
+          className="rounded-full !border-[#FFFFFF]"
           style={{ borderColor: '!important', borderWidth: 5 }}
           />
         </div>
 
-        <div className="w-48 h-full flex flex-col gap-6 mt-16">
+        <div className="w-48 h-full flex flex-col mt-16 pt-[13px] top-[13px] ">
           <div className="flex flex-col text-center">
-            <h4 className="text-3xl md:text-2xl lg:text-4xl text-xl font-medium">{name}</h4>
-            <span className="text text-1xl md:text-2xl font-light">{profession}</span>
+            <h4 className="text-3xl md:text-2xl lg:text-4xl text-xl font-medium ">{name}</h4>
+            <span className="text text-1xl md:text-2xl font-light pt-[24px]">{profession}</span>
           </div>
           <span>{description}</span>
-          <div className="flex flex-row justify-between items-center gap-4">
+          <div className="flex flex-row justify-between items-center gap-[14px] pt-[24px]">
             <Image
               src={"/WspIcon.svg"}
               width={45}
