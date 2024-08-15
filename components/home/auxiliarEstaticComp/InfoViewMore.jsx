@@ -1,10 +1,11 @@
 import Image from "next/image";
 import React from "react";
+import Link from "next/link";
 
 const InfoViewMore = () => {
     return (
-    <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white">
-    <div className="container flex flex-col md:flex-row w-full">    
+    <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+    <div className="container flex flex-col md:flex-row w-full">
     {/*Image*/}
     <div className="w-full md:w-1/2">
         <Image
@@ -20,11 +21,19 @@ const InfoViewMore = () => {
         <br />
     {/*Text*/}
     <div className="w-full md:w-1/2 relative flex flex-col items-center justify-center">
-        <h1 className="text-4xl font-bold mb-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl">La Era de las Redes Sociales</h1>
-        <span className="text text-lg mb-3 text-center text-3xl  leading-relaxed tracking-wide">
-        Actualmente vivimos en la era de las redes, quien trajo consigo un sin fin de oportunidades para todos los negocios, permítenos ayudarte a implementar estrategias que ayudarán a tu proyecto alcanzar el siguiente nivel.
+        <h1 className="text-4xl font-bold mb-[28px] text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl">La Era de las Redes Sociales</h1>
+        <span className="text text-lg mb-[40px] text-center text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
+        La era de las redes sociales fue un<br />
+        verdadero Tsunami para el marketing tradicional<br />
+        ¿Estás preparado para surfear la ola?<br />
+        No te quedes debajo de ella, puede ser peligroso,<br />
+        además surfearla es mucho más divertido.
         </span>
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded item-center flex flex-row gap-2 items-center justify-center p-1 px-10 text-white text-2xl hover:bg-[#0853FC] hover:text-white font-medium duration-300">Ver más</button>
+
+        <Link href="/services/DesktopTemplate">
+        <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-center flex flex-row gap-2 items-center justify-center p-1 px-10 text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">Más Info</button>
+        </Link>
+    
     </div>
     </div>
     {/*Ola*/}

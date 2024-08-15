@@ -5,8 +5,8 @@ const SecondSection = () => {
   return (
     <section id="services" className="w-full h-full bg-[#0853FC] p-4">
       <div className="w-full h-full flex flex-col items-center gap-6 py-4 pb-8">
-        <h2 className=" my-6 text-5xl text-white font-bold">CONOCÉ NUESTROS SERVICIOS </h2>
-        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-8">
+        <h2 className=" mt-[43px] text-2xl sm:text-2xl md:text-5xl text-white font-bold pb-[17px]">CONOCÉ NUESTROS SERVICIOS </h2>
+        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-[77px]">
           {/* <ServiceCard
             img={"/services/Jirafe1.svg"}
             title={"Analizamos tu negocio"}
@@ -42,7 +42,7 @@ const SecondSection = () => {
           />
 
           <ServiceCard
-            img={"/services/Jirafe1.svg"}
+            img={"/services/Jirafe12.svg"}
             title={"Herramientas Utiles"}
             description={
               "Preséntate como un verdadero profesional con nuestras tarjetas personales con QR, Incluye: El Qr direcciona a los interesados en tu producto/servicio a una web donde tendrás una presentación ampliada además de botones con acceso rápido a un chat con vos, tu ubicación en Google maps y todas tus redes sociales"

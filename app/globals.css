@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+
+/* Agregamos la fuente Segoe UI */
+@font-face {
+  font-family: 'Segoe UI';
+  src: url('https://fonts.gstatic.com/s/segoeui/v14/segoeui-regular.woff2') format('woff2'), url('https://fonts.gstatic.com/s/segoeui/v14/segoeui-regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 html {
   scroll-behavior: smooth;
+
+  /* Aplicamos la fuente Segoe UI a todo el documento */
+  font-family: 'Segoe UI';
 }

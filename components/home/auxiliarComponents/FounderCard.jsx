@@ -11,7 +11,7 @@ const FounderCard = ({ img, name, profession, description }) => {
           width={328}
           height={225}
           alt="FounderPhoto"
-          className="rounded-full !border-[#FFFFFF]"
+          className="rounded-full !border-[#0853FC]"
           style={{ borderColor: '!important', borderWidth: 5 }}
           />
         </div>

@@ -78,7 +78,12 @@ const Footer = () => {
               alt="WhatsAppIcon"
               className="cursor-pointer"
             />
+            {/*<Link
+            href={"https://mail.google.com/mail/?view=cm&fs=1&to=grupostartfsa@gmail.com"}
+            target="_blank"
+            rel="noopener noreferrer">*/}
             <span>grupostartfsa@gmail.com</span>
+  
           </div>
           <div className="flex gap-2 text-white">
             <Image
@@ -88,7 +93,14 @@ const Footer = () => {
               alt="WhatsAppIcon"
               className="cursor-pointer"
             />
+            <Link href="tel:+543704619402"
+            /*
+              href={`https://wa.me/+543704619402`}
+              target="_blank"
+              rel="noopener noreferrer" */
+            >
             <span>+54 3704-619402</span>
+            </Link>
           </div>
         </div>
         {/*Ubicacion*/}
