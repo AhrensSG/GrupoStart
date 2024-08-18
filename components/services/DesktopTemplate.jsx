@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import NavBarV2 from "../navbar/NavBarV2";
 import Footer from "../footer/Footer";
+import Carrousel from "../carrousel/Carrousel";
 import { Toaster } from "sonner";
 import GlobalContext from "@/app/context/GlobalContext";
 
@@ -14,12 +15,6 @@ const DesktopTemplate = ({
   footerImg = "/services/FooterJirafe1.svg",
 }) => {
 
-    // Define carrousel image constants
-  const carrouselImages = [
-    { src: "/lote1.png", alt: "Clients1" },
-    { src: "/lote2.png", alt: "Clients2" },
-    // ... Add more image objects
-  ];
 
   return (
     <main className="bg-slate-100 w-full h-full">
@@ -103,8 +98,8 @@ const DesktopTemplate = ({
         </div>
 
         {/*Carrusel*/}
-        <div className="relative overflow-x-hidden">
-      <div className="flex scroll-snap-x scroll-snap-mandatory gap-4">
+        {/*<div className="relative overflow-x-hidden">
+        <div className="flex scroll-snap-x scroll-snap-mandatory gap-4">
         {carrouselImages.map((image) => (
           <div key={image.alt} className="w-full">
             <Image
@@ -119,12 +114,14 @@ const DesktopTemplate = ({
             />
           </div>
         ))}
-      </div>
-</div>
+        </div>
+        </div>*/}
+        <Carrousel />
       </section>
+
       {/*Init Section*/}
-      <section>
-      <div className="container flex flex-col md:flex-row w-full">
+      <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+      <div className="flex flex-col md:flex-row w-full p-6">
     {/*Image*/}
     {/*<div className="w-full md:w-1/2">
         <Image
@@ -168,7 +165,7 @@ const DesktopTemplate = ({
 
       {/*Create contents*/}
       <section>
-      <div className="container flex flex-col md:flex-row w-full">
+      <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
     {/*Image*/}
     <div className="w-full md:w-1/2">
         <Image
@@ -183,14 +180,14 @@ const DesktopTemplate = ({
     </div>
         <br />
     {/*Text*/}
-    <div className="w-full md:w-1/2 relative flex flex-col items-center justify-center">
-        <span className="text-4xl font-bold mb-[28px] text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl">
+    <div className="w-full md:w-1/2 relative flex flex-col items-center justify-center text-center">
+        <span className="text-4xl font-bold mb-[28px] text-[#FFFFFF] text-end md:text-4xl lg:text-5xl">
           Creamos los<br />
           contenidos<br />
           estratégicos<br />
           que atraen
           </span>
-        <span className="text text-lg mb-[40px] text-center text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
+        <span className="font-bold mb-[40px] text-[#FB8A00] text-end text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16">
         y conectan con<br />
         tu audiencia<br />
         </span>
@@ -201,7 +198,7 @@ const DesktopTemplate = ({
       </section>
 
       {/*MAPConcept */}
-      <section className="bg-[#0051FF] text-white p-6 rounded-lg">
+      <section className="bg-[#0051FF] text-white p-6">
         {/*Title*/}
         <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
         <h2 className="text-[#FFFFFF] font-semibold mt-4 ">Contratas a Start, contratas un equipo<br />
@@ -213,12 +210,12 @@ const DesktopTemplate = ({
         <aside className="flex flex-between justify-center items-center">
             
             <div className="info-container row">
-                <div className="item-center">
+                <div className="item-center justify-center text-center">
                     <span className="person-icon [#FB8A00]">👤</span>
                     <span>Project Manager</span>
                 </div>
 
-              <div className="rounded-full bg-[#0853FC] relative object-center flex justify-center !border-[#FFFFFF]" style={{ borderColor: '!important', borderWidth: 3 }}>
+              <div className="!rounded-full bg-[#0853FC] relative object-center flex justify-center item-center text-center !border-[#FFFFFF]" style={{ borderColor: '!important', borderWidth: 3 }}>
               <p className="text-3xl font-bold items-center text-center">360°</p>
               </div>
 
@@ -247,8 +244,8 @@ const DesktopTemplate = ({
                     <span>Creativo Publicitario</span>
                 </div>
             </div>
-            <div className="items-center justify-center text-center">
-              <span className="text-[#FB8A00] font-light text-2xl md:text-3xl lg:text-4xl pb-[53px] pt-[17px]">Contarás con un equipo con un mínimo de 7 personas.</span>
+            <div className="items-center justify-center text-center flex">
+              <span className="text-[#FB8A00] font-light text-2xl md:text-3xl lg:text-4xl pb-[53px] pt-[17px] text-end">Contarás con un equipo con un mínimo de 7 personas.</span>
             </div>
         </aside>
         

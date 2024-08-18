@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const InfoViewMore = () => {
     return (
-    <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
-    <div className="container flex flex-col md:flex-row w-full">
+    <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white">
+    <div className="flex flex-col md:flex-row w-full sm:pb-[500px]">
     {/*Image*/}
     <div className="w-full md:w-1/2">
         <Image
