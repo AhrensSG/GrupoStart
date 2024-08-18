@@ -32,7 +32,7 @@ const Carrousel = () =>  {
         <button onClick={goPreview} className="absolute top-1/2 left-16 transform -translate-y-1/2 text-[#FB8A00] bg-transparent focus:outline-none focus:ring-gray-300 font-extrabold md:text-[100px] px-6 py-4.5">
         &#10094;
         </button>
-        <div className="flex gap-3 overflow-x-auto items-center justify-center" >
+        <div className="flex gap-4 overflow-x-auto items-center justify-center" >
             {
                 vistaImage.map((image, index) => (
                     <div key={index} className="w-48 h-48">
