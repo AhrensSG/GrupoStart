@@ -24,13 +24,12 @@ const DesktopTemplate = ({
         expand={false}
       />
       <section>
-        <div className="bg-[#0853FC] from-slate-100 w-full h-[100vh] flex flex-col relative">
-          <NavBarV2 />
-
-          </div>
+        <header className="bg-[#0853FC] from-slate-100 w-full h-auto flex flex-col relative">
+          <NavBarV2/>
+          </header>
       </section>
       {/*Plans*/}
-      <section className="py-16 px-4 w-full">{children}</section>
+      <section className="w-full">{children}</section>
       {/*Foot Bg*/}
       <section className="relative max-w-[100vw] w-full h-screen">
         <Image
