@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "../servicesV2/carrousel/Carousel";
+import DesktopBrandingSection from "@/components/services/auxiliarComponents/DesktopBrandingSection";
 
 const Branding = () => {
   const { data } = useContext(Context);
@@ -294,6 +295,9 @@ return (
             </span>
           </div>
           </section>
+
+          {/*PlanCard*/}
+          <DesktopBrandingSection />
 
           {/*Section 8*/}
           <section className="bg-[#0051FF] text-white p-6">

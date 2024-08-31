@@ -1,12 +1,39 @@
 "use client";
-import React from "react";
-import CheckSpan from "./reusableComponents/CheckSpan";
+
+import { Context } from "@/app/context/GlobalContext";
+import { addProductToCart } from "@/app/context/actions";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import { Context } from "@/app/context/GlobalContext";
+import React, { useContext } from "react";
 import { toast } from "sonner";
-import { addProductToCart } from "@/app/context/actions";
+
+const PlanCard = ({ title, features, price, onButtonClick }) => {
+  return (
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg py-[10px] px-[30px] border border-gray-300 leading-8">
+      <div className="items-center justify-center text-center pt-5 pb-[35px]">
+      <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white py-2 px-6">{title}</span>
+      </div>
+      <ul className="list-none pl-5 mt-4 items-center justify-center text-center"> {/* Changed list style for spacing */}
+        {features.map((feature, index) => (
+          <li key={index} className="flex items-center text-center justify-center mb-4">
+            {feature}
+            {index === 1 && <span className="feature-spaced" />}
+          </li>
+        ))}
+      </ul>
+      <br />
+      <div className="static flex flex-static items-end justify-center text-center mb-[5px]">
+      <button
+        onClick={onButtonClick}
+        className="static bottom-5 bg-[#0853FC] hover:bg-blue-700 text-white font-light py-[8px] px-2 rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-3xl"
+      >
+        Comprar
+      </button>
+      </div>
+    </div>
+  );
+};
 
 const DesktopBrandingSection = () => {
   const { state, dispatch } = useContext(Context);
@@ -16,7 +43,7 @@ const DesktopBrandingSection = () => {
     const data = {
       id,
       name,
-      description: "Servicio gestion de redes",
+      description: "Servicio Herramientas Útiles",
       price,
       items: 1,
       productType: "pack",
@@ -31,123 +58,46 @@ const DesktopBrandingSection = () => {
   };
 
   return (
-    <div>
-      <div className="w-full h-full flex flex-col justify-start items-center gap-16">
-        <div className="w-full flex flex-col justify-center items-center gap-8">
-          <h2 className="text-4xl font-medium text-[#0853FC] text-center">
-            ¡Preséntate como un verdadero profesional!
-          </h2>
-          <p className="max-w-[50%] text-center text-2xl font-medium">
-            Innovamos la forma en la que te presentas con tus clientes,{" "}
-            <span className="text-[#0853FC]">
-              el QR que agregamos a tu tarjeta esta enlazado a una landing page
-              tuya
-            </span>
-            , para mantenerla activa elegí el paquete que mas te convenga
-          </p>
-        </div>
-        <div className="w-full flex flex-col justify-center items-center gap-8">
-          <h3 className="text-4xl font-medium text-[#0853FC] text-center">
-            Conoce las opciones disponibles
-          </h3>
-        </div>
-        <div className="w-full flex flex-wrap items-center justify-center gap-4">
-          {/* CARD */}
-          <div className="hover:drop-shadow-2xl duration-500 w-full bg-white rounded-md drop-shadow-lg max-w-72 min-h-[484px]">
-            <div className="w-full flex flex-col justify-between items-center gap-6 p-4">
-              <div className="w-full space-y-4">
-                <div className="w-full flex flex-col justify-center items-center gap-4">
-                  <h3 className="text-xl font-medium">PACK 1</h3>
-                  <span className="text-4xl font-medium">$ 12.000</span>
-                  <span className="text-lg text-center text-[#FB8A00]">
-                    + Suscripción mensual
-                    <br />
-                    $500
-                  </span>
-                </div>
-                <div className="flex flex-col justify-center items-start gap-3">
-                  <CheckSpan title="50 Tarjetas con QR único" />
-                  <CheckSpan title="Landing page con botones de acceso directo" />
-                  <CheckSpan title="Descripción personaliza" />
-                  <CheckSpan title="Diseño personalizado" />
-                  <CheckSpan title="Carrusel de imagenes" />
-                </div>
-              </div>
-              <button
-                onClick={() => handleBuyNow(15, "Pack 1", 12000)}
-                className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white"
-              >
-                COMPRAR
-              </button>
-            </div>
-          </div>
-          <div className="hover:drop-shadow-2xl duration-500 w-full bg-white rounded-md drop-shadow-lg max-w-72 min-h-[484px]">
-            <div className="w-full flex flex-col justify-between items-center gap-6 p-4">
-              <div className="w-full space-y-4">
-                <div className="w-full flex flex-col justify-center items-center gap-4">
-                  <h3 className="text-xl font-medium">PACK 2</h3>
-                  <span className="text-4xl font-medium">$ 23.000</span>
-                  <span className="text-lg text-center text-[#FB8A00]">
-                    + Suscripción Anual
-                    <br />
-                    <br />
-                  </span>
-                </div>
-                <div className="flex flex-col justify-center items-start gap-3">
-                  <CheckSpan title="100 Tarjetas con QR único" />
-                  <CheckSpan title="Landing page con botones de acceso directo" />
-                  <CheckSpan title="Descripción personaliza" />
-                  <CheckSpan title="Diseño personalizado" />
-                  <CheckSpan title="Carrusel de imagenes" />
-                </div>
-              </div>
-              <button
-                onClick={() => handleBuyNow(16, "Pack 2", 23000)}
-                className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white"
-              >
-                COMPRAR
-              </button>
-            </div>
-          </div>
-          <div className="hover:drop-shadow-2xl duration-500 w-full bg-white rounded-md drop-shadow-lg max-w-72 min-h-[484px]">
-            <div className="w-full flex flex-col justify-between items-center gap-6 p-4">
-              <div className="w-full space-y-4">
-                <div className="w-full flex flex-col justify-center items-center gap-4">
-                  <h3 className="text-xl font-medium">PACK 3</h3>
-                  <span className="text-4xl font-medium">$ 46.000</span>
-                  <span className="text-lg text-center text-[#FB8A00]">
-                    + Suscripción vitalica
-                    <br />
-                    <br />
-                  </span>
-                </div>
-                <div className="flex flex-col justify-center items-start gap-3">
-                  <CheckSpan title="150 Tarjetas con QR único" />
-                  <CheckSpan title="Landing page con botones de acceso directo" />
-                  <CheckSpan title="Descripción personaliza" />
-                  <CheckSpan title="Diseño personalizado" />
-                  <CheckSpan title="Carrusel de imagenes" />
-                </div>
-              </div>
-              <button
-                onClick={() => handleBuyNow(17, "Pack 3", 46000)}
-                className="bg-[#FB8A00] p-2 px-4 rounded-tl-xl rounded-br-xl text-white"
-              >
-                COMPRAR
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="w-full flex flex-col justify-center items-center gap-12">
-          <Link href={"/services/CustomizedBrandingPlan"}>
-            <button className="text-[#FB8A00] text-xl border border-[#FB8A00] p-2 px-6 bg-white rounded-tl-xl rounded-br-xl shadow-[#FB8A00] shadow-md hover:shadow-lg hover:shadow-[#FB8A00] duration-300">
-              Quiero mi pack Personalizado
-            </button>
-          </Link>
-          <span className="text-4xl font-medium text-[#0853FC] text-center">
-            ¡Te lo enviamos a donde estés!
-          </span>
-        </div>
+    <div className="p-8 mx-auto static" style={{ background: '#0853FC' }}>
+      <div className="items-center justify-center text-center py-12">
+      <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#FFFFFF] text-[#FB8A00] py-3 px-[100px]">Packs de tarjetas</span>
+      </div>
+      <div className="grid-container grid grid-cols-3 gap-[74px] px-[185px]">
+      <PlanCard
+        title="Pack 1"
+        features={[
+        'Diseño personalizado: foto, colores, letras y logo',
+        'Landing page con descripción de tu negocio, botones de acceso directo a Whatsapp, Google maps y todas tus redes sociales',
+        'Posicionamiento SEO en internet',
+        '50 tarjetas full color doble face'
+        ]}
+        price={{ original: 0, discount: 0 }}
+        onButtonClick={() => handleBuyNow(2, "Plan Pack 1", 0)}
+        />
+        <PlanCard
+          title="Pack 2"
+          className="pb-2"
+          features={[
+          'Diseño personalizado: foto, colores, letras y logo',
+          'Landing page con descripción de tu negocio, botones de acceso directo a Whatsapp, Google maps y todas tus redes sociales',
+          'Posicionamiento SEO en internet',
+          '100 tarjetas full color doble face'
+          ]}
+          price={{ original: 0, discount: 0 }}
+          onButtonClick={() => handleBuyNow(3, "Plan Pack 2", 0)}
+        />
+        <PlanCard
+          title="Pack 3"
+          features={[
+          'Diseño personalizado: foto, colores, letras y logo',
+          'Landing page con descripción de tu negocio, botones de acceso directo a Whatsapp, Google maps y todas tus redes sociales',
+          'Posicionamiento SEO en internet',
+          '200 tarjetas full color doble face'
+          ]}
+          style={{ marginBottom: '30px'}}
+          price={{ original: 0, discount: 0 }}
+          onButtonClick={() => handleBuyNow(4, "Plan Pack", 0)}
+        />
       </div>
     </div>
   );

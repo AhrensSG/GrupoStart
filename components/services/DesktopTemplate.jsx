@@ -30,7 +30,8 @@ const DesktopTemplate = ({
       </section>
       {/*Plans*/}
       <section className="w-full">{children}</section>
-      {/*Foot Bg*/}
+      {/*
+      {/*Foot Bg
       <section className="relative max-w-[100vw] w-full h-screen">
         <Image
           src={footerImg}
@@ -39,7 +40,7 @@ const DesktopTemplate = ({
           quality={100}
           className="object-cover object-top"
         />
-      </section>
+      </section>*/}
       <Footer />
     </main>
   );

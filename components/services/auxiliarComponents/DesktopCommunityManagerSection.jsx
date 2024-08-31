@@ -116,16 +116,6 @@ const DesktopCommunityManagerSection = () => {
           onButtonClick={() => handleBuyNow(4, "Plan Social Pro", 110000)}
         />
       </div>
-      <div className="text-center mt-8">
-        <button className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-3xl">
-          Plan Personalizado
-        </button>
-      </div>
-      <div className="text-center justify-center items-center py-[5px]">
-      <span className="text-center justify-center items-center text-md py-[26px] ">
-        Elegí todo lo que quieras para tus redes sin límites para lograr el éxito!
-      </span>
-      </div>
     </div>
   );
 };

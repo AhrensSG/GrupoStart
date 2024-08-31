@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "../servicesV2/carrousel/Carousel";
+import DesktopWebDevelopmentSection from "@/components/services/auxiliarComponents/DesktopWebDevelopmentSection";
 
 const Media = () => {
   const { data } = useContext(Context);
@@ -169,10 +170,13 @@ return (
               </svg>
             </div>
           </section>
+
+          {/*PlanCard*/}
+          <DesktopWebDevelopmentSection />
     
           {/*Section 4*/}
-          <section>
-            <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
+          <section className="relative bg-[#FFFFFF]">
+            <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
               {/* Image */}
               <div className="w-full md:w-1/2 pl-[120px] mx-2">
                 <Image
@@ -187,50 +191,60 @@ return (
               </div>
               <br />
               {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center">
-                <span className="text-4xl font-bold mb-[2px] text-[#FFFFFF] text-end md:text-4xl lg:text-5xl pr-16">
-                  Creamos los<br />
-                  contenidos<br />
-                  estratégicos<br />
-                  que atraen
+              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
+                <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
+                ¿Cómo deben ser<br/>
+                los flyers publicitarios?
                 </span>
-                <span className="font-bold mb-[40px] text-[#FB8A00] text-end text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
-                  y conectan con<br />
-                  tu audiencia<br />
+                <br/>
+                <span className="font-light mb-[40px] text-black text-end text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
+                Estos son un instrumento muy poderoso<br/>
+                para hacer publicidad y fortalecer tu marca,<br/>
+                es necesario contar con diseños apropiados<br/>
+                que tengan mensajes directos y precisos.<br/>
+                <br/>
+                5 objetivos para comunicar efectivamente:<br/>
+                1 Mensaje claro 2 Titulos llamativos<br/>
+                3 Imágenes adecuadas 4 Diseño disruptivo<br/>
+                5 Orden, equilibro y resaltar lo importante
                 </span>
+                <Link href="/">
+                  <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+                    Quiero contratar
+                  </button>
+                </Link>
               </div>
             </div>
           </section>
 
-                {/* Section 5 */}
-          <section className="relative bg-grey-700 flex flex-col justify-center items-center">
-            <div className="text-center mt-[-230px]">
-                <span className="text text-4xl font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
+                {/*Section 5*/}
+          <section className="relative bg-[#FFFFFF] flex flex-col justify-center items-center py-6">
+            <div className="text-center my-3">
+                <span className="text text-4xl font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative">
                   Anotamos tus ideas, las funcionamos<br />
                   con otras para formar un guión
                 </span>
               </div>
               {/* Overlap the wave with the image */}
-              <div className="relative justify-center items-center object-center flex flex-col grid place-items: center z-10">
+              <div className="relative justify-center items-center object-center flex flex-col grid place-items: center">
                 <Image
-                  src={"/services/Jirafe5.svg"}
-                  width={270}
+                  src={"/services/Jirafe1.svg"}
+                  width={370}
                   height={300}
                   quality={100}
                   style={{
-                  zIndex: 15,
                   position: 'relative',
-                  top: -260,
-                  bottom: -200,
+                  top: 0,
+                  bottom: 10,
                   left: '50%',
                   transform: 'translateX(-50%)' }}
                 />
               </div>
           </section>
 
-                    {/*Section 6*/}
-                <section>
-            <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
+                {/*Section 6*/}
+            <section>
+            <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
               {/* Image */}
               <div className="w-full md:w-1/2 pl-[120px] mx-2">
                 <Image
@@ -245,13 +259,14 @@ return (
               </div>
               <br />
               {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center">
-                <span className="text-4xl font-bold mb-[2px] text-[#FFFFFF] text-end md:text-4xl lg:text-5xl pr-16">
+              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
+                <span className="text-5xl font-bold mb-[2px] text-[#FB8A00] text-end">
                   La importancia<br />
                   de un guión para<br />
                   tu video
                 </span>
-                <span className="font-bold mb-[40px] text-[#FB8A00] text-end text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
+                <br/>
+                <span className="font-light mb-[40px] text-black text-end text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
                     La idea junto al guión<br />
                     son el pilar de cualquier<br />
                     pieza audiovisual, ya sea<br/>
@@ -262,7 +277,7 @@ return (
 
                 </span>
                 <Link href="/">
-                  <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+                  <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-medium py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-3xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
                     Contratar
                   </button>
                 </Link>
@@ -271,7 +286,7 @@ return (
           </section>
     
                 {/* Section 7 */}
-        <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+        <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px] pt-[100px] pb-[-200px]">
           <div className="flex flex-col md:flex-row w-full p-6">
             {/* Image */}
             {/* <div className="w-full md:w-1/2">
@@ -287,7 +302,8 @@ return (
             </div> */}
     
          {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[80px] mx-2">
+              <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[80px] mx-2 z-15" style={{ 
+                    zIndex: 15}} >
               <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-start text-2xl md:text-4xl lg:text-5xl justify-start">
                   Creamos<br />
                   la historia<br />
@@ -302,7 +318,8 @@ return (
                 </span>
     
                 <Link href="/">
-                  <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+                  <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-16 object-cover" style={{ 
+                    zIndex: 15}} >
                     Contratar
                   </button>
                 </Link>
@@ -329,15 +346,15 @@ return (
             </div>
     
             {/* Ola */}
-            <div className="absolute w-full justify-end overflow-hidden bottom-0">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-auto">
+            <div className="absolute w-full justify-end overflow-hidden bottom-0 z-10">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-auto top-[-30px] z-10">
                 <path fill="#0853FC" fill-opacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
               </svg>
             </div>
           </section>
 
           {/*Section 8*/}
-          <section className="bg-[#0051FF] text-white p-6">
+          <section className="bg-[#0051FF] text-white pt-[90px] pb-10">
           <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
               {/* Image */}
               <div className="w-full md:w-1/2 pl-[120px] mx-2">
@@ -354,13 +371,13 @@ return (
               <br />
               {/* Text */}
               <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center">
-                <span className="text-4xl font-bold mb-[2px] text-[#FFFFFF] text-end md:text-4xl lg:text-5xl pr-16">
+                <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl pr-16">
                   Añadimos<br />
                   efectos<br />
                   llamativos<br />
                   a los videos
                 </span>
-                <span className="font-bold mb-[40px] text-[#FB8A00] text-end text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
+                <span className="font-light mb-[40px] text-[#FFFFFF] text-end text-3xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
                   Cientos de efectos y<br />
                   transcisiones creadas<br />
                   por los profesionales<br/>
@@ -372,16 +389,18 @@ return (
               </div>
             </div>
             {/* Title */}
-            <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
-              <h2 className="text-[#FFFFFF] font-semibold mt-4">
+            <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl pt-12">
+              <h2 className="text-[#FFFFFF] font-semibold mt-4 pb-6">
                 ¿Estas dispuesto a invertir para mejorar<br />
                 el contenido de tu negocio?
               </h2>
             </div>
         <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px]">
+            <Link href="/">
         <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
                 Hablá con un asesor
         </button>
+            </Link>
         </div>
           </section>
     </aside>

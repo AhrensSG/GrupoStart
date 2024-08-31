@@ -5,6 +5,8 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "../servicesV2/carrousel/Carousel";
+import DesktopCommunityManagerSection from "@/components/services/auxiliarComponents/DesktopCommunityManagerSection";
+import Forms from "../servicesV2/formulario/Forms";
 
 const CommunityManager = () => {
   const { data } = useContext(Context);
@@ -320,6 +322,12 @@ const CommunityManager = () => {
     </div>
       </section>
 
+      {/*PlanCards*/}
+      <DesktopCommunityManagerSection />
+
+      {/*Formulario*/}
+      <Forms />
+
       {/*Section FootSuperior*/}
       <section className="w-full">
         <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
@@ -336,8 +344,8 @@ const CommunityManager = () => {
               style={{ 
                 zIndex: 15, 
                 position: 'relative',
-                top: 100,
-                bottom: -200,
+                top: 60,
+                bottom: -50,
                 left: '50%',
                 transform: 'translateX(-50%)' }}
             />
