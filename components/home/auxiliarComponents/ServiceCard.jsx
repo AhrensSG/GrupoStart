@@ -22,7 +22,7 @@ const ServiceCard = ({
         </div>
         <div className="w-full h-full flex flex-col gap-4 justify-between mt-16">
           <div className="flex flex-col gap-3">
-            <h3 className="text-center text-white text-2xl font-bold">{title}</h3>
+            <span className="text-center text-white text-2xl font-bold rounded-medium rounded-tl-xl rounded-br-xl bg-[#FB8A00]" style={{zIndex: 15, top: -25}}>{title}</span>
             <p className="text-justify text-white text-sm font-medium">
               {description}
             </p>

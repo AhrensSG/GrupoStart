@@ -37,8 +37,8 @@ const SecondSection = () => {
             link={"/services/DesktopWebDevelopment"}
             firstBullet={"Identidad de marca (Creamos tu logo)"}
             secondtBullet={"Creacion de Flyers (Imagenes para redes y mas)"}
-            thirdtBullet={"Redacci"}
-            fourthtBullet={"Soporte siempre en contacto con vos"}
+            thirdtBullet={"Redacción de Guión para tus spots y videos"}
+            fourthtBullet={"Edición de Videos (animaciones, reels y más)"}
           />
 
           <ServiceCard
