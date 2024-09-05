@@ -5,11 +5,13 @@ import FourthSection from "@/components/home/FourthSection";
 import SecondSection from "@/components/home/SecondSection";
 import ThirdSection from "@/components/home/ThirdSection";
 import InfoViewMore from "@/components/home/auxiliarEstaticComp/InfoViewMore"
+import Chat from "@/components/chat/Chat"
 import Image from "next/image";
 
 export default function Home() {
   return (
     <main id="home" className="bg-slate-100">
+      <Chat />
       <FirstSection />
       <SecondSection />
       <ThirdSection />

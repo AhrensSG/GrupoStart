@@ -23,10 +23,8 @@ const SecondSection = () => {
             }
             link={"/services/DesktopCommunityManager"}
             firstBullet={"Planificación de contenidos"}
-            secondtBullet={"Publicaciones frecuentes en tus redes sociales"}
-            thirdtBullet={"Descripciones seductoras"}
-            fourthtBullet={"Campañas publicitarias"}
-            fifthtBullet={"Soporte siempre en contacto con vos"}
+            secondtBullet={"Campañas publicitarias"}
+            thirdtBullet={"Soporte siempre con vos"}
           />
           <ServiceCard
             img={"/services/Jirafe2.svg"}
@@ -35,10 +33,10 @@ const SecondSection = () => {
                 "Permití que nuestros equipo creativo genere las piezas comunicativas de tu negocio. Logra presentarte como profecionalmente y atrevete a nuevas experiencias con nuetro acompañamiento y asesoramiento continuo en el proceso."
             }
             link={"/services/DesktopWebDevelopment"}
-            firstBullet={"Identidad de marca (Creamos tu logo)"}
-            secondtBullet={"Creacion de Flyers (Imagenes para redes y mas)"}
-            thirdtBullet={"Redacción de Guión para tus spots y videos"}
-            fourthtBullet={"Edición de Videos (animaciones, reels y más)"}
+            firstBullet={"Creamos tu logo"}
+            secondtBullet={"Imágenes profesionales"}
+            thirdtBullet={"Edición de videos"}
+            fourthtBullet={"Soporte siempre con vos"}
           />
 
           <ServiceCard
