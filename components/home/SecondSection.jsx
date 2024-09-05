@@ -5,7 +5,7 @@ const SecondSection = () => {
   return (
     <section id="services" className="w-full h-full bg-[#0853FC] p-4">
       <div className="w-full h-full flex flex-col items-center gap-6 py-4 pb-8">
-        <h2 className=" mt-[43px] text-2xl sm:text-2xl md:text-5xl text-white font-bold pb-[17px]">CONOCÉ NUESTROS SERVICIOS </h2>
+        <h2 className=" mt-[43px] text-2xl sm:text-2xl md:text-[43px] text-white font-bold pb-[17px]">CONOCÉ NUESTROS SERVICIOS </h2>
         <div className="w-full h-full flex flex-row flex-wrap justify-center items-center gap-[77px]">
           {/* <ServiceCard
             img={"/services/Jirafe1.svg"}
@@ -37,8 +37,8 @@ const SecondSection = () => {
             link={"/services/DesktopWebDevelopment"}
             firstBullet={"Identidad de marca (Creamos tu logo)"}
             secondtBullet={"Creacion de Flyers (Imagenes para redes y mas)"}
-            thirdtBullet={"Redacci"}
-            fourthtBullet={"Soporte siempre en contacto con vos"}
+            thirdtBullet={"Redacción de Guión para tus spots y videos"}
+            fourthtBullet={"Edición de Videos (animaciones, reels y más)"}
           />
 
           <ServiceCard

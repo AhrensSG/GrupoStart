@@ -7,12 +7,12 @@ import { AnimatePresence, motion } from "framer-motion";
 const NavBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   return (
-    <nav className="w-full z-30 bg-transparent flex flex-row items-center justify-between p-6 px-14 gap-6">
-      <Link href={"/"} className="min-w-max">
-        <Image src="/Logo.png" alt="Logo" width={122} height={81} priority />
+    <nav className="w-full z-30 bg-transparent flex flex-row items-center justify-between ">
+      <Link href={"/"} className="min-w-max ml-[80px] mt-[50px]">
+        <Image src="/Logo.png" alt="Logo" width={161} height={66} priority />
       </Link>
 
-      <div className="w-full hidden lg:flex flex-row justify-end items-center gap-12">
+      <div className="w-full hidden lg:flex flex-row justify-end items-center gap-12 mt-[45px] mr-[100px]">
         {/* <Link className="max-w-32 w-full" href={"/experiences"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Experiencias
@@ -26,18 +26,18 @@ const NavBar = () => {
         </Link> */}
 
         <Link className="max-w-32 w-full" href={"/#services"}>
-          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+          <button className="text-xl max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Servicios
           </button>
         </Link>
 
         <Link className="max-w-32 w-full" href={"/about"}>
-          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+          <button className="text-xl max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Nosotros
           </button>
         </Link>
 
-        <Link className="max-w-32 w-full" href={"/about#contactAbout"}>
+        <Link className=" text-xl max-w-32 w-full" href={"/about#contactAbout"}>
           <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Contacto
           </button>
