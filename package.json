@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@icons-pack/react-simple-icons": "^10.0.0",
     "@mercadopago/sdk-react": "^0.0.19",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",

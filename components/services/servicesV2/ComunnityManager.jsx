@@ -341,8 +341,8 @@ const CommunityManager = () => {
               height={265}
               priority={true}
               quality={100}
-              style={{ 
-                zIndex: 15, 
+              style={{
+                zIndex: 15,
                 position: 'relative',
                 top: 60,
                 bottom: -50,
