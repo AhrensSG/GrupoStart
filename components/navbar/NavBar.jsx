@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -7,42 +6,29 @@ import { AnimatePresence, motion } from "framer-motion";
 const NavBar = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   return (
-    <nav className="w-full z-30 bg-transparent flex flex-row items-center justify-between ">
-      <Link href={"/"} className="min-w-max ml-[80px] mt-[50px]">
+    <nav className="w-full z-30 bg-transparent flex flex-row items-center justify-between p-[2%]">
+      <Link href={"/"} className="min-w-max ml-[5%] sm:ml-[2%] mt-[5%] sm:mt-[3%]">
         <Image src="/Logo.png" alt="Logo" width={161} height={66} priority />
       </Link>
 
-      <div className="w-full hidden lg:flex flex-row justify-end items-center gap-12 mt-[45px] mr-[100px]">
-        {/* <Link className="max-w-32 w-full" href={"/experiences"}>
-          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
-            Experiencias
-          </button>
-        </Link> */}
-
-        {/* <Link className="max-w-32 w-full" href={"/"}>
-          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
-            Inicio
-          </button>
-        </Link> */}
-
-        <Link className="max-w-32 w-full" href={"/#services"}>
-          <button className="text-xl max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+      <div className="hidden lg:flex flex-row justify-end items-center gap-[4%] mt-[3%] mr-[5%] lg:mr-[3%]">
+        <Link className="text-lg" href={"/#services"}>
+          <button className="w-full h-10 px-4 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Servicios
           </button>
         </Link>
-
-        <Link className="max-w-32 w-full" href={"/about"}>
-          <button className="text-xl max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+        <Link className="text-lg" href={"/about"}>
+          <button className="w-full h-10 px-4 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Nosotros
           </button>
         </Link>
-
-        <Link className=" text-xl max-w-32 w-full" href={"/about#contactAbout"}>
-          <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+        <Link className="text-lg" href={"/about#contactAbout"}>
+          <button className="w-full h-10 px-4 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Contacto
           </button>
         </Link>
       </div>
+
       <div className="lg:hidden">
         <button onClick={() => setShowSideBar(true)}>
           <Image
@@ -53,14 +39,15 @@ const NavBar = () => {
           />
         </button>
       </div>
+
       <AnimatePresence>
         {showSideBar && (
           <motion.div
-            initial={{ right: -1000 }}
-            animate={{ right: 0 }}
-            exit={{ right: -1000 }}
+            initial={{ right: "-100%" }}
+            animate={{ right: "0%" }}
+            exit={{ right: "-100%" }}
             transition={{ duration: 0.5 }}
-            className="w-2/3 xs:w-1/3 h-screen bg-gradient-to-b from-white via-white to-transparent fixed top-0 right-0 lg:hidden z-30"
+            className="w-2/3 xs:w-1/3 h-full bg-gradient-to-b from-white via-white to-transparent fixed top-0 right-0 lg:hidden z-30"
           >
             <div className="w-full h-full relative">
               <button
@@ -74,47 +61,27 @@ const NavBar = () => {
                   alt="CloseSideBarIcon"
                 />
               </button>
-              <div className="w-full h-full py-20 px-10 gap-4 flex flex-col justify-start items-start">
-                <Link className="max-w-32 w-full" href={"/courses"}>
+              <div className="w-full h-full py-[10%] px-[5%] gap-[5%] flex flex-col justify-start items-start">
+                <Link className="text-lg" href={"/#services"}>
                   <button
                     onClick={() => setShowSideBar(false)}
-                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
-                  >
-                    Cursos
-                  </button>
-                </Link>
-
-                <Link className="max-w-32 w-full" href={"/#services"}>
-                  <button
-                    onClick={() => setShowSideBar(false)}
-                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                    className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
                   >
                     Servicios
                   </button>
                 </Link>
-
-                <Link className="max-w-32 w-full" href={"/about"}>
+                <Link className="text-lg" href={"/about"}>
                   <button
                     onClick={() => setShowSideBar(false)}
-                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                    className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
                   >
                     Nosotros
                   </button>
                 </Link>
-
-                <Link className="max-w-32 w-full" href={"/experiences"}>
+                <Link className="text-lg" href={"/about#contactAbout"}>
                   <button
                     onClick={() => setShowSideBar(false)}
-                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
-                  >
-                    Experiencias
-                  </button>
-                </Link>
-
-                <Link className="max-w-32 w-full" href={"/"}>
-                  <button
-                    onClick={() => setShowSideBar(false)}
-                    className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                    className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
                   >
                     Contacto
                   </button>

@@ -1,39 +1,38 @@
 import Image from "next/image";
 import React from "react";
 import NavBar from "../navbar/NavBar";
-import Link from "next/link";
 
 const FirstSection = () => {
   return (
-    <section className="w-full h-[700px] xl:h-screen 2xl:h-full relative flex flex-col justify-start items-center overflow-hidden 2xl:pb-20">
+    <section className="w-full h-[100vh] relative flex flex-col justify-start items-center overflow-hidden 2xl:pb-20">
       <NavBar />
 
       {/* Blue Triangle */}
       <div
-        className="absolute z-0 w-full top-[15%] left-[55%] h-[135%] rotate-[30deg] rounded-[3.75rem]"
+        className="absolute z-0 w-full top-[15vh] left-[55vw] h-[135vh] rotate-[30deg] rounded-[3.75rem]"
         style={{ backgroundColor: "#0051FF" }}
       />
 
       {/* Main content */}
-      <div className="relative w-full h-full flex md:flex-row flex-col justify-center items-center gap-8 pb-[2.5rem] mr-[2.5rem] ml-[100px]">
+      <div className="relative w-full h-full flex md:flex-row flex-col justify-center items-center gap-8 pb-[5%] mr-[5%] ml-[8%]">
         <div className="flex flex-col justify-center items-start">
-          <div className="md:max-w-[40vw] flex flex-col text-[#FB8A00] gap-[1rem]">
-            <p className="mt-[0rem] uppercase text-[3.0625rem] sm:leading-tight md:leading-none font-semibold drop-shadow-[0_1.875rem_1.875rem_rgba(0,0,0,0.25)]">
+          <div className="md:max-w-[40vw] flex flex-col text-[#FB8A00] gap-[2%]">
+            <p className="mt-0 uppercase text-[3.5vw] sm:leading-tight md:leading-none font-semibold drop-shadow-[0_2vw_2vw_rgba(0,0,0,0.25)]">
               Somos
               <br /> una agencia
               <br /> de marketing 360°
             </p>
-            <span className="hidden md:block text-black text-[1.75rem] font-normal mt-[2.5rem] max-w-[25rem] max-h-[8rem] leading-none">
+            <span className="hidden md:block text-black text-[2vw] font-normal mt-[5%] max-w-[50%] leading-none">
               Nos enfocamos en <strong>conectarte al mundo digital</strong>,
               trabajamos con emprendedores y negocios de todos los niveles.
             </span>
           </div>
         </div>
-        <div className="w-[751px] h-[503px] flex flex-row justify-center items-start mt-[1.2rem]">
+        <div className="w-[50vw] h-[35vw] flex justify-center items-start mt-[2%]">
           <Image
             src={"/Home1.png"}
             alt="MainImage"
-            className="w-[751px] h-[503px] object-cover object-center transition-opacity opacity-0 duration-500"
+            className="w-full h-full object-cover object-center transition-opacity opacity-0 duration-500"
             onLoad={(event) => event.target.classList.remove("opacity-0")}
             width={751}
             height={503}
