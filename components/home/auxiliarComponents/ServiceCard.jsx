@@ -7,6 +7,7 @@ const ServiceCard = ({
   img,
   title,
   description,
+  secondDescription,
   link,
   firstBullet = false,
   secondtBullet = false,
@@ -15,45 +16,52 @@ const ServiceCard = ({
   fifthtBullet = false,
 }) => {
   return (
-    <div className="flex items-end h-[645px]">
-      <div className="max-w-80 border-[5px] rounded-3xl p-4 w-full h-[522px] flex flex-col justify-start items-center relative">
-        <div className="absolute -top-32">
-          <Image src={img} width={200} height={200} alt="ServiceImage" />
+    <div className="flex items-center justify-center h-full">
+      <div className="border-[5px] rounded-3xl p-4 w-full h-full flex flex-col justify-between items-center relative min-h-[350px] lg:min-h-[400px] xl:min-h-[450px] ">
+        <div className="absolute -top-20 sm:-top-24 lg:-top-24 flex justify-center w-full -z-0">
+          <Image src={img} width={140} height={140} alt="ServiceImage" className="lg:w-[160px] lg:h-[160px] xl:w-[180px] xl:h-[180px]" />
         </div>
-        <div className="w-full h-full flex flex-col gap-4 justify-between mt-16">
+        <div className="w-full h-full flex flex-col  justify-between mt-20 lg:mt-10 xl:mt-16 z-0">
           <div className="flex flex-col gap-3">
-            <span className="text-center text-white text-2xl font-bold rounded-medium rounded-tl-xl rounded-br-xl bg-[#FB8A00]" style={{zIndex: 15, top: -25}}>{title}</span>
-            <p className="text-justify text-white text-sm font-medium">
+            <span className="text-center text-white text-lg lg:text-lg font-bold rounded-tl-xl rounded-br-xl bg-[#FB8A00]">
+              {title}
+            </span>
+            <p className="text-justify text-white text-sm lg:text-xs leading-normal font-normal">
               {description}
             </p>
+            {secondDescription && (
+              <p className="text-justify text-white text-xs lg:text-xs leading-none font-normal space-y-10">
+                {secondDescription}
+              </p>
+            )}
             <div className="flex flex-col justify-center items-start gap-1.5">
-              {firstBullet !== false && (
-                <span className="flex flex-row gap-1 text-sm text-white items-center">
-                  <BulletSVG w={16} h={16} />
+              {firstBullet && (
+                <span className="flex flex-row gap-1 text-sm lg:text-sm text-white items-center">
+                  <BulletSVG w={20} h={20} />
                   {firstBullet}
                 </span>
               )}
-              {secondtBullet !== false && (
-                <span className="flex flex-row gap-1 text-sm text-white items-center">
-                  <BulletSVG w={16} h={16} />
+              {secondtBullet && (
+                <span className="flex flex-row gap-1 text-sm lg:text-sm text-white items-center">
+                  <BulletSVG w={20} h={20} />
                   {secondtBullet}
                 </span>
               )}
-              {thirdtBullet !== false && (
-                <span className="flex flex-row gap-1 text-sm text-white items-center">
-                  <BulletSVG w={16} h={16} />
+              {thirdtBullet && (
+                <span className="flex flex-row gap-1 text-sm lg:text-sm text-white items-center">
+                  <BulletSVG w={20} h={20} />
                   {thirdtBullet}
                 </span>
               )}
-              {fourthtBullet !== false && (
-                <span className="flex flex-row gap-1 text-sm text-white items-center">
-                  <BulletSVG w={16} h={16} />
+              {fourthtBullet && (
+                <span className="flex flex-row gap-1 text-sm lg:text-sm text-white items-center">
+                  <BulletSVG w={20} h={20} />
                   {fourthtBullet}
                 </span>
               )}
-              {fifthtBullet !== false && (
-                <span className="flex flex-row gap-1 text-sm text-white items-center">
-                  <BulletSVG w={16} h={16} />
+              {fifthtBullet && (
+                <span className="flex flex-row gap-1 text-sm lg:text-sm text-white items-center">
+                  <BulletSVG w={20} h={20} />
                   {fifthtBullet}
                 </span>
               )}
@@ -61,8 +69,8 @@ const ServiceCard = ({
           </div>
           <div className="text-center">
             <Link href={link}>
-              <button className="p-2 px-6 rounded-lg bg-[#FB8A00] drop-shadow-[0_5px_10px_rgba(0,0,0,0.5)] text-white">
-                Ver Mas
+              <button className="p-2 px-6 lg:px-8 rounded-lg bg-[#FB8A00] drop-shadow-[0_5px_10px_rgba(0,0,0,0.5)] text-white">
+                Ver Más
               </button>
             </Link>
           </div>
