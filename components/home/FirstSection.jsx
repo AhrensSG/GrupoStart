@@ -14,7 +14,7 @@ const FirstSection = () => {
       />
 
       {/* Main content */}
-      <div className="relative w-full h-full flex md:flex-row flex-col justify-center items-center gap-8 pb-[5%] mr-[5%] ml-[8%]">
+      <div className="relative w-full h-full flex md:flex-row flex-col justify-center items-center gap-5 pb-[15%] mr-[8%] ml-[8%]">
         <div className="flex flex-col justify-center items-start">
           <div className="md:max-w-[40vw] flex flex-col text-[#FB8A00] gap-[2%]">
             <p className="mt-0 uppercase text-[3.5vw] sm:leading-tight md:leading-none font-semibold drop-shadow-[0_2vw_2vw_rgba(0,0,0,0.25)]">
