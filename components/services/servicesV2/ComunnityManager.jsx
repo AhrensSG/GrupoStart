@@ -189,15 +189,123 @@ const CommunityManager = () => {
           </div>
         </div>
 
+        
+      </section>
+      {/*Section 4 */}
+      <section className="relative bg-[#FFFFFF]">
+            <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
+              {/* Image */}
+              <div className="w-full md:w-1/2 pl-[120px] mx-2">
+                <Image
+                  src={"/Jirafe1.svg"}
+                  className="object-cover transition-opacity opacity-0 duration-500"
+                  onLoad={(event) => event.target.classList.remove("opacity-0")}
+                  width={595}
+                  height={265}
+                  priority={true}
+                  quality={100}
+                />
+              </div>
+              <br />
+              {/* Text */}
+              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
+                <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
+                Un perfil<br/>
+                optimizado<br/>
+                al 100%
+                </span>
+              </div>
+            </div>
+          </section>
+
+      {/*Section 5*/}
+      <section className="relative bg-[#FFFFFF]">
+            <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
+              {/* Image */}
+              <div className="w-full md:w-1/2 pl-[120px] mx-2">
+                <Image
+                  src={"/Jirafe1.svg"}
+                  className="object-cover transition-opacity opacity-0 duration-500"
+                  onLoad={(event) => event.target.classList.remove("opacity-0")}
+                  width={595}
+                  height={265}
+                  priority={true}
+                  quality={100}
+                />
+              </div>
+              <br />
+              {/* Text */}
+              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
+                <span className="text-4xl font-bold mb-[2px] text-[#0853FC] text-end md:text-4xl lg:text-5xl">
+                Conocé a tu audiencia<br/>
+                es la clave del exito
+                </span>
+                <br/>
+                <span className="font-light mb-[40px] text-black text-end text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
+                Segmentar y entender a tu audiencia es fundamental<br/>
+                para crear campañas de marketing efectivas para<br/>
+                obtener éxito de tu negocio en redes sociales.
+                <br/>
+                Conocer sus edades, intereses, comportamientos y<br/>
+                necesidades permite diseñar mensajes que realmente<br/>
+                resuenen e impacten en cada persona, maximizando el<br/>
+                impacto y minimizando los esfuerzos desperdiciados.
+                </span>
+              </div>
+            </div>
+          </section>
+      {/*Section 6*/}
+      <section className="relative flex flex-wrap w-auto h-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+      <div className="flex flex-col md:flex-row w-full p-6">
+      <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[80px] mx-2">
+          <span className="text-4xl font-bold mb-[28px] text-[#0853FC] text-start text-2xl md:text-4xl lg:text-5xl justify-start">
+          Tu perfil es tu tarjeta<br />
+          de presentación
+            </span>
+            <span className="text text-lg mb-[40px] text-start text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
+            Tu biografía es la primera impresión que los posibles<br />
+            clientes tienen de tu marca en redes sociales.<br />
+            Optimizamos tu diseño y contenido para reflejar la<br/>
+            dentidad de tu marca, asegurando que cada<br/>
+            publicación contribuya a construir una imagen<br/>
+            coherente y atractiva.
+            </span>
+
+            <Link href="/">
+              <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+                Contactar
+              </button>
+            </Link>
+          </div>
+
+          <div className="w-full md:w-1/2">
+            <Image
+              src={"/Jirafe1.svg"}
+              className="object-cover transition-opacity opacity-0 duration-500"
+              onLoad={(event) => event.target.classList.remove("opacity-0")}
+              width={595}
+              height={265}
+              priority={true}
+              quality={100}
+              style={{ 
+                zIndex: 15, 
+                position: 'relative',
+                top: 100,
+                bottom: -200,
+                left: '50%',
+                transform: 'translateX(-50%)' }}
+            />
+          </div>
+        </div>
         {/* Ola */}
         <div className="absolute w-full justify-end overflow-hidden bottom-0">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
             <path fill="#0853FC" fill-opacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
           </svg>
         </div>
       </section>
 
-      {/*Section 4*/}
+      {/*Section 7*/}
       <section>
         <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
           {/* Image */}

@@ -14,7 +14,7 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       <div className="items-center justify-center text-center">
       <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white p-2">{title}</span>
       </div>
-      <ul className="list-none pl-5 mt-4"> {/* Changed list style for spacing */}
+      <ul className="list-none pl-5 mt-4 mb-4"> {/* Changed list style for spacing */}
         {features.map((feature, index) => (
           <li key={index} className="flex items-center mb-4">
           <Image
@@ -86,8 +86,8 @@ const DesktopCommunityManagerSection = () => {
         'Diseño creativo con imágenes del cliente o de internet',
         'Puesta en marcha de campañas publicitarias'
         ]}
-        price={{ original: 179900, discount: 159900 }}
-        onButtonClick={() => handleBuyNow(2, "Plan Conexion Inicial", 38000)}
+        price={{ original: 199900, discount: 179900 }}
+        onButtonClick={() => handleBuyNow(2, "Plan Conexion Inicial", 179900)}
         />
         <PlanCard
           title="Social Master"
@@ -99,8 +99,8 @@ const DesktopCommunityManagerSection = () => {
           'Puesta en marcha de campañas publicitarias',
           '1 video 30 seg. mensual'
           ]}
-          price={{ original: 219900, discount: 199900 }}
-          onButtonClick={() => handleBuyNow(3, "Plan Social Master", 56000)}
+          price={{ original: 278900, discount: 258900 }}
+          onButtonClick={() => handleBuyNow(3, "Plan Social Master", 258900)}
         />
         <PlanCard
           title="Social Pro"
@@ -109,11 +109,10 @@ const DesktopCommunityManagerSection = () => {
           '8 Publicaciones + historias semanales 32 Mensuales',
           'Diseño creativo con imágenes del cliente o de internet',
           'Puesta en marcha de campañas publicitarias',
-          '2 videos 30 seg. mensual'
+          '2 videos 30 seg. mensual',
           ]}
-          style={{ marginBottom: '30px'}}
-          price={{ original: 269900, discount: 249900 }}
-          onButtonClick={() => handleBuyNow(4, "Plan Social Pro", 110000)}
+          price={{ original: 399900, discount: 369900 }}
+          onButtonClick={() => handleBuyNow(4, "Plan Social Pro", 369900)}
         />
       </div>
     </div>

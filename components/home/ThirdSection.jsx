@@ -3,6 +3,22 @@ import React from "react";
 import EstaticSign from "../home/auxiliarEstaticComp/EstaticSign";
 
 const ThirdSection = () => {
+  // Lista de imágenes
+  const imageList = [
+    { src: "/services/clientsCarousel/logo10.png", alt: "Image 1" },
+    { src: "/services/clientsCarousel/logo9.png", alt: "Image 2" },
+    { src: "/services/clientsCarousel/logo12.png", alt: "Image 3" },
+    { src: "/services/clientsCarousel/logo13.png", alt: "Image 4" },
+    { src: "/services/clientsCarousel/logo14.png", alt: "Image 5" },
+    { src: "/services/clientsCarousel/logo15.png", alt: "Image 6" },
+    { src: "/services/clientsCarousel/logo2.png", alt: "Image 7" },
+    { src: "/services/clientsCarousel/logo3.png", alt: "Image 8" },
+    { src: "/services/clientsCarousel/logo4.png", alt: "Image 9" },
+    { src: "/services/clientsCarousel/logo5.png", alt: "Image 10" },
+    { src: "/services/clientsCarousel/logo6.png", alt: "Image 11" },
+    { src: "/services/clientsCarousel/logo8.png", alt: "Image 12" },
+  ];
+
   return (
     <section className=" relative flex flex-wrap z-0">
       <aside className="relative flex z-5">
@@ -17,28 +33,35 @@ const ThirdSection = () => {
             Clientes que confian en nosotros
           </h2>
 
-            <div className="image-client-container flex flex-wrap justify-center mb-4 pb-2 pt-[22px]">
-            <Image
-            src={"/lote2.png"}
-            alt="Clients2"
-            className="object-cover object-center transition-opacity opacity-0 duration-500 "
-            onLoad={(event) => event.target.classList.remove("opacity-0")}
-            width={850}
-            height={465}
-            priority={true}
-            quality={100}
-            />
+            {/* Contenedor de las imágenes en dos filas */}
+            <div className="grid grid-cols-6 gap-4 justify-center items-center pt-[22px]">
+              {imageList.slice(0, 6).map((image, index) => (
+                <Image
+                  key={index}
+                  src={image.src}
+                  alt={image.alt}
+                  className="object-cover object-center"
+                  width={150}
+                  height={150}
+                  priority={true}
+                  quality={100}
+                />
+              ))}
+            </div>
 
-            <Image
-            src={"/lote1.png"}
-            alt="Clients1"
-            className="object-cover object-center transition-opacity opacity-0 duration-500"
-            onLoad={(event) => event.target.classList.remove("opacity-0")}
-            width={850}
-            height={465}
-            priority={true}
-            quality={100}
-            />
+            <div className="grid grid-cols-6 gap-4 justify-center items-center pt-[22px]">
+              {imageList.slice(6).map((image, index) => (
+                <Image
+                  key={index}
+                  src={image.src}
+                  alt={image.alt}
+                  className="object-cover object-center"
+                  width={150}
+                  height={150}
+                  priority={true}
+                  quality={100}
+                />
+              ))}
             </div>
           </div>
         </div>

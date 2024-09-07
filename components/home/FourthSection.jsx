@@ -7,14 +7,12 @@ import Link from "next/link";
 const FourthSection = () => {
   return (
     <section id="about-us" className="w-full bg-gradient-to-b from-[#FB8A00] p-4">
-      <div className="w-full h-full flex flex-col items-center gap-6 py-4">
-        <h2 className="text-5xl xs:text-5xl text-white font-extrabold">Fundadores</h2>
 
-        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[575px] sm:gap-16 pt-[17px]" >
-          <FounderCard
-            img={"/seba.jpeg"}
-            name={"El Sebas"}
-            profession={"Diseñador Grafico"}
+        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[175px] sm:gap-8 pt-[17px]" >
+        <FounderCard
+            img={"/ivan.jpeg"}
+            name={"Ivan E. Ayala"}
+            profession={"Comunnity Manager"}
             description={""}
           />
           {/*<FounderCard
@@ -23,16 +21,32 @@ const FourthSection = () => {
             profession={"Programador"}
             description={""}
             />*/}
+        {/* Texto centrado entre las dos FounderCards */}
+          <div className="text-center text-black max-w-md px-4 py-6 justify-center items-center">
+          <div className="w-full h-full flex flex-col items-center gap-6 py-2">
+            <h2 className="text-5xl xs:text-4xl text-white font-extrabold uppercase">Fundadores</h2>
+            <p className="text-3xl font-light w-[312px] pb-2">
+              El destino une a estos<br/>
+              emprendedores en una<br/>
+              historia un poco cómica en<br/>
+              los inicios pero que luego<br/>
+              cambiaría para bien<br/>
+              la historia de muchos<br/>
+              negocios como vos.
+            </p>
+          </div>
+          </div>
+
           <FounderCard
-            img={"/ivan.jpeg"}
-            name={"Ivan"}
-            profession={"Marketing"}
+            img={"/seba.jpeg"}
+            name={"Sebastian D. Vera"}
+            profession={"Diseñador Gráfico"}
             description={""}
           />
         </div>
 
-        <div className="w-full flex flex-col justify-center items-center py-6 gap-8">
-          <div className="relative md:-top-[108px] sm:-top-[34px]">
+        <div className="w-full flex flex-col justify-center items-center py-8 gap-8">
+          <div className="relative md:-top-[108px] sm:-top-[26px]">
             <Link href="/about">
             <button className="flex flex-row gap-2 items-center justify-center bg-[#0853FC] p-1 px-10 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
               <svg
@@ -55,7 +69,6 @@ const FourthSection = () => {
             ! Somos el futuro de tu proyecto !
             </span>*/}
         </div>
-      </div>
 
     {/*<InfoViewMore />*/}
 {/*
