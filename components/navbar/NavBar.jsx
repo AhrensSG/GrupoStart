@@ -11,19 +11,19 @@ const NavBar = () => {
         <Image src="/Logo.png" alt="Logo" width={161} height={66} priority />
       </Link>
 
-      <div className="hidden lg:flex flex-row justify-end items-center gap-[4%] mt-[3%] mr-[5%] lg:mr-[3%]">
+      <div className="hidden lg:flex flex-row justify-end items-center gap-[20%] mt-[3%] mr-[5%] lg:mr-[3%]">
         <Link className="text-lg" href={"/#services"}>
-          <button className="w-full h-10 px-4 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+          <button className="w-full h-10 px-8 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Servicios
           </button>
         </Link>
         <Link className="text-lg" href={"/about"}>
-          <button className="w-full h-10 px-4 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+          <button className="w-full h-10 px-8 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Nosotros
           </button>
         </Link>
         <Link className="text-lg" href={"/about#contactAbout"}>
-          <button className="w-full h-10 px-4 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
+          <button className="w-full h-10 px-8 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Contacto
           </button>
         </Link>
