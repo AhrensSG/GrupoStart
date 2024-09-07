@@ -26,11 +26,11 @@ const ServiceCard = ({
             <span className="text-center text-white text-lg lg:text-lg font-bold rounded-tl-xl rounded-br-xl bg-[#FB8A00]">
               {title}
             </span>
-            <p className="text-justify text-white text-sm lg:text-xs leading-normal font-normal">
+            <p className="text-justify text-white text-sm lg:text-xs xl:text-sm leading-normal font-normal">
               {description}
             </p>
             {secondDescription && (
-              <p className="text-justify text-white text-xs lg:text-xs leading-none font-normal space-y-10">
+              <p className="text-justify text-white text-sm lg:text-xs xl:text-sm leading-normal font-normal">
                 {secondDescription}
               </p>
             )}
