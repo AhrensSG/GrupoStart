@@ -5,6 +5,7 @@ import NavBarV2 from "../navbar/NavBarV2";
 import Footer from "../footer/Footer";
 import { Toaster } from "sonner";
 import GlobalContext from "@/app/context/GlobalContext";
+import Chat from "@/components/chat/Chat";
 
 const DesktopTemplate = ({
   children,
@@ -28,6 +29,10 @@ const DesktopTemplate = ({
           <NavBarV2/>
           </header>
       </section>
+        <Chat
+        className="absolute"
+        style= {{zIndex: 15}}
+        />
       {/*Plans*/}
       <section className="w-full">{children}</section>
       {/*

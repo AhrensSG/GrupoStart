@@ -38,8 +38,8 @@ export default function Formulario() {
     },
     {
       detalle: "¿Deseas agregar efemérides?", // Descripción del ítem con interruptor
-      cantidad: 0,
-      valor: 0, // Inicialmente 0 porque depende del interruptor
+      cantidad: 0,//Cantidad inicial
+      valor: 3000, // Inicialmente 0 porque depende del interruptor
       info: "Publicaciones conmemorativas de fechas importantes.",
     },
     {
@@ -199,6 +199,31 @@ export default function Formulario() {
       alert("Por favor selecciona al menos un servicio.");
       return false;
     }
+    // Validación de carruseles
+    if (items[2].cantidad > items[2].max) {
+      alert("Has alcanzado el máximo número de carruseles permitidos.");
+      return false;
+    }
+
+    // Validación de imágenes
+    if (items[3].cantidad > items[2].cantidad * 20) {
+      alert("Has alcanzado el máximo número de imágenes permitidos.");
+      return false;
+    }
+    {/* 
+    // Validación de días de publicidad
+    if (items[6].cantidad < 3) {
+      alert("Por favor selecciona al menos 3 días de publicidad.");
+      return false;
+    }
+
+    // Validación del presupuesto de publicidad
+    if (items[7].cantidad <= 0) {
+      alert("Por favor especifica un presupuesto para publicidad.");
+      return false;
+    }
+  */}
+
     return true; // Si todo está correcto, el formulario es válido
   };
 
