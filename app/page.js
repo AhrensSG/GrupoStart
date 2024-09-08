@@ -10,7 +10,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main id="home" className="bg-slate-100">
+    <main id="home" >
       <Chat />
       <FirstSection />
       <SecondSection />

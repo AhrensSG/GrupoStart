@@ -6,49 +6,59 @@ import Link from "next/link";
 
 const FourthSection = () => {
   return (
-    <section id="about-us" className="w-full bg-gradient-to-b from-[#FB8A00] p-4">
-
-        <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[175px] sm:gap-8 pt-[17px]" >
+    <section
+      id="about-us"
+      className="w-full bg-gradient-to-b from-[#FB8A00]  via-[#FFFFFF] to-[#FFFFFF] p-10"
+    >
+      <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[175px] lg:gap-7 sm:gap-8 xl:gap-28 lg:pt-16 xl:pt-1">
         <FounderCard
-            img={"/ivan.jpeg"}
-            name={"Ivan E. Ayala"}
-            profession={"Comunnity Manager"}
-            description={""}
-          />
-          {/*<FounderCard
+          img={"/ivan.jpeg"}
+          name={"Ivan E. Ayala"}
+          profession={"Comunnity Manager"}
+          description={""}
+        />
+        {/*<FounderCard
             img={"/guille.jpeg"}
             name={"Cabezón"}
             profession={"Programador"}
             description={""}
             />*/}
         {/* Texto centrado entre las dos FounderCards */}
-          <div className="text-center text-black max-w-md px-4 py-6 justify-center items-center">
-          <div className="w-full h-full flex flex-col items-center gap-6 py-2">
-            <h2 className="text-5xl xs:text-4xl text-white font-extrabold uppercase">Fundadores</h2>
-            <p className="text-3xl font-light w-[312px] pb-2">
-              El destino une a estos<br/>
-              emprendedores en una<br/>
-              historia un poco cómica en<br/>
-              los inicios pero que luego<br/>
-              cambiaría para bien<br/>
-              la historia de muchos<br/>
+        <div className="xl:mt-12 text-center text-black max-w-md lg:pb-24 xl:pb-20 justify-center items-center">
+          <div className="w-full h-full flex flex-col items-center lg:gap-3 xl:gap-5">
+            <h2 className="lg:text-3xl xs:text-4xl xl:text-5xl text-white font-extrabold uppercase">
+              Fundadores
+            </h2>
+            <p className="lg:text-2xl xl:text-3xl font-normal lg:w-[300px] xl:w-[450px] pb-10 xl:pb-24">
+              El destino une a estos
+              <br />
+              emprendedores en una
+              <br />
+              historia un poco cómica en
+              <br />
+              los inicios pero que luego
+              <br />
+              cambiaría para bien
+              <br />
+              la historia de muchos
+              <br />
               negocios como vos.
             </p>
           </div>
-          </div>
-
-          <FounderCard
-            img={"/seba.jpeg"}
-            name={"Sebastian D. Vera"}
-            profession={"Diseñador Gráfico"}
-            description={""}
-          />
         </div>
 
-        <div className="w-full flex flex-col justify-center items-center py-8 gap-8">
-          <div className="relative md:-top-[108px] sm:-top-[26px]">
-            <Link href="/about">
-            <button className="flex flex-row gap-2 items-center justify-center bg-[#0853FC] p-1 px-10 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
+        <FounderCard
+          img={"/seba.jpeg"}
+          name={"Sebastian D. Vera"}
+          profession={"Diseñador Gráfico"}
+          description={""}
+        />
+      </div>
+
+      <div className="w-full flex flex-col justify-center items-center xl:py-0 lg:py-8 lg:gap-12">
+        <div className="relative md:-top-[108px] xl:-top-36 sm:-top-[26px]">
+          <Link href="/about">
+            <button className="flex flex-row items-center justify-center bg-[#0853FC] p-1 px-5 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={18}
@@ -63,15 +73,15 @@ const FourthSection = () => {
               </svg>
               Sobre Nosotros
             </button>
-            </Link>
-          </div>
-          {/*<span className="text-3xl font-normal tracking-wider">
+          </Link>
+        </div>
+        {/*<span className="text-3xl font-normal tracking-wider">
             ! Somos el futuro de tu proyecto !
             </span>*/}
-        </div>
+      </div>
 
-    {/*<InfoViewMore />*/}
-{/*
+      {/*<InfoViewMore />*/}
+      {/*
 <div className="container mx-auto flex justify-center items-center h-screen w-full bg-white">
   <div className="flex flex-col md:flex-row w-full">
     <div className="w-full md:w-1/2">

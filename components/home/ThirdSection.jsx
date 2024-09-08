@@ -22,42 +22,43 @@ const ThirdSection = () => {
   return (
     <section className=" relative flex flex-wrap z-0">
       <aside className="relative flex z-5">
-      <div className="w-full bg-gradient-to-b from-[#0853FC] via-[#FFFFFF] to-[#FFFFFF] mx-auto mb-1 md:pt-[53px] p-4 flex-row justify-center text-center">
-      <p className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mx-auto my-10 px-5 py-1 leading-relaxed tracking-wide text-center">
-      Trabajemos en equipo<br /> para impulsar tu marca
-      </p>
-      {/*Text and Image Clients */}
-        <div className="flex flex-wrap justify-center mb-6 mx-2">
-          
-          <h2 className="font-light bg-[#FB8A00] text-white my-1 text-1xl md:text-4xl lg:text-4xl px-[34px] py-[11px] border rounded-tl-xl rounded-br-xl">
-            Clientes que confian en nosotros
-          </h2>
-
+        <div className="w-full bg-gradient-to-b from-[#0853FC] via-[#FFFFFF] to-[#FFFFFF] p-6">
+          <div className="flex flex-wrap justify-center mb-6 mx-2 gap-6">
+            <p className="text-3xl md:text-5xl lg:text-5xl xl:text-7xl font-bold text-white mx-auto px-5  leading-relaxed tracking-wide text-center">
+              Trabajemos en equipo
+              <br /> para impulsar tu marca
+            </p>
+            <h2 className="font-light bg-[#FB8A00] text-white my-1 text-1xl md:text-4xl lg:text-2xl xl:text-4xl px-[34px] py-[7px] border rounded-tl-3xl rounded-br-3xl">
+              Clientes que confian en nosotros
+            </h2>
+          </div>
+          {/*Text and Image Clients */}
+          <div className="flex flex-wrap justify-center mb-2 mx-2">
             {/* Contenedor de las imágenes en dos filas */}
-            <div className="grid grid-cols-6 gap-4 justify-center items-center pt-[22px]">
+            <div className="grid grid-cols-6  xl:gap-12 lg:gap-7 justify-center items-center pt-[22px]">
               {imageList.slice(0, 6).map((image, index) => (
                 <Image
                   key={index}
                   src={image.src}
                   alt={image.alt}
                   className="object-cover object-center"
-                  width={150}
-                  height={150}
+                  width={115}
+                  height={115}
                   priority={true}
                   quality={100}
                 />
               ))}
             </div>
 
-            <div className="grid grid-cols-6 gap-4 justify-center items-center pt-[22px]">
+            <div className="grid grid-cols-6 xl:gap-12 lg:gap-7 justify-center items-center pt-[22px]">
               {imageList.slice(6).map((image, index) => (
                 <Image
                   key={index}
                   src={image.src}
                   alt={image.alt}
                   className="object-cover object-center"
-                  width={150}
-                  height={150}
+                  width={110}
+                  height={110}
                   priority={true}
                   quality={100}
                 />
@@ -66,11 +67,11 @@ const ThirdSection = () => {
           </div>
         </div>
       </aside>
-    {/*FutureJirafeImageBg and Text*/}
-    
-    <EstaticSign />
+      {/*FutureJirafeImageBg and Text*/}
 
-{/*
+      <EstaticSign />
+
+      {/*
       <Image
         src={"/FutureJirafe.jpg"}
         fill
@@ -92,7 +93,6 @@ const ThirdSection = () => {
         </div>
       </div> 
   */}
-    
     </section>
   );
 };
