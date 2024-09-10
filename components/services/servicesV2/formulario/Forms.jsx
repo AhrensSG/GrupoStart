@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 // Componente principal del formulario personalizado
 export default function Formulario() {
+
   // Estado inicial de los ítems del formulario con valores predeterminados
   const [items, setItems] = useState([
     {
@@ -95,6 +96,11 @@ export default function Formulario() {
       newItems[5].valor = checked ? 3000 : 0; // Asigna valor si está activado
       setItems(newItems); // Actualiza el estado de los ítems
     }
+
+    const socialNetwork = e.target.name;
+  if (socialNetwork === 'facebook' || socialNetwork === 'instagram') {
+    setSelectedSocialNetwork(socialNetwork);
+  }
   };
 
   // Incrementa la cantidad de un ítem seleccionado
@@ -186,6 +192,12 @@ export default function Formulario() {
     setItems(itemsReseteados); // Actualiza el estado
   };
 
+  const [item7Value, setItem7Value] = useState(0);
+
+  const handleItem8Change = (value) => {
+    setItem7Value(value);
+  };
+
   // Valida que al menos una red social y un servicio estén seleccionados
   const validarFormulario = () => {
     // Validar si hay al menos una red social seleccionada
@@ -210,7 +222,7 @@ export default function Formulario() {
       alert("Has alcanzado el máximo número de imágenes permitidos.");
       return false;
     }
-    {/* 
+    {/*
     // Validación de días de publicidad
     if (items[6].cantidad < 3) {
       alert("Por favor selecciona al menos 3 días de publicidad.");
@@ -226,6 +238,15 @@ export default function Formulario() {
 
     return true; // Si todo está correcto, el formulario es válido
   };
+
+  const [selectedSocialNetwork, setSelectedSocialNetwork] = useState(null);
+
+const handleSocialNetworkChange = (socialNetwork) => {
+  setSelectedSocialNetwork(socialNetwork);
+};
+
+const isMetaSocialNetwork = selectedSocialNetwork === 'Facebook' || selectedSocialNetwork === 'Instagram';
+
 
   // Maneja el envío del formulario
   const handleSubmit = () => {
@@ -337,7 +358,7 @@ export default function Formulario() {
         <div key={index}>
           <div className="grid grid-cols-3 items-center mb-2">
             <div
-              className="text-black-900 text-sm text-center"
+              className="text-black-900 text-sm text-center font-bold flex-col"
               onMouseOver={(e) => handleMouseOver(e, item.info)}
               onMouseOut={handleMouseOut}
             >
@@ -391,10 +412,11 @@ export default function Formulario() {
             </div>
           </div>
 
-          {/* Línea horizontal continua debajo de cada ítem */}
-          <hr className="border-2 border-black mb-2" />
+         {/* No more horizontal lines between items 3 and 4, and 6 and 7 */}
+          {index !== 2 && index !== 6 && <hr className="border-2 border-black mb-2" />}
         </div>
       ))}
+      
 
       {/* Valor total y resultado */}
 

@@ -8,9 +8,9 @@ const FourthSection = () => {
   return (
     <section
       id="about-us"
-      className="w-full bg-gradient-to-b from-[#FB8A00]  via-[#FFFFFF] to-[#FFFFFF] p-10"
+      className="w-full bg-gradient-to-b from-[#FB8A00]  via-[#FFFFFF] to-[#FFFFFF] p-5"
     >
-      <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[175px] lg:gap-7 sm:gap-8 xl:gap-28 lg:pt-16 xl:pt-1">
+      <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[175px] lg:gap-7 sm:gap-8 xl:gap-28 lg:pt-16 xl:pt-1 relative">
         <FounderCard
           img={"/ivan.jpeg"}
           name={"Ivan E. Ayala"}

@@ -163,7 +163,7 @@ const CommunityManager = () => {
             </span>
 
             <Link href="/">
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
                 Empezar
               </button>
             </Link>
@@ -171,15 +171,15 @@ const CommunityManager = () => {
 
           <div className="w-full md:w-1/2">
             <Image
-              src={"/Jirafe1.svg"}
+              src={"/services/ImgSct3GR.svg"}
               className="object-cover transition-opacity opacity-0 duration-500"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
               width={595}
               height={265}
               priority={true}
               quality={100}
-              style={{ 
-                zIndex: 15, 
+              style={{
+                zIndex: 15,
                 position: 'relative',
                 top: 100,
                 bottom: -200,
@@ -197,7 +197,7 @@ const CommunityManager = () => {
               {/* Image */}
               <div className="w-full md:w-1/2 pl-[120px] mx-2">
                 <Image
-                  src={"/Jirafe1.svg"}
+                  src={"/ImgSct4GR.svg"}
                   className="object-cover transition-opacity opacity-0 duration-500"
                   onLoad={(event) => event.target.classList.remove("opacity-0")}
                   width={595}
@@ -224,7 +224,7 @@ const CommunityManager = () => {
               {/* Image */}
               <div className="w-full md:w-1/2 pl-[120px] mx-2">
                 <Image
-                  src={"/Jirafe1.svg"}
+                  src={"/ImgSct5GR.svg"}
                   className="object-cover transition-opacity opacity-0 duration-500"
                   onLoad={(event) => event.target.classList.remove("opacity-0")}
                   width={595}
@@ -272,7 +272,7 @@ const CommunityManager = () => {
             </span>
 
             <Link href="/">
-              <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+              <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
                 Contactar
               </button>
             </Link>
@@ -280,7 +280,7 @@ const CommunityManager = () => {
 
           <div className="w-full md:w-1/2">
             <Image
-              src={"/Jirafe1.svg"}
+              src={"/ImgSct6GR.svg"}
               className="object-cover transition-opacity opacity-0 duration-500"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
               width={595}
@@ -296,9 +296,10 @@ const CommunityManager = () => {
                 transform: 'translateX(-50%)' }}
             />
           </div>
+          <br/>
         </div>
         {/* Ola */}
-        <div className="absolute w-full justify-end overflow-hidden bottom-0">
+        <div className="absolute w-full justify-end overflow-hidden bottom-0 z-5">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
             <path fill="#0853FC" fill-opacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
           </svg>
@@ -311,7 +312,7 @@ const CommunityManager = () => {
           {/* Image */}
           <div className="w-full md:w-1/2 pl-[120px] mx-2">
             <Image
-              src={"/Jirafe1.svg"}
+              src={"/ImgSct7GR.svg"}
               className="object-cover transition-opacity opacity-0 duration-500"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
               width={595}
@@ -442,7 +443,7 @@ const CommunityManager = () => {
           {/* Image */}
           <div className="w-full md:w-1/2 pl-[120px] mx-2">
             <Image
-              src={"/Jirafe1.svg"}
+              src={"/services/Mockupredes3.svg"}
               className="object-cover transition-opacity opacity-0 duration-500"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
               width={595}

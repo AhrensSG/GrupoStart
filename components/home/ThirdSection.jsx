@@ -23,14 +23,16 @@ const ThirdSection = () => {
     <section className=" relative flex flex-wrap z-0">
       <aside className="relative flex z-5">
         <div className="w-full bg-gradient-to-b from-[#0853FC] via-[#FFFFFF] to-[#FFFFFF] p-6">
-          <div className="flex flex-wrap justify-center mb-6 mx-2 gap-6">
+          <div className="flex flex-col justify-center mb-6 mx-2 gap-6">
             <p className="text-3xl md:text-5xl lg:text-5xl xl:text-7xl font-bold text-white mx-auto px-5  leading-relaxed tracking-wide text-center">
               Trabajemos en equipo
               <br /> para impulsar tu marca
             </p>
-            <h2 className="font-light bg-[#FB8A00] text-white my-1 text-1xl md:text-4xl lg:text-2xl xl:text-4xl px-[34px] py-[7px] border rounded-tl-3xl rounded-br-3xl">
+            <div className="px-[448px] py-[31px]">
+            <h2 className="font-light bg-[#FB8A00] text-white my-1 text-1xl md:text-4xl lg:text-2xl xl:text-4xl px-[34px] py-[7px] border rounded-tl-3xl rounded-br-3xl relative text-center">
               Clientes que confian en nosotros
             </h2>
+            </div>
           </div>
           {/*Text and Image Clients */}
           <div className="flex flex-wrap justify-center mb-2 mx-2">
