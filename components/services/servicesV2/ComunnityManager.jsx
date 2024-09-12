@@ -43,303 +43,291 @@ const CommunityManager = () => {
 
   return (
 
-<aside className="relative flex-col">
+<aside className="relative flex-col w-full">
       {/*Section 1*/}
-        <section className="relative bg-[#0853FC] flex w-full p-5">
-        <div className="container flex-col pb-2 gap-16 ml-1 pl-[50px] pt-[85px]">
-          <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-center">Gestión de<br/>Redes Sociales</span>
-          <div className="pt-[30px] gap-16">
-            <span className="text-white text-md">
-              Es tiempo de invertir en tus redes<br/>
-              para impulsar tu negocio<br/>
-              conocé más en este video explicativo</span>
-          </div>
-          <div className="py-[30px]">
-          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
-            Comenzar
-          </button>
-          </div>
-        </div>
-          {/* Aquí iría el reproductor de YouTube */}
-          <div className="flex items-end justify-end w-full pr-[100px] mr-[5px] rounded">
-          <div style={{
-              paddingTop: '10px',
-              width: '842px',
-              height: '474px',
-            }}
-            >
-            <iframe
-              width="842"
-              height="474"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              style={{
-                borderRadius: '68px',
-                width: '100%',
-                height: '100%',
-              }}
-            ></iframe>
-          </div>
-          </div>
-        </section>
+    <section className="relative bg-[#0853FC] flex w-full p-5 px-[100px]">
+        {/* Contenedor para la sección */}
+      <div className="container mx-auto flex flex-col lg:flex-row pb-2 gap-16 ml-1 pl-0 lg:pl-[50px] pt-[85px]">
+    
+        {/* Sección de texto y botón */}
+      <div className="flex flex-col justify-start items-start lg:w-1/2 text-start pt-[66px]">
+      <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold text-left lg:text-start">
+        Gestión de<br />Redes Sociales
+      </span>
+      <div className="pt-[30px]">
+        <span className="text-white text-md">
+          Es tiempo de invertir en tus redes<br />
+          para impulsar tu negocio, creación y<br />
+          gestión de contenidos que conecten<br/>
+          con tu audiencia y aumenten la<br/>
+          visibilidad de tu marca, conocé más en<br/>
+          este video explicativo.
+        </span>
+      </div>
+      <div className="py-[30px]">
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl">
+          Comenzar
+        </button>
+      </div>
+    </div>
+    
+    {/* Sección del reproductor de video */}
+    <div className="flex items-center justify-center lg:w-1/2 w-full">
+      <div
+        className="w-full lg:w-[842px] lg:h-[474px] h-auto"
+        style={{
+          paddingTop: "10px",
+        }}
+      >
+        <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          className="rounded-[68px]"
+        ></iframe>
+      </div>
+      </div>
+      </div>
+    </section>
 
       {/* Section 2 */}
       <section className="relative bg-grey-700 flex flex-col justify-center items-center">
-        <div className="w-full justify-start">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 320"
-            className="w-full h-full"
-            style={{ position: 'relative' }}
-          >
-            <path
-              fill="#0853FC"
-              fillOpacity="10"
-              d="M0,300L48,285C96,270,192,250,288,235C384,220,480,210,576,205C672,210,768,220,864,235C960,250,1056,270,1152,285C1248,300,1344,320,1392,325L1440,330L1440,0L1392,0L1248,0L1152,0L1056,0L960,0L864,0L768,0L672,0L576,0L480,0L384,0L288,0L192,0L96,0L48,0L0,0Z"
-            />
-          </svg>
-        </div>
-        <br/>
-          {/* Overlap the wave with the image */}
-          <div className="relative justify-center items-center object-center flex flex-col grid place-items: center z-10">
-            <Image
-              src={"/services/Jirafe3.svg"}
-              width={270}
-              height={300}
-              quality={100}
-              style={{
-              zIndex: 15,
-              position: 'relative',
-              top: -260,
-              bottom: -200,
-              left: '50%',
-              transform: 'translateX(-50%)' }}
-            />
-          </div>
-          <div className="text-center mt-[-230px]">
-            <span className="text text-4xl font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
-              Ayudamos a que tu redes<br />
-              alcancen su máximo potencial.
-            </span>
-          </div>
-          <br/>
-          {/* Center the carousel */}
-          <div className="flex justify-center w-full z-20 p-4">
-            <Carousel />
-          </div>
+  {/* SVG wave */}
+  <div className="w-full">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1440 320"
+      className="w-full h-auto"
+      style={{ position: "relative" }}
+    >
+      <path
+        fill="#0853FC"
+        fillOpacity="10"
+        d="M0,300L48,285C96,270,192,250,288,235C384,220,480,210,576,205C672,210,768,220,864,235C960,250,1056,270,1152,285C1248,300,1344,320,1392,325L1440,330L1440,0L1392,0L1248,0L1152,0L1056,0L960,0L864,0L768,0L672,0L576,0L480,0L384,0L288,0L192,0L96,0L48,0L0,0Z"
+      />
+    </svg>
+  </div>
+
+  {/* Overlap the wave with the image */}
+  <div className="relative justify-center items-center object-center flex flex-col z-10">
+    <Image
+      src={"/services/Jirafe3.svg"}
+      width={270}
+      height={300}
+      quality={100}
+      className="w-full max-w-xs md:max-w-md lg:max-w-lg"
+      style={{
+        zIndex: 15,
+        position: "relative",
+        top: -260,
+        bottom: -200,
+        left: "50%",
+        transform: "translateX(-50%)",
+      }}
+    />
+  </div>
+
+  {/* Text section */}
+  <div className="text-center mt-[-230px]">
+    <span className="text-2xl md:text-4xl lg:text-5xl font-bold text-[#0853FC]">
+      Ayudamos a que tus redes<br />
+      alcancen su máximo potencial.
+    </span>
+  </div>
+
+  {/* Carousel section */}
+  <div className="flex justify-center w-full z-20 p-4">
+    <Carousel />
+  </div>
       </section>
-  
-      {/* Section 3 */}
-    <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
-      <div className="flex flex-col md:flex-row w-full p-6">
+
+{/* Section 3 */}
+<section className="relative flex flex-wrap w-auto h-auto justify-center items-center bg-white md:pb-[77px] sm:pb-[10px] px-[100px] bottom-[-160px]">
+  <div className="flex flex-col md:flex-row w-full p-6">
+    {/* Text */}
+    <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[20px] md:pl-[80px] mx-2">
+      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[28px] text-[#FB8A00] text-start">
+        Hacemos<br />
+        crecer<br />
+        tu negocio<br />
+        en redes
+      </span>
+      <span className="text-lg md:text-2xl sm:text-4xl mb-[40px] text-start leading-relaxed tracking-wide">
+        Llegá a nuevos<br />
+        clientes en todas<br />
+        las plataformas Meta
+      </span>
+      <Link href="/">
+        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+          Empezar
+        </button>
+      </Link>
+    </div>
+
+    {/* Image */}
+    <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
+      <Image
+        src={"/services/ImgSct3GR.png"}
+        alt="Imagen de la sección 3"
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={834}
+        height={864}
+        priority={true}
+        quality={100}
+        style={{top: 60, bottom: -20, zIndex: 20, right: -20}}
+      />
+    </div>
+  </div>
+</section>
+
+{/* Section 4 */}
+<section className="relative bg-[#FFFFFF]">
+  <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] px-[100px]">
+    {/* Image */}
+    <div className="w-full flex justify-center md:justify-start pl-0 mx-2">
+      <Image
+        src={"/services/ImgSct4GR.png"}
+        alt="Imagen de la sección 4"
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={908}
+        height={564}
+        priority={true}
+        quality={100}
+      />
+    </div>
+    {/* Text */}
+    <div className="flex justify-center items-center text-end pr-5">
+      <span className="font-bold text-[#FB8A00] text-end flex flex-col justify-end items-center h-[250px] w-[385px] text-4xl md:text-5xl lg:text-6xl leading-snug">
+        Un perfil<br />
+        optimizado<br />
+        al 100%
+      </span>
+    </div>
+  </div>
+</section>
+
+
+{/* Section 5 */}
+<section className="relative bg-[#FFFFFF]">
+  <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
+    {/* Image */}
+    <div className="w-full md:w-1/2 flex justify-center md:justify-start pl-0 md:pl-[100px] mx-2">
+      <Image
+        src={"/services/ImgSct5GR.png"}
+        alt="Imagen de la sección 5"
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={620}
+        height={483}
+        priority={true}
+        quality={100}
+      />
+    </div>
+    {/* Text */}
+    <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center mt-6 md:mt-0 pr-0 md:pr-16">
+      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
+        Conocé a tu audiencia<br />
+        es la clave del éxito
+      </span>
+      <span className="font-light mb-[40px] text-black text-end text-xl md:text-2xl leading-relaxed tracking-wide mt-4">
+        Segmentar y entender a tu audiencia es fundamental<br />
+        para crear campañas de marketing efectivas para<br />
+        obtener éxito de tu negocio en redes sociales.<br /><br />
+        Conocer sus edades, intereses, comportamientos y<br />
+        necesidades permite diseñar mensajes que realmente<br />
+        resuenen e impacten en cada persona, maximizando el<br />
+        impacto y minimizando los esfuerzos desperdiciados.
+      </span>
+    </div>
+  </div>
+</section>
+
+{/* Section 6 */}
+<section className="relative flex flex-wrap w-auto h-auto justify-center items-center bg-white">
+  <div className="flex flex-col md:flex-row w-full py-6">
+    {/* Text */}
+    <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[100px] md:pl-[100px] mx-2">
+      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[28px] text-[#0853FC] text-start">
+        Tu perfil es tu tarjeta<br />
+        de presentación
+      </span>
+      <span className="text-lg md:text-2xl sm:text-4xl mb-[40px] text-start leading-relaxed tracking-wide">
+        Tu biografía es la primera impresión que los posibles<br />
+        clientes tienen de tu marca en redes sociales.<br />
+        Optimizamos tu diseño y contenido para reflejar la<br />
+        identidad de tu marca, asegurando que cada<br />
+        publicación contribuya a construir una imagen<br />
+        coherente y atractiva.
+      </span>
+      <Link href="/">
+        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
+          Contactar
+        </button>
+      </Link>
+    </div>
+
+    {/* Image */}
+    <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0 rounded-br-full right-0">
+      <Image
+        src={"/services/ImgSct6GR.png"}
+        alt="Imagen de la sección 6"
+        className="object-cover transition-opacity opacity-0 duration-500 rounded-br-full"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={792}
+        height={651}
+        priority={true}
+        quality={100}
+      />
+    </div>
+  </div>
+  {/* Ola */}
+  <div className="absolute w-full justify-end overflow-hidden bottom-0 z-5">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
+      <path fill="#0853FC" fillOpacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
+    </svg>
+  </div>
+</section>
+
+{/* Section 7 */}
+<section className="relative bg-[#0051FF] py-6 px-[100px]">
+  <div className="flex flex-col md:flex-row w-full">
         {/* Image */}
-        {/* <div className="w-full md:w-1/2">
-          <Image
-            src={"/"}
-            className="object-cover transition-opacity opacity-0 duration-500"
-            onLoad={(event) => event.target.classList.remove("opacity-0")}
-            width={595}
-            height={265}
-            priority={true}
-            quality={100}
-          />
-        </div> */}
-
-     {/* Text */}
-          <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[80px] mx-2">
-          <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-start text-2xl md:text-4xl lg:text-5xl justify-start">
-              Hacemos<br />
-              crecer<br />
-              tu negocio<br />
-              en redes
-            </span>
-            <span className="text text-lg mb-[40px] text-start text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
-              Llegá a nuevos<br />
-              clientes en todas<br />
-              las plataformas Meta
-            </span>
-
-            <Link href="/">
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
-                Empezar
-              </button>
-            </Link>
-          </div>
-
-          <div className="w-full md:w-1/2">
-            <Image
-              src={"/services/ImgSct3GR.svg"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
-              priority={true}
-              quality={100}
-              style={{
-                zIndex: 15,
-                position: 'relative',
-                top: 100,
-                bottom: -200,
-                left: '50%',
-                transform: 'translateX(-50%)' }}
-            />
-          </div>
-        </div>
-
-        
-      </section>
-      {/*Section 4 */}
-      <section className="relative bg-[#FFFFFF]">
-            <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
-              {/* Image */}
-              <div className="w-full md:w-1/2 pl-[120px] mx-2">
-                <Image
-                  src={"/ImgSct4GR.svg"}
-                  className="object-cover transition-opacity opacity-0 duration-500"
-                  onLoad={(event) => event.target.classList.remove("opacity-0")}
-                  width={595}
-                  height={265}
-                  priority={true}
-                  quality={100}
-                />
-              </div>
-              <br />
-              {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
-                <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
-                Un perfil<br/>
-                optimizado<br/>
-                al 100%
-                </span>
-              </div>
-            </div>
-          </section>
-
-      {/*Section 5*/}
-      <section className="relative bg-[#FFFFFF]">
-            <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
-              {/* Image */}
-              <div className="w-full md:w-1/2 pl-[120px] mx-2">
-                <Image
-                  src={"/ImgSct5GR.svg"}
-                  className="object-cover transition-opacity opacity-0 duration-500"
-                  onLoad={(event) => event.target.classList.remove("opacity-0")}
-                  width={595}
-                  height={265}
-                  priority={true}
-                  quality={100}
-                />
-              </div>
-              <br />
-              {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
-                <span className="text-4xl font-bold mb-[2px] text-[#0853FC] text-end md:text-4xl lg:text-5xl">
-                Conocé a tu audiencia<br/>
-                es la clave del exito
-                </span>
-                <br/>
-                <span className="font-light mb-[40px] text-black text-end text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
-                Segmentar y entender a tu audiencia es fundamental<br/>
-                para crear campañas de marketing efectivas para<br/>
-                obtener éxito de tu negocio en redes sociales.
-                <br/>
-                Conocer sus edades, intereses, comportamientos y<br/>
-                necesidades permite diseñar mensajes que realmente<br/>
-                resuenen e impacten en cada persona, maximizando el<br/>
-                impacto y minimizando los esfuerzos desperdiciados.
-                </span>
-              </div>
-            </div>
-          </section>
-      {/*Section 6*/}
-      <section className="relative flex flex-wrap w-auto h-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
-      <div className="flex flex-col md:flex-row w-full p-6">
-      <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[80px] mx-2">
-          <span className="text-4xl font-bold mb-[28px] text-[#0853FC] text-start text-2xl md:text-4xl lg:text-5xl justify-start">
-          Tu perfil es tu tarjeta<br />
-          de presentación
-            </span>
-            <span className="text text-lg mb-[40px] text-start text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
-            Tu biografía es la primera impresión que los posibles<br />
-            clientes tienen de tu marca en redes sociales.<br />
-            Optimizamos tu diseño y contenido para reflejar la<br/>
-            dentidad de tu marca, asegurando que cada<br/>
-            publicación contribuya a construir una imagen<br/>
-            coherente y atractiva.
-            </span>
-
-            <Link href="/">
-              <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
-                Contactar
-              </button>
-            </Link>
-          </div>
-
-          <div className="w-full md:w-1/2">
-            <Image
-              src={"/ImgSct6GR.svg"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
-              priority={true}
-              quality={100}
-              style={{ 
-                zIndex: 15, 
-                position: 'relative',
-                top: 100,
-                bottom: -200,
-                left: '50%',
-                transform: 'translateX(-50%)' }}
-            />
-          </div>
-          <br/>
-        </div>
-        {/* Ola */}
-        <div className="absolute w-full justify-end overflow-hidden bottom-0 z-5">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
-            <path fill="#0853FC" fill-opacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
-          </svg>
-        </div>
-      </section>
-
-      {/*Section 7*/}
-      <section>
-        <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
-          {/* Image */}
-          <div className="w-full md:w-1/2 pl-[120px] mx-2">
-            <Image
-              src={"/ImgSct7GR.svg"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
-              priority={true}
-              quality={100}
-            />
-          </div>
-          <br />
-          {/* Text */}
-          <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center">
-            <span className="text-4xl font-bold mb-[2px] text-[#FFFFFF] text-end md:text-4xl lg:text-5xl pr-16">
-              Creamos los<br />
-              contenidos<br />
-              estratégicos<br />
-              que atraen
-            </span>
-            <span className="font-bold mb-[40px] text-[#FB8A00] text-end text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
-              y conectan con<br />
-              tu audiencia<br />
-            </span>
-          </div>
-        </div>
-      </section>
+        <div className="w-full md:w-1/2 flex justify-center md:justify-start mt-6 md:mt-0 pl-0 md:pl-[120px] mx-2">
+      <Image
+        src={"/services/ImgSct7GR.png"}
+        alt="Imagen de la sección 7"
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={804}
+        height={485}
+        priority={true}
+        quality={100}
+      />
+    </div>
+    {/* Text */}
+    <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center md:text-end pr-0 md:pr-16">
+      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[2px] text-[#FFFFFF]">
+        Creamos los<br />
+        contenidos<br />
+        estratégicos<br />
+        que atraen
+      </span>
+      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[40px] text-[#FB8A00] mt-4">
+        y conectan con<br />
+        tu audiencia
+      </span>
+    </div>
+  </div>
+</section>
 
       {/*Section CircleMap */}
-      <section className="bg-[#0051FF] text-white p-6">
+      <section className="bg-[#0051FF] text-white py-6 px-[100px]">
         {/* Title */}
         <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
           <h2 className="text-[#FFFFFF] font-semibold mt-4">
@@ -432,36 +420,41 @@ const CommunityManager = () => {
       </section>
 
       {/*PlanCards*/}
-      <DesktopCommunityManagerSection />
+      <DesktopCommunityManagerSection style={{
+        width: "full"
+      }} />
 
       {/*Formulario*/}
-      <Forms />
+      <Forms 
+      style={{paddingX: "100px"}}
+      />
 
       {/*Section FootSuperior*/}
       <section className="w-full">
-        <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
+        <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] py-3 px-[-100px]">
           {/* Image */}
-          <div className="w-full md:w-1/2 pl-[120px] mx-2">
+          <div className="w-full md:w-1/2 pl-[100px] mx-2">
             <Image
-              src={"/services/Mockupredes3.svg"}
+              src={"/services/Mockupredes3.png"}
+              alt="Imagen del FootSuperior"
               className="object-cover transition-opacity opacity-0 duration-500"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
+              width={774}
+              height={708}
               priority={true}
               quality={100}
               style={{
                 zIndex: 15,
                 position: 'relative',
-                top: 60,
-                bottom: -50,
+                top: 80,
+                bottom: -60,
                 left: '50%',
                 transform: 'translateX(-50%)' }}
             />
           </div>
           <br />
           {/* Text */}
-          <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center">
+          <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-[100px]">
             <span className="text-5xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl pr-16">
               ¿Estás listo<br />
               para trabajar<br />

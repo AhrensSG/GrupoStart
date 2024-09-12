@@ -256,10 +256,10 @@ const isMetaSocialNetwork = selectedSocialNetwork === 'Facebook' || selectedSoci
   };
 
   return (
-    <section className="py-6 px-16 bg-[#FFFFFF] relative">
+    <section className="py-6 px-[100px] bg-[#FFFFFF] relative md:flex-wrap">
       {/* Encabezado del formulario */}
-      <div className="text-center mb-8 mt-0">
-        <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-3xl">
+      <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
+        <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
           Plan Personalizado
         </span>
       </div>
@@ -274,7 +274,7 @@ const isMetaSocialNetwork = selectedSocialNetwork === 'Facebook' || selectedSoci
       {/* Interruptores de redes sociales */}
       <div className="flex space-x-4 mb-4 justify-center items-center border-t-2 border-t-blue-500 bg-[#0853FC] text-white p-2 rounded-t-full">
         {/* Interruptor de Facebook */}
-        <label className="flex items-center space-x-2">
+        <label className="flex items-center space-x-2 ">
           <input
             type="checkbox"
             name="facebook"

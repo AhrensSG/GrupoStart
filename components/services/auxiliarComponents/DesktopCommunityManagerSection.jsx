@@ -10,40 +10,55 @@ import { toast } from "sonner";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg py-[10px] px-[30px] border border-gray-300 leading-8">
-      <div className="items-center justify-center text-center">
-      <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white p-2">{title}</span>
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col pb-1">
+      {/* Título del plan */}
+      <div className="items-center justify-center text-center pt-[29px] pb-[8px]">
+        <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
+          {title}
+        </span>
       </div>
-      <ul className="list-none pl-5 mt-4 mb-4"> {/* Changed list style for spacing */}
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-center mb-4">
-          <Image
-                  src={"/services/CheckIcon.svg"}
-                  width={20}
-                  height={20}
+
+          {/* Lista de características */}
+        <ul className="list-none pl-[33px] pr-[12px] py-[4px] h-[270px] w-[260px] flex-grow overflow-y-auto justify-center">
+          {features.map((feature, index) => (
+            <li key={index} className="flex items-center w-full mb-2">
+              <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
+                <Image
+                  src="/services/CheckIcon.svg"
+                  width={16}
+                  height={16} // Tamaño fijo de 20px x 20px
                   alt="checkIcon"
-                  className="mr-2"
+                  className="w-full h-full"
                 />
-            {feature}
-            {index === 1 && <span className="feature-spaced" />}
-          </li>
-        ))}
-      </ul>
-      <div className="flex justify-center items-center pb-[8px]">
-        <div className="text-center flex-col justify-center items-center gap-4">
-        <span className="text-black-900 line-through font-extrabold text-center justify-center text-[40px]"><s>${price.original}</s></span>
-        <br />
-        <span className="font-bold text-[#FB8A00] text-center justify-center text-ligth text-[30px]">ahora ${price.discount}</span>
+              </div>
+              <span className="text-left text-xs md:text-sm lg:text-base leading-tight">
+              {feature}
+              </span>
+            </li>
+          ))}
+        </ul>
+
+      {/* Precios */}
+      <div className="flex justify-center items-center pb-[3px] relative w-full">
+        <div className="text-center flex-col justify-center items-center gap-4 relative">
+          <span className="text-black-900 line-through font-extrabold text-center justify-center text-[32px] w-[206px] h-[64px]">
+            <s>${price.original}</s>
+          </span>
+          <br />
+          <span className="font-bold text-[#FB8A00] text-center justify-center text-ligth text-[26px] w-[202px] h-[39px]">
+            ahora ${price.discount}
+          </span>
         </div>
       </div>
-      <br />
-      <div className="static flex flex-static items-end justify-center text-center mb-[5px]">
-      <button
-        onClick={onButtonClick}
-        className="static bottom-5 bg-[#0853FC] hover:bg-blue-700 text-white font-light py-[8px] px-2 rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-3xl"
-      >
-        Contratar
-      </button>
+
+      {/* Botón de contratación */}
+      <div className="flex items-end justify-center text-center">
+        <button
+          onClick={onButtonClick}
+          className="bg-[#0853FC] hover:bg-blue-700 text-white font-light py-[8px] px-2 rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-xl h-[43px] w-[132]"
+        >
+          Contratar
+        </button>
       </div>
     </div>
   );
@@ -72,32 +87,40 @@ const DesktopCommunityManagerSection = () => {
   };
 
   return (
-    <div className="p-8 mx-auto static" style={{ background: 'linear-gradient(to bottom, #0853FC, #FFFFFF, #FFFFFF)' }}>
-      <div className="items-center justify-center text-center py-12">
-      <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white py-3 px-[100px]">Elegí tu plan</span>
+    <div
+      className="py-8 px-[30px] md:px-[100px] relative"
+      style={{
+        background:
+          "linear-gradient(to bottom, #0853FC, #0853FC, #FFFFFF, #FFFFFF)",
+      }}
+    >
+      <div className="items-center justify-center text-center py-[36px] relative px-[20px] md:px-[100px] sm:px-[50px] w-full">
+        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center items-center justify-center mb-8 rounded-full rounded-tr-xl rounded-bl-xl bg-[#FB8A00] text-white py-3 lg:max-w-[20%] sm:max-w-[80%] mx-auto">
+          Elegí tu plan
+        </h2>
       </div>
-      <div className="grid-container grid grid-cols-3 gap-[74px] px-[185px]">
-      <PlanCard
-        title="Conexion inicial"
-        features={[
-        '2 Redes sociales Facebook + Instagram',
-        '3 Publicaciones semanales 12 Mensuales',
-        '3 Historias semanales 12 Mensuales',
-        'Diseño creativo con imágenes del cliente o de internet',
-        'Puesta en marcha de campañas publicitarias'
-        ]}
-        price={{ original: 199900, discount: 179900 }}
-        onButtonClick={() => handleBuyNow(2, "Plan Conexion Inicial", 179900)}
+      {/* Ajustamos el grid para que sea responsive */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px] md:gap-[74px] px-[0px] md:px-[185px]">
+        <PlanCard
+          title="Conexion inicial"
+          features={[
+            "2 Redes sociales Facebook + Instagram",
+            "3 Publicaciones semanales 12 Mensuales",
+            "3 Historias semanales 12 Mensuales",
+            "Diseño creativo con imágenes del cliente o de internet",
+            "Puesta en marcha de campañas publicitarias",
+          ]}
+          price={{ original: 199900, discount: 179900 }}
+          onButtonClick={() => handleBuyNow(2, "Plan Conexion Inicial", 179900)}
         />
         <PlanCard
           title="Social Master"
-          className="pb-2"
           features={[
-          '3 Redes sociales Facebook + Instagram + Tiktok',
-          '5 Publicaciones + historias semanales 20 Mensuales',
-          'Diseño creativo con imágenes del cliente o de internet',
-          'Puesta en marcha de campañas publicitarias',
-          '1 video 30 seg. mensual'
+            "3 Redes sociales Facebook + Instagram + Tiktok",
+            "5 Publicaciones + historias semanales 20 Mensuales",
+            "Diseño creativo con imágenes del cliente o de internet",
+            "Puesta en marcha de campañas publicitarias",
+            "1 video 30 seg. mensual",
           ]}
           price={{ original: 278900, discount: 258900 }}
           onButtonClick={() => handleBuyNow(3, "Plan Social Master", 258900)}
@@ -105,11 +128,11 @@ const DesktopCommunityManagerSection = () => {
         <PlanCard
           title="Social Pro"
           features={[
-          '3 Redes sociales Facebook + Instagram + Tiktok',
-          '8 Publicaciones + historias semanales 32 Mensuales',
-          'Diseño creativo con imágenes del cliente o de internet',
-          'Puesta en marcha de campañas publicitarias',
-          '2 videos 30 seg. mensual',
+            "3 Redes sociales Facebook + Instagram + Tiktok",
+            "8 Publicaciones + historias semanales 32 Mensuales",
+            "Diseño creativo con imágenes del cliente o de internet",
+            "Puesta en marcha de campañas publicitarias",
+            "2 videos 30 seg. mensual",
           ]}
           price={{ original: 399900, discount: 369900 }}
           onButtonClick={() => handleBuyNow(4, "Plan Social Pro", 369900)}
