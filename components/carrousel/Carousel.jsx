@@ -108,7 +108,7 @@ const Carousel = () =>  {
             className="absolute top-1/2 left-16 transform -translate-y-1/2 text-[#FB8A00] bg-transparent focus:outline-none font-extrabold md:text-[100px] px-6 py-4.5 justify-start z-10"
             >
             <Image
-            src="./flechabotoncarousel.svg"
+            src="../flechabotoncarousel.svg"
             alt="Anterior"
             width={24}
             height={24}
@@ -134,7 +134,7 @@ const Carousel = () =>  {
             className="absolute top-1/2 right-16 transform -translate-y-1/2 text-[#FB8A00] bg-transparent focus:outline-none focus:ring-gray-300 font-extrabold md:text-[100px] px-6 py-4.5 rounded-full"
             >
             <Image
-            src="./flechabotoncarousel.svg"
+            src="../flechabotoncarousel.svg"
             alt="Siguiente"
             width={24}
             height={24}

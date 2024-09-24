@@ -29,7 +29,7 @@ const Chat = () => {
           onClick={handleButtonClick}
         >
           <Image
-            src="/services/flechabotoncarousel.svg" // Ruta del SVG para el botón superior
+            src="../flechabotoncarousel.svg" // Ruta del SVG para el botón superior
             alt="OpenChat"
             width={25}
             height={50} // Ajusta el tamaño si es necesario

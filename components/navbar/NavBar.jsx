@@ -23,7 +23,7 @@ const NavBar = () => {
             Nosotros
           </button>
         </Link>
-        <Link className="text-lg" href={"/about#contactAbout"}>
+        <Link className="text-lg" href={"/contact"}>
           <button className="w-full h-10 px-6 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Contacto
           </button>

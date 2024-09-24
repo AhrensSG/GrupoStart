@@ -7,9 +7,9 @@ import { AnimatePresence, motion } from "framer-motion";
 const NavBarV2 = () => {
   const [showSideBar, setShowSideBar] = useState(false);
   return (
-    <nav className="w-full z-30 bg-transparent flex flex-row items-center justify-between px-14 gap-6">
-        <Link href={"/"} className="min-w-max">
-        <Image src="/OrangeLogo.svg" alt="Logo" width={130} height={91} priority />
+    <nav className="w-full z-30 flex flex-row items-center justify-between px-14 gap-6 bg-[#0853FC]">
+        <Link href={"/#home"} className="min-w-max">
+        <Image src="/OrangeLogo.svg" alt="Logo" width={150} height={101} priority />
         </Link>
 
             <div className="w-full hidden lg:flex flex-row justify-end items-center gap-12">
@@ -111,7 +111,7 @@ const NavBarV2 = () => {
                   </button>
                 </Link>
 
-                <Link className="max-w-32 w-full" href={"/"}>
+                <Link className="max-w-32 w-full" href={"/contact"}>
                   <button
                     onClick={() => setShowSideBar(false)}
                     className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"

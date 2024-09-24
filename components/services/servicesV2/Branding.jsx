@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Carousel from "../servicesV2/carrousel/Carousel";
+import Carousel from "@/components/carrousel/Carousel";
 import DesktopBrandingSection from "@/components/services/auxiliarComponents/DesktopBrandingSection";
 
 const Branding = () => {
@@ -129,8 +129,8 @@ return (
                   height={265}
                   priority={true}
                   quality={100}
-                  style={{ 
-                    zIndex: 15, 
+                  style={{
+                    zIndex: 15,
                     position: 'relative',
                     top: 100,
                     bottom: -200,
@@ -140,21 +140,21 @@ return (
               </div>
          {/* Text */}
               <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center bg-grey-700 pr-[150px] mx-2">
-              <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-center text-2xl md:text-4xl lg:text-5xl justify-center">
-                  ¿Que es el codigo QR y por<br />
-                  qué debes utilizarlos como<br />
-                  herramientas de marketing?
+              <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-end text-2xl md:text-4xl lg:text-5xl justify-center">
+                  ¿Por qué utilizar un<br />
+                  código QR en tus tarjetas<br />
+                  de presentación?
                 </span>
                 <span className="text text-lg mb-[40px] text-end text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
-                    Estos son un instrumento muy poderoso<br />
-                    para hacer publicidad y fortalecer tu marca,<br />
-                    es necesario contar con diseños apropiados<br/>
-                    que tengan mensajes directos y precisos.<br/>
-                    
-                    5 objetivos para comunicar efectivamente:<br/>
-                    1 Mensaje claro 2 Titulos llamativos<br/>
-                    3 Imágenes adecuadas 4 Diseño disruptivo<br/>
-                    5 Orden, equilibro y resaltar lo importante
+                    Los QR son una herramienta poderosa<br />
+                    capaz de almacenar información en ellos<br />
+                    como por ejemplo una dirección web.<br/>
+                    Es por ello que aprovechamos esta cualidad<br/>
+                    para dirigir atus potenciales clientes con un<br/>
+                    código QR personalizado hacia una web<br/>
+                    de presentación que vamos a configurar<br/>
+                    para vos detallando una presentación de tu<br/>
+                    negocio y todos tus puntos de contacto.
                 </span>
               </div>
     
@@ -168,16 +168,15 @@ return (
         <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
           {/* Text */}
           <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center text-center pl-16">
-            <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-start md:text-4xl lg:text-5xl pr-16">
-              Conecta con<br />
-              tu público,
-            </span>
-            <span className="font-bold mb-[40px] text-[#0853FC] text-start text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
-              mejorá<br />
-              la experiencia<br />
-              del cliente<br />
-              y aumenta<br/>
-              la interacción.
+          <span className="font-bold mb-[40px] text-[#0853FC] text-start text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
+              Facilitale<br />
+              a tus clientes<br/>
+              el acceso a tu<br/>
+              información<br />
+              en la web o<br />
+              también lo tendrás<br />
+              impreso en el dorso<br/>
+              de las tarjetas
             </span>
           </div>
 
@@ -194,13 +193,13 @@ return (
             />
           </div>
         </div>
-      </section>
+          </section>
 
           {/*Section 5*/}
           <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
               <span className="text-4xl font-bold mb-[2px] text-black text-center items-center md:text-4xl lg:text-5xl pr-16">
-                Tus tarjetas personalizadas<br/>
-                con tu foto, colores, letras y tu logo
+                Tus tarjetas 100% personalizadas<br/>
+                con tu foto, colores, letras o tu logo
               </span>
             {/* Image */}
             <div className="w-full md:w-1/2 pl-[120px] mx-2 justify-center">
@@ -245,56 +244,80 @@ return (
                   solo para vos
                 </span>
                 <span className="font-light mb-[40px] text-end text-[#FFFFFF] text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
-                    Direcciona a los interesados en tu<br />
-                    negocio a una página web<br />
-                    donde, tendrás una presentación<br/>
-                    ampliada, además de botones con<br/>
-                    acceso rápido a un chat con vos,<br/>
-                    tu ubicación en google maps<br/>
-                    y todas tus redes sociales
+                    El QR enviará a la gente que quiera<br />
+                    saber más sobre vos a landing<br />
+                    page, donde tendrán una<br/>
+                    presentación completa de tu<br/>
+                    negocio y pueden chatear con vos<br/>
+                    al instante por Whatsapp, ver tu<br/>
+                    dirección en Google Maps y<br/>
+                    seguirte en tus redes sociales.
                 </span>
                 <Link href="/">
                   <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
-                    Contratar
+                    Solicitar
                   </button>
                 </Link>
               </div>
             </div>
           </section>
-          {/*Section 7*/}
-          <section className="relative bg-[#0853FC] flex flex-wrap w-auto">
-            {/*Lista*/}
-            <div className="items-start justify-center text-start pl-16">
-            <ul class="list pl-4 space-y-2 text-left text-#FFA500 font-bold text-3xl">
-              <li>Diseño<br/> personalizado</li>
-              <li>Landing page<br/>completa</li>
-              <li>Posicionamiento<br/>SEO en internet</li>
-              <li>Accesos<br/> Directos</li>
-              <li>Envíos a<br/> tu domicilio</li>
-            </ul>
-            </div>
-            {/*Imagen*/}
-            <div className="w-full h-auto pl-[520px] mx-2 items-end justify-end object-end">
-            <Image
-              src={"/Jirafe1.svg"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
-              priority={true}
-              quality={100}
-            />
-          </div>
-          {/*Texto*/}
-          <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center text-start pl-16">
-            <span className="text-4xl font-bold mb-[2px] text-[#FFFFFF] text-start md:text-4xl lg:text-5xl pr-16">
-              ¿Listo para<br />
-              mejorar tu imagen<br/>
-              y potenciar tu negocio<br/>
-              con esta herramienta?
+{/*Section 7*/}
+<section className="relative bg-[#0853FC] flex w-full p-8">
+  <div className="grid grid-cols-2 gap-4 w-full">
+    {/* Columna izquierda: Lista + Texto */}
+    <div className="flex flex-col justify-start">
+      {/* Lista */}
+      <ul className="list pl-4 space-y-[58px] text-left font-bold text-3xl text-orange-500">
+        {[
+          "Diseño<br/>personalizado",
+          "Landing page<br/>completa",
+          "Posicionamiento<br/>SEO en internet",
+          "Accesos<br/>Directos",
+          "Envíos a<br/>tu domicilio",
+        ].map((item, index) => (
+          <li key={index} className="relative flex items-center">
+            {/* Punto naranja */}
+            <div className="w-[58px] h-[58px] rounded-full bg-[#FB8A00] mr-4 flex-shrink-0" />
+            <span className="leading-tight">
+              {item.split("<br/>").map((line, i) => (
+                <React.Fragment key={i}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
             </span>
-          </div>
-          </section>
+          </li>
+        ))}
+      </ul>
+
+      {/* Texto debajo de la lista */}
+      <div className="mt-12">
+        <span className="text-4xl font-bold text-[#FFFFFF] md:text-4xl lg:text-5xl">
+          ¿Listo para<br />
+          mejorar tu imagen<br />
+          y potenciar tu negocio<br />
+          con esta herramienta?
+        </span>
+      </div>
+    </div>
+
+    {/* Columna derecha: Imagen */}
+    <div className="flex justify-end items-center">
+      <Image
+        src={"/Jirafe1.svg"}
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={933}
+        height={1244}
+        priority={true}
+        quality={100}
+        alt="Imagen"
+      />
+    </div>
+  </div>
+</section>
+
+
 
           {/*PlanCard*/}
           <DesktopBrandingSection />
@@ -309,9 +332,11 @@ return (
               </h2>
             </div>
         <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px] py-8">
+        <Link href="/contacto">
         <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
                 Hablá con un asesor
         </button>
+        </Link>
         </div>
           </section>
     </aside>

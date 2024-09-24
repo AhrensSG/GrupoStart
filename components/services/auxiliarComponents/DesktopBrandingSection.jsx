@@ -10,11 +10,11 @@ import { toast } from "sonner";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg py-[10px] px-[30px] border border-gray-300 leading-8">
-      <div className="items-center justify-center text-center pt-5 pb-[35px]">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[556px] w-[307px] relative container flex flex-col pb-1">
+      <div className="items-center justify-center text-center pt-5 pb-[12px]">
       <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white py-2 px-6">{title}</span>
       </div>
-      <ul className="list-none pl-5 mt-4 items-center justify-center text-center"> {/* Changed list style for spacing */}
+      <ul className="list-none pl-[33px] pr-[12px] py-[2px] h-[220px] w-[300px] flex-grow justify-center relative"> {/* Changed list style for spacing */}
         {features.map((feature, index) => (
           <li key={index} className="flex items-center text-center justify-center mb-4">
             {feature}
@@ -23,11 +23,11 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
         ))}
       </ul>
       <br />
-      <div className="static flex flex-static items-end justify-center text-center mb-[5px]">
-      <button
-        onClick={onButtonClick}
-        className="static bottom-5 bg-[#0853FC] hover:bg-blue-700 text-white font-light py-[8px] px-2 rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-3xl"
-      >
+      <div className="flex items-end justify-center text-center pb-1">
+        <button
+          onClick={onButtonClick}
+          className="bg-[#0853FC] hover:bg-blue-700 text-white font-light py-[8px] px-2 rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-xl h-[43px] w-[132]"
+        >
         Comprar
       </button>
       </div>
@@ -69,7 +69,8 @@ const DesktopBrandingSection = () => {
         'Diseño personalizado: foto, colores, letras y logo',
         'Landing page con descripción de tu negocio, botones de acceso directo a Whatsapp, Google maps y todas tus redes sociales',
         'Posicionamiento SEO en internet',
-        '50 tarjetas full color doble face'
+        '50 tarjetas full color doble face',
+        'Suscripción de $500 de mantenimiento mensual a tu landing page'
         ]}
         price={{ original: 0, discount: 0 }}
         onButtonClick={() => handleBuyNow(2, "Plan Pack 1", 0)}
@@ -81,7 +82,8 @@ const DesktopBrandingSection = () => {
           'Diseño personalizado: foto, colores, letras y logo',
           'Landing page con descripción de tu negocio, botones de acceso directo a Whatsapp, Google maps y todas tus redes sociales',
           'Posicionamiento SEO en internet',
-          '100 tarjetas full color doble face'
+          '100 tarjetas full color doble face',
+          'Suscripción de $5.000 de mantenimiento anual a tu landing page'
           ]}
           price={{ original: 0, discount: 0 }}
           onButtonClick={() => handleBuyNow(3, "Plan Pack 2", 0)}
@@ -92,7 +94,8 @@ const DesktopBrandingSection = () => {
           'Diseño personalizado: foto, colores, letras y logo',
           'Landing page con descripción de tu negocio, botones de acceso directo a Whatsapp, Google maps y todas tus redes sociales',
           'Posicionamiento SEO en internet',
-          '200 tarjetas full color doble face'
+          '200 tarjetas full color doble face',
+          'Pago vitalicio no tiene costo de mantenimiento'
           ]}
           style={{ marginBottom: '30px'}}
           price={{ original: 0, discount: 0 }}

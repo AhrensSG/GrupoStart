@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Carousel from "../servicesV2/carrousel/Carousel";
+import Carousel from "@/components/carrousel/Carousel";
 import DesktopCommunityManagerSection from "@/components/services/auxiliarComponents/DesktopCommunityManagerSection";
 import Forms from "../servicesV2/formulario/Forms";
 
@@ -265,7 +265,7 @@ const CommunityManager = () => {
         publicación contribuya a construir una imagen<br />
         coherente y atractiva.
       </span>
-      <Link href="/">
+      <Link href="/contacto">
         <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
           Contactar
         </button>
@@ -466,10 +466,11 @@ const CommunityManager = () => {
               el plan para potenciar<br />
               las redes de tu negocio
             </span>
-            
+            <Link href="/contacto">
             <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl items-center pr-4 mr-[55px]">
               Hablá con un asesor
             </button>
+            </Link>
         </div>
         </div>
       </section>
