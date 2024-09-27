@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import GlobalContext from "./context/GlobalContext";
 import { Toaster } from "sonner";
+import ResponsiveContainer from "@/components/responsiveComp/ResponsiveContainer";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -21,7 +22,9 @@ export default function RootLayout({ children }) {
           position="bottom-right"
           expand={false}
         />
-        <body className={roboto.className}>{children}</body>
+        <ResponsiveContainer>
+          <body className={roboto.className}>{children}</body>
+        </ResponsiveContainer>
       </GlobalContext>
     </html>
   );
