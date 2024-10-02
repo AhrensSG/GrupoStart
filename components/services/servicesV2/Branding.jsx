@@ -1,26 +1,72 @@
 "use client";
 import { Context } from "@/app/context/GlobalContext";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "@/components/carrousel/Carousel";
 import DesktopBrandingSection from "@/components/services/auxiliarComponents/DesktopBrandingSection";
 
 const Branding = () => {
-  const { data } = useContext(Context);
-  const router = useRouter();
+  const [scale, setScale] = useState(1);
 
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      let newScale = screenWidth / 1600;
 
-return (
+       // Reducir el tamaño proporcionalmente para pantallas menores de 1024px
+       if (screenWidth < 1024) {
+        const scaleFactor = 1 - ((1023 - screenWidth) * 0.10) / 1023;
+        newScale *= scaleFactor;
+      }
 
-    <aside className="relative flex-col">
+      // Ajustar la escala para pantallas entre 1024px y 1600px
+      if (screenWidth >= 1024 && screenWidth < 1600) {
+        const scaleFactor = (screenWidth - 1024) / (1600 - 1024);
+        newScale = 0.10 + (1 - 0.20) * scaleFactor;
+      }
+
+      // Limitar el escalado para pantallas muy pequeñas
+      if (newScale < 0.10) {
+        newScale = 0.10;
+      }
+
+      // Limitar el escalado para pantallas muy grandes
+      if (newScale > 1) {
+        newScale = 1;
+      }
+
+      setScale(newScale);
+    };
+
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <aside
+      className="relative flex-col w-full h-full"
+      style={{
+        transform: `scale(${scale})`,
+        width: "100%",
+        height: "100%",
+        overflowX: "hidden",
+      }}
+    >
           {/*Section 1*/}
-            <section className="relative bg-[#0853FC] flex w-full p-5">
-            <div className="container flex-col pb-2 gap-16 ml-1 pl-[30px] pt-[55px]">
+            <section className="relative bg-[#0853FC] flex w-full pl-[2%]">
+            <div className="container flex-col pb-2 gap-16 ml-1 pl-[1%] pt-[55px]" 
+            style={{
+            maxWidth: "1600px",
+            paddingLeft: "2%",
+            paddingRight: "2%",
+          }}>
               <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-center">Herramientas<br/>útiles</span>
               <div className="pt-[20px] gap-16">
-                <span className="text-white text-md">
+                <span className="text-white text-xl">
                 Envia a los interesados en tu negocio<br/>
                 a una web con una presentación<br/>
                 ampliada, además de botones con<br/>
@@ -35,7 +81,7 @@ return (
               </div>
             </div>
               {/* Aquí iría el reproductor de YouTube */}
-              <div className="flex items-end justify-end w-full pr-[100px] mr-[5px] rounded">
+              <div className="flex items-end justify-end w-full pr-[3%] rounded">
           <div style={{
               paddingTop: '10px',
               width: '842px',
@@ -61,7 +107,7 @@ return (
             </section>
     
           {/* Section 2 */}
-          <section className="relative bg-grey-700 flex flex-col justify-center items-center">
+          <section className="relative bg-white flex flex-col justify-center items-center w-full">
             <div className="w-full justify-start">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,14 +146,17 @@ return (
                 </span>
               </div>
               <br/>
-              {/* Center the carousel */}
-              <div className="flex justify-center w-full z-20 p-4">
                 <Carousel />
-              </div>
           </section>
           {/* Section 3 */}
-          <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
-          <div className="flex flex-col md:flex-row w-full p-6">
+          <section className="relative flex flex-wrap w-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+          <div className="flex flex-col md:flex-row w-full p-6"
+          style={{
+            maxWidth: "1600px",
+            paddingLeft: "2%",
+            paddingRight: "2%",
+          }}
+          >
             {/* Image */}
             {/* <div className="w-full md:w-1/2">
               <Image
@@ -120,13 +169,13 @@ return (
                 quality={100}
               />
             </div> */}
-          <div className="w-full md:w-1/2">
+          <div className="w-full justify-start items-start">
                 <Image
-                  src={"/Jirafe1.svg"}
+                  src={"/services/imgSct3HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500"
                   onLoad={(event) => event.target.classList.remove("opacity-0")}
-                  width={595}
-                  height={265}
+                  width={575}
+                  height={255}
                   priority={true}
                   quality={100}
                   style={{
@@ -134,18 +183,18 @@ return (
                     position: 'relative',
                     top: 100,
                     bottom: -200,
-                    left: '50%',
+                    left: '45%',
                     transform: 'translateX(-50%)' }}
                 />
               </div>
          {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center bg-grey-700 pr-[150px] mx-2">
+              <div className="w-full relative flex flex-col items-end justify-center bg-grey-700 pr-[3%]">
               <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-end text-2xl md:text-4xl lg:text-5xl justify-center">
                   ¿Por qué utilizar un<br />
                   código QR en tus tarjetas<br />
                   de presentación?
                 </span>
-                <span className="text text-lg mb-[40px] text-end text-1xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
+                <span className="text text-lg text-end text-2xl md:text-3xl sm:text-4xl leading-relaxed tracking-wide">
                     Los QR son una herramienta poderosa<br />
                     capaz de almacenar información en ellos<br />
                     como por ejemplo una dirección web.<br/>
@@ -164,10 +213,16 @@ return (
             
           </section>
           {/*Section 4*/}
-          <section className="relative flex flex-wrap w-auto h-screen justify-center">
-        <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
+          <section className="relative flex flex-wrap w-full justify-center">
+        <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6"
+        style={{
+          maxWidth: "1600px",
+          paddingLeft: "2%",
+          paddingRight: "2%",
+        }}
+        >
           {/* Text */}
-          <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center text-center pl-16">
+          <div className="w-full relative flex flex-col items-start justify-center text-center pl-[3%]">
           <span className="font-bold mb-[40px] text-[#0853FC] text-start text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
               Facilitale<br />
               a tus clientes<br/>
@@ -181,12 +236,12 @@ return (
           </div>
 
            {/* Image */}
-          <div className="w-full md:w-1/2 pr-[120px] mx-2">
+          <div className="w-full pr-[2%]">
             <Image
-              src={"/Jirafe1.svg"}
+              src={"/services/imgSct4HU.png"}
               className="object-cover transition-opacity opacity-0 duration-500"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
+              width={715}
               height={265}
               priority={true}
               quality={100}
@@ -196,19 +251,30 @@ return (
           </section>
 
           {/*Section 5*/}
-          <section className="relative flex flex-wrap w-auto h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
-              <span className="text-4xl font-bold mb-[2px] text-black text-center items-center md:text-4xl lg:text-5xl pr-16">
+          <section className="relative flex flex-wrap w-full justify-center items-center bg-white"
+          style={{
+            maxWidth: "1600px",
+            paddingLeft: "2%",
+            paddingRight: "2%",
+          }}
+          >
+              <span className="text-4xl font-bold pb-[16px] text-black text-center items-center md:text-4xl lg:text-5xl pr-16">
                 Tus tarjetas 100% personalizadas<br/>
                 con tu foto, colores, letras o tu logo
               </span>
             {/* Image */}
-            <div className="w-full md:w-1/2 pl-[120px] mx-2 justify-center">
+            <div className="w-full justify-center items-center pb-[15%] px-[1%]" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                margin: '0 auto',
+              }}>
                 <Image
-                  src={"/Jirafe1.svg"}
+                  src={"/services/imgSct5HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500"
                   onLoad={(event) => event.target.classList.remove("opacity-0")}
-                  width={595}
-                  height={265}
+                  width={945}
+                  height={365}
                   priority={true}
                   quality={100}
                 />
@@ -222,23 +288,23 @@ return (
           </section>
 
           {/*Section 6*/}
-          <section>
-          <div className="flex flex-col md:flex-row w-full bg-[#0051FF] p-6">
+          <section className="w-full relative">
+          <div className="flex flex-row w-full bg-[#0051FF] p-6">
               {/* Image */}
-              <div className="w-full md:w-1/2 pl-[120px] mx-2">
+              <div className="w-full pl-[3%]">
                 <Image
-                  src={"/Jirafe1.svg"}
-                  className="object-cover transition-opacity opacity-0 duration-500"
+                  src={"/services/imgSct6HU.png"}
+                  className="object-cover transition-opacity opacity-0 duration-500 z-10"
                   onLoad={(event) => event.target.classList.remove("opacity-0")}
-                  width={595}
-                  height={265}
+                  width={648}
+                  height={449}
                   priority={true}
                   quality={100}
                 />
               </div>
               <br />
               {/* Text */}
-              <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-16">
+              <div className="w-full relative flex flex-col items-end justify-center text-center pr-[4%]">
                 <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl pb-5">
                   Una landing page<br />
                   solo para vos
@@ -261,13 +327,13 @@ return (
               </div>
             </div>
           </section>
-{/*Section 7*/}
-<section className="relative bg-[#0853FC] flex w-full p-8">
+          {/*Section 7*/}
+          <section className="relative bg-[#0853FC] flex w-full px-[2%]">
   <div className="grid grid-cols-2 gap-4 w-full">
     {/* Columna izquierda: Lista + Texto */}
     <div className="flex flex-col justify-start">
       {/* Lista */}
-      <ul className="list pl-4 space-y-[58px] text-left font-bold text-3xl text-orange-500">
+      <ul className="list pl-[5%] space-y-[58px] text-left font-bold text-3xl text-orange-500">
         {[
           "Diseño<br/>personalizado",
           "Landing page<br/>completa",
@@ -291,7 +357,7 @@ return (
       </ul>
 
       {/* Texto debajo de la lista */}
-      <div className="mt-12">
+      <div className="mt-12 pl-[5%]">
         <span className="text-4xl font-bold text-[#FFFFFF] md:text-4xl lg:text-5xl">
           ¿Listo para<br />
           mejorar tu imagen<br />
@@ -302,9 +368,9 @@ return (
     </div>
 
     {/* Columna derecha: Imagen */}
-    <div className="flex justify-end items-center">
+    <div className="flex justify-end items-center pr-[5%]">
       <Image
-        src={"/Jirafe1.svg"}
+        src={"/services/imgSct7HU.png"}
         className="object-cover transition-opacity opacity-0 duration-500"
         onLoad={(event) => event.target.classList.remove("opacity-0")}
         width={933}
@@ -315,18 +381,16 @@ return (
       />
     </div>
   </div>
-</section>
-
-
+          </section>
 
           {/*PlanCard*/}
           <DesktopBrandingSection />
 
           {/*Section 8*/}
-          <section className="bg-[#0051FF] text-white p-6">
+          <section className="w-full bg-[#0051FF] text-white px-[2%]">
             {/* Title */}
             <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
-              <h2 className="text-[#FFFFFF] font-semibold mt-4">
+              <h2 className="text-[#FFFFFF] font-semibold pt-4">
                 ¿Tienes alguna duda sobre este servicio<br />
                 o quieres pedir una cantidad personalizada?
               </h2>

@@ -43,19 +43,20 @@ const CommunityManager = () => {
 
   return (
 
-<aside className="relative flex-col w-full">
+<aside className="relative flex-col w-full bg-white mx-[1%]">
       {/*Section 1*/}
-    <section className="relative bg-[#0853FC] flex w-full p-5 px-[100px]">
-        {/* Contenedor para la sección */}
-      <div className="container mx-auto flex flex-col lg:flex-row pb-2 gap-16 ml-1 pl-0 lg:pl-[50px] pt-[85px]">
-    
-        {/* Sección de texto y botón */}
-      <div className="flex flex-col justify-start items-start lg:w-1/2 text-start pt-[66px]">
-      <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold text-left lg:text-start">
+    <section className="relative bg-[#0853FC] flex w-full py-1 px-[1%]">
+    <div className="container flex-col pb-2 gap-16 ml-1 pl-[2%] pt-[55px]"
+            style={{
+            maxWidth: "1600px",
+            paddingLeft: "2%",
+            paddingRight: "2%",
+          }}>
+      <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start">
         Gestión de<br />Redes Sociales
       </span>
-      <div className="pt-[30px]">
-        <span className="text-white text-md">
+      <div className="pt-[20px] gap-16">
+        <span className="text-white text-xl w-full">
           Es tiempo de invertir en tus redes<br />
           para impulsar tu negocio, creación y<br />
           gestión de contenidos que conecten<br/>
@@ -72,13 +73,13 @@ const CommunityManager = () => {
     </div>
     
     {/* Sección del reproductor de video */}
-    <div className="flex items-center justify-center lg:w-1/2 w-full">
-      <div
-        className="w-full lg:w-[842px] lg:h-[474px] h-auto"
-        style={{
-          paddingTop: "10px",
-        }}
-      >
+    <div className="flex items-end justify-end w-full pr-[2%] rounded">
+          <div style={{
+              paddingTop: '5px',
+              width: '842px',
+              height: '474px',
+            }}
+            >
         <iframe
           width="100%"
           height="100%"
@@ -91,11 +92,10 @@ const CommunityManager = () => {
         ></iframe>
       </div>
       </div>
-      </div>
     </section>
 
       {/* Section 2 */}
-      <section className="relative bg-grey-700 flex flex-col justify-center items-center">
+      <section className="relative bg-white flex flex-col justify-center items-center">
   {/* SVG wave */}
   <div className="w-full">
     <svg
@@ -140,16 +140,16 @@ const CommunityManager = () => {
   </div>
 
   {/* Carousel section */}
-  <div className="flex justify-center w-full z-20 p-4">
+  <div className="flex justify-center w-full z-20 px-2">
     <Carousel />
   </div>
       </section>
 
 {/* Section 3 */}
-<section className="relative flex flex-wrap w-auto h-auto justify-center items-center bg-white md:pb-[77px] sm:pb-[10px] px-[100px] bottom-[-160px]">
-  <div className="flex flex-col md:flex-row w-full p-6">
+<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px]">
+  <div className="flex flex-row w-full">
     {/* Text */}
-    <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[20px] md:pl-[80px] mx-2">
+    <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%]">
       <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[28px] text-[#FB8A00] text-start">
         Hacemos<br />
         crecer<br />
@@ -169,17 +169,17 @@ const CommunityManager = () => {
     </div>
 
     {/* Image */}
-    <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
+    <div className="w-full flex justify-end pr-[4%]">
       <Image
         src={"/services/ImgSct3GR.png"}
         alt="Imagen de la sección 3"
         className="object-cover transition-opacity opacity-0 duration-500"
         onLoad={(event) => event.target.classList.remove("opacity-0")}
         width={834}
-        height={864}
+        height={844}
         priority={true}
         quality={100}
-        style={{top: 60, bottom: -20, zIndex: 20, right: -20}}
+        style={{top: 35, bottom: -20, zIndex: 20, right: -20}}
       />
     </div>
   </div>
@@ -187,9 +187,9 @@ const CommunityManager = () => {
 
 {/* Section 4 */}
 <section className="relative bg-[#FFFFFF]">
-  <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] px-[100px]">
+  <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%]">
     {/* Image */}
-    <div className="w-full flex justify-center md:justify-start pl-0 mx-2">
+    <div className="w-full flex justify-start pl-[4%]">
       <Image
         src={"/services/ImgSct4GR.png"}
         alt="Imagen de la sección 4"
@@ -202,8 +202,8 @@ const CommunityManager = () => {
       />
     </div>
     {/* Text */}
-    <div className="flex justify-center items-center text-end pr-5">
-      <span className="font-bold text-[#FB8A00] text-end flex flex-col justify-end items-center h-[250px] w-[385px] text-4xl md:text-5xl lg:text-6xl leading-snug">
+    <div className="flex justify-center items-center text-end pr-[4%]">
+      <span className="font-bold text-[#FB8A00] text-end flex flex-col justify-end items-center text-5xl md:text-6xl lg:text-7xl leading-snug">
         Un perfil<br />
         optimizado<br />
         al 100%
@@ -215,9 +215,9 @@ const CommunityManager = () => {
 
 {/* Section 5 */}
 <section className="relative bg-[#FFFFFF]">
-  <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6">
+  <div className="flex flex-row w-full bg-[#FFFFFF] py-6">
     {/* Image */}
-    <div className="w-full md:w-1/2 flex justify-center md:justify-start pl-0 md:pl-[100px] mx-2">
+    <div className="w-full flex items-start justify-start pl-[5%]">
       <Image
         src={"/services/ImgSct5GR.png"}
         alt="Imagen de la sección 5"
@@ -230,7 +230,7 @@ const CommunityManager = () => {
       />
     </div>
     {/* Text */}
-    <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center mt-6 md:mt-0 pr-0 md:pr-16">
+    <div className="w-full relative flex flex-col items-end justify-end text-end mt-6 pr-[6%]">
       <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
         Conocé a tu audiencia<br />
         es la clave del éxito
@@ -249,10 +249,10 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 6 */}
-<section className="relative flex flex-wrap w-auto h-auto justify-center items-center bg-white">
+<section className="relative flex flex-wrap w-screen h-auto justify-center items-center bg-white">
   <div className="flex flex-col md:flex-row w-full py-6">
     {/* Text */}
-    <div className="w-full md:w-1/2 relative flex flex-col items-start justify-center bg-grey-700 pl-[100px] md:pl-[100px] mx-2">
+    <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[5%]">
       <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[28px] text-[#0853FC] text-start">
         Tu perfil es tu tarjeta<br />
         de presentación
@@ -273,14 +273,14 @@ const CommunityManager = () => {
     </div>
 
     {/* Image */}
-    <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0 rounded-br-full right-0">
+    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%]">
       <Image
         src={"/services/ImgSct6GR.png"}
         alt="Imagen de la sección 6"
-        className="object-cover transition-opacity opacity-0 duration-500 rounded-br-full"
+        className="object-cover transition-opacity opacity-0 duration-500 rounded-br-xl"
         onLoad={(event) => event.target.classList.remove("opacity-0")}
-        width={792}
-        height={651}
+        width={800}
+        height={631}
         priority={true}
         quality={100}
       />
@@ -295,10 +295,10 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 7 */}
-<section className="relative bg-[#0051FF] py-6 px-[100px]">
-  <div className="flex flex-col md:flex-row w-full">
+<section className="relative bg-[#0853FC] py-6 px-[2%]">
+  <div className="flex flex-row w-full">
         {/* Image */}
-        <div className="w-full md:w-1/2 flex justify-center md:justify-start mt-6 md:mt-0 pl-0 md:pl-[120px] mx-2">
+        <div className="w-full flex justify-start mt-6 pl-[3%]">
       <Image
         src={"/services/ImgSct7GR.png"}
         alt="Imagen de la sección 7"
@@ -327,7 +327,7 @@ const CommunityManager = () => {
 </section>
 
       {/*Section CircleMap */}
-      <section className="bg-[#0051FF] text-white py-6 px-[100px]">
+      <section className="bg-[#0853FC] text-white py-6 px-[2%]">
         {/* Title */}
         <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
           <h2 className="text-[#FFFFFF] font-semibold mt-4">
@@ -335,7 +335,8 @@ const CommunityManager = () => {
             de <span className="text-[#FB8A00] font-semibold">trabajo profesional</span>
           </h2>
         </div>
-        {/* Circulo con sus elementos */}
+        {/*
+        {/* Circulo con sus elementos
         <div className="flex items-center justify-center text-center relative m-[30px] p-[10px]">
           <svg width="446" height="446" viewBox="0 0 260 260" className="items-center mx-[130px] my-[2px] p-[25px] flex-auto">
           <circle cx="125" cy="125" r="95" fill="none" stroke="white" strokeWidth="1" style={circleMapStyles} />
@@ -414,7 +415,24 @@ const CommunityManager = () => {
             </text>
           </svg>
     </div>
-    <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px]">
+    */}
+    <div clasName="w-full justify-center items-center px-[2%]">
+      <Image
+      src="/services/img360Equipo.png"
+      alt="Imagen360°Equipo"
+      width={914}
+      height={356}
+      quality={100}
+      className="object-cover transition-opacity opacity-0 duration-500"
+      priority={true}
+      style={{
+        position: 'relative',
+      }}
+      
+      />
+      </div>
+
+    <div className="flex relative items-center justify-center text-center mx-[20px] px-[250px]">
     <span className="text-[#FB8A00] text-center justify-center items-center text-4xl text-light">Contarás con equipo con un mínimo de 7 personas.</span>
     </div>
       </section>
@@ -426,14 +444,14 @@ const CommunityManager = () => {
 
       {/*Formulario*/}
       <Forms 
-      style={{paddingX: "100px"}}
+      style={{paddingX: "2%"}}
       />
 
       {/*Section FootSuperior*/}
-      <section className="w-full">
-        <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] py-3 px-[-100px]">
+      <section className="w-full px-[2%]">
+        <div className="flex flex-row w-full bg-[#FFFFFF] px-[2%]">
           {/* Image */}
-          <div className="w-full md:w-1/2 pl-[100px] mx-2">
+          <div className="w-full pl-[2%]">
             <Image
               src={"/services/Mockupredes3.png"}
               alt="Imagen del FootSuperior"
@@ -454,20 +472,20 @@ const CommunityManager = () => {
           </div>
           <br />
           {/* Text */}
-          <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center pr-[100px]">
-            <span className="text-5xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl pr-16">
+          <div className="w-full relative flex flex-col items-end justify-end text-end pr-[3%] pb-[8%]">
+            <span className="text-5xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-5xl lg:text-6xl pr-[1%]">
               ¿Estás listo<br />
               para trabajar<br />
               en serio?
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-[] text-end text-2xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-end text-3xl leading-relaxed tracking-wide pr-[1%]" style={{top: -2}}>
               Te ayudamos a elegir<br />
               el plan para potenciar<br />
               las redes de tu negocio
             </span>
             <Link href="/contacto">
-            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl items-center pr-4 mr-[55px]">
+            <button className="bg-[#FB8A00] justify-end hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl items-center">
               Hablá con un asesor
             </button>
             </Link>

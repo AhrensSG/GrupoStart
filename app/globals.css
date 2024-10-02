@@ -18,3 +18,8 @@ html {
   /* Aplicamos la fuente Segoe UI a todo el documento */
   font-family: 'Segoe UI';
 }
+
+/* Asegurar que todas las secciones ocupen el ancho completo */
+section {
+  width: 100%;
+}

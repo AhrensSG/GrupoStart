@@ -4,16 +4,16 @@ import Link from "next/link";
 
 const InfoViewMore = () => {
   return (
-    <section className="relative w-auto  justify-center items-center bg-white">
-      <div className="flex flex-col md:flex-row w-full pb-10">
+    <section className="relative w-full justify-center items-center bg-white h-screen">
+      <div className="flex flex-col md:flex-row w-full pb-10 px-[2%]"> {/* Añadido el padding aquí */}
         {/* Imagen */}
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/2 pl-[2%]">
           <Image
             src={"/jirafe1.svg"}
-            className="object-cover transition-opacity opacity-0 duration-500"
+            className="object-cover transition-opacity opacity-0 duration-500 "
             onLoad={(event) => event.target.classList.remove("opacity-0")}
-            width={595}
-            height={265}
+            width={625}
+            height={235}
             priority={true}
             quality={100}
           />
@@ -52,7 +52,7 @@ const InfoViewMore = () => {
         >
           <path
             fill="#0853FC"
-            fill-opacity="10"
+            fillOpacity="10"
             d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"
           ></path>
         </svg>

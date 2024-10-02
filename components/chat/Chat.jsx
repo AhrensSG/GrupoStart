@@ -22,10 +22,10 @@ const Chat = () => {
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-4 right-6 z-10 flex flex-col items-center space-y-4">
+      <div className="fixed bottom-4 right-6 z-20 flex flex-col items-center space-y-4 mr-[3%] lg:mr-[2%]">
         {/* Botón secundario superior flotante */}
         <button
-          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-center"
+          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-white focus:outline-none transition-all duration-300 ease-in-out justify-center"
           onClick={handleButtonClick}
         >
           <Image
@@ -33,7 +33,7 @@ const Chat = () => {
             alt="OpenChat"
             width={25}
             height={50} // Ajusta el tamaño si es necesario
-            className="transform rotate-90 filter invert brightness-0 px-1 py-[-2]"
+            className="transform rotate-90 filter invert brightness-0 px-1 py-[-2] hover-invert-1"
           />
         </button>
         
@@ -56,10 +56,10 @@ const Chat = () => {
             onClick={handleClick}
           >
             <Image
-              src="/icons/chat-icon.svg" // La ruta de tu archivo SVG
+              src="/imgChatIcon.png" // La ruta de tu archivo SVG
               alt="Chat icon"
-              width={80}
-              height={80} // Ajusta el tamaño si es necesario
+              width={70}
+              height={70} // Ajusta el tamaño si es necesario
             />
           </button>
         </div>

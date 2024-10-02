@@ -9,7 +9,7 @@ const Contact = () => {
   return (
     <aside className="w-full relative flex flex-col justify-center items-center bg-white">
         {/* Chat */}
-        <Chat />
+        <Chat style={{ zIndex: 35 }}/>
 
 {/* Sección Principal */}
 <section className="w-full bg-[#0853FC] text-white py-10 flex flex-col items-center justify-center">
@@ -151,7 +151,7 @@ const Contact = () => {
         {/* Overlap the wave with the image */}
         <div className="relative justify-center items-center object-center flex flex-col z-2">
           <Image
-            src={"/Jirafe1.svg"}
+            src={"/iconos/logoStartBlue.svg"}
             width={328}
             height={328}
             quality={100}
@@ -331,7 +331,7 @@ const Contact = () => {
         height={180}
         className="rounded-full"
       />
-      <div className="bg-orange-500 text-white font-bold w-[300px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-orange-500 text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Gestión de Redes
       </div>
     </div>
@@ -345,7 +345,7 @@ const Contact = () => {
         height={180}
         className="rounded-full"
       />
-      <div className="bg-orange-500 text-white font-bold w-[300px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-orange-500 text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Media
       </div>
     </div>
@@ -359,7 +359,7 @@ const Contact = () => {
         height={180}
         className="rounded-full"
       />
-      <div className="bg-orange-500 text-white font-bold w-[300px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-orange-500 text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Herramientas Útiles
       </div>
     </div>
@@ -370,10 +370,10 @@ const Contact = () => {
     {/* Primera Tarjeta */}
     <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/icon-co-creacion.svg"
+        src="/iconos/unido-co-creacion.svg"
         alt="Co-creación"
-        width={50}
-        height={50}
+        width={60}
+        height={60}
       />
       <h3 className="font-bold mt-4">Co-creación</h3>
     </div>
@@ -381,10 +381,10 @@ const Contact = () => {
     {/* Segunda Tarjeta */}
     <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/icon-excelencia.svg"
+        src="/iconos/gestion-del-talento-excelencia.svg"
         alt="Excelencia"
-        width={50}
-        height={50}
+        width={60}
+        height={60}
       />
       <h3 className="font-bold mt-4">Excelencia</h3>
     </div>
@@ -392,10 +392,10 @@ const Contact = () => {
     {/* Tercera Tarjeta */}
     <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/icon-confianza.svg"
+        src="/iconos/apreton-de-manos-confianza.svg"
         alt="Confianza"
-        width={50}
-        height={50}
+        width={60}
+        height={60}
       />
       <h3 className="font-bold mt-4">Confianza</h3>
     </div>
@@ -403,10 +403,10 @@ const Contact = () => {
     {/* Cuarta Tarjeta */}
     <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/icon-innovacion.svg"
+        src="/iconos/digital-innovacion.svg"
         alt="Innovación"
-        width={50}
-        height={50}
+        width={60}
+        height={60}
       />
       <h3 className="font-bold mt-4">Innovación</h3>
     </div>
@@ -418,12 +418,12 @@ const Contact = () => {
   {/* Contenedor principal */}
   <div className="flex justify-center items-center gap-[40px]">
     {/* Primera Card */}
-    <div className="bg-white rounded-2xl w-[350px] h-[250px] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl w-[370px] h-[295px] flex flex-col justify-center items-center p-6">
       <Image
-        src="/icon1.svg" // Agregar la ruta correcta del icono
+        src="/iconos/clasificacion-100clientes.svg" // Agregar la ruta correcta del icono
         alt="100 Clientes"
-        width={100}
-        height={100}
+        width={162}
+        height={162}
         className="mb-6"
       />
       <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
@@ -432,12 +432,12 @@ const Contact = () => {
     </div>
 
     {/* Segunda Card (más ancha) */}
-    <div className="bg-white rounded-2xl w-[400px] h-[250px] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl w-[420px] h-[295px] flex flex-col justify-center items-center p-6">
       <Image
-        src="/icon2.svg" // Agregar la ruta correcta del icono
+        src="/iconos/maletin-experiencia.svg" // Agregar la ruta correcta del icono
         alt="Experiencia Profesional"
-        width={100}
-        height={100}
+        width={162}
+        height={162}
         className="mb-6"
       />
       <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
@@ -446,12 +446,12 @@ const Contact = () => {
     </div>
 
     {/* Tercera Card */}
-    <div className="bg-white rounded-2xl w-[350px] h-[250px] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl w-[370px] h-[295px] flex flex-col justify-center items-center p-6">
       <Image
-        src="/icon3.svg" // Agregar la ruta correcta del icono
+        src="/iconos/servicio-al-cliente247.svg" // Agregar la ruta correcta del icono
         alt="Soporte 24/7"
-        width={100}
-        height={100}
+        width={162}
+        height={162}
         className="mb-6"
       />
       <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">

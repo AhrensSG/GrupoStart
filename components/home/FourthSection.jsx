@@ -58,7 +58,7 @@ const FourthSection = () => {
       <div className="w-full flex flex-col justify-center items-center xl:py-0 lg:py-8 lg:gap-12">
         <div className="relative md:-top-[108px] xl:-top-36 sm:-top-[26px]">
           <Link href="/about">
-            <button className="flex flex-row items-center justify-center bg-[#0853FC] p-1 px-5 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
+            <button className="flex flex-row items-center justify-center bg-[#0853FC] p-1 px-6 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={18}

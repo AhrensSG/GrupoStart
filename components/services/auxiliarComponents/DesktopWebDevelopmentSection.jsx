@@ -24,7 +24,7 @@ const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contra
           <li key={index} className="flex items-center w-full mb-2">
             <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
               <Image
-                src={crossedItems.includes(index) ? "/services/CrossIcon.svg" : "/services/CheckIcon.svg"}
+                src={crossedItems.includes(index) ? "/services/IconX.svg" : "/services/CheckIcon.svg"}
                 width={16}
                 height={16}
                 alt={crossedItems.includes(index) ? "crossIcon" : "checkIcon"}
