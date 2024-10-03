@@ -8,54 +8,46 @@ const FourthSection = () => {
   return (
     <section
       id="about-us"
-      className="w-full bg-gradient-to-b from-[#FB8A00]  via-[#FFFFFF] to-[#FFFFFF] p-5"
+      className="w-full bg-gradient-to-b from-[#FB8A00] via-[#FFFFFF] to-[#FFFFFF] p-5"
     >
-      <div className="w-full h-full flex flex-row flex-wrap justify-center items-center md:gap-[175px] lg:gap-7 sm:gap-8 xl:gap-28 lg:pt-16 xl:pt-1 relative">
-        <FounderCard
-          img={"/ivan.jpeg"}
-          name={"Ivan E. Ayala"}
-          profession={"Comunnity Manager"}
-          description={""}
-        />
-        {/*<FounderCard
-            img={"/guille.jpeg"}
-            name={"Cabezón"}
-            profession={"Programador"}
-            description={""}
-            />*/}
-        {/* Texto centrado entre las dos FounderCards */}
-        <div className="xl:mt-12 text-center text-black max-w-md lg:pb-24 xl:pb-20 justify-center items-center">
-          <div className="w-full h-full flex flex-col items-center lg:gap-3 xl:gap-5">
-            <h2 className="lg:text-3xl xs:text-4xl xl:text-5xl text-white font-extrabold uppercase">
-              Fundadores
-            </h2>
-            <p className="lg:text-2xl xl:text-3xl font-normal lg:w-[300px] xl:w-[450px] pb-10 xl:pb-24">
-              El destino une a estos
-              <br />
-              emprendedores en una
-              <br />
-              historia un poco cómica en
-              <br />
-              los inicios pero que luego
-              <br />
-              cambiaría para bien
-              <br />
-              la historia de muchos
-              <br />
-              negocios como vos.
-            </p>
-          </div>
-        </div>
+      <div className="w-full h-full flex justify-center items-center md:gap-5 lg:gap-4 sm:gap-2 xl:gap-28 lg:pt-16 xl:pt-1 relative">
+  <FounderCard
+    img={"/ivan.jpeg"}
+    name={"Ivan E. Ayala"}
+    profession={"Comunnity Manager"}
+    description={""}
+  />
+  <div className="xl:mt-12 text-center text-black max-w-md lg:pb-24 xl:pb-20 justify-center items-center">
+    <div className="w-full h-full flex flex-col items-center md:gap-1 lg:gap-3 xl:gap-5">
+      <h2 className="lg:text-3xl xs:text-4xl xl:text-5xl text-white font-extrabold uppercase">
+        Fundadores
+      </h2>
+      <p className="lg:text-2xl xl:text-3xl font-normal lg:w-[300px] xl:w-[450px] pb-10 xl:pb-24">
+        El destino une a estos
+        <br />
+        emprendedores en una
+        <br />
+        historia un poco cómica en
+        <br />
+        los inicios pero que luego
+        <br />
+        cambiaría para bien
+        <br />
+        la historia de muchos
+        <br />
+        negocios como vos.
+      </p>
+    </div>
+  </div>
+  <FounderCard
+    img={"/seba.jpeg"}
+    name={"Sebastian D. Vera"}
+    profession={"Diseñador Gráfico"}
+    description={""}
+  />
+</div>
 
-        <FounderCard
-          img={"/seba.jpeg"}
-          name={"Sebastian D. Vera"}
-          profession={"Diseñador Gráfico"}
-          description={""}
-        />
-      </div>
-
-      <div className="w-full flex flex-col justify-center items-center xl:py-0 lg:py-8 lg:gap-12">
+      <div className="w-full flex flex-col justify-center items-center xl:py-0 lg:py-8 md:py-12 lg:gap-12">
         <div className="relative md:-top-[108px] xl:-top-36 sm:-top-[26px]">
           <Link href="/about">
             <button className="flex flex-row items-center justify-center bg-[#0853FC] p-1 px-6 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">

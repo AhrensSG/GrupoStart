@@ -10,47 +10,12 @@ import DesktopBrandingSection from "@/components/services/auxiliarComponents/Des
 const Branding = () => {
   const [scale, setScale] = useState(1);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      let newScale = screenWidth / 1600;
 
-       // Reducir el tamaño proporcionalmente para pantallas menores de 1024px
-       if (screenWidth < 1024) {
-        const scaleFactor = 1 - ((1023 - screenWidth) * 0.10) / 1023;
-        newScale *= scaleFactor;
-      }
-
-      // Ajustar la escala para pantallas entre 1024px y 1600px
-      if (screenWidth >= 1024 && screenWidth < 1600) {
-        const scaleFactor = (screenWidth - 1024) / (1600 - 1024);
-        newScale = 0.10 + (1 - 0.20) * scaleFactor;
-      }
-
-      // Limitar el escalado para pantallas muy pequeñas
-      if (newScale < 0.10) {
-        newScale = 0.10;
-      }
-
-      // Limitar el escalado para pantallas muy grandes
-      if (newScale > 1) {
-        newScale = 1;
-      }
-
-      setScale(newScale);
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
     <aside
       className="relative flex-col w-full h-full"
       style={{
-        transform: `scale(${scale})`,
         width: "100%",
         height: "100%",
         overflowX: "hidden",
@@ -81,7 +46,7 @@ const Branding = () => {
               </div>
             </div>
               {/* Aquí iría el reproductor de YouTube */}
-              <div className="flex items-end justify-end w-full pr-[3%] rounded">
+              <div className="flex items-end justify-end w-full pr-[3%] rounded md:w-1/2 md:h-1/2">
           <div style={{
               paddingTop: '10px',
               width: '842px',
@@ -169,7 +134,7 @@ const Branding = () => {
                 quality={100}
               />
             </div> */}
-          <div className="w-full justify-start items-start">
+          <div className="w-full justify-start items-start md:w-3/4 pl-[4%]">
                 <Image
                   src={"/services/imgSct3HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500"
@@ -188,13 +153,13 @@ const Branding = () => {
                 />
               </div>
          {/* Text */}
-              <div className="w-full relative flex flex-col items-end justify-center bg-grey-700 pr-[3%]">
-              <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-end text-2xl md:text-4xl lg:text-5xl justify-center">
+              <div className="w-full relative flex flex-col items-end justify-center bg-grey-700 pr-[3%] pt-2">
+              <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-end text-2xl md:text-3xl lg:text-5xl justify-center">
                   ¿Por qué utilizar un<br />
                   código QR en tus tarjetas<br />
                   de presentación?
                 </span>
-                <span className="text text-lg text-end text-2xl md:text-3xl sm:text-4xl leading-relaxed tracking-wide">
+                <span className="text text-lg text-end text-xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
                     Los QR son una herramienta poderosa<br />
                     capaz de almacenar información en ellos<br />
                     como por ejemplo una dirección web.<br/>
@@ -309,7 +274,7 @@ const Branding = () => {
                   Una landing page<br />
                   solo para vos
                 </span>
-                <span className="font-light mb-[40px] text-end text-[#FFFFFF] text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
+                <span className="font-light mb-[40px] text-end text-[#FFFFFF] lg:text-3xl md:text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
                     El QR enviará a la gente que quiera<br />
                     saber más sobre vos a landing<br />
                     page, donde tendrán una<br/>

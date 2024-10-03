@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import GlobalContext from "./context/GlobalContext";
 import { Toaster } from "sonner";
-import ResponsiveContainer from "@/components/responsiveComp/ResponsiveContainer";
+
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -14,7 +14,13 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html title="GrupoStart" description="GrupoStart Solutions" lang="en">
-      <GlobalContext>
+      <GlobalContext
+      width={"100%"}
+      height={"100%"}
+      overflowX={"hidden"}
+      justifyContent={"center"}
+      
+      >
         <Toaster
           richColors
           visibleToasts={3}
@@ -22,9 +28,7 @@ export default function RootLayout({ children }) {
           position="bottom-right"
           expand={false}
         />
-        <ResponsiveContainer>
           <body className={roboto.className}>{children}</body>
-        </ResponsiveContainer>
       </GlobalContext>
     </html>
   );

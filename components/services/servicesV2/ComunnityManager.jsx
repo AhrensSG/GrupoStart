@@ -45,11 +45,11 @@ const CommunityManager = () => {
 
 <aside className="relative flex-col w-full bg-white mx-[1%]">
       {/*Section 1*/}
-    <section className="relative bg-[#0853FC] flex w-full py-1 px-[1%]">
-    <div className="container flex-col pb-2 gap-16 ml-1 pl-[2%] pt-[55px]"
+    <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%]">
+    <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px]"
             style={{
             maxWidth: "1600px",
-            paddingLeft: "2%",
+            paddingLeft: "3%",
             paddingRight: "2%",
           }}>
       <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start">
@@ -73,7 +73,7 @@ const CommunityManager = () => {
     </div>
     
     {/* Sección del reproductor de video */}
-    <div className="flex items-end justify-end w-full pr-[2%] rounded">
+    <div className="flex items-end justify-end w-full pr-[2%] rounded md:w-1/2 md:h-1/2">
           <div style={{
               paddingTop: '5px',
               width: '842px',
@@ -95,9 +95,9 @@ const CommunityManager = () => {
     </section>
 
       {/* Section 2 */}
-      <section className="relative bg-white flex flex-col justify-center items-center">
+      <section className="relative bg-white flex flex-col justify-center items-center w-full">
   {/* SVG wave */}
-  <div className="w-full">
+  <div className="w-full top-0">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1440 320"
@@ -139,24 +139,21 @@ const CommunityManager = () => {
     </span>
   </div>
 
-  {/* Carousel section */}
-  <div className="flex justify-center w-full z-20 px-2">
     <Carousel />
-  </div>
       </section>
 
 {/* Section 3 */}
-<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px]">
+<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-80px]">
   <div className="flex flex-row w-full">
     {/* Text */}
     <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%]">
-      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[28px] text-[#FB8A00] text-start">
+      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[28px] text-[#FB8A00] text-start">
         Hacemos<br />
         crecer<br />
         tu negocio<br />
         en redes
       </span>
-      <span className="text-lg md:text-2xl sm:text-4xl mb-[40px] text-start leading-relaxed tracking-wide">
+      <span className="text-lg md:text-xl sm:text-4xl lg:text-3xl mb-[40px] text-start leading-relaxed tracking-wide">
         Llegá a nuevos<br />
         clientes en todas<br />
         las plataformas Meta
@@ -189,7 +186,7 @@ const CommunityManager = () => {
 <section className="relative bg-[#FFFFFF]">
   <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%]">
     {/* Image */}
-    <div className="w-full flex justify-start pl-[4%]">
+    <div className="w-full flex justify-start pl-[4%] md:w-3/4">
       <Image
         src={"/services/ImgSct4GR.png"}
         alt="Imagen de la sección 4"
@@ -203,7 +200,7 @@ const CommunityManager = () => {
     </div>
     {/* Text */}
     <div className="flex justify-center items-center text-end pr-[4%]">
-      <span className="font-bold text-[#FB8A00] text-end flex flex-col justify-end items-center text-5xl md:text-6xl lg:text-7xl leading-snug">
+      <span className="font-bold text-[#FB8A00] text-end flex flex-col justify-end items-center text-4xl md:text-5xl lg:text-7xl leading-snug">
         Un perfil<br />
         optimizado<br />
         al 100%
@@ -231,11 +228,11 @@ const CommunityManager = () => {
     </div>
     {/* Text */}
     <div className="w-full relative flex flex-col items-end justify-end text-end mt-6 pr-[6%]">
-      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
+      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
         Conocé a tu audiencia<br />
         es la clave del éxito
       </span>
-      <span className="font-light mb-[40px] text-black text-end text-xl md:text-2xl leading-relaxed tracking-wide mt-4">
+      <span className="font-light mb-[40px] text-black text-end text-lg md:text-xl lg:text-2xl leading-relaxed tracking-wide mt-4">
         Segmentar y entender a tu audiencia es fundamental<br />
         para crear campañas de marketing efectivas para<br />
         obtener éxito de tu negocio en redes sociales.<br /><br />
@@ -253,11 +250,11 @@ const CommunityManager = () => {
   <div className="flex flex-col md:flex-row w-full py-6">
     {/* Text */}
     <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[5%]">
-      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[28px] text-[#0853FC] text-start">
+      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[28px] text-[#0853FC] text-start">
         Tu perfil es tu tarjeta<br />
         de presentación
       </span>
-      <span className="text-lg md:text-2xl sm:text-4xl mb-[40px] text-start leading-relaxed tracking-wide">
+      <span className="text-lg md:text-xl sm:text-lg lg:text-2xl mb-[40px] md:mb-[60px] text-start leading-relaxed tracking-wide z-5">
         Tu biografía es la primera impresión que los posibles<br />
         clientes tienen de tu marca en redes sociales.<br />
         Optimizamos tu diseño y contenido para reflejar la<br />
@@ -273,7 +270,7 @@ const CommunityManager = () => {
     </div>
 
     {/* Image */}
-    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%]">
+    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%] md:w-3/4 md:mb-10 ">
       <Image
         src={"/services/ImgSct6GR.png"}
         alt="Imagen de la sección 6"

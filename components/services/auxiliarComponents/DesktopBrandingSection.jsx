@@ -58,11 +58,11 @@ const DesktopBrandingSection = () => {
   };
 
   return (
-    <div className="p-8 mx-auto static" style={{ background: '#0853FC' }}>
+    <div className="py-8 px-[4%] w-full flex-row xs:px-0 sm:px-0" style={{ background: '#0853FC' }}>
       <div className="items-center justify-center text-center py-12">
       <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#FFFFFF] text-[#FB8A00] py-3 px-[100px]">Packs de tarjetas</span>
       </div>
-      <div className="grid-container grid grid-cols-3 gap-[74px] px-[185px]">
+      <div className="grid grid-cols-3 justify-items-center items-center object-center gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
       <PlanCard
         title="Pack 1"
         features={[

@@ -13,53 +13,21 @@ const Media = () => {
 
   const [scale, setScale] = useState(1);
 
-  useEffect(() => {
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      let newScale = screenWidth / 1600;
-
-      // Reducir el tamaño proporcionalmente para pantallas menores de 1024px
-      if (screenWidth < 1024) {
-        const scaleFactor = 1 - ((1023 - screenWidth) * 0.02) / 1023;
-        newScale *= scaleFactor;
-      }
-
-      // Limitar el escalado para pantallas muy pequeñas
-      if (newScale < 0.4) {
-        newScale = 0.4;
-      }
-
-      setScale(newScale);
-    };
-
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   return (
-    <aside className="relative flex flex-col w-full h-full"
+    <aside className="relative flex-col w-full h-full"
     style={{
       width: "100%",
       height: "100%",
       overflowX: "hidden",
-      overflowY: "hidden",
-      transformOrigin: "top left",
     }}
     >
       {/* Section 1 */}
-      <section className="relative bg-[#0853FC] flex w-full px-[2%] flex-row">
-        <div className="container flex-col gap-16 ml-1 pl-[1%] pt-[55px]"
-          style={{
-            maxWidth: "1600px",
-            paddingLeft: "2%",
-            paddingRight: "2%",
-          }}
-        >
+      <section className="relative bg-[#0853FC] flex w-full px-[2%] md:pb-10 lg:pb-2">
+        <div className="container flex-col pl-[3%] pt-[55px]">
           <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-center">Media: edición<br/>de videos<br/>e imágenes</span>
-          <div className="pt-[20px] gap-16">
-            <span className="text-white text-xl">
+          <div className="pt-[20px]">
+            <span className="text-white text-xl ">
               Destacá entre la competencia con<br/>
               diseños únicos y llamativos, maximizá el<br/>
               de tus videos con edición<br/>
@@ -74,7 +42,7 @@ const Media = () => {
           </div>
         </div>
         {/* Aquí iría el reproductor de YouTube */}
-        <div className="flex-row items-end justify-end w-full pr-[2%] rounded">
+        <div className="flex items-end justify-center pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
           <div style={{
               paddingTop: '10px',
               width: '842px',
@@ -100,7 +68,7 @@ const Media = () => {
       </section>
 
       {/* Section 2 */}
-      <section className="relative bg-white flex flex-col justify-center items-center w-full min-h-screen">
+      <section className="relative bg-white flex flex-col justify-center items-center w-full">
         <div className="w-full justify-start">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -139,10 +107,7 @@ const Media = () => {
           </span>
         </div>
         <br/>
-        {/* Center the carousel */}
-        <div className="flex justify-center w-full z-20 p-4">
           <Carousel />
-        </div>
       </section>
 
       {/* Section 3 */}
@@ -199,14 +164,14 @@ const Media = () => {
       </section>
 
       {/* Section 4 */}
-      <section className="relative bg-[#FFFFFF] flex flex-col justify-center items-center py-6">
+      <section className="relative bg-[#FFFFFF] flex flex-col justify-center items-center lg:py-6">
         <div className="text-center justify-center items-center mb-8 mt-0 w-full sm:mx-auto relative">
           <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
             Ejemplo de diseño de identidad Standar
           </span>
         </div>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col grid place-items: center">
+        <div className="relative justify-center items-center object-center flex flex-col grid place-items:center md:w-3/4">
           <Image
             src={"/services/imgSct4Media.png"}
             width={1020}
@@ -215,7 +180,7 @@ const Media = () => {
             style={{
               position: 'relative',
               top: 0,
-              bottom: 10,
+              bottom: 15,
               left: '50%',
               transform: 'translateX(-50%)' }}
           />
@@ -223,7 +188,7 @@ const Media = () => {
       </section>
 
       {/* Section 5 */}
-      <section className="relative bg-[#FFFFFF] w-full">
+      <section className="relative bg-[#FFFFFF] w-full pt-2">
         <div className="flex flex-row w-full bg-[#FFFFFF] pl-[4%]">
           {/* Image */}
           <div className="w-full flex justify-start items-start pl-[2%]">
@@ -239,8 +204,8 @@ const Media = () => {
             />
           </div>
           {/* Text */}
-          <div className="flex justify-end items-center text-end h-[180px] w-[632px] rigth-0 py-2 pl-1 pr-0">
-            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 w-[431px] h-[107px] px-[45px] py-[35px] text-2xl md:text-3xl lg:text-4xl relative flex">
+          <div className="flex justify-end items-center text-end h-[180px] w-[632px] rigth-0 py-2 pl-1 pr-0 md:w-1/2">
+            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 w-[431px] h-[107px] px-[45px] md:px-[30px] py-[35px] md:w-3/4 md:h-1/2 text-lg md:text-xl lg:text-4xl relative flex">
               TU LOGO es la<br />
               cara de tu negocio
             </span>
@@ -269,12 +234,12 @@ const Media = () => {
           <br />
           {/* Text */}
           <div className="w-full  relative flex flex-col items-end justify-end text-center pr-[5%]">
-            <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
+            <span className="text-2xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-3xl lg:text-5xl">
               ¿Cómo deben ser<br/>
               los flyers publicitarios?
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-black text-end text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-black text-end text-xl lg:text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
               Estos son un instrumento muy poderoso<br/>
               para hacer publicidad y fortalecer tu marca,<br/>
               es necesario contar con diseños apropiados<br/>
@@ -307,7 +272,7 @@ const Media = () => {
       </section>
 
       {/* Section 8 */}
-      <section className="relative flex flex-wrap w-full h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px] pb-[-200px]">
+      <section className="relative flex flex-wrap w-full h-screen justify-center items-center bg-white md:pb-[27px] sm:pb-[40px] pb-[-200px]">
         <div className="flex flex-row w-full px-[2%]">
           {/* Image */}
           <div className="w-full flex items-start justify-start pl-[5%]">
@@ -358,13 +323,13 @@ const Media = () => {
       {/* Section 9 */}
       <section className="relative bg-[#0853FC] flex flex-col justify-center items-center py-6">
         <div className="text-center my-3">
-          <span className="text text-4xl font-bold my-4 text-[#FFFFFF] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative">
+          <span className="text text-4xl font-bold my-4 text-[#FFFFFF] text-center text-2xl md:text-3xl lg:text-5xl justify-center items-center flex-col relative">
             Los videos cortos lideran las tendencias<br />
             comunicativas en todas las plataformas
           </span>
         </div>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col grid place-items: center">
+        <div className="relative justify-center items-center object-center flex flex-col grid place-items: center md:w-3/4">
           <Image
             src={"/services/imgSct9Media.png"}
             width={1070}
@@ -382,7 +347,7 @@ const Media = () => {
 
       {/* Section 10 */}
       <section className="w-full relative flex">
-        <div className="flex flex-col md:flex-row w-full bg-[#0853FC] px-[2%]">
+        <div className="flex flex-row w-full bg-[#0853FC] px-[2%]">
           {/* Image */}
           <div className="w-full items-start justify-start pl-[4%]">
             <Image
@@ -404,7 +369,7 @@ const Media = () => {
               tu video
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-white text-end text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-white text-end text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
               La idea junto al guión<br />
               son el pilar de cualquier<br />
               pieza audiovisual, ya sea<br/>
@@ -446,7 +411,7 @@ const Media = () => {
               la historia<br />
               perfecta
             </span>
-            <span className="text font-light mb-[40px] text-start text-white text-3xl leading-relaxed tracking-wide">
+            <span className="text font-light mb-[40px] text-start text-white text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wide">
               Utilizamos herramientas<br />
               de edición profesional<br />
               como: premiere, after<br/>
@@ -502,13 +467,13 @@ const Media = () => {
           <br />
           {/* Text */}
           <div className="w-full relative flex flex-col items-end justify-center text-end pr-[2%]">
-            <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
+            <span className="text-2xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-3xl lg:text-5xl">
               Añadimos<br />
               efectos<br />
               llamativos<br />
               a los videos
             </span>
-            <span className="font-light mb-[40px] text-[#FFFFFF] text-end text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-[#FFFFFF] text-end text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
               Cientos de efectos y<br />
               transcisiones creadas<br />
               por los profesionales<br/>
@@ -524,7 +489,7 @@ const Media = () => {
           </div>
         </div>
         {/* Title */}
-        <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl pt-12">
+        <div className="text-center justify-center items-center text-2xl md:text-4xl lg:text-5xl pt-12">
           <h2 className="text-[#FFFFFF] font-semibold mt-4 pb-6">
             Una comunicación de impacto<br />
             ¿Listo para invertir en ella?

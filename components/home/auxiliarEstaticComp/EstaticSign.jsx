@@ -3,7 +3,7 @@ import React from "react";
 
 const EstaticSign = () => {
   return (
-    <section className="relative flex flex-wrap w-full h-screen">
+    <section className="relative flex flex-wrap w-full h-screen ">
       {/* Contenedor de la imagen de la Jirafa */}
       <div className="relative w-full h-full block">
         <Image

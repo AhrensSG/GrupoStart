@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col pb-1">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col pb-1 sm:w-3/4">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[8px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
@@ -19,7 +19,7 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       </div>
 
           {/* Lista de características */}
-        <ul className="list-none pl-[33px] pr-[12px] py-[4px] h-[270px] w-[260px] flex-grow overflow-y-auto justify-center">
+        <ul className="list-none pl-[30px] pr-[5px] py-[4px] h-[265px] w-[300px] flex-grow sm:overflow-y-auto justify-items-center lg:h-[300px] lg:w-[330px] sm:w-3/4">
           {features.map((feature, index) => (
             <li key={index} className="flex items-center w-full mb-2">
               <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
@@ -88,19 +88,19 @@ const DesktopCommunityManagerSection = () => {
 
   return (
     <div
-      className="py-8 px-[30px] md:px-[100px] relative"
+      className="py-8 md:px-[2%] lg:px-[4%] xl:px-[8%] xxl:px-[16%] w-full flex-row relative justify-center"
       style={{
         background:
           "linear-gradient(to bottom, #0853FC, #0853FC, #FFFFFF, #FFFFFF)",
       }}
     >
-      <div className="items-center justify-center text-center py-[36px] relative px-[20px] md:px-[100px] sm:px-[50px] w-full">
-        <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-center items-center justify-center mb-8 rounded-full rounded-tr-xl rounded-bl-xl bg-[#FB8A00] text-white py-3 lg:max-w-[20%] sm:max-w-[80%] mx-auto">
+      <div className="items-center justify-center text-center py-[36px] relative px-[20px] md:px-[60px] sm:px-[40px] w-full">
+        <h2 className="xs:text-md sm:text-lg md:text-xl lg:text-3xl font-bold text-center items-center justify-center mb-8 rounded-full rounded-tr-xl rounded-bl-xl bg-[#FB8A00] text-white py-3 lg:max-w-[20%] sm:max-w-[30%] md:max-w-[70%] mx-auto">
           Elegí tu plan
         </h2>
       </div>
       {/* Ajustamos el grid para que sea responsive */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[20px] md:gap-[74px] px-[0px] md:px-[185px]">
+      <div className="grid grid-cols-3 justify-items-center items-center object-center gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
         <PlanCard
           title="Conexion inicial"
           features={[

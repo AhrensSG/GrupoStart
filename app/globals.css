@@ -23,3 +23,174 @@ html {
 section {
   width: 100%;
 }
+/* Responsive Styles */
+
+ /* Pantallas muy pequeñas (menos de 640px) */
+ .xs\: {
+  /* Estilos para pantallas muy pequeñas */
+  font-size: 12px;
+  padding: 10px;
+  margin: 5px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Pantallas pequeñas (640px y menos) */
+.sm\: {
+  /* Estilos para pantallas pequeñas */
+  font-size: 14px;
+  padding: 15px;
+  margin: 10px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Pantallas medianas (768px y más) */
+.md\: {
+  /* Estilos para pantallas medianas */
+  font-size: 16px;
+  padding: 20px;
+  margin: 15px;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+/* Pantallas grandes (1024px y más) */
+.lg\: {
+  /* Estilos para pantallas grandes */
+  font-size: 18px;
+  padding: 25px;
+  margin: 20px;
+  max-width: 1024px;
+  margin: 0 auto;
+}
+
+/* Pantallas extra grandes (1280px y más) */
+.xl\: {
+  /* Estilos para pantallas extra grandes */
+  font-size: 20px;
+  padding: 30px;
+  margin: 25px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Pantallas 4K (2560px y más) */
+.xxl\: {
+  /* Estilos para pantallas 4K */
+  font-size: 22px;
+  padding: 35px;
+  margin: 30px;
+  max-width: 2560px;
+  margin: 0 auto;
+}
+
+/* Pantallas 8K (3840px y más) */
+.xxxl\: {
+  /* Estilos para pantallas 8K */
+  font-size: 24px;
+  padding: 40px;
+  margin: 35px;
+  max-width: 3840px;
+  margin: 0 auto;
+}
+
+/* Estilos adicionales para cada tipo de pantalla */
+
+/* Pantallas muy pequeñas */
+.xs\: {
+  /* Estilos adicionales para pantallas muy pequeñas */
+  .container {
+    max-width: 100%;
+  }
+  .header {
+    padding: 10px;
+  }
+  .footer {
+    padding: 10px;
+  }
+}
+
+/* Pantallas pequeñas */
+.sm\: {
+  /* Estilos adicionales para pantallas pequeñas */
+  .container {
+    max-width: 100%;
+  }
+  .header {
+    padding: 15px;
+  }
+  .footer {
+    padding: 15px;
+  }
+}
+
+/* Pantallas medianas */
+.md\: {
+  /* Estilos adicionales para pantallas medianas */
+  .container {
+    max-width: 768px;
+  }
+  .header {
+    padding: 20px;
+  }
+  .footer {
+    padding: 20px;
+  }
+}
+
+/* Pantallas grandes */
+.lg\: {
+  /* Estilos adicionales para pantallas grandes */
+  .container {
+    max-width: 1024px;
+  }
+  .header {
+    padding: 25px;
+  }
+  .footer {
+    padding: 25px;
+  }
+}
+
+/* Pantallas extra grandes */
+.xl\: {
+  /* Estilos adicionales para pantallas extra grandes */
+  .container {
+    max-width: 1280px;
+  }
+  .header {
+    padding: 30px;
+  }
+  .footer {
+    padding: 30px;
+  }
+}
+
+/* Pantallas 4K */
+.xxl\: {
+  /* Estilos adicionales para pantallas 4K */
+  .container {
+    max-width: 2560px;
+  }
+  .header {
+    padding: 35px;
+  }
+  .footer {
+    padding: 35px;
+  }
+}
+
+/* Pantallas 8K */
+.xxxl\: {
+  /* Estilos adicionales para pantallas 8K */
+  .container {
+    max-width: 3840px;
+  }
+  .header {
+    padding: 40px;
+  }
+  .footer {
+    padding: 40px;
+  }
+}

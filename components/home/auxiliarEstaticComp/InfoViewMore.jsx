@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const InfoViewMore = () => {
   return (
-    <section className="relative w-full justify-center items-center bg-white h-screen">
-      <div className="flex flex-col md:flex-row w-full pb-10 px-[2%]"> {/* Añadido el padding aquí */}
+    <section className="relative w-full justify-center items-center bg-white h-full">
+      <div className="flex flex-row w-full lg:pb-[10%] md:pb-[10%] px-[2%] h-full"> {/* Añadido el padding aquí */}
         {/* Imagen */}
         <div className="w-full md:w-1/2 pl-[2%]">
           <Image
@@ -21,10 +21,10 @@ const InfoViewMore = () => {
         <br />
         {/* Texto */}
         <div className="w-full md:w-1/2 relative flex flex-col items-center justify-center">
-          <h1 className="xl:text-4xl font-bold mb-[28px] text-[#0853FC] text-center md:text-4xl lg:text-3xl">
+          <h1 className="xl:text-4xl font-bold lg:mb-[28px] md:mb-[14px] text-[#0853FC] text-center md:text-2xl lg:text-3xl">
             La Era de las Redes Sociales
           </h1>
-          <span className="text text-lg mb-[40px] text-center text-1xl md:text-2xl sm:text-4xl lg:text-xl leading-relaxed tracking-wide">
+          <span className="text text-lg mb-[10px] text-center text-lg md:text-xl sm:text-md lg:text-3xl leading-relaxed tracking-wide">
             La era de las redes sociales fue un
             <br />
             verdadero Tsunami para el marketing tradicional

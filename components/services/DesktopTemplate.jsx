@@ -6,7 +6,7 @@ import Footer from "../footer/Footer";
 import { Toaster } from "sonner";
 import GlobalContext from "@/app/context/GlobalContext";
 import Chat from "@/components/chat/Chat";
-import ResponsiveContainer from "@/components/responsiveComp/ResponsiveContainer";
+
 
 const DesktopTemplate = ({
   children,
@@ -15,9 +15,8 @@ const DesktopTemplate = ({
   footerImg = "/services/FooterJirafe1.svg",
 }) => {
   return (
-    <ResponsiveContainer>
       <main
-        className="bg-white-100 w-full h-full flex flex-col justify-center items-center"
+        className="bg-white-100 w-full h-full flex flex-row justify-center items-center"
         style={{
           display: "flex", // Agrega un estilo de display
           flexDirection: "column", // Agrega un estilo de flexDirection
@@ -46,7 +45,6 @@ const DesktopTemplate = ({
         {/* Footer */}
         <Footer />
       </main>
-    </ResponsiveContainer>
   );
 };
 
