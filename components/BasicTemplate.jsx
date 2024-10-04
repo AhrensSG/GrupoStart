@@ -7,7 +7,7 @@ import GlobalContext from "@/app/context/GlobalContext";
 
 const BasicTemplate = ({ children }) => {
   return (
-    <main className="bg-slate-100 w-full h-full">
+    <main className="bg-slate-100 w-full h-full flex justify-items-center">
       <NavBarV2 />
       <section className="w-full flex flex-row justify-center items-center relative">
         {children}

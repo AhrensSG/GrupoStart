@@ -14,13 +14,13 @@ const About = () => {
         <div className="container mx-auto flex flex-col lg:flex-row pb-1 gap-16 ml-1 pl-0 lg:pl-[50px] pt-[7px]">
           {/* Sección de texto y botón */}
           <div className="w-full flex flex-col justify-center items-center py-2 gap-10">
-            <span className="text-5xl font-bold text-orange-700 text-center justify-center items-center leading-snug">
+            <span className="lg:text-5xl md:text-3xl font-bold text-[#FB8A00] text-center justify-center items-center leading-snug">
               Todo sobre nosotros:<br />
               nuestra historia, objetivos, filosofía,<br />
               visión y proyectos futuros
             </span>
             <div className="pt-[3px]">
-              <span className="flex text-xl text-white text-center justify-center items-center w-[1000px] h-[300px] px-[5%] leading-relaxed">
+              <span className="flex lg:text-xl md:text-lg text-white text-center justify-center items-center lg:w-[1000px] lg:h-[300px] md:w-[500px] md:h-[100px] px-[5%] leading-relaxed">
                 Somos una agencia de marketing completa de 360 grados,<br />
                 enfocada en conectar a los negocios al mundo digital y generar<br />
                 resultados positivos para nuestros clientes.<br />
@@ -36,7 +36,7 @@ const About = () => {
       </section>
 
       {/* Section 2 */}
-      <section className="relative bg-grey-700 flex flex-col justify-center items-center w-full">
+      <section className="relative bg-white flex flex-col justify-center items-center w-full">
         {/* SVG wave */}
         <div className="w-full h-auto">
           <svg
@@ -54,13 +54,13 @@ const About = () => {
         </div>
 
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col z-2">
+        <div className="relative justify-center items-center object-center flex flex-col z-2 ">
           <Image
             src={"/iconos/logoStartBlue.svg"}
             width={328}
             height={328}
             quality={100}
-            className="w-full max-w-xs md:max-w-md lg:max-w-lg"
+            className="w-full max-w-xs justify-items-center lg:w-full lg:h-full md:w-1/4 md:h-1/4 relative"
             style={{
               zIndex: 15,
               position: "relative",
@@ -80,10 +80,8 @@ const About = () => {
           </span>
         </div>
 
-         {/* Carousel section */}
-        <div className="flex justify-center w-full z-20 p-4">
         <Carousel />
-        </div>
+
       </section>
 
             <br/>
@@ -91,7 +89,7 @@ const About = () => {
       {/* Section 3 - Línea de tiempo */}
       <section className="w-full flex flex-col items-center">
         <h3 className="text-3xl font-light text-black justify-center text-center items-center">Historia</h3>
-        <h2 className="text-5xl font-bold mb-8 text-orange-500">Así nació Start</h2>
+        <h2 className="text-5xl font-bold mb-8 text-[#FB8A00]">Así nació Start</h2>
 
         
           {/* 2022 */}
@@ -108,7 +106,7 @@ const About = () => {
 
           {/* Founderss */}
           <div className="w-full flex justify-between items-center mb-16">
-            <div className="w-1/2 flex flex-col items-center text-right pr-10">
+            <div className="lg:w-1/2 md:w-1/4 flex flex-col items-center text-right lg:pr-10 md:pr-0 md:pl-16">
               <Image
                 src="/ivan.jpeg"
                 alt="Ivan E. Ayala"
@@ -120,7 +118,7 @@ const About = () => {
               <p className="text-lg">CEO y Co Fundador</p>
             </div>
 
-            <div className="w-1/2 flex flex-col items-center text-left pl-10">
+            <div className="lg:w-1/2 md:w-1/4 flex flex-col items-center text-left lg:pl-10 md:pl-0 md:pr-14">
               <Image
                 src="/seba.jpeg"
                 alt="Sebastian D. Vera"
@@ -144,7 +142,7 @@ const About = () => {
         marginTop: "70px"  // Mantiene el ajuste hacia abajo
     }}>
   
-  <div className="bg-orange-500 text-white font-bold px-[66px] py-[11px] rounded-tl-full rounded-br-full mb-4 justify-start text-left" 
+  <div className="bg-[#FB8A00] text-white font-bold px-[66px] py-[11px] rounded-tl-full rounded-br-full mb-4 justify-start text-left" 
       style={{ maxWidth: "345px", width: "100%" }}>
     Objetivos que nos inspiran
   </div>
@@ -227,7 +225,7 @@ const About = () => {
     {/* Founder 1 - Iván Ayala */}
     <div className="w-full flex flex-col items-start text-end mb-12 max-w-[850px] relative">
       {/* Nombre del fundador */}
-      <div className="bg-orange-500 text-white font-bold px-4 py-2 rounded-tl-full rounded-br-full w-[250px] text-2xl text-center">
+      <div className="bg-[#FB8A00] text-white font-bold px-4 py-2 rounded-tl-full rounded-br-full w-[250px] text-2xl text-center">
         Iván Ayala
       </div>
       {/* Texto descripción */}
@@ -255,7 +253,7 @@ const About = () => {
     {/* Founder 2 - Sebastián Vera */}
     <div className="w-full flex flex-col items-start text-start max-w-[850px] relative">
       {/* Nombre del fundador */}
-      <div className="bg-orange-500 text-white font-bold px-4 py-2 rounded-tl-full text-2xl rounded-br-full w-[250px] justify-center items-center text-center">
+      <div className="bg-[#FB8A00] text-white font-bold px-4 py-2 rounded-tl-full text-2xl rounded-br-full w-[250px] justify-center items-center text-center">
         Sebastián Vera
       </div>
       {/* Texto descripción */}
@@ -356,29 +354,30 @@ const About = () => {
   {/* Etapas */}
   <div className="flex justify-center gap-[41px] mb-16 pb-[80px]">
     <div className="flex flex-col items-center">
-      <div className="bg-white rounded-full px-[70px] py-2 text-orange-500 font-bold text-center">1 - Desarrollo</div>
+      <div className="bg-white rounded-full px-[70px] py-2 text-[#FB8A00] font-bold text-center">1 - Desarrollo</div>
     </div>
     <div className="flex flex-col items-center">
-      <div className="bg-white rounded-full px-[70px] py-2 text-orange-500 font-bold text-center">2 - Crecimiento</div>
+      <div className="bg-white rounded-full px-[70px] py-2 text-[#FB8A00] font-bold text-center">2 - Crecimiento</div>
     </div>
     <div className="flex flex-col items-center">
-      <div className="bg-white rounded-full px-[70px] py-2 text-orange-500 font-bold text-center">3 - Autoridad</div>
+      <div className="bg-white rounded-full px-[70px] py-2 text-[#FB8A00] font-bold text-center">3 - Autoridad</div>
     </div>
     <div className="flex flex-col items-center">
-      <div className="bg-white rounded-full px-[70px] py-2 text-orange-500 font-bold text-center">4 - Expansión</div>
+      <div className="bg-white rounded-full px-[70px] py-2 text-[#FB8A00] font-bold text-center">4 - Expansión</div>
     </div>
   </div>
 
   {/* Tarjetas */}
   <div className="flex justify-center gap-[5px] mb-16">
     {/* Primera tarjeta */}
-    <div className="bg-orange-500 rounded-lg w-[270px] h-auto p-6 relative">
+    <div className="bg-[#FB8A00] rounded-lg w-[270px] h-auto p-6 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
-          src="/iconos/unido-co-creacion.svg"
+          src="/iconos/unido-co-creacion.png"
           alt="Icono Colaboración"
-          width={50}
-          height={50}
+          width={80}
+          height={80}
+          quality={100}
         />
       </div>
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
@@ -395,13 +394,14 @@ const About = () => {
     </div>
 
     {/* Segunda tarjeta */}
-    <div className="bg-orange-500 rounded-lg w-[270px] h-auto p-6 relative">
+    <div className="bg-[#FB8A00] rounded-lg w-[270px] h-auto p-6 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
-          src="/iconos/gestion-del-talento-excelencia.svg"
+          src="/iconos/gestion-del-talento-excelencia.png"
           alt="Icono Excelencia"
-          width={50}
-          height={50}
+          width={80}
+          height={80}
+          quality={100}
         />
       </div>
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
@@ -417,13 +417,14 @@ const About = () => {
     </div>
 
     {/* Tercera tarjeta */}
-    <div className="bg-orange-500 rounded-lg w-[270px] h-auto p-6 relative">
+    <div className="bg-[#FB8A00] rounded-lg w-[270px] h-auto p-6 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
-          src="/iconos/apreton-de-manos-confianza.svg"
+          src="/iconos/apreton-de-manos-confianza.png"
           alt="Icono Confianza"
-          width={50}
-          height={50}
+          width={80}
+          height={80}
+          quality={100}
         />
       </div>
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
@@ -438,13 +439,15 @@ const About = () => {
     </div>
 
     {/* Cuarta tarjeta */}
-    <div className="bg-orange-500 rounded-lg w-[270px] h-auto p-6 relative">
+    <div className="bg-[#FB8A00] rounded-lg w-[270px] h-auto p-6 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
-          src="/iconos/digital-innovacion.svg"
+          src="/iconos/digital-innovacion.png"
           alt="Icono Innovación"
-          width={50}
-          height={50}
+          width={80}
+          height={80}
+          quality={100}
+
         />
       </div>
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
@@ -462,7 +465,7 @@ const About = () => {
 
   {/* Texto final */}
   <div className="text-center mb-8">
-    <h2 className="text-orange-500 text-5xl font-extrabold leading-snug">
+    <h2 className="text-[#FB8A00] text-5xl font-extrabold leading-snug">
       ¡Recorramos juntos este camino, <br /> estás en el lugar correcto!
     </h2>
     <p className="text-white text-2xl font-light mt-4 px-4">
@@ -491,7 +494,7 @@ const About = () => {
   {/* Contenedor para centrar tanto el título como la imagen */}
   <div className="flex flex-col justify-center items-center">
     {/* Título principal con ancho igual al de la imagen */}
-    <h1 className="text-orange-500 text-4xl font-extrabold text-center w-[800px] mb-8">
+    <h1 className="text-[#FB8A00] text-4xl font-extrabold text-center w-[800px] mb-8">
       El futuro de Start se vé prometedor
     </h1>
 
@@ -516,7 +519,7 @@ const About = () => {
     {/* Imagen */}
     <div className="w-full lg:w-1/2">
       <Image
-        src="/Jirafe1.svg"
+        src="/iconos/business.png"
         alt="Business meeting"
         width={600}
         height={400}
@@ -526,7 +529,7 @@ const About = () => {
     
     {/* Texto descriptivo */}
     <div className="w-full lg:w-1/2 text-white text-end pr-[130px]">
-      <h1 className="text-orange-500 text-5xl font-extrabold mb-6">
+      <h1 className="text-[#FB8A00] text-5xl font-extrabold mb-6">
         Soñamos con ayudar <br /> a más negocios
       </h1>
       <p className="text-2xl font-light leading-relaxed">
@@ -558,7 +561,7 @@ const About = () => {
         height={162}
         className="mb-6"
       />
-      <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
         +100 Clientes
       </h3>
     </div>
@@ -572,7 +575,7 @@ const About = () => {
         height={162}
         className="mb-6"
       />
-      <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
         Experiencia Profesional
       </h3>
     </div>
@@ -586,7 +589,7 @@ const About = () => {
         height={162}
         className="mb-6"
       />
-      <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
         Soporte 24/7
       </h3>
     </div>
@@ -605,7 +608,7 @@ const About = () => {
 <section className="bg-[#0853FC] w-full py-8 px-6">
   {/* Título principal */}
   <div className="text-center mb-8">
-    <h1 className="text-orange-500 text-6xl font-extrabold">
+    <h1 className="text-[#FB8A00] text-6xl font-extrabold">
       No hay nada imposible,<br />
       el límite lo ponemos nosotros
     </h1>
@@ -625,13 +628,13 @@ const About = () => {
 
   {/* Botones de compromisos */}
   <div className="flex justify-center mt-8 gap-5">
-    <div className="bg-white text-orange-500 font-bold px-auto text-center justify-center py-[14px] items-center rounded-full text-2xl font-extrabold" style={{ width: '270px', height: '60px' }}>
+    <div className="bg-white text-[#FB8A00] font-bold px-auto text-center justify-center py-[14px] items-center rounded-full text-2xl font-extrabold" style={{ width: '270px', height: '60px' }}>
       + Nivel
     </div>
-    <div className="bg-white text-orange-500 font-bold px-auto text-center justify-center py-[14px] items-center rounded-full text-2xl font-extrabold" style={{ width: '270px', height: '60px' }}>
+    <div className="bg-white text-[#FB8A00] font-bold px-auto text-center justify-center py-[14px] items-center rounded-full text-2xl font-extrabold" style={{ width: '270px', height: '60px' }}>
       + Enfoque
     </div>
-    <div className="bg-white text-orange-500 font-bold px-auto text-center justify-center py-[14px] items-center rounded-full text-2xl font-extrabold" style={{ width: '270px', height: '60px' }}>
+    <div className="bg-white text-[#FB8A00] font-bold px-auto text-center justify-center py-[14px] items-center rounded-full text-2xl font-extrabold" style={{ width: '270px', height: '60px' }}>
       + Compromiso
     </div>
   </div>
@@ -639,7 +642,7 @@ const About = () => {
 
 
       {/* Section FootSup */}
-      <section className="bg-[#0051FF] text-white p-6 w-full relative">
+      <section className="bg-[#0051FF] text-white p-6 lg:w-full relative">
         {/* Title */}
         <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
           <h2 className="text-[#FFFFFF] font-semibold mt-4">
@@ -649,7 +652,7 @@ const About = () => {
         </div>
         <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px] py-8">
           <Link href="/contacto">
-          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl">
+          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded lg:text-2xl md:text-xl text-lg">
             Hablá con un representante
           </button>
           </Link>

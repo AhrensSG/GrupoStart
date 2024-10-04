@@ -5,7 +5,9 @@ import React from 'react'
 const AboutPage = () => {
   return (
     <BasicTemplate>
+      <div className="w-full overflowX-hidden">
       <About/>
+      </div>
     </BasicTemplate>
   )
 }

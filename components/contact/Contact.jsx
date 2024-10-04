@@ -15,7 +15,7 @@ const Contact = () => {
 <section className="w-full bg-[#0853FC] text-white py-10 flex flex-col items-center justify-center">
   <div className="container mx-auto flex flex-col lg:flex-row gap-16 px-8 items-center">
     <div className="lg:w-1/2">
-      <h1 className="text-5xl font-extrabold text-orange-500">
+      <h1 className="text-5xl font-extrabold text-[#FB8A00]">
         Sede Central<br /> en Ciudad de Formosa<br /> República Argentina
       </h1>
 
@@ -120,7 +120,7 @@ const Contact = () => {
     {/* Imagen de la Ciudad */}
     <div className="lg:w-1/2">
       <Image
-        src="/city-image.svg"
+        src="/iconos/ciudadFormosa.png"
         alt="Ciudad de Formosa"
         width={664}
         height={439}
@@ -187,7 +187,7 @@ const Contact = () => {
     
     {/* Columna Izquierda - Título y Descripción */}
     <div className="w-1/2 flex flex-col items-start pl-[60px]">
-      <h1 className="text-orange-500 text-6xl font-extrabold mb-6">
+      <h1 className="text-[#FB8A00] text-6xl font-extrabold mb-6">
         ¡Comencemos a <br /> trabajar juntos!
       </h1>
       <p className="text-black text-3xl font-light">
@@ -331,7 +331,7 @@ const Contact = () => {
         height={180}
         className="rounded-full"
       />
-      <div className="bg-orange-500 text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-[#FB8A00] text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Gestión de Redes
       </div>
     </div>
@@ -345,7 +345,7 @@ const Contact = () => {
         height={180}
         className="rounded-full"
       />
-      <div className="bg-orange-500 text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-[#FB8A00] text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Media
       </div>
     </div>
@@ -359,7 +359,7 @@ const Contact = () => {
         height={180}
         className="rounded-full"
       />
-      <div className="bg-orange-500 text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-[#FB8A00] text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Herramientas Útiles
       </div>
     </div>
@@ -368,45 +368,49 @@ const Contact = () => {
   {/* Contenedor de Valores */}
   <div className="flex justify-center gap-[53px]">
     {/* Primera Tarjeta */}
-    <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/iconos/unido-co-creacion.svg"
+        src="/iconos/unido-co-creacion.png"
         alt="Co-creación"
-        width={60}
-        height={60}
+        width={80}
+          height={80}
+          quality={100}
       />
       <h3 className="font-bold mt-4">Co-creación</h3>
     </div>
 
     {/* Segunda Tarjeta */}
-    <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/iconos/gestion-del-talento-excelencia.svg"
+        src="/iconos/gestion-del-talento-excelencia.png"
         alt="Excelencia"
-        width={60}
-        height={60}
+        width={80}
+        height={80}
+        quality={100}
       />
       <h3 className="font-bold mt-4">Excelencia</h3>
     </div>
 
     {/* Tercera Tarjeta */}
-    <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/iconos/apreton-de-manos-confianza.svg"
+        src="/iconos/apreton-de-manos-confianza.png"
         alt="Confianza"
-        width={60}
-        height={60}
+        width={80}
+          height={80}
+          quality={100}
       />
       <h3 className="font-bold mt-4">Confianza</h3>
     </div>
 
     {/* Cuarta Tarjeta */}
-    <div className="bg-orange-500 text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
       <Image
-        src="/iconos/digital-innovacion.svg"
+        src="/iconos/digital-innovacion.png"
         alt="Innovación"
-        width={60}
-        height={60}
+        width={80}
+          height={80}
+          quality={100}
       />
       <h3 className="font-bold mt-4">Innovación</h3>
     </div>
@@ -426,7 +430,7 @@ const Contact = () => {
         height={162}
         className="mb-6"
       />
-      <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
         +100 Clientes
       </h3>
     </div>
@@ -440,7 +444,7 @@ const Contact = () => {
         height={162}
         className="mb-6"
       />
-      <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
         Experiencia Profesional
       </h3>
     </div>
@@ -454,7 +458,7 @@ const Contact = () => {
         height={162}
         className="mb-6"
       />
-      <h3 className="text-orange-500 text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
         Soporte 24/7
       </h3>
     </div>

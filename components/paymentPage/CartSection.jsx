@@ -1,10 +1,8 @@
 import { Context } from "@/app/context/GlobalContext";
 import { useFormik } from "formik";
 import Image from "next/image";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { toast } from "sonner";
-import Loader from "../Loader";
-import { useState } from "react";
 import {
   addProductsToOrder,
   createOrder,
@@ -16,7 +14,7 @@ import {
   savePreferenceID,
   updateUser,
 } from "@/app/context/actions";
-import { useEffect } from "react";
+import Loader from "../Loader";
 import PaymentModal from "../payment/PaymentModal";
 
 const CartSection = () => {
@@ -237,10 +235,10 @@ const CartSection = () => {
                       </label>
                       <input
                         type="text"
-                        name="name"
-                        value={formik.values.name || ""}
+                        name="fullName"
+                        value={formik.values.fullName || ""}
                         onChange={formik.handleChange}
-                        className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                        className="p-1.5 px-3 border-2 rounded -md outline-none w-full"
                       />
                     </div>
                     <div className="w-full flex flex-col">
@@ -371,7 +369,7 @@ const CourseCard = ({ id, name, duration, type, price, dispatch }) => {
         alt="Course Image"
         className="rounded-l-md"
       />
-      <div className="flex flex-col justify-between w-full p-1">
+      <div className="flex flex-col justify-between w -full p-1">
         <span className="text-xl font-medium">{name}</span>
         <p className="text-lg font-medium">
           Duracion: <br />
