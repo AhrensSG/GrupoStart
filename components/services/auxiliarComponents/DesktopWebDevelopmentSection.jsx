@@ -85,7 +85,7 @@ const DesktopWebDevelopmentSection = () => {
       <div className="items-center justify-center text-center py-12">
         <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#0853FC] text-white py-3 px-[100px]">Planes de Identidad</span>
       </div>
-      <div className="grid grid-cols-3 justify-items-center items-center object-center gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
+      <div className="grid grid-cols-3 justify-items-center items-center object-center lg:gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
         <PlanCard
           title="Identidad Simplificada"
           features={[

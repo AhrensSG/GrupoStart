@@ -1,21 +1,24 @@
-
+"use client"
 import Image from "next/image";
 import React from "react";
 import Carousel from "@/components/carrousel/Carousel";
 import Link from "next/link";
+import NavBarV2 from "@/components/navbar/NavBarV2";
+import Footer from "@/components/footer/Footer";
 import Chat from "@/components/chat/Chat";
+
 
 const Contact = () => {
   return (
-    <aside className="w-full relative flex flex-col justify-center items-center bg-white">
-        {/* Chat */}
-        <Chat style={{ zIndex: 35 }}/>
 
+    <aside className="w-full relative flex flex-col justify-start items-center overflow-hidden">
+        <NavBarV2/>
+        <Chat/>
 {/* Sección Principal */}
-<section className="w-full bg-[#0853FC] text-white py-10 flex flex-col items-center justify-center">
-  <div className="container mx-auto flex flex-col lg:flex-row gap-16 px-8 items-center">
-    <div className="lg:w-1/2">
-      <h1 className="text-5xl font-extrabold text-[#FB8A00]">
+<section className="w-full bg-[#0853FC] text-white lg:pt-[5%] md:py-9 flex items-center justify-center px-[2%]">
+  <div className="relative flex justify-center w-full">
+    <div className="w-full items-start justify-center pl-[2%]">
+      <h1 className="lg:text-5xl md:text-3xl font-extrabold text-[#FB8A00]">
         Sede Central<br /> en Ciudad de Formosa<br /> República Argentina
       </h1>
 
@@ -118,26 +121,26 @@ const Contact = () => {
     </div>
 
     {/* Imagen de la Ciudad */}
-    <div className="lg:w-1/2">
+    <div className="w-full items-end justify-center relative">
       <Image
         src="/iconos/ciudadFormosa.png"
         alt="Ciudad de Formosa"
-        width={664}
-        height={439}
-        className="rounded-lg"
+        width={654}
+        height={489}
+        className="rounded-lg justify-items-center lg:w-[230vh] h-[220vw] md:h-[37vh] md:w-[70vh]"
       />
     </div>
   </div>
 </section>
 
 {/* Section 2 Ola y Carrusel*/}
-<section className="relative bg-grey-700 flex flex-col justify-center items-center w-full">
+<section className="relative bg-white flex flex-col justify-center items-center w-full">
         {/* SVG wave */}
-        <div className="w-full h-auto">
+        <div className="w-full justify-start">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 320"
-            className="w-full h-auto"
+            viewBox="0 0 1440 310"
+            className="w-full h-full"
             style={{ position: "relative", width: "full" }}
           >
             <path
@@ -149,18 +152,17 @@ const Contact = () => {
         </div>
 
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col z-2">
+        <div className="relative justify-center items-center object-center grid place-items: center z-10">
           <Image
             src={"/iconos/logoStartBlue.svg"}
-            width={328}
-            height={328}
+            width={300}
+            height={338}
             quality={100}
-            className="w-full max-w-xs md:max-w-md lg:max-w-lg"
+            className="lg:w-[100%] lg:h-[100%] md:w-[20vh] md:h-[20vh] lg:pt-0 md:pt-[5%] md:bottom-0 md:top-[20%]"
             style={{
               zIndex: 15,
               position: "relative",
-              top: -260,
-              bottom: -200,
+              top: -180,
               left: "50%",
               transform: "translateX(-50%)",
             }}
@@ -168,29 +170,30 @@ const Contact = () => {
         </div>
 
         {/* Text section */}
-        <div className="text-center mt-[-230px]">
-          <span className="text-2xl md:text-4xl lg:text-5xl font-bold text-[#0853FC] leading-tight">
+        <div className="text-center lg:mt-[-90px] md:mt-[-20%] mb-[5%] relative px-[1%]">
+          <span className="md:text-4xl lg:text-6xl font-bold text-[#0853FC] leading-tight">
             Algunos de nuestros clientes<br />
             que confían en nosotros
           </span>
         </div>
+        <br/>
+        
+</section>
 
-         {/* Carousel section */}
-        <div className="flex justify-center w-full z-20 p-4">
-        <Carousel />
-        </div>
+<section className="bg-[#FFFFFF] w-full relative flex justify-items-center z-15 pb-[3%]">
+<Carousel />
 </section>
 
 {/* Section Formulario de Contacto */}
-<section className="bg-[#FFFFFF] w-full py-16 flex justify-center items-center relative z-10">
+<section className="bg-[#FFFFFF] w-full py-12 flex justify-center items-center relative z-10">
   <div className="container mx-auto flex flex-row justify-between items-center gap-16 px-8">
     
     {/* Columna Izquierda - Título y Descripción */}
     <div className="w-1/2 flex flex-col items-start pl-[60px]">
-      <h1 className="text-[#FB8A00] text-6xl font-extrabold mb-6">
+      <h1 className="text-[#FB8A00] lg:text-6xl md:text-4xl font-extrabold mb-6">
         ¡Comencemos a <br /> trabajar juntos!
       </h1>
-      <p className="text-black text-3xl font-light">
+      <p className="text-black lg:text-3xl md:text-xl font-light">
         Completá el siguiente<br/>
         formulario para que <br />
         nos pongamos en<br/>
@@ -277,15 +280,15 @@ const Contact = () => {
   {/* Contenedor para centrar tanto el título como la imagen */}
   <div className="flex flex-col justify-center items-center">
     {/* Título principal con ancho igual al de la imagen */}
-    <h1 className="text-[#0853FC] text-5xl font-extrabold text-center w-[800px] mb-8">
+    <h1 className="text-[#0853FC] lg:text-5xl md:text-3xl font-extrabold text-center w-[800px] mb-8">
       Puedes visitarnos en:
     </h1>
     {/*Subtitulo con la direccion*/}
-    <h2 className="text-black text-3xl font-light text-center w-[950px] mb-[-310px]">
+    <h2 className="text-black lg:text-3xl md:text-xl font-light text-center w-[950px]">
       Calle Hipólito Yrigoyen 342 entre Dean Funes y Moreno
       </h2>
     {/* Contenedor de la imagen */}
-    <div className="w-[800px] h-auto relative top-[-220px]">
+    <div className="w-2/4 h-auto relative justify-items-center lg:mb-[-6%]">
     <Link
             href="https://www.google.com/maps/place/Hip%C3%B3lito+Yrigoyen+342,+P3600JGA+Formosa,+Argentina"
             passHref
@@ -298,7 +301,7 @@ const Contact = () => {
         className="rounded-lg object-cover items-center justify-center object-center cursor-pointer relative"
         width={800}
         height={300}
-        style={{ borderRadius: "20px", bottom: -550, zIndex: 5}}
+        style={{ borderRadius: "20px", justifyContent: "center"}}
       />
       </Link>
     </div>
@@ -312,63 +315,63 @@ const Contact = () => {
 </section>
 
 {/* Section CardsOranges Servicios y Valores */}
-<section className="bg-[#0853FC] w-full py-8 relative">
+<section className="bg-[#0853FC] w-full py-8 relative flex-col px-[2%]">
   {/* Título principal */}
   <div className="text-center mb-8">
-    <h1 className="text-white text-5xl font-extrabold">
+    <h1 className="text-white lg:text-5xl md:text-3xl font-extrabold">
       Nuestros Servicios y Valores
     </h1>
   </div>
 
   {/* Contenedor de Servicios */}
-  <div className="flex justify-center gap-[143px] mb-16">
+  <div className="flex justify-center object-center items-center lg:gap-[20vh] md:gap-[2vh] lg:mb-16 md:mb-7 w-full relative">
     {/* Primer Servicio */}
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col justify-items-center relative">
       <Image
         src="/services/Jirafe3.svg"  // Ruta de la imagen correcta
         alt="Gestión de Redes"
         width={176}
         height={180}
-        className="rounded-full"
+        className="rounded-full relative lg:w-full lg:h-full md:w-[75%] md:h-[65%]"
       />
-      <div className="bg-[#FB8A00] text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Gestión de Redes
       </div>
     </div>
 
     {/* Segundo Servicio */}
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       <Image
         src="/services/Jirafe2.svg"  // Ruta de la imagen correcta
         alt="Media"
         width={176}
         height={180}
-        className="rounded-full"
+        className="rounded-full relative lg:w-full lg:h-full md:[70%] md:h-[60%]"
       />
-      <div className="bg-[#FB8A00] text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Media
       </div>
     </div>
 
     {/* Tercer Servicio */}
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center relative">
       <Image
         src="/services/Jirafe12.svg"  // Ruta de la imagen correcta
         alt="Herramientas Útiles"
         width={176}
         height={180}
-        className="rounded-full"
+        className="rounded-full relative lg:w-full lg:h-full md:w-[65%] md:h-[55%]"
       />
-      <div className="bg-[#FB8A00] text-white font-bold w-[320px] h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
+      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Herramientas Útiles
       </div>
     </div>
   </div>
 
   {/* Contenedor de Valores */}
-  <div className="flex justify-center gap-[53px]">
+  <div className="flex justify-center w-full lg:gap-[56px] md:gap-[26px]">
     {/* Primera Tarjeta */}
-    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center lg:w-[275px] lg:h-[219px] md:w-[175px] md:h-[120px] rounded-lg">
       <Image
         src="/iconos/unido-co-creacion.png"
         alt="Co-creación"
@@ -380,7 +383,7 @@ const Contact = () => {
     </div>
 
     {/* Segunda Tarjeta */}
-    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center lg:w-[275px] lg:h-[219px] md:w-[175px] md:h-[120px] rounded-lg">
       <Image
         src="/iconos/gestion-del-talento-excelencia.png"
         alt="Excelencia"
@@ -392,7 +395,7 @@ const Contact = () => {
     </div>
 
     {/* Tercera Tarjeta */}
-    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center lg:w-[275px] lg:h-[219px] md:w-[175px] md:h-[120px] rounded-lg">
       <Image
         src="/iconos/apreton-de-manos-confianza.png"
         alt="Confianza"
@@ -404,7 +407,7 @@ const Contact = () => {
     </div>
 
     {/* Cuarta Tarjeta */}
-    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center w-[270px] h-[219px] rounded-lg">
+    <div className="bg-[#FB8A00] text-white flex flex-col items-center justify-center lg:w-[275px] lg:h-[219px] md:w-[175px] md:h-[120px] rounded-lg">
       <Image
         src="/iconos/digital-innovacion.png"
         alt="Innovación"
@@ -418,60 +421,63 @@ const Contact = () => {
 </section>
 
 {/* Section Cards White */}
-<section className="bg-[#0853FC] w-full py-12 px-4">
+<section className="bg-[#0853FC] w-full py-12 px-[2%] relative flex">
   {/* Contenedor principal */}
-  <div className="flex justify-center items-center gap-[40px]">
+  <div className="flex w-full relative justify-center items-center gap-[40px]">
     {/* Primera Card */}
-    <div className="bg-white rounded-2xl w-[370px] h-[295px] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[30vh] md:h-[20vh] flex flex-col justify-center items-center p-6">
       <Image
         src="/iconos/clasificacion-100clientes.svg" // Agregar la ruta correcta del icono
         alt="100 Clientes"
         width={162}
         height={162}
-        className="mb-6"
+        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] md:h-[8vh]"
       />
-      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] lg:text-5xl md:text-3xl font-bold uppercase text-center">
         +100 Clientes
       </h3>
     </div>
 
     {/* Segunda Card (más ancha) */}
-    <div className="bg-white rounded-2xl w-[420px] h-[295px] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[40vh] md:h-[20vh] flex flex-col justify-center items-center p-6">
       <Image
         src="/iconos/maletin-experiencia.svg" // Agregar la ruta correcta del icono
         alt="Experiencia Profesional"
         width={162}
         height={162}
-        className="mb-6"
+        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] md:h-[8vh]"
       />
-      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] lg:text-5xl md:text-3xl font-bold uppercase text-center">
         Experiencia Profesional
       </h3>
     </div>
 
     {/* Tercera Card */}
-    <div className="bg-white rounded-2xl w-[370px] h-[295px] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[30vh] md:h-[20vh] flex flex-col justify-center items-center relative p-6">
       <Image
         src="/iconos/servicio-al-cliente247.svg" // Agregar la ruta correcta del icono
         alt="Soporte 24/7"
         width={162}
         height={162}
-        className="mb-6"
+        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] md:h-[8vh]"
       />
-      <h3 className="text-[#FB8A00] text-5xl font-bold uppercase text-center">
+      <h3 className="text-[#FB8A00] lg:text-5xl md:text-3xl font-bold uppercase text-center">
         Soporte 24/7
       </h3>
     </div>
   </div>
+</section>
 
-  {/* Texto Final */}
-  <div className="text-center mt-12">
+<section className="bg-[#0853FC] w-full justify-items-center text-center px-2%">
+    {/* Texto Final */}
+    <div className="text-center py-[3%]">
     <h2 className="text-white text-5xl font-extrabold">
       Tendrás un equipo de 7 personas<br/> comprometidas con vos
     </h2>
   </div>
 </section>
 
+  <Footer/>
     </aside>
   );
 };

@@ -65,7 +65,7 @@ const ThirdSection = () => {
           alt={image.alt}
           className="object-cover object-center"
           width={160}
-          height={150}
+          height={145}
           priority={true}
           quality={100}
         />

@@ -101,7 +101,7 @@ const Media = () => {
           />
         </div>
         <div className="text-center mt-[-230px]">
-          <span className="text text -4xl font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
+          <span className="text font-bold my-4 text-[#0853FC] text-center md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
             Trabajemos juntos,<br />
             tenemos el equipo creativo que necesitas
           </span>
@@ -239,7 +239,7 @@ const Media = () => {
               los flyers publicitarios?
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-black text-end text-xl lg:text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-black text-end text-xl lg:text-2xl md:text-lg leading-relaxed tracking-wide" style={{top: -2}}>
               Estos son un instrumento muy poderoso<br/>
               para hacer publicidad y fortalecer tu marca,<br/>
               es necesario contar con diseños apropiados<br/>
@@ -272,8 +272,8 @@ const Media = () => {
       </section>
 
       {/* Section 8 */}
-      <section className="relative flex flex-wrap w-full h-screen justify-center items-center bg-white md:pb-[27px] sm:pb-[40px] pb-[-200px]">
-        <div className="flex flex-row w-full px-[2%]">
+      <section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white md:pb-[27px] sm:pb-[40px]">
+        <div className="flex flex-row w-full px-[2%] md:pb-[10%] sm:pb-[15%]">
           {/* Image */}
           <div className="w-full flex items-start justify-start pl-[5%]">
             <Image
@@ -349,7 +349,7 @@ const Media = () => {
       <section className="w-full relative flex">
         <div className="flex flex-row w-full bg-[#0853FC] px-[2%]">
           {/* Image */}
-          <div className="w-full items-start justify-start pl-[4%]">
+          <div className="w-full items-start justify-center pl-[4%] md:pt-[10%]">
             <Image
               src={"/services/imgSct10Media.png"}
               className="object-cover transition-opacity opacity-0 duration-500"
@@ -362,14 +362,14 @@ const Media = () => {
           </div>
           <br />
           {/* Text */}
-          <div className="w-full relative flex flex-col items-end justify-center text-end pr-[4%]">
-            <span className="text-5xl font-bold mb-[2px] text-[#FB8A00] text-end">
+          <div className="lg:w-full md:w-1/2 relative flex flex-col items-end justify-center text-end pr-[4%]">
+            <span className="lg:text-5xl md:text-3xl font-bold mb-[2px] text-[#FB8A00] text-end">
               La importancia<br />
               de un guión para<br />
               tu video
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-white text-end text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-white text-end md:text-xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
               La idea junto al guión<br />
               son el pilar de cualquier<br />
               pieza audiovisual, ya sea<br/>
@@ -388,30 +388,17 @@ const Media = () => {
       </section>
 
       {/* Section 11 */}
-      <section className="relative flex flex-wrap w-full justify-center items-center bg-[#0853FC] md:pb-[77px] sm:pb-[10px] pt-[100px] pb-[-200px]">
-        <div className="flex flex-col md:flex-row w-full p-6">
-          {/* Image */}
-          {/* <div className="w-full md:w-1/2">
-            <Image
-              src={"/"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
-              priority={true}
-              quality={100}
-            />
-          </div> */}
+      <section className="relative flex w-full justify-center bg-[#0853FC] px-[2%]">
+        <div className="flex flex-row w-full py-6">
 
           {/* Text */}
-          <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%] z-15" style={{ 
-                zIndex: 15}} >
-            <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-start text-2xl md:text-4xl lg:text-5xl justify-start">
+          <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%]" >
+            <span className="font-bold mb-[28px] text-[#FB8A00] text-start md:text-4xl lg:text-5xl justify-items-start">
               Creamos<br />
               la historia<br />
               perfecta
             </span>
-            <span className="text font-light mb-[40px] text-start text-white text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wide">
+            <span className="text font-light mb-[40px] text-start justify-center text-white md:text-xl lg:text-3xl leading-relaxed tracking-wide">
               Utilizamos herramientas<br />
               de edición profesional<br />
               como: premiere, after<br/>
@@ -422,58 +409,74 @@ const Media = () => {
             </span>
           </div>
 
-          <div className="w-full relative justify-center items-end">
-            <video
+          {/* Video */}
+          <div className="flex relative items-end justify-center object-center md:py-[5%] lg:pr-[3%] md:pr-[3%] rounded lg:w-full h-auto md:w-1/2">
+          <div style={{
+              width: '750px',
+              height: '465px',
+            }}
+            >
+            <iframe
               src={"/services/vidSct11Media.mp4"}
-              className="object-cover transition-opacity opacity-0 duration-500"
+              className="object-cover transition-opacity opacity-0 duration-500 w-full h-full"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
+              width={845}
+              height={465}
               priority={true}
               quality={100}
               loop
               autoPlay
               muted
+              allowfullscreen="false"
               style={{
-                zIndex: 15,
                 position: 'relative',
                 top: 0,
                 bottom: 0,
                 left: '50%',
                 transform: 'translateX(-50%)' }}
-            />
+            >
+
+            </iframe>
+          </div>
           </div>
         </div>
       </section>
 
       {/* Section 12 */}
-      <section className="bg-[#0051FF] text-white pt-[90px] pb-10 w-full px-[2%]">
-        <div className="flex flex-row w-full bg-[#0051FF] px-[2%]">
-          {/* Image */}
-          <div className="w-full justify-center items-start pl-[2%]">
-            <video
+      <section className="relative flex w-full justify-center bg-[#0853FC] px-[2%]">
+        <div className="flex flex-row w-full py-6">
+          {/* Video */}
+          <div className="flex items-start justify-center relative pl-[4%] md:py-[5%] rounded lg:w-full h-auto md:w-1/2 priority-true">
+          <div style={{
+              
+              width: '750px',
+              height: '465px',
+            }}
+            >
+            <iframe
               src={"/services/vidSct12Media.mp4"}
-              className="object-cover transition-opacity opacity-0 duration-500"
+              className="object-cover transition-opacity items-start justify-center opacity-0 duration-500 w-full h-full relative"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
+              width={845}
+              height={465}
               priority={true}
               quality={100}
               loop
               autoPlay
               muted
+              
             />
           </div>
-          <br />
+          </div>
           {/* Text */}
-          <div className="w-full relative flex flex-col items-end justify-center text-end pr-[2%]">
-            <span className="text-2xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-3xl lg:text-5xl">
+          <div className="lg:w-full md:w-1/2 relative flex flex-col items-end justify-center text-end pr-[2%]">
+            <span className="font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
               Añadimos<br />
               efectos<br />
               llamativos<br />
               a los videos
             </span>
-            <span className="font-light mb-[40px] text-[#FFFFFF] text-end text-xl md:text-2xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-[#FFFFFF] text-end md:text-lg lg:text-3xl leading-relaxed tracking-wide">
               Cientos de efectos y<br />
               transcisiones creadas<br />
               por los profesionales<br/>
@@ -482,15 +485,18 @@ const Media = () => {
               en tu video.
             </span>
             <Link href="/">
-              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded flex flex-col gap-2 text-3xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative">
+              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative">
                 Contratar
               </button>
             </Link>
           </div>
         </div>
-        {/* Title */}
-        <div className="text-center justify-center items-center text-2xl md:text-4xl lg:text-5xl pt-12">
-          <h2 className="text-[#FFFFFF] font-semibold mt-4 pb-6">
+      </section>
+
+        {/*Section 13*/}
+      <section className="w-full justify-items-center px-[2%] py-[2%] bg-[#0853FC]">
+      <div className="text-center flex-col  relative justify-center items-center text-2xl md:text-4xl lg:text-5xl pt-12">
+          <h2 className="text-[#FFFFFF] font-semibold pb-6">
             Una comunicación de impacto<br />
             ¿Listo para invertir en ella?
           </h2>
