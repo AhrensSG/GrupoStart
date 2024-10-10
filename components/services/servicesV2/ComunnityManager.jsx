@@ -73,7 +73,7 @@ const CommunityManager = () => {
     </div>
     
     {/* Sección del reproductor de video */}
-    <div className="flex items-end justify-end w-full pr-[2%] rounded md:w-1/2 md:h-1/2">
+    <div className="flex items-end justify-end w-full pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
           <div style={{
               paddingTop: '5px',
               width: '842px',
@@ -143,7 +143,7 @@ const CommunityManager = () => {
       </section>
 
 {/* Section 3 */}
-<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-80px]">
+<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-60px]">
   <div className="flex flex-row w-full">
     {/* Text */}
     <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%]">
@@ -176,7 +176,7 @@ const CommunityManager = () => {
         height={844}
         priority={true}
         quality={100}
-        style={{top: 35, bottom: -20, zIndex: 20, right: -20}}
+        style={{top: 35, bottom: -25, zIndex: 20, right: -20}}
       />
     </div>
   </div>
@@ -211,10 +211,10 @@ const CommunityManager = () => {
 
 
 {/* Section 5 */}
-<section className="relative bg-[#FFFFFF]">
-  <div className="flex flex-row w-full bg-[#FFFFFF] py-6">
+<section className="relative bg-[#FFFFFF] px-[2%]">
+  <div className="flex flex-row w-full bg-[#FFFFFF] md:py-6 lg:py-1">
     {/* Image */}
-    <div className="w-full flex items-start justify-start pl-[5%]">
+    <div className="flex items-start justify-center md:pl-[4%] lg:w-[100vh] lg:h-[80vh] md:w-[53vh] md:h-[53vh] lg:pt-[6%] md:pt-[7%]">
       <Image
         src={"/services/ImgSct5GR.png"}
         alt="Imagen de la sección 5"
@@ -227,12 +227,12 @@ const CommunityManager = () => {
       />
     </div>
     {/* Text */}
-    <div className="w-full relative flex flex-col items-end justify-end text-end mt-6 pr-[6%]">
-      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
+    <div className="lg:w-2/4 md:w-2/4 relative flex flex-col items-end justify-center text-end mt-2 lg:pr-[4%] md:pr-[2%]">
+      <span className=" md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
         Conocé a tu audiencia<br />
         es la clave del éxito
       </span>
-      <span className="font-light mb-[40px] text-black text-end text-lg md:text-xl lg:text-2xl leading-relaxed tracking-wide mt-4">
+      <span className="font-light mb-[40px] text-black text-end md:text-md lg:text-xl xl:text-2xl leading-relaxed tracking-wide mt-4">
         Segmentar y entender a tu audiencia es fundamental<br />
         para crear campañas de marketing efectivas para<br />
         obtener éxito de tu negocio en redes sociales.<br /><br />
@@ -247,14 +247,14 @@ const CommunityManager = () => {
 
 {/* Section 6 */}
 <section className="relative flex flex-wrap w-screen h-auto justify-center items-center bg-white">
-  <div className="flex flex-col md:flex-row w-full py-6">
+  <div className="flex flex-row w-full lg:-mb-[10%] md:mb-[3%]">
     {/* Text */}
     <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[5%]">
-      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[28px] text-[#0853FC] text-start">
+      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[2%] text-[#0853FC] text-start">
         Tu perfil es tu tarjeta<br />
         de presentación
       </span>
-      <span className="text-lg md:text-xl sm:text-lg lg:text-2xl mb-[40px] md:mb-[60px] text-start leading-relaxed tracking-wide z-5">
+      <span className="text-lg md:text-xl sm:text-lg lg:text-2xl md:pb-[5%] text-start leading-relaxed tracking-wide">
         Tu biografía es la primera impresión que los posibles<br />
         clientes tienen de tu marca en redes sociales.<br />
         Optimizamos tu diseño y contenido para reflejar la<br />
@@ -262,7 +262,7 @@ const CommunityManager = () => {
         publicación contribuya a construir una imagen<br />
         coherente y atractiva.
       </span>
-      <Link href="/contacto">
+      <Link href="/contact">
         <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
           Contactar
         </button>
@@ -270,7 +270,7 @@ const CommunityManager = () => {
     </div>
 
     {/* Image */}
-    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%] md:w-3/4 md:mb-10 ">
+    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%] md:w-3/4 md:mb-1 ">
       <Image
         src={"/services/ImgSct6GR.png"}
         alt="Imagen de la sección 6"
@@ -284,7 +284,7 @@ const CommunityManager = () => {
     </div>
   </div>
   {/* Ola */}
-  <div className="absolute w-full justify-end overflow-hidden bottom-0 z-5">
+  <div className="relative w-full justify-end overflow-hidden bottom-0 ">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
       <path fill="#0853FC" fillOpacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
     </svg>
@@ -416,21 +416,17 @@ const CommunityManager = () => {
     <div clasName="w-full justify-center items-center px-[2%]">
       <Image
       src="/services/img360Equipo.png"
-      alt="Imagen360°Equipo"
+      alt="Imagen360Equipo"
       width={914}
       height={356}
       quality={100}
-      className="object-cover transition-opacity opacity-0 duration-500"
+      className="object-cover relative transition-opacity opacity-0 duration-500"
       priority={true}
-      style={{
-        position: 'relative',
-      }}
-      
       />
       </div>
 
-    <div className="flex relative items-center justify-center text-center mx-[20px] px-[250px]">
-    <span className="text-[#FB8A00] text-center justify-center items-center text-4xl text-light">Contarás con equipo con un mínimo de 7 personas.</span>
+    <div className="flex relative items-center justify-center text-center mx-[20px] lg:px-[250px] md:px-[10px]">
+    <span className="text-[#FB8A00] text-center justify-center items-center lg:text-4xl md:text-3xl text-light">Contarás con equipo con un mínimo de 7 personas.</span>
     </div>
       </section>
 

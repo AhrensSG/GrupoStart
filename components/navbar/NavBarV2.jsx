@@ -37,7 +37,7 @@ const NavBarV2 = () => {
             </button>
         </Link>
 
-        <Link className="max-w-32 w-full" href={"/about#contactAbout"}>
+        <Link className="max-w-32 w-full" href={"/contact"}>
             <button className="max-w-32 w-full h-10 px-2 border rounded-tl-xl rounded-br-xl bg-[#f8f8f8] border-orange-500 shadow-md shadow-orange-500 text-center hover:bg-orange-500 hover:text-white font-medium duration-300">
             Contacto
             </button>

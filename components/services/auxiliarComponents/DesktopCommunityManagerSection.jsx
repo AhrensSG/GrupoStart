@@ -10,7 +10,7 @@ import { toast } from "sonner";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col pb-1 sm:w-3/4">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 lg:h-[530px] lg:w-[307px] md:h-[455px] md:w-[275px] relative container flex flex-col pb-1 sm:w-1/4">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[8px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
@@ -19,9 +19,9 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       </div>
 
           {/* Lista de características */}
-        <ul className="list-none pl-[30px] pr-[5px] py-[4px] h-[265px] w-[300px] flex-grow sm:overflow-y-auto justify-items-center lg:h-[300px] lg:w-[330px] sm:w-3/4">
+        <ul className="list-none relative lg:pl-[30px] lg:pr-[8px] md:py-[2px] lg:pt-[3vh] flex-grow sm:overflow-y-auto justify-items-center lg:h-[260px] lg:w-[295px] md:pl-[8px] md:pr-[15px] md:w-[255px] md:h-[245px] sm:w-3/4">
           {features.map((feature, index) => (
-            <li key={index} className="flex items-center w-full mb-2">
+            <li key={index} className="flex items-center w-full lg:mb-[4.5%] md:mb-2">
               <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
                 <Image
                   src="/services/CheckIcon.svg"
@@ -100,7 +100,7 @@ const DesktopCommunityManagerSection = () => {
         </h2>
       </div>
       {/* Ajustamos el grid para que sea responsive */}
-      <div className="grid grid-cols-3 justify-items-center items-center object-center gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
+      <div className="grid grid-cols-3 justify-items-center items-center object-center lg:gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
         <PlanCard
           title="Conexion inicial"
           features={[

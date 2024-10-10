@@ -22,7 +22,7 @@ const Branding = () => {
       }}
     >
           {/*Section 1*/}
-            <section className="relative bg-[#0853FC] flex w-full pl-[2%]">
+            <section className="relative bg-[#0853FC] flex w-full pl-[2%] py-3">
             <div className="container flex-col pb-2 gap-16 ml-1 pl-[1%] pt-[55px]" 
             style={{
             maxWidth: "1600px",
@@ -46,7 +46,7 @@ const Branding = () => {
               </div>
             </div>
               {/* Aquí iría el reproductor de YouTube */}
-              <div className="flex items-end justify-end w-full pr-[3%] rounded md:w-1/2 md:h-1/2">
+              <div className="flex items-end justify-end w-full pr-[3%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
           <div style={{
               paddingTop: '10px',
               width: '842px',

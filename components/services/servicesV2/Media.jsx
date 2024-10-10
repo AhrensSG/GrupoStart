@@ -23,8 +23,8 @@ const Media = () => {
     }}
     >
       {/* Section 1 */}
-      <section className="relative bg-[#0853FC] flex w-full px-[2%] md:pb-10 lg:pb-2">
-        <div className="container flex-col pl-[3%] pt-[55px]">
+      <section className="relative bg-[#0853FC] flex w-full pl-[2%] pr-[1%] md:pb-10 lg:pb-2 pt-3">
+        <div className="container flex-col pl-[2%] pt-[55px]">
           <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-center">Media: edición<br/>de videos<br/>e imágenes</span>
           <div className="pt-[20px]">
             <span className="text-white text-xl ">
@@ -42,7 +42,7 @@ const Media = () => {
           </div>
         </div>
         {/* Aquí iría el reproductor de YouTube */}
-        <div className="flex items-end justify-center pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
+        <div className="flex items-end justify-end pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
           <div style={{
               paddingTop: '10px',
               width: '842px',

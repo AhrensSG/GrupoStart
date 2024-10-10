@@ -86,7 +86,7 @@ const About = () => {
 
 
       {/* Section 3 - Línea de tiempo */}
-      <section className="bg-[#FFFFFF] w-full flex flex-col items-center">
+      <section className="bg-[#FFFFFF] w-full flex flex-col items-center justify-center">
         <h3 className="lg:text-3xl md:text-xl font-light text-black justify-center text-center items-center">Historia</h3>
         <h2 className="lg:text-5xl md:text-3xl font-bold mb-8 text-[#FB8A00]">Así nació Start</h2>
 
@@ -101,7 +101,7 @@ const About = () => {
         {/* Contenedor de la línea de tiempo */}
         <div className="relative w-full max-w-6xl">
           {/* Línea central */}
-          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 lg:h-[602px] md:h-[65vh] w-1 bg-blue-500 z-2 mb-16"></div>
+          <div className="absolute top-0 left-1/2 transform -translate-x-1/2 lg:h-[602px] md:h-[60vh] w-1 bg-blue-500 z-2 mb-16"></div>
 
           {/* Founderss */}
           <div className="w-full flex justify-between items-center mb-16">
@@ -130,24 +130,17 @@ const About = () => {
             </div>
           </div>
     </div>
-   {/* Sección de objetivos */}
-<div className="w-full flex flex-col items-start justify-start py-3 relative lg:pl-[45vh] lg:pr-[55vh] md:pl-[5vw] md:pr-[16vw]"
-    style={{
-        position: "relative",
-        maxWidth: "100%", 
-        overflowX: "hidden",
-        marginTop: "70px"  // Mantiene el ajuste hacia abajo
-    }}>
+{/* Sección de objetivos */}
+<div className="flex flex-col items-start justify-center text-start lg:left-[12%] pt-7 relative lg:w-[100%] md:pl-[4vw] md:left-[8%] md:w-[90%]">
   
-  <div className="bg-[#FB8A00] text-white font-bold px-[66px] py-[11px] rounded-tl-full rounded-br-full lg:mb-3 md:mb-0 md:mt-8 justify-start text-left"
+  <div className="bg-[#FB8A00] text-white font-bold px-[66px] py-[11px] rounded-tl-full rounded-br-full xl:mb-3 lg:mb-2 lg:mr-5 md:mb-0 md:mt-8 justify-start text-left"
       style={{ maxWidth: "345px", width: "100%" }}>
     Objetivos que nos inspiran
   </div>
   
   <br />
   
-  <span className="leading-relaxed text-black lg:text-xl md:text-lg text-left" 
-      style={{ width: "100%", maxWidth: "850px", paddingRight: "30px", marginTop: "3px" }}>
+  <span className="block leading-relaxed text-black lg:text-xl md:text-lg text-left text-start justify-center items-start xl:ml-[0%] lg:w-2/3 lg:pr-[16%] md:w-2/4 md:pr-[10%] relative lg:left">
     Start se fundó en Formosa Argentina a comienzos del año 2023,<br />
     aunque nuestra historia comienza mucho antes con el objetivo de<br />
     erradicar uno de los problemas más grandes presentes en todos<br />
@@ -156,19 +149,17 @@ const About = () => {
   </span>
 </div>
 
-
-
-          <div className="w-full pb-[2vh]">
+<div className="w-full pb-[2vh] lg:px-6 lg:w-[70%] md:w-[105%]">
   {/* 2do Bloque */}
-  <div className="w-full py-[2vh] flex items-start justify-center text-end lg:px-[22%]">
-    <div className="lg:pl-[0vh] md:pl-[4vh] lg:w-3/4 lg:h-full md:w-1/3 md:h-1/4">
+  <div className="w-full py-[2vh] flex items-start justify-center text-end lg:px-4">
+    <div className="lg:pl-6 md:pl-6 lg:w-2/4 lg:h-full md:w-1/3 md:h-1/4">
       {/* SVG con línea de 90° hacia abajo y luego derecha */}
-      <svg width="305" height="147" xmlns="http://www.w3.org/2000/svg" className="lg:mr-[0vh] md:mr-[3vh]" style={{top: 250, bottom: -180}}>
+      <svg width="305" height="147" xmlns="http://www.w3.org/2000/svg" className="lg:mr-0 md:mr-4" style={{top: 250, bottom: -180}}>
         <path d="M0 0 L0 147 L310 147" stroke="#0853FC" strokeWidth="5" fill="none" />
       </svg>
     </div>
-    <div className="lg:pl-[0vh] lg:w-full md:pl-[8vh] pt-[45px]">
-      <span className="lg:text-xl md:text-lg leading-relaxed" style={{top: 500, bottom: -70}}>
+    <div className="lg:w-full md:pl-6 pt-6 lg:pl-0">
+      <span className="text-rigth text-end justify-center items-end lg:text-xl md:text-lg leading-relaxed" style={{top: 500, bottom: -70}}>
         Culminaba la pandemia del covid-19 que tanto afligió al<br />
         mundo, Iván organizaba un evento de entretenimiento<br />
         y relaciones públicas, en ese momento se encontraba<br />
@@ -179,10 +170,12 @@ const About = () => {
     </div>
   </div>
 
-  {/* 3er Bloque */}
-  <div className="lg:px-[16%] w-full pt-[10px] flex items-start justify-center">
-    <div className="lg:pr-[6vh] md:pr-[2vh] md:pl-[5vh] pt-[25px]">
-      <span className="lg:text-xl md:text-lg leading-relaxed text-start" style={{left:-50}}>
+{/* 3er Bloque */}
+<div className="lg:px-0 w-full lg:w-[100%] pt-6 flex-row text-start text-left items-start justify-center">
+
+  <div className="flex flex-row justify-between w-full">
+    <div className="lg:w-3/4 md:w-2/4" style={{marginLeft: 0, paddingLeft: 10, width: 'calc(100% - 16vw)'}}>
+      <span className="lg:text-xl md:text-lg leading-relaxed text-start justify-center items-start text-left">
         Seba, un diseñador gráfico y publicista con una amplia trayectoria,<br />
         estaba de pasada para saludar al dueño del lugar, nota la presencia<br />
         de varios influencers, se acercó preguntando por el organizador,<br />
@@ -198,13 +191,14 @@ const About = () => {
         como socios, fundando lo que hoy conocemos como Grupo Start.</strong>
       </span>
     </div>
-    <div className="lg:pl-[16vh] md:pl-[8vh] lg:w-1/4 lg:h-full md:w-1/4 md:h-1/4">
+    <div className="lg:w-1/4" style={{marginRight: 0, paddingRight: 0, marginLeft: '14vw'}}>
       {/* Línea en ángulo de 90° hacia la izquierda */}
-      <svg width="96" height="202" xmlns="http://www.w3.org/2000/svg" className="md:ml-4" style={{top: -50, bottom: 90}}>
+      <svg width="96" height="202" xmlns="http://www.w3.org/2000/svg" className="lg:ml-0 md:ml-4" style={{top: -50, bottom: 90}}>
         <path d="M97 0 L97 202 L0 203" stroke="#0853FC" strokeWidth="6" fill="none" />
       </svg>
     </div>
   </div>
+</div>
 </div>
 
             {/* Ola */}
@@ -380,7 +374,7 @@ const About = () => {
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
         Co-creación
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm leading-relaxed">
+      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
         Creemos en una<br/>
         relación colaborativa donde<br/>
         trabajamos juntos para<br/>
@@ -404,7 +398,7 @@ const About = () => {
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
         Excelencia
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm leading-relaxed">
+      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
         Nos esforzamos por alcanzar los<br/>
         más altos estándares de calidad<br/>
         en todo lo que hacemos, desde<br/>
@@ -427,7 +421,7 @@ const About = () => {
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
         Confianza
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm leading-relaxed">
+      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
         Construimos relaciones sólidas,<br/>
         basadas en la transparencia,<br/>
         la honestidad y el respeto mutuo<br/>
@@ -450,7 +444,7 @@ const About = () => {
       <h3 className="text-white text-lg font-bold text-center mt-10 underline">
         Innovación
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm leading-relaxed">
+      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 sm:text-xs leading-relaxed">
         Estamos a la vanguardia de las<br/>
         últimas tendencias y tecnologías<br/>
         para garantizar que nuestros<br/>

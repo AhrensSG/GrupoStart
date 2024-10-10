@@ -8,9 +8,9 @@ const FourthSection = () => {
   return (
     <section
       id="about-us"
-      className="w-full bg-gradient-to-b from-[#FB8A00] via-[#FFFFFF] to-[#FFFFFF] p-5"
+      className="w-full bg-gradient-to-b from-[#FB8A00] via-[#FFFFFF] to-[#FFFFFF] p-4"
     >
-      <div className="w-full h-full flex justify-center items-center md:gap-5 lg:gap-4 sm:gap-2 xl:gap-28 lg:pt-16 xl:pt-1 relative">
+      <div className="w-full h-full flex justify-center items-center md:gap-8 lg:gap-4 sm:gap-0 xl:gap-28 lg:pt-16 xl:pt-1 relative lg:px-[4%]">
   <FounderCard
     img={"/ivan.jpeg"}
     name={"Ivan E. Ayala"}
@@ -18,11 +18,11 @@ const FourthSection = () => {
     description={""}
   />
   <div className="xl:mt-12 text-center text-black max-w-md lg:pb-24 xl:pb-20 justify-center items-center">
-    <div className="w-full h-full flex flex-col items-center md:gap-1 lg:gap-3 xl:gap-5">
+    <div className="w-full h-full flex flex-col items-center md:gap-3 lg:gap-3 xl:gap-5">
       <h2 className="lg:text-3xl xs:text-4xl xl:text-5xl text-white font-extrabold uppercase">
         Fundadores
       </h2>
-      <p className="lg:text-2xl xl:text-3xl font-normal lg:w-[300px] xl:w-[450px] pb-10 xl:pb-24">
+      <p className="lg:text-2xl xl:text-3xl md:text-xl font-normal lg:w-[300px] xl:w-[450px] pb-10 xl:pb-24">
         El destino une a estos
         <br />
         emprendedores en una

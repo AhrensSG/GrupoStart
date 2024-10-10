@@ -79,7 +79,7 @@ const NavBar = () => {
                     Nosotros
                   </button>
                 </Link>
-                <Link className="text-lg" href={"/about#contactAbout"}>
+                <Link className="text-lg" href={"/contact"}>
                   <button
                     onClick={() => setShowSideBar(false)}
                     className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
