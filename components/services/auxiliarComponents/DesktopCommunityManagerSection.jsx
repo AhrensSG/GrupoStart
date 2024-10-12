@@ -122,7 +122,7 @@ const DesktopCommunityManagerSection = () => {
             "Puesta en marcha de campañas publicitarias",
             "1 video 30 seg. mensual",
           ]}
-          price={{ original: 278900, discount: 258900 }}
+          price={{ original: 299900, discount: 258900 }}
           onButtonClick={() => handleBuyNow(3, "Plan Social Master", 258900)}
         />
         <PlanCard

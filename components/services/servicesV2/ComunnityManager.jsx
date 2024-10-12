@@ -9,10 +9,20 @@ import DesktopCommunityManagerSection from "@/components/services/auxiliarCompon
 import Forms from "../servicesV2/formulario/Forms";
 
 const CommunityManager = () => {
+
+  const handleClick = () => {
+    // Redirige al link de WhatsApp con el número y un mensaje personalizado
+    window.open(
+      "https://wa.me/+543704619402?text=¡Hola!%20Me%20gustaría%20saber%20más%20sobre%20sus%20servicios",
+      "_blank",
+      "noopener noreferrer"
+    );
+  };
+
   const { data } = useContext(Context);
   const router = useRouter();
 
-  // Elements for the circle map
+  {/*// Elements for the circle map
   const elements = [
     { text: "👤Diseñador\nGráfico"},
     { text: "👤Creativo\nPublicitario" },
@@ -39,7 +49,7 @@ const CommunityManager = () => {
     fill: "#FFFFFF",
     textAlign: "center",
   };
-};
+};*/}
 
   return (
 
@@ -66,7 +76,7 @@ const CommunityManager = () => {
         </span>
       </div>
       <div className="py-[30px]">
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl">
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
           Comenzar
         </button>
       </div>
@@ -158,11 +168,11 @@ const CommunityManager = () => {
         clientes en todas<br />
         las plataformas Meta
       </span>
-      <Link href="/">
-        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+      
+        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
           Empezar
         </button>
-      </Link>
+      
     </div>
 
     {/* Image */}
@@ -262,11 +272,11 @@ const CommunityManager = () => {
         publicación contribuya a construir una imagen<br />
         coherente y atractiva.
       </span>
-      <Link href="/contact">
-        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
+      
+        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative" onClick={handleClick}>
           Contactar
         </button>
-      </Link>
+      
     </div>
 
     {/* Image */}
@@ -324,7 +334,7 @@ const CommunityManager = () => {
 </section>
 
       {/*Section CircleMap */}
-      <section className="bg-[#0853FC] text-white py-6 px-[2%]">
+      <section className="bg-[#0853FC] text-white flex-col justify-items-center py-6 px-[2%]">
         {/* Title */}
         <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
           <h2 className="text-[#FFFFFF] font-semibold mt-4">
@@ -332,95 +342,14 @@ const CommunityManager = () => {
             de <span className="text-[#FB8A00] font-semibold">trabajo profesional</span>
           </h2>
         </div>
-        {/*
-        {/* Circulo con sus elementos
-        <div className="flex items-center justify-center text-center relative m-[30px] p-[10px]">
-          <svg width="446" height="446" viewBox="0 0 260 260" className="items-center mx-[130px] my-[2px] p-[25px] flex-auto">
-          <circle cx="125" cy="125" r="95" fill="none" stroke="white" strokeWidth="1" style={circleMapStyles} />
-          {elements.map((element, index) => {
-              const angle = (index / elements.length) * 2 * Math.PI;
-              const radius = 110; // Ajustes para el radio (distancia desde el centro con el texto)
-              const x = 120 + radius * Math.cos(angle);
-              const y = 120 + radius * Math.sin(angle);
-
-              const customStyles = {
-                transform: 'translateX(0px) translateY(0px)' // Inicializar con valores por defecto
-              };
-
-
-              // Aplicar padding personalizado según el elemento
-            switch (index) {
-              case 1: // Creativo Publicitario
-                customStyles.transform = 'translateX(60px)';
-              break;
-              case 2: // Community Manager
-                customStyles.transform = 'translateX(-250px) translateY(-25px)';
-              break;
-              case 3: // Social Media
-                customStyles.transform = 'translateX(-250px) translateY(-50px)';
-              break;
-              case 4: // Coordinador de Media
-                customStyles.transform = 'translateX(-160px) translateY(-35px)';
-              break;
-              case 5: // Project Manager
-                customStyles.transform = 'translateX(-35px)';
-              break;
-              case 6: // Coordinador de Social Media
-                customStyles.transform = 'translateX(30px) translateY(5px)';
-              break;
-              case 0: // Diseñador Grafico
-                customStyles.transform = 'translateX(120px)';
-              break;
-              // Agrega más casos según tus necesidades
-              default:
-              // Si quieres aplicar un estilo por defecto a los demás elementos
-                customStyles.transform = 'translateX(10px)';
-                }
-
-              return (
-                <text
-                  key={index} // Unique key for each element
-                  x={x}
-                  y={y}
-                  textAnchor={textStyles(index).textAlign}
-                  dominantBaseline="middle"
-                  fill="white"
-                  // Agregar estilos aqui
-                  style={{
-                    ...textStyles(index),
-                    ...circleMapStyles,
-                    ...customStyles,
-                    fontSize: '14px', // Reducido el tamaño de la fuente
-                    padding: '5px' // Añadido padding
-                  }}
-                >
-                  {element.text}
-                </text>
-              );
-            })}
-            <text
-              x="125"
-              y="125"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              fill="white"
-              fontSize="55px"
-              fontWeight="bold"
-              className="items-center justify-center"
-            >
-              360°
-            </text>
-          </svg>
-    </div>
-    */}
-    <div clasName="w-full justify-center items-center px-[2%]">
+    <div clasName="flex-row justify-center items-center object-center px-[6%] py-6">
       <Image
       src="/services/img360Equipo.png"
       alt="Imagen360Equipo"
-      width={914}
-      height={356}
+      width={814}
+      height={556}
       quality={100}
-      className="object-cover relative transition-opacity opacity-0 duration-500"
+      className="object-cover relative justify-center items-center object-center w-[100%] px-[20%] py-8"
       priority={true}
       />
       </div>
@@ -477,11 +406,11 @@ const CommunityManager = () => {
               el plan para potenciar<br />
               las redes de tu negocio
             </span>
-            <Link href="/contacto">
-            <button className="bg-[#FB8A00] justify-end hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl items-center">
+            
+            <button className="bg-[#FB8A00] justify-end hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl items-center" onClick={handleClick}>
               Hablá con un asesor
             </button>
-            </Link>
+            
         </div>
         </div>
       </section>

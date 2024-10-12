@@ -66,7 +66,6 @@ const Contact = () => {
                 height={30}
                 alt="FacebookIcon"
                 className="cursor-pointer"
-                style={{ filter: "invert(1)" }} // Hace el icono blanco
               />
             </Link>
             <Link
@@ -86,7 +85,6 @@ const Contact = () => {
                 height={30}
                 alt="LinkedInIcon"
                 className="cursor-pointer"
-                style={{ filter: "invert(1)" }} // Hace el icono blanco
               />
             </Link>
             <Link href={"https://www.linkedin.com/"} target="_blank">
@@ -106,7 +104,6 @@ const Contact = () => {
                 height={30}
                 alt="InstagramIcon"
                 className="cursor-pointer"
-                style={{ filter: "invert(1)" }} // Hace el icono blanco
               />
             </Link>
             <Link
@@ -127,7 +124,7 @@ const Contact = () => {
         alt="Ciudad de Formosa"
         width={654}
         height={489}
-        className="rounded-lg justify-items-center lg:w-[230vh] h-[220vw] md:h-[37vh] md:w-[70vh]"
+        className="rounded-lg justify-items-center lg:w-[230vh] lg:h-[50vh] md:h-[37vh] md:w-[70vh]"
       />
     </div>
   </div>
@@ -170,7 +167,7 @@ const Contact = () => {
         </div>
 
         {/* Text section */}
-        <div className="text-center lg:mt-[-90px] md:mt-[-20%] mb-[5%] relative px-[1%]">
+        <div className="text-center lg:mt-[-90px] md:mt-[-16%] mb-[5%] relative px-[1%]">
           <span className="md:text-4xl lg:text-6xl font-bold text-[#0853FC] leading-tight">
             Algunos de nuestros clientes<br />
             que confían en nosotros
@@ -425,7 +422,7 @@ const Contact = () => {
   {/* Contenedor principal */}
   <div className="flex w-full relative justify-center items-center gap-[40px]">
     {/* Primera Card */}
-    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[30vh] md:h-[20vh] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] flex flex-col justify-center items-center p-6">
       <Image
         src="/iconos/clasificacion-100clientes.svg" // Agregar la ruta correcta del icono
         alt="100 Clientes"
@@ -439,7 +436,7 @@ const Contact = () => {
     </div>
 
     {/* Segunda Card (más ancha) */}
-    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[40vh] md:h-[20vh] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[45vh] md:h-[28vh] flex flex-col justify-center items-center p-6">
       <Image
         src="/iconos/maletin-experiencia.svg" // Agregar la ruta correcta del icono
         alt="Experiencia Profesional"
@@ -453,7 +450,7 @@ const Contact = () => {
     </div>
 
     {/* Tercera Card */}
-    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[30vh] md:h-[20vh] flex flex-col justify-center items-center relative p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] flex flex-col justify-center items-center relative p-6">
       <Image
         src="/iconos/servicio-al-cliente247.svg" // Agregar la ruta correcta del icono
         alt="Soporte 24/7"

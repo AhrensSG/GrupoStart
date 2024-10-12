@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +8,16 @@ import Footer from "@/components/footer/Footer";
 import Chat from "@/components/chat/Chat";
 
 const About = () => {
+
+  const handleClick = () => {
+    // Redirige al link de WhatsApp con el número y un mensaje personalizado
+    window.open(
+      "https://wa.me/+543704619402?text=¡Hola!%20Me%20gustaría%20saber%20más%20sobre%20sus%20servicios",
+      "_blank",
+      "noopener noreferrer"
+    );
+  };
+  
   return (
     <aside className="w-full relative flex flex-col justify-start items-center overflow-hidden">
       <NavBarV2/>
@@ -361,7 +372,7 @@ const About = () => {
   {/* Tarjetas */}
   <div className="flex justify-center lg:gap-[5px] md:gap-[1px] mb-16">
     {/* Primera tarjeta */}
-    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[50vh] md:h-[35vh] lg:p-6 md:p-1 relative">
+    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[70vh] md:h-[35vh] lg:p-6 md:p-1 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
           src="/iconos/unido-co-creacion.png"
@@ -385,7 +396,7 @@ const About = () => {
     </div>
 
     {/* Segunda tarjeta */}
-    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[50vh] md:h-[35vh] lg:p-6 md:p-1 relative">
+    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[70vh] md:h-[35vh] lg:p-6 md:p-1 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
           src="/iconos/gestion-del-talento-excelencia.png"
@@ -408,7 +419,7 @@ const About = () => {
     </div>
 
     {/* Tercera tarjeta */}
-    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[50vh] md:h-[35vh] lg:p-6 md:p-1 relative">
+    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[70vh] md:h-[35vh] lg:p-6 md:p-1 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
           src="/iconos/apreton-de-manos-confianza.png"
@@ -430,7 +441,7 @@ const About = () => {
     </div>
 
     {/* Cuarta tarjeta */}
-    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[50vh] md:h-[35vh] lg:p-6 md:p-1 relative">
+    <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] lg:h-[70vh] md:h-[35vh] lg:p-6 md:p-1 relative">
       <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
         <Image
           src="/iconos/digital-innovacion.png"
@@ -472,11 +483,11 @@ const About = () => {
 
   {/* Botón */}
   <div className="text-center">
-    <Link href="/contacto">
-      <button className="bg-orange-500 hover:bg-orange-600 text-white font-light lg:py-3 lg:px-[40px] md:py-1 md:px-[20px] rounded-lg lg:text-2xl md:text-lg">
+    
+      <button className="bg-orange-500 hover:bg-orange-600 text-white font-light lg:py-3 lg:px-[40px] md:py-1 md:px-[20px] rounded-lg lg:text-2xl md:text-lg" onClick={handleClick}>
         Hablá con un asesor
       </button>
-    </Link>
+    
   </div>
 </section>
 
@@ -544,7 +555,7 @@ const About = () => {
   {/* Contenedor principal */}
   <div className="flex w-full relative justify-center items-center gap-[40px]">
     {/* Primera Card */}
-    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[30vh] md:h-[20vh] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] flex flex-col justify-center items-center p-6">
       <Image
         src="/iconos/clasificacion-100clientes.svg" // Agregar la ruta correcta del icono
         alt="100 Clientes"
@@ -558,7 +569,7 @@ const About = () => {
     </div>
 
     {/* Segunda Card (más ancha) */}
-    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[40vh] md:h-[20vh] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[45vh] md:h-[28vh] flex flex-col justify-center items-center p-6">
       <Image
         src="/iconos/maletin-experiencia.svg" // Agregar la ruta correcta del icono
         alt="Experiencia Profesional"
@@ -572,7 +583,7 @@ const About = () => {
     </div>
 
     {/* Tercera Card */}
-    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[30vh] md:h-[20vh] flex flex-col justify-center items-center relative p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] flex flex-col justify-center items-center relative p-6">
       <Image
         src="/iconos/servicio-al-cliente247.svg" // Agregar la ruta correcta del icono
         alt="Soporte 24/7"
@@ -634,11 +645,11 @@ const About = () => {
           </h2>
         </div>
         <div className="flex relative items-center justify-center text-center lg:mx-[60px] lg:px-[270px] md:px-[240px] py-8">
-          <Link href="/contacto">
-          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded lg:text-2xl md:text-lg">
+          
+          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded lg:text-2xl md:text-lg" onClick={handleClick}>
             Hablá con un representante
           </button>
-          </Link>
+          
         </div>
       </section>
 

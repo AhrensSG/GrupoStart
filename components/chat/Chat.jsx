@@ -31,8 +31,8 @@ const Chat = () => {
           <Image
             src="../flechabotoncarousel.svg" // Ruta del SVG para el botón superior
             alt="OpenChat"
-            width={25}
-            height={30} // Ajusta el tamaño si es necesario
+            width={23}
+            height={28} // Ajusta el tamaño si es necesario
             className="transform rotate-90 filter invert brightness-0 px-1 py-[-2] hover-invert-1 "
           />
         </button>
@@ -58,8 +58,8 @@ const Chat = () => {
             <Image
               src="/imgChatIcon.png" // La ruta de tu archivo SVG
               alt="Chat icon"
-              width={70}
-              height={70} // Ajusta el tamaño si es necesario
+              width={50}
+              height={50} // Ajusta el tamaño si es necesario
             />
           </button>
           </div>

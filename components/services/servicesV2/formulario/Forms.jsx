@@ -8,51 +8,51 @@ export default function Formulario() {
     {
       detalle: "Cantidad de posteos e historias básicas", // Descripción del ítem
       cantidad: 0, // Cantidad seleccionada (inicialmente 0)
-      valor: 1000, // Precio por unidad
+      valor: 14900, // Precio por unidad
       info: "Descripción del primer item.", // Descripción para el tooltip
     },
     {
       detalle: "Cantidad de historias tamaño completo",
       cantidad: 0,
-      valor: 1000,
+      valor: 14900,
       info: "Descripción del segundo item.",
     },
     {
       detalle: "Cantidad de carruseles",
       cantidad: 0,
-      valor: 3000,
+      valor: 14900,
       info: "Publicaciones con múltiples imágenes deslizables.",
       max: 5, // Máximo permitido para este ítem
     },
     {
       detalle: "Cantidad de imágenes para el carrusel",
       cantidad: 0,
-      valor: 500,
+      valor: 7390,
       info: "Imágenes adicionales para los carruseles seleccionados.",
       max: 20,
     },
     {
       detalle: "Idea, guión y edición de videos",
       cantidad: 0,
-      valor: 5000,
+      valor: 39900,
       info: "Creación completa de contenido de video profesional.",
     },
     {
       detalle: "¿Deseas agregar efemérides?", // Descripción del ítem con interruptor
       cantidad: 0,//Cantidad inicial
-      valor: 3000, // Inicialmente 0 porque depende del interruptor
+      valor: 29900, // Inicialmente 0 porque depende del interruptor
       info: "Publicaciones conmemorativas de fechas importantes.",
     },
     {
       detalle: "Cantidad de días para publicidad Meta",
       cantidad: 0,
-      valor: 2000,
+      valor: 0,
       info: "Días de promoción pagada en plataformas de Meta.",
     },
     {
       detalle: "Presupuesto por día para publicidad Meta",
       cantidad: 0,
-      valor: 1000,
+      valor: 3500,
       info: "Monto asignado diariamente para publicidad en Meta.",
     },
   ]);

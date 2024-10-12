@@ -10,6 +10,14 @@ import DesktopBrandingSection from "@/components/services/auxiliarComponents/Des
 const Branding = () => {
   const [scale, setScale] = useState(1);
 
+  const handleClick = () => {
+    // Redirige al link de WhatsApp con el número y un mensaje personalizado
+    window.open(
+      "https://wa.me/+543704619402?text=¡Hola!%20Me%20gustaría%20saber%20más%20sobre%20sus%20servicios",
+      "_blank",
+      "noopener noreferrer"
+    );
+  };
 
 
   return (
@@ -40,7 +48,7 @@ const Branding = () => {
                 y todas tus redes sociales.</span>
               </div>
               <div className="py-[20px]">
-              <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
+              <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
                 +INFO
               </button>
               </div>
@@ -284,11 +292,11 @@ const Branding = () => {
                     dirección en Google Maps y<br/>
                     seguirte en tus redes sociales.
                 </span>
-                <Link href="/">
-                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+                
+                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
                     Solicitar
                   </button>
-                </Link>
+                
               </div>
             </div>
           </section>
@@ -361,11 +369,11 @@ const Branding = () => {
               </h2>
             </div>
         <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px] py-8">
-        <Link href="/contacto">
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
+        
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
                 Hablá con un asesor
         </button>
-        </Link>
+        
         </div>
           </section>
     </aside>

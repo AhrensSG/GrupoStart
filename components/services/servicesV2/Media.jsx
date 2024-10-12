@@ -8,6 +8,16 @@ import Carousel from "@/components/carrousel/Carousel";
 import DesktopWebDevelopmentSection from "@/components/services/auxiliarComponents/DesktopWebDevelopmentSection";
 
 const Media = () => {
+
+  const handleClick = () => {
+    // Redirige al link de WhatsApp con el número y un mensaje personalizado
+    window.open(
+      "https://wa.me/+543704619402?text=¡Hola!%20Me%20gustaría%20saber%20más%20sobre%20sus%20servicios",
+      "_blank",
+      "noopener noreferrer"
+    );
+  };
+
   const { data } = useContext(Context);
   const router = useRouter();
 
@@ -36,7 +46,7 @@ const Media = () => {
             </span>
           </div>
           <div className="py-[20px]">
-            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
+            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
               Contactar
             </button>
           </div>
@@ -135,11 +145,11 @@ const Media = () => {
               de tu negocio, TU LOGO.
             </span>
 
-            <Link href="/">
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+           
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
                 Contratar
               </button>
-            </Link>
+          
           </div>
 
           <div className="w-full justify-end items-end pr-[2%]">
@@ -204,8 +214,8 @@ const Media = () => {
             />
           </div>
           {/* Text */}
-          <div className="flex justify-end items-center text-end h-[180px] w-[632px] rigth-0 py-2 pl-1 pr-0 md:w-1/2">
-            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 w-[431px] h-[107px] px-[45px] md:px-[30px] py-[35px] md:w-3/4 md:h-1/2 text-lg md:text-xl lg:text-4xl relative flex">
+          <div className="flex justify-end items-center text-end h-[180px] w-[632px] rigth-0 py-2 pl-1 pr-0 md:w-1/2 z-3">
+            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 lg:w-[431px] lg:h-[107px] px-[45px] md:px-[30px] py-[35px] md:w-3/4 md:h-1/2 text-lg md:text-xl lg:text-4xl relative flex">
               TU LOGO es la<br />
               cara de tu negocio
             </span>
@@ -250,11 +260,11 @@ const Media = () => {
               3 Imágenes adecuadas 4 Diseño disruptivo<br/>
               5 Orden, equilibrio y resaltar lo importante
             </span>
-            <Link href="/">
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+            
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
                 Quiero contratar
               </button>
-            </Link>
+            
           </div>
         </div>
       </section>
@@ -304,11 +314,11 @@ const Media = () => {
               tu negocio<br/>
               destaque
             </span>
-            <Link href="/">
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded flex flex-col justify-center text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-16">
+            
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded flex flex-col justify-center text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-16" onClick={handleClick}>
                 Quiero Contratar
               </button>
-            </Link>
+            
           </div>
         </div>
 
@@ -378,11 +388,11 @@ const Media = () => {
               una animación, es la semilla<br/>
               para empezar un video.
             </span>
-            <Link href="/">
-              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-3xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+            
+              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-3xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
                 Contratar
               </button>
-            </Link>
+            
           </div>
         </div>
       </section>
@@ -484,11 +494,11 @@ const Media = () => {
               el mensaje perfecto<br/>
               en tu video.
             </span>
-            <Link href="/">
+            
               <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative">
                 Contratar
               </button>
-            </Link>
+          
           </div>
         </div>
       </section>
@@ -502,11 +512,11 @@ const Media = () => {
           </h2>
         </div>
         <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px ]">
-          <Link href="/contacto">
-            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
+        
+            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
               Hablá con un asesor
             </button>
-          </Link>
+          
         </div>
       </section>
     </aside>
