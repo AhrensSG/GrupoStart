@@ -118,9 +118,10 @@ const Footer = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src={"/Location.svg"}
+              src={"/Location.png"}
               width={200}
               height={150}
+              quality={100}
               alt="LocationIcon"
               className="cursor-pointer"
             />

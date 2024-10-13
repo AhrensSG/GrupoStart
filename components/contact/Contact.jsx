@@ -293,7 +293,7 @@ const Contact = () => {
             rel="noopener noreferrer"
           >
       <Image
-        src="/Location.svg"  // Asegúrate de que la ruta de la imagen sea correcta
+        src="/LocationContact.png"  // Asegúrate de que la ruta de la imagen sea correcta
         alt="LOCATION"
         className="rounded-lg object-cover items-center justify-center object-center cursor-pointer relative"
         width={800}
