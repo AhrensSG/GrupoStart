@@ -382,10 +382,10 @@ const About = () => {
           quality={100}
         />
       </div>
-      <h3 className="text-white text-lg font-bold text-center mt-10 underline">
+      <h3 className="text-white text-lg font-extrabold text-center mt-10 underline">
         Co-creación
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
+      <p className="text-center text-white font-bold mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
         Creemos en una<br/>
         relación colaborativa donde<br/>
         trabajamos juntos para<br/>
@@ -406,10 +406,10 @@ const About = () => {
           quality={100}
         />
       </div>
-      <h3 className="text-white text-lg font-bold text-center mt-10 underline">
+      <h3 className="text-white text-lg extrabold text-center mt-10 underline">
         Excelencia
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
+      <p className="text-center text-white font-bold mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
         Nos esforzamos por alcanzar los<br/>
         más altos estándares de calidad<br/>
         en todo lo que hacemos, desde<br/>
@@ -429,10 +429,10 @@ const About = () => {
           quality={100}
         />
       </div>
-      <h3 className="text-white text-lg font-bold text-center mt-10 underline">
+      <h3 className="text-white text-lg font-extrabold text-center mt-10 underline">
         Confianza
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
+      <p className="text-center text-white font-bold mt-4 px-2 lg:text-xl md:text-sm md:pb-1 leading-relaxed">
         Construimos relaciones sólidas,<br/>
         basadas en la transparencia,<br/>
         la honestidad y el respeto mutuo<br/>
@@ -452,10 +452,10 @@ const About = () => {
 
         />
       </div>
-      <h3 className="text-white text-lg font-bold text-center mt-10 underline">
+      <h3 className="text-white text-lg font-extrabold text-center mt-10 underline">
         Innovación
       </h3>
-      <p className="text-center text-white font-light mt-4 px-2 lg:text-xl md:text-sm md:pb-1 sm:text-xs leading-relaxed">
+      <p className="text-center text-white font-bold mt-4 px-2 lg:text-xl md:text-sm md:pb-1 sm:text-xs leading-relaxed">
         Estamos a la vanguardia de las<br/>
         últimas tendencias y tecnologías<br/>
         para garantizar que nuestros<br/>

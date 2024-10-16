@@ -40,7 +40,7 @@ const ThirdSection = () => {
 <div className="flex flex-col justify-center mb-2 mx-[4%]">
   {/* Contenedor de las imágenes en dos filas */}
   <div className="flex justify-center px-[2%]">
-    <div className="grid grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 pt-[22px] md:w-3/4 lg:w-full">
+    <div className="grid grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 pt-[22px] w-full">
       {imageList.slice(0, 6).map((image, index) => (
         <Image
           key={index}
@@ -57,7 +57,7 @@ const ThirdSection = () => {
   </div>
 
   <div className="flex justify-center px-[2%]">
-    <div className="grid grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 pt-[22px] md:w-3/4 lg:w-full">
+    <div className="grid grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 pt-[22px] w-full">
       {imageList.slice(6).map((image, index) => (
         <Image
           key={index}

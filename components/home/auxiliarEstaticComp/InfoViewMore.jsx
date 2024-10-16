@@ -5,14 +5,14 @@ import Link from "next/link";
 const InfoViewMore = () => {
   return (
     <section className="relative w-full justify-center items-center bg-white h-full">
-      <div className="flex flex-row w-full lg:pb-[10%] md:pb-[10%] px-[2%] h-full"> {/* Añadido el padding aquí */}
+      <div className="flex flex-row w-full lg:pb-[10%] md:pb-[12%] lg:px-0 md:px-0 h-full"> {/* Añadido el padding aquí */}
         {/* Imagen */}
-        <div className="w-full md:w-1/2 pl-[2%]">
+        <div className="w-full md:w-[75%] md:pl-[3%] lg:pl-[2%]">
           <Image
             src={"/jirafe1.svg"}
             className="object-cover transition-opacity opacity-0 duration-500 "
             onLoad={(event) => event.target.classList.remove("opacity-0")}
-            width={625}
+            width={630}
             height={235}
             priority={true}
             quality={100}
@@ -20,11 +20,11 @@ const InfoViewMore = () => {
         </div>
         <br />
         {/* Texto */}
-        <div className="w-full md:w-1/2 relative flex flex-col items-center justify-center">
-          <h1 className="xl:text-4xl font-bold lg:mb-[28px] md:mb-[14px] text-[#0853FC] text-center md:text-2xl lg:text-3xl">
+        <div className="w-full relative flex flex-col items-center justify-center">
+          <h1 className="xl:text-4xl font-bold lg:mb-[28px] md:mb-[14px] text-[#0853FC] text-center md:text-2xl lg:text-4xl">
             La Era de las Redes Sociales
           </h1>
-          <span className="text text-lg mb-[10px] text-center text-lg md:text-xl sm:text-md lg:text-3xl leading-relaxed tracking-wide">
+          <span className="text mb-[10px] text-center md:text-xl sm:text-md lg:text-3xl leading-relaxed tracking-wide">
             La era de las redes sociales fue un
             <br />
             verdadero Tsunami para el marketing tradicional

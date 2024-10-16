@@ -19,7 +19,7 @@ const EstaticSign = () => {
 
       {/* Contenedor del texto */}
       <div className="absolute inset-0 flex flex-col justify-center items-center text-end w-1/2 h-full py-10 lg:py-20 ml-auto sm:text-3xl right-0">
-        <div className="text-4xl lg:text-6xl xl:text-7xl text-white leading-tight items-start justify-center static py-[15px] my-[5px]">
+        <div className="text-6xl lg:text-6xl xl:text-7xl text-white leading-tight items-start justify-center static py-[15px] my-[5px]">
           <span className="font-bold uppercase drop-shadow-[0_10px_10px_rgba(0,0,0,0.25)]">
             EL FUTURO <br /> ESTÁ AQUÍ
           </span>

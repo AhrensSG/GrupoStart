@@ -16,24 +16,24 @@ const Chat = () => {
 
   const handleButtonClick = () => {
     // Acción del botón secundario superior
-    alert("Botón superior presionado");
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-4 lg:right-6 md:right-3 z-20 flex flex-col items-center space-y-4 lg:mr-[2%] md:mr-[3%]">
+      <div className="fixed bottom-4 lg:right-11 md:right-10 z-20 flex flex-col items-center space-y-4 lg:mr-[2%]">
         {/* Botón secundario superior flotante */}
         <button
-          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center md:w-2/4 md:h-2/4"
+          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center lg:w-[70%] lg:h-[30%] md:w-[68%] md:h-[30%]"
           onClick={handleButtonClick}
         >
           <Image
             src="../flechabotoncarousel.svg" // Ruta del SVG para el botón superior
             alt="OpenChat"
-            width={23}
-            height={28} // Ajusta el tamaño si es necesario
-            className="transform rotate-90 filter invert brightness-0 px-1 py-[-2] hover-invert-1 "
+            width={26}
+            height={27} // Ajusta el tamaño si es necesario
+            className="transform rotate-90 filter invert brightness-0 px-1 py-[-1] hover-invert-1 "
           />
         </button>
         
@@ -45,7 +45,7 @@ const Chat = () => {
         >
           {/* Desplegable cuando el usuario pasa el mouse solo sobre el botón principal */}
           {hovered && (
-            <div className="absolute left-[-178px] top-1/2 transform -translate-y-1/2 bg-[#FB8A00] text-white px-3 py-1 rounded-tl-lg shadow-lg transition-all duration-300 ease-in-out z-10 mr-[-35px]">
+            <div className="absolute left-[-177px] top-1/2 transform -translate-y-1/2 bg-orange-600 text-white px-3 py-1 rounded-tl-lg shadow-lg transition-all duration-300 ease-in-out z-10 mr-[-35px]">
               ¡Chatea con nosotros!
             </div>
           )}

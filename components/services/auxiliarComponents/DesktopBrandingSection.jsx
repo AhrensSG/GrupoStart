@@ -14,15 +14,25 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       <div className="items-center justify-center text-center pt-5 pb-[12px]">
       <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white py-2 px-6">{title}</span>
       </div>
-      <ul className="list-none pl-[33px] pr-[12px] py-[2px] h-[220px] w-[300px] flex-grow justify-center relative"> {/* Changed list style for spacing */}
+      <ul className="list-none pl-[33px] pr-[12px] py-[8px] h-[216px] w-[300px] flex-grow justify-center relative"> {/* Changed list style for spacing */}
         {features.map((feature, index) => (
-          <li key={index} className="flex items-center text-center justify-center mb-4">
+          <li key={index} className="flex items-center text-center justify-center mb-3">
             {feature}
             {index === 1 && <span className="feature-spaced" />}
           </li>
         ))}
       </ul>
       <br />
+
+            {/* Precios */}
+            <div className="flex justify-center items-center pt-[10px] relative w-full">
+        <div className="text-center flex-col justify-center items-center gap-6 relative">
+          <span className="text-orange-500 font-extrabold text-ligth text-[26px] w-[202px] h-[39px]">
+            ${price.original}
+          </span>
+        </div>
+      </div>
+
       <div className="flex items-end justify-center text-center pb-1">
         <button
           onClick={onButtonClick}
@@ -72,7 +82,7 @@ const DesktopBrandingSection = () => {
         '50 tarjetas full color doble face',
         'Suscripción de $500 de mantenimiento mensual a tu landing page'
         ]}
-        price={{ original: 0, discount: 0 }}
+        price={{ original: 16900 }}
         onButtonClick={() => handleBuyNow(2, "Plan Pack 1", 0)}
         />
         <PlanCard
@@ -85,7 +95,7 @@ const DesktopBrandingSection = () => {
           '100 tarjetas full color doble face',
           'Suscripción de $5.000 de mantenimiento anual a tu landing page'
           ]}
-          price={{ original: 0, discount: 0 }}
+          price={{ original:31900 }}
           onButtonClick={() => handleBuyNow(3, "Plan Pack 2", 0)}
         />
         <PlanCard
@@ -98,7 +108,7 @@ const DesktopBrandingSection = () => {
           'Pago vitalicio no tiene costo de mantenimiento'
           ]}
           style={{ marginBottom: '30px'}}
-          price={{ original: 0, discount: 0 }}
+          price={{ original: 58900 }}
           onButtonClick={() => handleBuyNow(4, "Plan Pack", 0)}
         />
       </div>

@@ -3,12 +3,12 @@ import ServiceCard from "./auxiliarComponents/ServiceCard";
 
 const SecondSection = () => {
   return (
-    <section id="services" className="w-full bg-[#0853FC] px-6 py-8 sm:px-6 sm:py-12 md:px-8 lg:px-16 xl:px-24">
+    <section id="services" className="w-full bg-[#0853FC] py-8 sm:px-6 sm:py-12 md:px-[5.5%]">
       <div className="max-w-7xl mx-auto flex flex-col items-center gap-12 lg:gap-16">
         <h2 className="text-2xl sm:text-3xl lg:text-3xl xl:text-5xl text-white font-bold text-center mb-8">
           CONOCÉ NUESTROS SERVICIOS
         </h2>
-        <div className="w-full grid grid-cols-3 gap-32 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16">
+        <div className="w-full grid grid-cols-3 sm:gap-6 md:gap-10 lg:gap-12 xl:gap-16">
           <ServiceCard
             img={"/services/Jirafe3.svg"}
             title={"Gestión de redes"}

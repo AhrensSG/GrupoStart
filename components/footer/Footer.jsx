@@ -4,8 +4,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="w-full flex flex-col justify-center items-center bg-[#0853FC] py-5 px-5 gap-1 relative">
-      <div className="w-full px-12 sm:px-0 flex flex-row flex-wrap justify-start sm:justify-around items-start gap-4">
+    <footer className="w-full flex flex-col justify-center items-center bg-[#0853FC] py-5 lg:px-0 md:px-0 relative">
+      <div className="w-full px-0 sm:px-0 flex flex-row flex-wrap justify-start sm:justify-around items-start gap-4">
         {/* Redes */}
         <div className="flex flex-col justify-center items-start gap-2 md:gap-3 lg:gap-3">
           <span className="text-xl md:text-xl lg:text-2xl text-white font-bold">
@@ -107,7 +107,7 @@ const Footer = () => {
           </div>
         </div>
         {/* Ubicación */}
-        <div className="max-w-52 flex flex-col justify-start items-start gap-2 md:gap-3 lg:gap-3">
+        <div className="max-w-52 flex flex-col justify-center items-start text-start gap-2 md:gap-3 lg:gap-3">
           <span className="text-2xl md:text-xl lg:text-2xl text-white font-bold">
             Visítanos
           </span>
@@ -119,7 +119,7 @@ const Footer = () => {
           >
             <Image
               src={"/Location.png"}
-              width={200}
+              width={215}
               height={150}
               quality={100}
               alt="LocationIcon"
