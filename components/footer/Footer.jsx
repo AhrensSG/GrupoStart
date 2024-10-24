@@ -118,7 +118,7 @@ const Footer = () => {
             rel="noopener noreferrer"
           >
             <Image
-              src={"/Location.png"}
+              src={"/LocationContact.png"}
               width={215}
               height={150}
               quality={100}

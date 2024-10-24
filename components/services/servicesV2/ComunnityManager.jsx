@@ -296,7 +296,7 @@ const CommunityManager = () => {
   {/* Ola */}
   <div className="relative w-full justify-end overflow-hidden bottom-0 ">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-full">
-      <path fill="#0853FC" fillOpacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
+      <path fill="#0853FC" fillOpacity="10" d="M0,160L48,186.7C96,213,192,267,288,277.3C384,288,480,256,576,245.3C672,235,768,245,864,240C960,235,1056,213,1152,186.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
     </svg>
   </div>
 </section>
@@ -342,14 +342,14 @@ const CommunityManager = () => {
             de <span className="text-[#FB8A00] font-semibold">trabajo profesional</span>
           </h2>
         </div>
-    <div clasName="flex-row justify-center items-center object-center px-[6%] py-6">
+    <div clasName="flex-row justify-center items-center object-center px-[6%] py-6 w-[100%]">
       <Image
       src="/services/img360Equipo.png"
       alt="Imagen360Equipo"
       width={814}
       height={556}
       quality={100}
-      className="object-cover relative justify-center items-center object-center w-[100%] px-[20%] py-8"
+      className="object-cover relative justify-center items-center object-center w-[100%] lg:px-[10%] md:px-[9%] py-8"
       priority={true}
       />
       </div>

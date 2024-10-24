@@ -240,16 +240,16 @@ const Contact = () => {
           <option>¿Cómo nos conociste?</option>
           <option>Redes Sociales</option>
           <option>Google</option>
-          <option>Amigos</option>
-          <option>Publicidad</option>
+          <option>Recomendaciones</option>
+          <option>Otro</option>
         </select>
 
         {/* Soluciones */}
         <select className="border border-gray-300 rounded-md p-2">
           <option>Soluciones</option>
-          <option>Marketing Digital</option>
-          <option>Diseño Gráfico</option>
-          <option>Desarrollo Web</option>
+          <option>Gestion de Redes</option>
+          <option>Media</option>
+          <option>Herramientas Utiles (tarjeteria)</option>
           <option>Consultoría</option>
         </select>
       </div>
@@ -321,7 +321,7 @@ const Contact = () => {
   </div>
 
   {/* Contenedor de Servicios */}
-  <div className="flex justify-center object-center items-center lg:gap-[20vh] md:gap-[2vh] lg:mb-16 md:mb-7 w-full relative">
+  <div className="flex justify-center object-center items-center lg:gap-[15vh] md:gap-[2vh] lg:mb-16 md:mb-7 w-full relative">
     {/* Primer Servicio */}
     <div className="flex flex-col justify-items-center relative">
       <Image
@@ -329,7 +329,7 @@ const Contact = () => {
         alt="Gestión de Redes"
         width={176}
         height={180}
-        className="rounded-full relative lg:w-full lg:h-full md:w-[75%] md:h-[65%]"
+        className="rounded-full relative lg:w-full lg:h-full md:w-[85%] md:h-[65%] justify-center"
       />
       <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Gestión de Redes
@@ -343,7 +343,7 @@ const Contact = () => {
         alt="Media"
         width={176}
         height={180}
-        className="rounded-full relative lg:w-full lg:h-full md:[70%] md:h-[60%]"
+        className="rounded-full relative lg:w-full lg:h-full md:w-[80%] md:h-[65%]"
       />
       <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Media
@@ -357,7 +357,7 @@ const Contact = () => {
         alt="Herramientas Útiles"
         width={176}
         height={180}
-        className="rounded-full relative lg:w-full lg:h-full md:w-[65%] md:h-[55%]"
+        className="rounded-full relative lg:w-[93%] lg:h-[93%] md:w-[80%] md:h-[70%]"
       />
       <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] mt-4 flex items-center justify-center rounded-tl-full rounded-br-full">
         Herramientas Útiles
