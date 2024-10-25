@@ -1,7 +1,7 @@
 "use client";
 import { Context } from "@/app/context/GlobalContext";
 import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "@/components/carrousel/Carousel";
@@ -19,6 +19,21 @@ const Branding = () => {
     );
   };
 
+
+  const planCardsRef = useRef(null); // Referencia a la sección de PlanCards
+  const scrollToPlanCards = () => {
+    // Hacer scroll a la sección de PlanCards
+    if (planCardsRef.current) {
+      planCardsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const section3Ref = useRef(null); // Referencia a la Section 3
+  const scrollToSection3 = () => {
+    if (section3Ref.current) {
+      section3Ref.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <aside
@@ -48,7 +63,7 @@ const Branding = () => {
                 y todas tus redes sociales.</span>
               </div>
               <div className="py-[20px]">
-              <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
+              <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={scrollToSection3}>
                 +INFO
               </button>
               </div>
@@ -122,7 +137,7 @@ const Branding = () => {
                 <Carousel />
           </section>
           {/* Section 3 */}
-          <section className="relative flex flex-wrap w-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+          <section ref={section3Ref} className="relative flex flex-wrap w-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
           <div className="flex flex-col md:flex-row w-full p-6"
           style={{
             maxWidth: "1600px",
@@ -293,7 +308,7 @@ const Branding = () => {
                     seguirte en tus redes sociales.
                 </span>
                 
-                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
+                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={scrollToPlanCards}>
                     Solicitar
                   </button>
                 
@@ -357,7 +372,9 @@ const Branding = () => {
           </section>
 
           {/*PlanCard*/}
+          <div ref={planCardsRef}>
           <DesktopBrandingSection />
+          </div>
 
           {/*Section 8*/}
           <section className="w-full bg-[#0051FF] text-white px-[2%]">

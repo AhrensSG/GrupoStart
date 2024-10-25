@@ -46,8 +46,8 @@ const Media = () => {
             </span>
           </div>
           <div className="py-[20px]">
-            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
-              Contactar
+            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
+            <Link href="/contact#contact-form">Contactar</Link>
             </button>
           </div>
         </div>
@@ -147,7 +147,7 @@ const Media = () => {
 
            
               <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
-                Contratar
+              <Link href="/contact#contact-form">Contratar</Link>
               </button>
           
           </div>

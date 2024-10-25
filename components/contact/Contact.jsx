@@ -182,7 +182,7 @@ const Contact = () => {
 </section>
 
 {/* Section Formulario de Contacto */}
-<section className="bg-[#FFFFFF] w-full py-12 flex justify-center items-center relative z-10">
+<section id="contact-form" className="bg-[#FFFFFF] w-full py-12 flex justify-center items-center relative z-10">
   <div className="container mx-auto flex flex-row justify-between items-center gap-16 px-8">
     
     {/* Columna Izquierda - Título y Descripción */}

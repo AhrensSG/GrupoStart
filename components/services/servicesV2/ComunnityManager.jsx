@@ -1,7 +1,7 @@
 "use client";
 import { Context } from "@/app/context/GlobalContext";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "@/components/carrousel/Carousel";
@@ -18,6 +18,16 @@ const CommunityManager = () => {
       "noopener noreferrer"
     );
   };
+
+
+  const planCardsRef = useRef(null); // Referencia a la sección de PlanCards
+  const scrollToPlanCards = () => {
+    // Hacer scroll a la sección de PlanCards
+    if (planCardsRef.current) {
+      planCardsRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
 
   const { data } = useContext(Context);
   const router = useRouter();
@@ -76,7 +86,7 @@ const CommunityManager = () => {
         </span>
       </div>
       <div className="py-[30px]">
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl" onClick={scrollToPlanCards}>
           Comenzar
         </button>
       </div>
@@ -169,7 +179,7 @@ const CommunityManager = () => {
         las plataformas Meta
       </span>
       
-        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
+        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={scrollToPlanCards}>
           Empezar
         </button>
       
@@ -273,8 +283,8 @@ const CommunityManager = () => {
         coherente y atractiva.
       </span>
       
-        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative" onClick={handleClick}>
-          Contactar
+        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
+        <Link href="/contact#contact-form">Contactar</Link>
         </button>
       
     </div>
@@ -360,9 +370,11 @@ const CommunityManager = () => {
       </section>
 
       {/*PlanCards*/}
-      <DesktopCommunityManagerSection style={{
-        width: "full"
-      }} />
+      <div ref={planCardsRef}>
+        <DesktopCommunityManagerSection style={{
+          width: "full"
+        }} />
+      </div>
 
       {/*Formulario*/}
       <Forms 
