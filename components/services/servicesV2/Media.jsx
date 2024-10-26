@@ -146,7 +146,7 @@ const Media = () => {
             </span>
 
            
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
               <Link href="/contact#contact-form">Contratar</Link>
               </button>
           
@@ -315,7 +315,7 @@ const Media = () => {
               destaque
             </span>
             
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded flex flex-col justify-center text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-16" onClick={handleClick}>
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded flex flex-col justify-center text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-24" style={{zIndex: 16}} onClick={handleClick}>
                 Quiero Contratar
               </button>
             
@@ -323,8 +323,8 @@ const Media = () => {
         </div>
 
         {/* Ola */}
-        <div className="absolute w-full justify-end overflow-hidden bottom-0 z-5">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-auto top-[-30px] z-10">
+        <div className="absolute w-full justify-end overflow-hidden bottom-0">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full h-1/2 top-[-7px]">
             <path fill="#0853FC" fillOpacity="10" d="M0,96L48,122.7C96,149,192,203,288,218.7C384,235,480,213,576,197.3C672,181,768,171,864,170.7C960,171,1056,181,1152,197.3C1248,213,1344,235,1392,245.3L1440,256L1440,320L1392,320L1248,320L1152,320L1056,320L960,320L864,320L768,320L672,320L576,320L480,320L384,320L288,320L192,320L96,320L48,320L0,320Z"></path>
           </svg>
         </div>
@@ -513,7 +513,7 @@ const Media = () => {
         </div>
         <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px ]">
         
-            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
+            <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] hover:text-[#FB8A00] text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
               Hablá con un asesor
             </button>
           
