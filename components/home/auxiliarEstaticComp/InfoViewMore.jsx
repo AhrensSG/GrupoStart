@@ -36,11 +36,10 @@ const InfoViewMore = () => {
             además surfearla es mucho más divertido.
           </span>
 
-          <Link href="/services/DesktopCommunityManager">
             <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-center flex flex-row gap-2 items-center justify-center p-1 px-10 text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
-              Más Info
+            <Link href="/services/DesktopCommunityManager">Más Info</Link>
             </button>
-          </Link>
+
         </div>
       </div>
       {/* Ola gráfica */}

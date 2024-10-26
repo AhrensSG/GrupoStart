@@ -146,7 +146,7 @@ const Media = () => {
             </span>
 
            
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
               <Link href="/contact#contact-form">Contratar</Link>
               </button>
           
@@ -495,7 +495,7 @@ const Media = () => {
               en tu video.
             </span>
             
-              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative">
+              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative" onclick={handleClick}>
                 Contratar
               </button>
           
