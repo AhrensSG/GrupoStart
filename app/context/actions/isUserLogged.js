@@ -8,9 +8,12 @@ export const isUserLogged = async (dispatch) => {
   onAuthStateChanged(auth, async (user) => {
     try {
       if (user) {
-        const data = await axios.get(
-          `${SERVER_URL_AUTH_ENDPOINT}?id=${user.uid}`
-        );
+        const info = {
+          displayName: user.displayName,
+          email: user.email,
+          uid: user.uid,
+        };
+        const data = await axios.put(`${SERVER_URL_AUTH_ENDPOINT}`, info);
         dispatch({ type: "LOGGED_IN_USER", payload: data.data });
         return true;
       } else {

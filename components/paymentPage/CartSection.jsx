@@ -16,12 +16,14 @@ import {
 } from "@/app/context/actions";
 import Loader from "../Loader";
 import PaymentModal from "../payment/PaymentModal";
+import Modal from "../login/Modal";
 
 const CartSection = () => {
   const { state, dispatch } = useContext(Context);
   const [loader, setLoader] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
-
+  const [showLogin, setShowLogin] = useState(false);
+  
   const initialValues = state.user || {
     fullName: "",
     email: "",
@@ -36,6 +38,11 @@ const CartSection = () => {
     initialValues,
     enableReinitialize: true,
     onSubmit: async (values) => {
+      if (!state.user) {
+        setShowLogin(true);
+        return toast.info("¡Inicia sesión y continúa!")
+      }
+      
       if (
         values.fullName === "" ||
         values.email === "" ||
@@ -140,6 +147,7 @@ const CartSection = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center p-2 py-10">
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* PAYMENT MODAL */}
       {showPaymentModal ? (
         <PaymentModal setShowPaymentModal={setShowPaymentModal} />
@@ -407,7 +415,18 @@ const PackCard = ({ id, name, price, dispatch }) => {
   );
 };
 
-const AddsPackCard = ({ id, name, price, post, reels, IgyFace, carrucel, efemerides, adds, dispatch }) => {
+const AddsPackCard = ({
+  id,
+  name,
+  price,
+  post,
+  reels,
+  IgyFace,
+  carrucel,
+  efemerides,
+  adds,
+  dispatch,
+}) => {
   return (
     <div className="relative flex flex-row max-w-[580px] w-full gap-4 border rounded-md shadow-md">
       <button
