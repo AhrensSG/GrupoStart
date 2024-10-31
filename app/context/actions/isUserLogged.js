@@ -6,6 +6,7 @@ const SERVER_URL_AUTH_ENDPOINT = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
 
 export const isUserLogged = async (dispatch) => {
   onAuthStateChanged(auth, async (user) => {
+    console.log(user);
     try {
       if (user) {
         const info = {

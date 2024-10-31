@@ -1,4 +1,9 @@
-import React, { useState } from "react";
+import { addProductToCart } from "@/app/context/actions";
+import { Context } from "@/app/context/GlobalContext";
+import Modal from "@/components/login/Modal";
+import { useRouter } from "next/navigation";
+import React, { useContext, useState } from "react";
+import { toast } from "sonner";
 
 // Componente principal del formulario personalizado
 export default function Formulario() {
@@ -56,6 +61,50 @@ export default function Formulario() {
       info: "Monto asignado diariamente para publicidad en Meta.",
     },
   ]);
+
+  const { state, dispatch } = useContext(Context);
+  const router = useRouter();
+  const [showLogin, setShowLogin] = useState(false);
+  const handleBuyNow = async () => {
+    // Verifica si el usuario está autenticado
+    if (!state.user) {
+      setShowLogin(true);
+      return toast.info("¡Inicia sesión y continúa!");
+    }
+  
+    // Filtra los ítems seleccionados
+    const selectedItems = items
+      .filter((item) => item.cantidad > 0)
+      .map((item) => ({
+        id: item.detalle,
+        name: item.detalle,
+        description: item.info,
+        price: item.valor,
+        quantity: item.cantidad,
+      }));
+  
+    // Configura el paquete de productos a agregar al carrito
+    const data = {
+      id: "pack-gestion-redes",
+      name: "Pack Personalizado de Gestión de Redes",
+      description: "Servicio personalizado para redes sociales",
+      price: calcularValorTotal(),
+      items: selectedItems,
+      productType: "pack",
+    };
+  
+    // Verifica si el paquete ya está en el carrito
+    if (state.cart?.some((prod) => prod.id === data.id)) {
+      toast.info(`Se actualizó el producto en tu carrito!`);
+    } else {
+      toast.success(`Añadiste el pack personalizado a tu carrito!`);
+    }
+  
+    // Añade al carrito y redirige al pago
+    await addProductToCart(data, dispatch);
+    return router.push("/payment");
+  };
+  
 
   // Estado del tooltip, que muestra la información de los ítems al pasar el mouse
   const [tooltip, setTooltip] = useState({
@@ -257,6 +306,7 @@ const isMetaSocialNetwork = selectedSocialNetwork === 'Facebook' || selectedSoci
 
   return (
     <section className="py-6 px-[100px] bg-[#FFFFFF] relative md:flex-wrap">
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* Encabezado del formulario */}
       <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
         <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
@@ -431,7 +481,7 @@ const isMetaSocialNetwork = selectedSocialNetwork === 'Facebook' || selectedSoci
       {/* Botón de enviar */}
       <div className="flex justify-end mt-4">
         <button
-          onClick={handleSubmit}
+          onClick={handleBuyNow}
           className="bg-blue-600 text-white text-1xl px-[95px] py-1 rounded-medium border rounded-tl-xl rounded-br-xl font-lg"
         >
           CONTRATAR

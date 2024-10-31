@@ -308,7 +308,7 @@ const Branding = () => {
                     seguirte en tus redes sociales.
                 </span>
                 
-                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={scrollToPlanCards}>
+                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF]  duration-300 shadow-sm shadow-black border-orange-500 " onClick={scrollToPlanCards}>
                     Solicitar
                   </button>
                 

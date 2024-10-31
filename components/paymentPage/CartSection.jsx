@@ -38,10 +38,10 @@ const CartSection = () => {
     initialValues,
     enableReinitialize: true,
     onSubmit: async (values) => {
-      if (!state.user) {
-        setShowLogin(true);
-        return toast.info("¡Inicia sesión y continúa!")
-      }
+      // if (!state.user) {
+      //   setShowLogin(true);
+      //   return toast.info("¡Inicia sesión y continúa!")
+      // }
       
       if (
         values.fullName === "" ||
@@ -147,7 +147,7 @@ const CartSection = () => {
 
   return (
     <div className="w-full flex flex-col justify-center items-center p-2 py-10">
-      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
+      {/* {showLogin === true && <Modal setShowLogin={setShowLogin} />} */}
       {/* PAYMENT MODAL */}
       {showPaymentModal ? (
         <PaymentModal setShowPaymentModal={setShowPaymentModal} />
