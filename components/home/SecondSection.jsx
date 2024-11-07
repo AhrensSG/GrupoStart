@@ -22,6 +22,7 @@ const SecondSection = () => {
             firstBullet={"Planificación de contenidos"}
             secondtBullet={"Campañas publicitarias"}
             thirdtBullet={"Soporte siempre con vos"}
+            comingSoon={false}
           />
           <ServiceCard
             img={"/services/Jirafe2.svg"}
@@ -34,6 +35,7 @@ const SecondSection = () => {
             secondtBullet={"Imágenes profesionales"}
             thirdtBullet={"Edición de videos"}
             fourthtBullet={"Soporte siempre con vos"}
+            comingSoon={false}
           />
           <ServiceCard
             img={"/services/Jirafe12.svg"}
@@ -48,6 +50,7 @@ const SecondSection = () => {
             firstBullet={"Diseño personalizado"}
             secondtBullet={"Landing page completa"}
             thirdtBullet={"Envíos a tu domicilio"}
+            comingSoon={true}
           />
         </div>
       </div>

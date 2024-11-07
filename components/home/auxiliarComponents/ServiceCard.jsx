@@ -14,6 +14,7 @@ const ServiceCard = ({
   thirdtBullet = false,
   fourthtBullet = false,
   fifthtBullet = false,
+  comingSoon = false, // Nuevo prop para indicar si es "Próximamente"
 }) => {
   return (
     <div className="flex items-center justify-center h-full">
@@ -68,11 +69,15 @@ const ServiceCard = ({
             </div>
           </div>
           <div className="text-center">
-            <Link href={link}>
+            {comingSoon ? (
+              <span className="text-white font-extrabold text-2xl">Próximamente</span> // Mostrar texto "Próximamente"
+            ) : (
+              <Link href={link}>
               <button className="p-2 px-6 lg:px-8 rounded-lg bg-[#FB8A00] drop-shadow-[0_5px_10px_rgba(0,0,0,0.5)] text-white">
                 Ver Más
               </button>
-            </Link>
+              </Link>
+            )}
           </div>
         </div>
       </div>
