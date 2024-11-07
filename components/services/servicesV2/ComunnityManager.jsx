@@ -179,7 +179,7 @@ const CommunityManager = () => {
         las plataformas Meta
       </span>
       
-        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={scrollToPlanCards}>
+        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF]  duration-300 shadow-sm shadow-black border-orange-500 " onClick={scrollToPlanCards}>
           Empezar
         </button>
       

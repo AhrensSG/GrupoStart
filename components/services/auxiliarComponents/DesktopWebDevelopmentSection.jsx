@@ -2,10 +2,11 @@
 
 import { Context } from "@/app/context/GlobalContext";
 import { addProductToCart } from "@/app/context/actions";
+import Modal from "@/components/login/Modal";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 
 const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contratar", crossedItems = [] }) => {
@@ -61,8 +62,13 @@ const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contra
 const DesktopWebDevelopmentSection = () => {
   const { state, dispatch } = useContext(Context);
   const router = useRouter();
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleBuyNow = async (id, name, price) => {
+    if (!state.user) {
+      setShowLogin(true);
+      return toast.info("¡Inicia sesión y continúa!");
+    }
     const data = {
       id,
       name,
@@ -82,6 +88,7 @@ const DesktopWebDevelopmentSection = () => {
 
   return (
     <div className="py-8 md:px-[2%] lg:px-[4%] xl:px-[8%] xxl:px-[16%] w-full flex-row relative justify-center" style={{ background: '#FFFFFF' }}>
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       <div className="items-center justify-center text-center py-12">
         <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#0853FC] text-white py-3 px-[100px]">Planes de Identidad</span>
       </div>
@@ -98,7 +105,7 @@ const DesktopWebDevelopmentSection = () => {
             'Modelado 3D de interiores'
           ]}
           price="$119900"
-          onButtonClick={() => handleBuyNow(2, "Plan Identidad Simplificada", 119900)}
+          onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 119900)}
           crossedItems={[4, 5, 6]}
         />
         <PlanCard
@@ -114,7 +121,7 @@ const DesktopWebDevelopmentSection = () => {
             'Modelado 3D de interiores'
           ]}
           price="$179900"
-          onButtonClick={() => handleBuyNow(3, "Plan Identidad Standar", 179900)}
+          onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 179900)}
           crossedItems={[6]}
         />
         <PlanCard
@@ -129,7 +136,7 @@ const DesktopWebDevelopmentSection = () => {
             'Modelado 3D de interiores'
           ]}
           price="Etapa sujeta a aprobación"
-          onButtonClick={() => handleBuyNow(4, "Plan Identidad Completa", "Pedir Cotización")}
+          onButtonClick={() => handleBuyNow(7, "Plan Identidad Completa", "Pedir Cotización")}
           buttonLabel="Cotizar"
           crossedItems={[]}
         />

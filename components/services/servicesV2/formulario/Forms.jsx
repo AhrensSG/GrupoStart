@@ -1,4 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { addProductToCart } from "@/app/context/actions";
+import { Context } from "@/app/context/GlobalContext";
+import Modal from "@/components/login/Modal";
+import { useRouter } from "next/navigation";
+import React, { useContext, useState, useEffect } from "react";
+import { toast } from "sonner";
 
 // Componente principal del formulario personalizado
 export default function Formulario() {
@@ -55,7 +60,71 @@ export default function Formulario() {
     },
   ]);
 
-   // Estado para los valores de formulario como los interruptores
+  const { state, dispatch } = useContext(Context);
+  const router = useRouter();
+  const [showLogin, setShowLogin] = useState(false);
+  const handleBuyNow = async () => {
+    // Verifica si el usuario está autenticado
+    if (!state.user) {
+      setShowLogin(true);
+      return toast.info("¡Inicia sesión y continúa!");
+    }
+  
+    // Filtra los ítems seleccionados
+    const selectedItems = items
+      .filter((item) => item.cantidad > 0)
+      .map((item) => ({
+        id: item.detalle,
+        name: item.detalle,
+        description: item.info,
+        price: item.valor,
+        quantity: item.cantidad,
+      }));
+  
+    // Configura el paquete de productos a agregar al carrito
+    const data = {
+      id: "pack-gestion-redes",
+      name: "Pack Personalizado de Gestión de Redes",
+      description: "Servicio personalizado para redes sociales",
+      price: calcularValorTotal(),
+      items: selectedItems,
+      productType: "pack",
+    };
+  
+    // Verifica si el paquete ya está en el carrito
+    if (state.cart?.some((prod) => prod.id === data.id)) {
+      toast.info(`Se actualizó el producto en tu carrito!`);
+    } else {
+      toast.success(`Añadiste el pack personalizado a tu carrito!`);
+    }
+  
+    // Añade al carrito y redirige al pago
+    await addProductToCart(data, dispatch);
+    return router.push("/payment");
+  };
+  
+
+  // Estado del tooltip, que muestra la información de los ítems al pasar el mouse
+  const [tooltip, setTooltip] = useState({
+    visible: false,
+    content: "", // Contenido del tooltip
+    x: 0,
+    y: 0,
+  });
+
+  // Maneja cuando el mouse pasa sobre un ítem para mostrar el tooltip
+  const handleMouseOver = (event, info) => {
+    const x = event.clientX + 10; // Posición del tooltip (X)
+    const y = event.clientY + 10; // Posición del tooltip (Y)
+    setTooltip({ visible: true, content: info, x, y });
+  };
+
+  // Oculta el tooltip cuando el mouse sale del ítem
+  const handleMouseOut = () => {
+    setTooltip({ visible: false, content: "", x: 0, y: 0 });
+  };
+
+  // Estado de los interruptores para seleccionar redes sociales y efemérides
   const [formData, setFormData] = useState({
     facebook: false,
     instagram: false,
@@ -65,26 +134,6 @@ export default function Formulario() {
 
   // Estado para habilitar o deshabilitar la edición del formulario
   const [isEditable, setIsEditable] = useState(false);
-
-  // Estado para mostrar un tooltip (información al pasar el ratón)
-  const [tooltip, setTooltip] = useState({
-    visible: false,
-    content: "",
-    x: 0,
-    y: 0,
-  });
-
-  // Mostrar tooltip con la información del ítem
-  const handleMouseOver = (event, info) => {
-    const x = event.clientX + 10;
-    const y = event.clientY + 10;
-    setTooltip({ visible: true, content: info, x, y });
-  };
-
-  // Ocultar tooltip
-  const handleMouseOut = () => {
-    setTooltip({ visible: false, content: "", x: 0, y: 0 });
-  };
 
   const handleToggleChange = (e) => {
     const { name, checked } = e.target;
@@ -415,6 +464,7 @@ const validarFormulario = () => {
 
   return (
     <section className="py-6 px-[100px] bg-[#FFFFFF] relative md:flex-wrap">
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* Encabezado del formulario */}
       <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
         <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
@@ -638,7 +688,7 @@ const validarFormulario = () => {
       {/* Botón de enviar */}
       <div className="flex justify-end mt-4">
         <button
-          onClick={handleSubmit}
+          onClick={handleBuyNow}
           className="bg-blue-600 text-white text-1xl px-[95px] py-1 rounded-medium border rounded-tl-xl rounded-br-xl font-lg"
         >
           CONTRATAR

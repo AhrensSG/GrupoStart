@@ -1,26 +1,41 @@
 import { Order, User } from "@/db/models/models";
 
-export async function GET(req) {
+export async function PUT(req) {
   try {
-    const searchParams = req.nextUrl.searchParams;
-    const id = searchParams.get("id");
+    const { displayName, email, uid } = await req.json();
 
-    if (!id) {
-      return Response.json("User ID is required", { status: 400 });
+    if (!uid || !displayName || !email) {
+      return Response.json("UID / DISPLAYNAME / EMAIL ARE required", {
+        status: 400,
+      });
     }
 
     const user = await User.findOne({
-      where: { id },
+      where: { id: uid },
       include: [{ model: Order }],
       order: [[Order, "createdAt", "DESC"]],
     });
 
     if (!user) {
-      return Response.json(`User with ID ${id} not found`, { status: 404 });
+      const newUser = await User.create({
+        id: uid,
+        name: displayName,
+        surname: "",
+        email: email,
+      });
+
+      const updatedUser = await User.findOne({
+        where: { id: newUser.id },
+        include: [{ model: Order }],
+        order: [[Order, "createdAt", "DESC"]],
+      });
+
+      return Response.json(updatedUser);
     }
 
     return Response.json(user);
   } catch (error) {
+    console.log(error)
     return Response.json(error.message, { status: 500 });
   }
 }

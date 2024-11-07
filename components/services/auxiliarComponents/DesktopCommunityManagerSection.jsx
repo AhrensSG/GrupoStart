@@ -2,10 +2,11 @@
 
 import { Context } from "@/app/context/GlobalContext";
 import { addProductToCart } from "@/app/context/actions";
+import Modal from "@/components/login/Modal";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { toast } from "sonner";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
@@ -18,25 +19,28 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
         </span>
       </div>
 
-          {/* Lista de características */}
-        <ul className="list-none relative lg:pl-[30px] lg:pr-[8px] md:py-[2px] lg:pt-[3vh] flex-grow sm:overflow-y-auto justify-items-center lg:h-[260px] lg:w-[295px] md:pl-[8px] md:pr-[15px] md:w-[255px] md:h-[245px] sm:w-3/4">
-          {features.map((feature, index) => (
-            <li key={index} className="flex items-center w-full lg:mb-[4.5%] md:mb-2">
-              <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
-                <Image
-                  src="/services/CheckIcon.svg"
-                  width={16}
-                  height={16} // Tamaño fijo de 20px x 20px
-                  alt="checkIcon"
-                  className="w-full h-full"
-                />
-              </div>
-              <span className="text-left text-xs md:text-sm lg:text-base leading-tight">
+      {/* Lista de características */}
+      <ul className="list-none relative lg:pl-[30px] lg:pr-[8px] md:py-[2px] lg:pt-[3vh] flex-grow sm:overflow-y-auto justify-items-center lg:h-[260px] lg:w-[295px] md:pl-[8px] md:pr-[15px] md:w-[255px] md:h-[245px] sm:w-3/4">
+        {features.map((feature, index) => (
+          <li
+            key={index}
+            className="flex items-center w-full lg:mb-[4.5%] md:mb-2"
+          >
+            <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
+              <Image
+                src="/services/CheckIcon.svg"
+                width={16}
+                height={16} // Tamaño fijo de 20px x 20px
+                alt="checkIcon"
+                className="w-full h-full"
+              />
+            </div>
+            <span className="text-left text-xs md:text-sm lg:text-base leading-tight">
               {feature}
-              </span>
-            </li>
-          ))}
-        </ul>
+            </span>
+          </li>
+        ))}
+      </ul>
 
       {/* Precios */}
       <div className="flex justify-center items-center pb-[3px] relative w-full">
@@ -67,8 +71,13 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
 const DesktopCommunityManagerSection = () => {
   const { state, dispatch } = useContext(Context);
   const router = useRouter();
+  const [showLogin, setShowLogin] = useState(false);
 
   const handleBuyNow = async (id, name, price) => {
+    if (!state.user) {
+      setShowLogin(true);
+      return toast.info("¡Inicia sesión y continúa!");
+    }
     const data = {
       id,
       name,
@@ -94,6 +103,7 @@ const DesktopCommunityManagerSection = () => {
           "linear-gradient(to bottom, #0853FC, #0853FC, #FFFFFF, #FFFFFF)",
       }}
     >
+      {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       <div className="items-center justify-center text-center py-[36px] relative px-[20px] md:px-[60px] sm:px-[40px] w-full">
         <h2 className="xs:text-md sm:text-lg md:text-xl lg:text-3xl font-bold text-center items-center justify-center mb-8 rounded-full rounded-tr-xl rounded-bl-xl bg-[#FB8A00] text-white py-3 lg:max-w-[20%] sm:max-w-[30%] md:max-w-[70%] mx-auto">
           Elegí tu plan

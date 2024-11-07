@@ -5,7 +5,6 @@ import "./globals.css";
 import GlobalContext from "./context/GlobalContext";
 import { Toaster } from "sonner";
 
-
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
@@ -14,13 +13,7 @@ const roboto = Roboto({
 export default function RootLayout({ children }) {
   return (
     <html title="GrupoStart" description="GrupoStart Solutions" lang="en">
-      <GlobalContext
-      width={"100%"}
-      height={"100%"}
-      overflowX={"hidden"}
-      justifyContent={"center"}
-      
-      >
+      <GlobalContext>
         <Toaster
           richColors
           visibleToasts={3}
@@ -28,7 +21,7 @@ export default function RootLayout({ children }) {
           position="bottom-right"
           expand={false}
         />
-          <body className={roboto.className}>{children}</body>
+        <body className={roboto.className}>{children}</body>
       </GlobalContext>
     </html>
   );

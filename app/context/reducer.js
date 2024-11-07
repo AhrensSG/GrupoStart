@@ -17,7 +17,7 @@ export const reducer = (state, action) => {
 
     case "ADD_PRODUCT_TO_CART":
       if (!state.cart) {
-        if (action.payload.productType === "course") {
+        if (action.payload.productType !== "pack-envio") {
           const total = action.payload.price * action.payload.items;
 
           return {
