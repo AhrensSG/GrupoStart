@@ -86,7 +86,7 @@ const CommunityManager = () => {
         </span>
       </div>
       <div className="py-[30px]">
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md text-2xl" onClick={scrollToPlanCards}>
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md" onClick={scrollToPlanCards}>
           Comenzar
         </button>
       </div>

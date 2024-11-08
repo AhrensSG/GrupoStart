@@ -28,6 +28,26 @@ const NavBar = () => {
             Contacto
           </button>
         </Link>
+        <Link className="w-11" href={"/login"}>
+        <button className="w-11 h-10 px-2 border rounded-tl-xl rounded-br-xl bg-orange-500 text-white shadow-md shadow-orange-500 text-center hover:bg-white hover:text-orange-500 border border-orange-500 duration-300">
+          {/* Ícono de Usuario SVG */}
+          <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="#0853FC" // Color del trazo
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="mr-1" // Espaciado a la derecha del ícono
+                      >
+                        <circle cx="12" cy="7" r="4" />
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H 8a4 4 0 0 0-4 4v2" />
+                      </svg>
+        </button>
+        </Link>
       </div>
 
       <div className="lg:hidden">
@@ -63,6 +83,14 @@ const NavBar = () => {
                 />
               </button>
               <div className="w-full h-full py-[10%] px-[5%] gap-[5%] flex flex-col justify-start items-start">
+              <Link className="max-w-32 w-full" href={"/login"}>
+                <button
+                  onClick={() => setShowSideBar(false)}
+                  className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
+                >
+                  Usuario
+                </button>
+                </Link>
                 <Link className="text-lg" href={"/#services"}>
                   <button
                     onClick={() => setShowSideBar(false)}
