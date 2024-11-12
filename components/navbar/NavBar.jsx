@@ -28,7 +28,7 @@ const NavBar = () => {
             Contacto
           </button>
         </Link>
-        <Link className="w-11" href={"/Login"}>
+        <Link className="w-11" href={"/login"}>
         <button className="w-11 h-10 px-2 border rounded-tl-xl rounded-br-xl bg-orange-500 text-white shadow-md shadow-orange-500 text-center hover:bg-white hover:text-orange-500 border border-orange-500 duration-300">
           {/* Ícono de Usuario SVG */}
           <svg
