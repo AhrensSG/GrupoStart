@@ -15,6 +15,8 @@ const Login = ({ setShowLogin }) => {
     const [password, setPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
     const [isForgotPassword, setIsForgotPassword] = useState(false);
+    const [nombreUser , setNombre] = useState('');
+    const [apellidoUser , setApellido] = useState('');
     const [phone, setPhone] = useState('');
     const [acceptTerms, setAcceptTerms] = useState(false);
     const [resetEmail, setResetEmail] = useState('');
@@ -105,7 +107,7 @@ const Login = ({ setShowLogin }) => {
 
     const handleRegister = async () => {
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password, nombreUser, apellidoUser);
             const user = userCredential.user;
             console.log(" Usuario creado:", user);
             setShowLogin(false);
@@ -258,7 +260,7 @@ const Login = ({ setShowLogin }) => {
                                     </label>
                                     <input
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="email"
+                                        id="emailUser"
                                         type="email"
                                         placeholder="Email"
                                         value={email}
@@ -279,6 +281,34 @@ const Login = ({ setShowLogin }) => {
                                     />
                                 </div>
                                 {isRegistering && (
+                                
+                                <>
+                                                <div className="mb-4 w-full">
+                                                <label className="block text-white text-sm font-semibold mb-2" htmlFor="nombreUser">
+                                                    Nombre
+                                                </label>
+                                                <input
+                                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="nombreUser "
+                                                    type="text"
+                                                    placeholder="Nombre"
+                                                    value={nombreUser }
+                                                    onChange={(e) => setNombre(e.target.value)}
+                                                />
+                                                </div>
+                                                <div className="mb-4 w-full">
+                                                <label className="block text-white text-sm font-semibold mb-2" htmlFor="apellidoUser">
+                                                    Apellido
+                                                </label>
+                                                <input
+                                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                    id="apellidoUser "
+                                                    type="text"
+                                                    placeholder="Apellido"
+                                                    value={apellidoUser }
+                                                    onChange={(e) => setApellido(e.target.value)}
+                                                />
+                                                </div>
                                     <div className="mb-4 w-full">
                                         <label className="block text-white text-sm font-semibold mb-2" htmlFor="phone">
                                             Teléfono
@@ -292,6 +322,7 @@ const Login = ({ setShowLogin }) => {
                                             onChange={(e) => setPhone(e.target.value)}
                                         />
                                     </div>
+                                    </>
                                 )}
                                 {isRegistering && (
                                     <div className="flex items-center justify-center mb-4">
