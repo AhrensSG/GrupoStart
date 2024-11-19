@@ -77,6 +77,7 @@ const Usuario = ({
   const [modalMessage, setModalMessage] = useState('');
   const [onConfirmAction, setOnConfirmAction] = useState(null);
 
+
   // Maneja cambios en los inputs del formulario de usuario
   const handleInputChange = useCallback((e) => {
     const { name, value } = e.target;
@@ -394,15 +395,31 @@ const Usuario = ({
                 {/* Subtitulo y ChatWsp */}
                 <div className="flex justify-between items-center w-full relative">
                   <h2 className="font-bold text-orange-500 text-2xl" id="subMisServicios">Mis Servicios</h2>
+                  <div className="flex ml-auto space-x-4" id="actionButtonsServices">
+                    <Link href={"/paymentPage"}>
+                      <button
+                        className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out w-16 h-16 flex items-center justify-center"
+                        aria-label="Ir a la página de pago"
+                        title="Ir al carrito"
+                      >
+                        <Image
+                          src="/cartIconUser.png"
+                          alt="Icono de carrito"
+                          width={35}
+                          height={35}
+                        />
+                      </button>
+                    </Link>
 
-                  <div className="relative ml-auto" id="chatWspDirect">
                     <button
                       className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out w-16 h-16 flex items-center justify-center"
                       onClick={handleClick}
+                      aria-label="Abrir chat"
+                      title="Ir al chat"
                     >
                       <Image
                         src="/imgChatIcon.png"
-                        alt="Chat icon"
+                        alt="Icono de chat"
                         width={30}
                         height={30}
                       />
