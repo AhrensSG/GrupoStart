@@ -396,7 +396,7 @@ const Usuario = ({
                 <div className="flex justify-between items-center w-full relative">
                   <h2 className="font-bold text-orange-500 text-2xl" id="subMisServicios">Mis Servicios</h2>
                   <div className="flex ml-auto space-x-4" id="actionButtonsServices">
-                    <Link href={"/paymentPage"}>
+                    <Link href={"/payment"}>
                       <button
                         className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out w-16 h-16 flex items-center justify-center"
                         aria-label="Ir a la página de pago"
