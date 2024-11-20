@@ -123,134 +123,122 @@ const Login = ({ setShowLogin }) => {
     };
 
     return (
-        <section className="flex w-full min-h -screen relative" style={{ backgroundImage: "url('/login/BGlogin.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
-            <aside className="flex flex-col items-start justify-start w-1/3 mx-[5%] my-[2%]">
-                <Link href={"/#home"} className="min-w-max mb-4">
-                    <Image src="/OrangeLogo.svg" alt="Logo" width={150} height={101} priority />
-                </Link>
-            </aside>
-            <aside className="flex justify-start items-center w-3/2 min-h-screen pl-2">
-                <Image src="/login/Slogo.png" alt="S Logo" width={650} height={650} className="mx-auto" />
-            </aside>
-            <aside className="flex justify-end items-center w-2/3 min-h-screen pr-[14%] pl-[2%]">
-                <AnimatePresence>
-                    <motion.div
-                        initial={{ scale: 0.5 }}
-                        animate={{ scale: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="bg-blue-500 bg-opacity-65 rounded-2xl shadow-lg p-8 w-96 border-grey-700 border-opacity-40 border-2"
-                    >
-                        <h2 className="text-2xl font-bold text-orange-500 mb-2 text-center">
-                            {isRegistering ? "Únete a nosotros hoy" : isForgotPassword ? (codeSent ? "Verifica tu código" : "Restablecer contraseña") : "Bienvenido de vuelta"}
-                        </h2>
-                        <p className="text-white text-center font-light">{isRegistering ? "El camino a Impulsar tu Negocio" : isForgotPassword ? (codeSent ? "Introduce el código que recibiste" : "Introduce tu correo para restablecer la contraseña") : "Nos alegra verte otra vez :)"}</p>
-                        <br />
-                        <div className="flex items-center justify-center mb-4">
-                            <span className="text-white font-light">{isRegistering ? "Registrate con:" : isForgotPassword ? "" : "Inicia sesión con:"}</span>
-                            {!isForgotPassword && (
-                                <>
-                                    <button
-                                        className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white"
-                                        onClick={handleGoogleLogin}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 262" id="google">
-                                            <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
-                                            <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
-                                            <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
-                                            <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36 ```javascript
-.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
-                                        </svg>
-                                    </button>
-                                    <button
-                                        className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white"
-                                        onClick={handleFacebookLogin}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" id="facebook">
-                                            <path fill="#1877f2" d="M1024,512C1024,229.23016,794.76978,0,512,0S0,229.23016,0,512c0,255.554,187.231,467.37012,432,505.77777V660H302V512H432V399.2C432,270.87982,508.43854,200,625.38922,200,681.40765,200,740,210,740,210V336H675.43713C611.83508,336,592,375.46667,592,415.95728V512H734L711.3,660H592v357.77777C836.769,979.37012,1024,767.554,1024,512Z"></path>
-                                            <path fill="#fff" d="M711.3,660,734,512H592V415.95728C592,375.46667,611.83508,336,675.43713,336H740V210s-58.59235-10-114.61078-10C508.43854,200,432,270.87982,432,399.2V512H302V660H432v357.77777a517.39619,517.39619,0,0,0,160,0V660Z"></path>
-                                        </svg>
-                                    </button>
-                                </>
-                            )}
-                        </div>
+        <section className="flex w-full min-h-screen relative" style={{ backgroundImage: "url('/login/BGlogin.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <aside className="flex flex-col items-start justify-start w-1/3 mx-[5%] my-[2%]">
+        <Link href={"/#home"} className="min-w-max mb-4">
+            <Image src="/OrangeLogo.svg" alt="Logo" width={150} height={101} priority />
+        </Link>
+    </aside>
+    <aside className="flex justify-start items-center w-3/2 min-h-screen pl-2">
+        <Image src="/login/Slogo.png" alt="S Logo" width={650} height={650} className="mx-auto" />
+    </aside>
+    <aside className="flex justify-end items-center w-2/3 min-h-screen pr-[14%] pl-[2%]">
+        <AnimatePresence>
+            <motion.div
+                initial={{ scale: 0.5 }}
+                animate={{ scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25 }}
+                className="bg-blue-500 bg-opacity-65 rounded-2xl shadow-lg p-8 w-96 border-grey-700 border-opacity-40 border-2"
+            >
+                <h2 className="text-2xl font-bold text-orange-500 mb-2 text-center">
+                    {isRegistering ? "Únete a nosotros hoy" : isForgotPassword ? (codeSent ? "Verifica tu código" : "Restablecer contraseña") : "Bienvenido de vuelta"}
+                </h2>
+                <p className="text-white text-center font-light">
+                    {isRegistering ? "El camino a Impulsar tu Negocio" : isForgotPassword ? (codeSent ? "Introduce el código que recibiste" : "Introduce tu correo para restablecer la contraseña") : "Nos alegra verte otra vez :)"}
+                </p>
+                <br />
+                <div className="flex items-center justify-center mb-4">
+                    <span className="text-white font-light">{isRegistering ? "Regístrate con:" : isForgotPassword ? "" : "Inicia sesión con:"}</span>
+                    {!isForgotPassword && (
+                        <>
+                            <button className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white" onClick={handleGoogleLogin}>
+                            <svg width="25" height="25" preserveAspectRatio="xMidYMid" viewBox="0 0 256 262" id="google">
+                                <path fill="#4285F4" d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"></path>
+                                <path fill="#34A853" d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"></path>
+                                <path fill="#FBBC05" d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"></path>
+                                <path fill="#EB4335" d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"></path>
+                            </svg>
+                            </button>
+                            <button className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white" onClick={handleFacebookLogin}>
+                            <svg viewBox="0 0 1024 1024" id="facebook">
+                                <path fill="#1877f2" d="M1024,512C1024,229.23016,794.76978,0,512,0S0,229.23016,0,512c0,255.554,187.231,467.37012,432,505.77777V660H302V512H432V399.2C432,270.87982,508.43854,200,625.38922,200,681.40765,200,740,210,740,210V336H675.43713C611.83508,336,592,375.46667,592,415.95728V512H734L711.3,660H592v357.77777C836.769,979.37012,1024,767.554,1024,512Z"></path>
+                                <path fill="#fff" d="M711.3,660,734,512H592V415.95728C592,375.46667,611.83508,336,675.43713,336H740V210s-58.59235-10-114.61078-10C508.43854,200,432,270.87982,432,399.2V512H302V660H432v357.77777a517.39619,517.39619,0,0,0,160,0V660Z"></path>
+                            </svg>
+                            </button>
+                        </>
+                    )}
+                </div>
 
-                        {isForgotPassword ? (
-                            codeSent ? (
-                                <>
-                                    <div className="mb-4 w-full">
-                                        <label className="block text-white text-sm font-semibold mb-2" htmlFor="verificationCode">
-                                            Código de verificación
-                                        </label>
-                                        <input
-                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="verificationCode"
-                                            type="text"
-                                            placeholder="Código"
-                                            value={verificationCode}
-                                            onChange={(e) => setVerificationCode(e.target.value)}
-                                        />
-                                        <button
-                                            className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mt-4"
-                                            onClick={handleVerifyCode}
-                                        >
-                                            Verificar código
-                                        </button>
-                                    </div>
-                                    {codeVerified && (
-                                        <div className="mb-4 w-full">
-                                            <label className="block text-white text-sm font-semibold mb-2" htmlFor="newPassword">
-                                                Nueva contraseña
-                                            </label>
-                                            <input
-                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="newPassword"
-                                                type="password"
-                                                placeholder="Nueva contraseña"
-                                                value={newPassword}
-                                                onChange={(e) => setNewPassword(e.target.value)}
-                                            />
-                                            <label className="block text-white text-sm font-semibold mb-2 mt-2" htmlFor="confirmNewPassword">
-                                                Confirmar nueva contraseña
-                                            </label>
-                                            <input
-                                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="confirmNewPassword"
-                                                type="password"
-                                                placeholder="Confirmar nueva contraseña"
-                                                value={confirmNewPassword}
-                                                onChange={(e) => setConfirmNewPassword(e.target.value)}
-                                            />
-                                            <p className="text-white text-xs mt-2">Asegúrate de incluir al menos un número, un carácter especial y una mayúscula.</p>
-                                            <button
-                                                className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mt-4"
-                                                onClick={handleResetPassword}
-                                            >
-                                                Restablecer contraseña
-                                            </button>
-                                        </div>
-                                    )}
-                                </>
-                            ) : (
+                {isForgotPassword ? (
+                    codeSent ? (
+                        <>
+                            <div className="mb-4 w-full">
+                                <label className="block text-white text-sm font-semibold mb-2" htmlFor="verificationCode">
+                                    Código de verificación
+                                </label>
+                                <input
+                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="verificationCode"
+                                    type="text"
+                                    placeholder="Código"
+                                    value={verificationCode}
+                                    onChange={(e) => setVerificationCode(e.target.value)}
+                                />
+                                <button
+                                    className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mt-4"
+                                    onClick={handleVerifyCode}
+                                >
+                                    Verificar código
+                                </button>
+                            </div>
+                            {codeVerified && (
                                 <div className="mb-4 w-full">
-                                    <label className="block text-white text-sm font-semibold mb-2" htmlFor="resetEmail">
-                                        Correo electrónico
+                                    <label className="block text-white text-sm font-semibold mb-2" htmlFor="newPassword">
+                                        Nueva contraseña
                                     </label>
                                     <input
                                         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="resetEmail"
-                                        type="email"
-                                        placeholder="Email"
-                                        value={resetEmail}
-                                        onChange={(e) => setResetEmail(e.target.value)}
+                                        id="newPassword"
+                                        type="password"
+                                        placeholder="Nueva contraseña"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)}
+                                    />
+                                    <label className="block text-white text-sm font-semibold mb-2 mt-2" htmlFor="confirmNew Password">
+                                        Confirmar nueva contraseña
+                                    </label>
+                                    <input
+                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="confirmNewPassword"
+                                        type="password"
+                                        placeholder="Confirmar nueva contraseña"
+                                        value={confirmNewPassword}
+                                        onChange={(e) => setConfirmNewPassword(e.target.value)}
                                     />
                                     <button
                                         className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mt-4"
-                                        onClick={handleForgotPassword}
+                                        onClick={handleResetPassword}
                                     >
-                                        Enviar correo
+                                        Restablecer contraseña
                                     </button>
                                 </div>
+                            )}
+                        </>
+                    ) : (
+                        <div className="mb-4 w-full">
+                            <label className="block text-white text-sm font-semibold mb-2" htmlFor="resetEmail">
+                                Correo electrónico
+                            </label>
+                            <input
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                id="resetEmail"
+                                type="email"
+                                placeholder="Email"
+                                value={resetEmail}
+                                onChange={(e) => setResetEmail(e.target.value)}
+                            />
+                        </div>
                             )
                         ) : (
                             <>
@@ -292,7 +280,7 @@ const Login = ({ setShowLogin }) => {
                                                     id="nombreUser "
                                                     type="text"
                                                     placeholder="Nombre"
-                                                    value={nombreUser }
+                                                    value={nombreUser}
                                                     onChange={(e) => setNombre(e.target.value)}
                                                 />
                                                 </div>
@@ -305,7 +293,7 @@ const Login = ({ setShowLogin }) => {
                                                     id="apellidoUser "
                                                     type="text"
                                                     placeholder="Apellido"
-                                                    value={apellidoUser }
+                                                    value={apellidoUser}
                                                     onChange={(e) => setApellido(e.target.value)}
                                                 />
                                                 </div>
@@ -355,16 +343,18 @@ const Login = ({ setShowLogin }) => {
                             <button
                                 className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full max-w-52"
                                 type="button"
-                                onClick={isForgotPassword ? (codeSent ? handleResetPassword : handleForgotPassword) : isRegistering ? handleRegister : handleEmailLogin}
+                                onClick={isForgotPassword ? (codeSent ? handleResetPassword : handleForgotPassword) :
+                                            isRegistering ? handleRegister : handleEmailLogin}
                             >
-                                {isForgotPassword ? (codeSent ? "Restablecer contraseña" : "Enviar correo") : isRegistering ? "Registrarse" : "Iniciar sesión"}
+                                {isForgotPassword ? (codeSent ? "Restablecer contraseña" : "Enviar correo") :
+                                    isRegistering ? "Registrarse" : "Iniciar sesión"}
                             </button>
                         </div>
                         <div className="flex items-center justify-center mt-4">
                             <button
                                 className="text-orange-500 hover:text-orange-800 font-semibold text-sm"
                                 onClick={() => {
- if (isForgotPassword) {
+                                    if (isForgotPassword) {
                                         setIsForgotPassword(false);
                                         setCodeSent(false);
                                         setCodeVerified(false);
@@ -373,7 +363,8 @@ const Login = ({ setShowLogin }) => {
                                     }
                                 }}
                             >
-                                {isForgotPassword ? "Regresar a inicio de sesión" : isRegistering ? "¿Ya tienes una cuenta? Inicia sesión" : "¿No tienes una cuenta? Regístrate"}
+                                {isForgotPassword ? "Regresar a inicio de sesión" :
+                                    isRegistering ? "¿Ya tienes una cuenta? Inicia sesión" : "¿No tienes una cuenta? Regístrate"}
                             </button>
                         </div>
                     </motion.div>
