@@ -46,11 +46,11 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       <div className="flex justify-center items-center pb-[3px] relative w-full">
         <div className="text-center flex-col justify-center items-center gap-4 relative">
           <span className="text-black-900 line-through font-extrabold text-center justify-center text-[32px] w-[206px] h-[64px]">
-            <s>${price.original}</s>
+            <s>${price.original.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</s>
           </span>
           <br />
           <span className="font-bold text-[#FB8A00] text-center justify-center text-ligth text-[26px] w-[202px] h-[39px]">
-            ahora ${price.discount}
+            ahora ${price.discount.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </span>
         </div>
       </div>

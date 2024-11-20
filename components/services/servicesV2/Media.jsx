@@ -89,7 +89,7 @@ const Media = () => {
             <path
               fill="#0853FC"
               fillOpacity="10"
-              d="M0,300L48,285C96,270,192,250,288,235C384,220,480,210,576,205C672,210,768,220,864,235C960,250,1056,270,1152,285C1248,300,1344,320,1392,325L1440,330L1440,0L1392,0L1248,0L1152,0L1056,0L960,0L864,0L768,0L672,0L576,0L480,0L384,0L288,0L192,0L96,0L48,0L0,0Z"
+              d="M0,300L48,285C96,270,192,250,288,235C384,220,480,210,576,205C672,210,768,220,864,235C960,250,1056,270,1152,285C1248,300,1344,310,1392,315C1432,320,1440,315,1440,315L1440,0L1392,0L1248,0L1152,0L1056,0L960,0L864,0L768,0L672,0L576,0L480,0L384,0L288,0L192,0L96,0L48,0L0,0Z"
             />
           </svg>
         </div>
@@ -215,7 +215,7 @@ const Media = () => {
           </div>
           {/* Text */}
           <div className="flex justify-end items-center text-end h-[180px] w-[632px] rigth-0 py-2 pl-1 pr-0 md:w-1/2 z-3">
-            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 lg:w-[431px] lg:h-[107px] px-[45px] md:px-[30px] py-[35px] md:w-3/4 md:h-1/2 text-lg md:text-xl lg:text-4xl relative flex">
+            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 lg:w-[455px] lg:h-[107px] lg:pl-[45px] lg:pr-[10vh] md:pl-[10px] md:pr-[4vh] py-[35px] md:w-[25vh] md:h-1/2 text-lg md:text-xl lg:text-4xl relative flex">
               TU LOGO es la<br />
               cara de tu negocio
             </span>

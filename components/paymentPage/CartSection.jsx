@@ -146,25 +146,26 @@ const CartSection = () => {
   }, []);
 
   return (
-    <div className="w-full flex flex-col justify-center items-center p-2 py-10">
+    <div className="bg-[#EEEEEE] w-full flex flex-col justify-center items-center p-2 py-10">
       {/* {showLogin === true && <Modal setShowLogin={setShowLogin} />} */}
-      {/* PAYMENT MODAL */}
-      {showPaymentModal ? (
-        <PaymentModal setShowPaymentModal={setShowPaymentModal} />
-      ) : null}
-      <div className="max-w-screen-lg w-full">
-        {/* TOP SECTION  */}
-        <div className="w-full flex justify-between">
-          <span className="max-w-72 w-full text-start text-2xl text-[#0853FC] font-medium">
-            Productos
-          </span>
-          <span className="max-w-72 w-full text-start text-2xl text-[#0853FC] font-medium">
-            Total
-          </span>
-        </div>
-        {/* PRODUCTS SECTION */}
-        <div className="max-w-screen-lg w-full shadow-md shadow-[#0853FC]/40 px-4 py-6 border brder-[#0853FC] rounded-md flex flex-row justify-between">
-          <div className="overflow-y-scroll scrollbar-thin w-full p-2 border max-w-[600px] max-h-64 rounded-md shadow-inner space-y-3">
+       {/* PAYMENT MODAL */}
+  {showPaymentModal ? (
+    <PaymentModal setShowPaymentModal={setShowPaymentModal} />
+  ) : null}
+  <div className="max-w-screen-lg w-full">
+    {/* TOP SECTION  */}
+    <div className="w-full flex justify-between mb-4">
+      <span className="text-2xl text-[#0853FC] font-medium">Productos</span>
+      <span className="text-2xl text-[#0853FC] font-medium">Resumen</span>
+    </div>
+
+    {/* MAIN CONTAINER */}
+    <div className="max-w-screen-lg w-full flex flex-row justify-between">
+
+      {/* Tarjeta de Productos */}
+      <div className="w-full max-w-[800px] mr-4">
+        <div className="bg-white shadow-md shadow-[#0853FC]/40 p-4 border border-[#0853FC] rounded-md">
+          <div className="overflow-y-scroll scrollbar-thin max-h-74">
             {state.cart?.length > 0 ? (
               state.cart.map((prod) => {
                 if (prod.productType === "course") {
@@ -197,167 +198,161 @@ const CartSection = () => {
               </div>
             )}
           </div>
-          <div className="max-w-[270px] w-full flex flex-col justify-center items-start gap-10">
-            <div className="text-xl font-normal flex flex-row justify-between w-full">
-              <span>SUBTOTAL:</span>
-              <span> $ {state.cartPrice || 0}</span>
-            </div>
-            <div className="text-xl font-normal flex flex-row justify-between w-full">
-              <span>IVA 21%:</span>
-              <span> $ {state.cartPrice * 0.21 || 0}</span>
-            </div>
-            <div className="text-xl font-medium flex flex-row justify-between w-full">
-              <span>PRECIO FINAL:</span>
-              <span> $ {state.cartPrice + state.cartPrice * 0.21 || 0}</span>
-            </div>
-          </div>
         </div>
-        {/* FINAL PRICE SECTION */}
-        <div className="max-w-screen-lg w-full shadow-md shadow-[#0853FC]/40 px-4 py-6 mt-4 border brder-[#0853FC] rounded-md flex flex-row justify-between">
-          <span className="text-xl font-medium">TOTAL A PAGAR: </span>
-          <span className="text-xl font-medium">
-            $ {state.cartPrice + state.cartPrice * 0.21 || 0}
-          </span>
-        </div>
-        {/* PAYMENT INFORMATION SECTION */}
-        <div className="max-w-screen-lg w-full shadow-md shadow-[#0853FC]/40 px-20 py-6 mt-4 border brder-[#0853FC] rounded-md flex flex-col justify-center items-center gap-8">
-          <span className="text-xl font-medium">Informacion de compra </span>
-          {/* FORM */}
-          <form
-            onSubmit={formik.handleSubmit}
-            className="w-full grid place-items-center gap-8"
-          >
-            <div className="w-full flex flex-row justify-around items-center">
-              <div className="max-w-72 w-full flex flex-col gap-5">
-                <div className="flex flex-row gap-2 justify-start items-center">
-                  <div className="border-2 border-[#FB8A00] px-2 rounded-full">
-                    <span className="text-[#FB8A00] text-lg">1</span>
-                  </div>
-                  <span className="text-lg">Informacion personal</span>
-                </div>
-                <div className="flex flex-col w-full max-w-72 gap-4">
-                  <div className="w-full flex flex-row gap-2">
-                    <div className="w-full flex flex-col">
-                      <label className="text-sm pl-1 text-gray-500">
-                        Nombre
-                      </label>
-                      <input
-                        type="text"
-                        name="fullName"
-                        value={formik.values.fullName || ""}
-                        onChange={formik.handleChange}
-                        className="p-1.5 px-3 border-2 rounded -md outline-none w-full"
-                      />
-                    </div>
-                    <div className="w-full flex flex-col">
-                      <label className="text-sm pl-1 text-gray-500">
-                        Apellido
-                      </label>
-                      <input
-                        type="text"
-                        name="surname"
-                        value={formik.values.surname || ""}
-                        onChange={formik.handleChange}
-                        className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full flex flex-col">
-                    <label className="text-sm pl-1 text-gray-500">
-                      Correo electronico
-                    </label>
-                    <input
-                      type="text"
-                      name="email"
-                      value={formik.values.email || ""}
-                      onChange={formik.handleChange}
-                      className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                    />
-                  </div>
-                  <div className="w-full flex flex-col">
-                    <label className="text-sm pl-1 text-gray-500">
-                      Telefono
-                    </label>
-                    <input
-                      type="number"
-                      name="phone"
-                      value={formik.values.phone || ""}
-                      onChange={formik.handleChange}
-                      className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                    />
-                  </div>
-                </div>
-              </div>
+      </div>
 
-              <div className="max-w-72 w-full flex flex-col gap-5">
-                <div className="flex flex-row gap-2 justify-start items-center">
-                  <div className="border-2 border-[#FB8A00] px-2 rounded-full">
-                    <span className="text-[#FB8A00] text-lg">2</span>
-                  </div>
-                  <span className="text-lg">Informacion de envío</span>
-                </div>
-                <div className="flex flex-col w-full max-w-72 gap-4">
-                  <div className="w-full flex flex-col">
-                    <label className="text-sm pl-1 text-gray-500">Pais</label>
-                    <input
-                      type="text"
-                      name="country"
-                      value={"Argentina"}
-                      disabled
-                      className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                    />
-                  </div>
-                  <div className="w-full flex flex-row gap-2">
-                    <div className="w-full flex flex-col">
-                      <label className="text-sm pl-1 text-gray-500">
-                        Provincia
-                      </label>
-                      <input
-                        type="text"
-                        name="province"
-                        value={formik.values.province || ""}
-                        onChange={formik.handleChange}
-                        className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                      />
-                    </div>
-                    <div className="w-full flex flex-col">
-                      <label className="text-sm pl-1 text-gray-500">
-                        Codigo Postal
-                      </label>
-                      <input
-                        type="number"
-                        name="postalCode"
-                        value={formik.values.postalCode || ""}
-                        onChange={formik.handleChange}
-                        className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full flex flex-col">
-                    <label className="text-sm pl-1 text-gray-500">
-                      Calle / Altura
-                    </label>
-                    <input
-                      type="text"
-                      name="fullAddress"
-                      value={formik.values.fullAddress || ""}
-                      onChange={formik.handleChange}
-                      className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="max-w-52 w-full h-11 p-2 text-lg font-bold text-white bg-[#FB8A00] rounded-md"
-            >
-              {loader ? <Loader size={26} /> : "Ir al Pago"}
-            </button>
-          </form>
+      {/* Tarjeta de Resumen (Sticky) */}
+      <div className="w-full max-w-[270px] sticky top-10">
+        <div className="bg-white shadow-md shadow-[#0853FC]/40 p-4 border border-[#0853FC] rounded-md">
+          <div className="text-xl font-normal flex flex-row justify-between w-full">
+            <span>SUBTOTAL:</span>
+            <span> $ {state.cartPrice || 0}</span>
+          </div>
+          <div className="text-xl font-normal flex flex-row justify-between w-full">
+            <span>IVA 21%:</span>
+            <span> $ {state.cartPrice * 0.21 || 0}</span>
+          </div>
+          <div className="text-xl font-medium flex flex-row justify-between w-full">
+            <span>PRECIO FINAL:</span>
+            <span> $ {state.cartPrice + state.cartPrice * 0.21 || 0}</span>
+          </div>
         </div>
       </div>
     </div>
+
+    {/* FINAL PRICE SECTION */}
+    <div className="max-w-screen-lg bg-white w-full shadow-md shadow-[#0853FC]/40 px-4 py-6 mt-4 border border-[#0853FC] rounded-md flex flex-row justify-between">
+      <span className="text-xl font-medium">TOTAL A PAGAR: </span>
+      <span className="text-xl font-medium">
+        $ {state.cartPrice + state.cartPrice * 0.21 || 0}
+      </span>
+    </div>
+
+    {/* PAYMENT INFORMATION SECTION */}
+    <div className="max-w-screen-lg bg-white w-full shadow-md shadow-[#0853FC]/40 px-20 py-6 mt-4 border border-[#0853FC] rounded-md flex flex-col justify-center items-center gap-8">
+      <span className="text-xl font-medium">Información de compra</span>
+      {/* FORM */}
+      <form
+        onSubmit={formik.handleSubmit}
+        className="w-full grid place-items-center gap-8"
+      >
+        <div className="w-full flex flex-row justify-around items-center">
+          <div className="max-w-72 w-full flex flex-col gap-5">
+            <div className="flex flex-row gap-2 justify-start items-center">
+              <div className="border-2 border-[#FB8A00] px-2 rounded-full">
+                <span className="text-[#FB8A00] text-lg">1</span>
+              </div>
+              <span className="text-lg">Información personal</span>
+            </div>
+            <div className="flex flex-col w-full max-w-72 gap-4">
+              <div className="w-full flex flex-row gap-2">
+                <div className="w-full flex flex-col">
+                  <label className="text-sm pl-1 text-gray-500">Nombre</label>
+                  <input
+                    type="text"
+                    name="fullName"
+                    value={formik.values.fullName || ""}
+                    onChange={formik.handleChange}
+                    className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                  />
+                </div>
+                <div className="w-full flex flex-col">
+                  <label className="text-sm pl-1 text-gray-500">Apellido</label>
+                  <input
+                    type="text"
+                    name="surname"
+                    value={formik.values.surname || ""}
+                    onChange={formik.handleChange}
+                    className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                  />
+                </div>
+              </div>
+              <div className="w-full flex flex-col">
+                <label className="text-sm pl-1 text-gray-500">Correo electrónico</label>
+                <input
+                  type="text"
+                  name="email"
+                  value={formik.values.email || ""}
+                  onChange={formik.handleChange}
+                  className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                />
+              </div>
+              <div className="w-full flex flex-col">
+                <label className="text-sm pl-1 text-gray-500">Teléfono</label>
+                <input
+                  type="number"
+                  name="phone"
+                  value={formik.values.phone || ""}
+                  onChange={formik.handleChange}
+                  className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="max-w-72 w-full flex flex-col gap-5">
+            <div className="flex flex-row gap-2 justify-start items-center">
+              <div className="border-2 border-[#FB8A00] px-2 rounded-full">
+                <span className="text-[#FB8A00] text-lg">2</span>
+              </div>
+              <span className="text-lg">Información de envío</span>
+            </div>
+            <div className="flex flex-col w-full max-w-72 gap-4">
+              <div className="w-full flex flex-col">
+                <label className="text-sm pl-1 text-gray-500">País</label>
+                <input
+                  type="text"
+                  name="country"
+                  value={"Argentina"}
+                  disabled
+                  className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                />
+              </div>
+              <div className="w-full flex flex-row gap-2">
+                <div className="w-full flex flex-col">
+                  <label className="text-sm pl-1 text-gray-500">Provincia</label>
+                  <input
+                    type="text"
+                    name="province"
+                    value={formik.values.province || ""}
+                    onChange={formik.handleChange}
+                    className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                  />
+                </div>
+                <div className="w-full flex flex-col">
+                  <label className="text-sm pl-1 text-gray-500">Código Postal</label>
+                  <input
+                    type="number"
+                    name="postalCode"
+                    value={formik.values.postalCode || ""}
+                    onChange={formik.handleChange}
+                    className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                  />
+                </div>
+              </div>
+              <div className="w-full flex flex-col">
+                <label className="text-sm pl-1 text-gray-500">Calle / Altura</label>
+                <input
+                  type="text"
+                  name="fullAddress"
+                  value={formik.values.fullAddress || ""}
+                  onChange={formik.handleChange}
+                  className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          type="submit"
+          className ="max-w-52 w-full h-11 p-2 text-lg font-bold text-white bg-[#FB8A00] rounded-md"
+        >
+          {loader ? <Loader size={26} /> : "Ir al Pago"}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
   );
 };
 

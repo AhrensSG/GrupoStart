@@ -42,7 +42,7 @@ const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contra
       <div className="flex justify-center items-center pb-[3px] relative w-full">
         <div className="text-center flex-col justify-center items-center gap-4 relative">
           <span className="text-orange-500 font-bold text-center justify-center text-[32px] w-[128px] h-[40px]">
-            {price}
+          {typeof price === 'number' ? `$${price.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : price}
           </span>
         </div>
       </div>
@@ -104,7 +104,7 @@ const DesktopWebDevelopmentSection = () => {
             'Diseño de mockups, perfil y portada de facebook',
             'Modelado 3D de interiores'
           ]}
-          price="$119900"
+          price={119900}
           onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 119900)}
           crossedItems={[4, 5, 6]}
         />
@@ -120,7 +120,7 @@ const DesktopWebDevelopmentSection = () => {
             'Diseño de mockups, perfil y portada de facebook',
             'Modelado 3D de interiores'
           ]}
-          price="$179900"
+          price={179900}
           onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 179900)}
           crossedItems={[6]}
         />

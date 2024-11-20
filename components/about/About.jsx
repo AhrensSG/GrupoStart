@@ -25,22 +25,22 @@ const About = () => {
       {/* Section 1 */}
       <section className="relative bg-[#0853FC] flex w-full px-[5%] justify-items-center">
           {/* Sección de texto y botón */}
-          <div className="w-full realtive flex-col justify-center items-center text-center py-2">
+          <div className="w-full realtive flex flex-col justify-center items-center text-center py-2">
             <span className="lg:text-5xl md:text-3xl font-bold text-[#FB8A00] text-center justify-center items-center leading-snug">
               Todo sobre nosotros:<br />
               nuestra historia, objetivos, filosofía,<br />
               visión y proyectos futuros<br/>
             </span>
             <br/>
-              <span className="lg:text-xl md:text-lg text-white text-center justify-center items-center lg:w-[1000px] lg:h-[300px] md:w-[500px] md:h-[100px] px-[5%] leading-relaxed">
+              <span className="lg:text-xl md:text-lg text-white text-center flex flex-col justify-center items-center lg:w-[1000px] lg:h-[300px] md:w-[500px] md:h-[100px] px-[5%] leading-relaxed">
                 Somos una agencia de marketing completa de 360 grados,<br />
                 enfocada en conectar a los negocios al mundo digital y generar<br />
                 resultados positivos para nuestros clientes.<br />
                 <br />
                 Pensamos la estrategia adecuada, creamos contenidos,<br />
                 publicidad efectiva, imágenes y videos profesionales, estamos en<br />
-                varios países ayudando a negocios de todos los niveles, desde<br />
-                emprendedores hasta empresarios corporativos.
+                varios países ayudando a negocios de todos los niveles,<br />
+                desde emprendedores hasta empresarios corporativos.<br/>
               </span>
             </div>
       </section>
@@ -58,7 +58,7 @@ const About = () => {
             <path
               fill="#0853FC"
               fillOpacity="10"
-              d="M0,300L48,285C96,270,192,250,288,235C384,220,480,210,576,205C672,210,768,220,864,235C960,250,1056,270,1152,285C1248,300,1344,320,1392,325L1440,330L1440,0L1392,0L1248,0L1152,0L1056,0L960,0L864,0L768,0L672,0L576,0L480,0L384,0L288,0L192,0L96,0L48,0L0,0Z"
+              d="M0,300L48,285C96,270,192,250,288,235C384,220,480,210,576,205C672,210,768,220,864,235C960,250,1056,270,1152,285C1248,300,1344,310,1392,315C1432,320,1440,315,1440,315L1440,0L1392,0L1248,0L1152,0L1056,0L960,0L864,0L768,0L672,0L576,0L480,0L384,0L288,0L192,0L96,0L48,0L0,0Z"
             />
           </svg>
         </div>
