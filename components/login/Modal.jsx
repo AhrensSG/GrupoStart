@@ -28,7 +28,7 @@ const Modal = ({ setShowLogin }) => {
           <span className="text-lg">Inicia sesion con Google</span>
           <button
             onClick={handleLogin}
-            className="border border-[#0853FC] p-2 w-full max-w-52 flex justify-center items-center rounded-md"
+            className="border border-[#024eff] p-2 w-full max-w-52 flex justify-center items-center rounded-md"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

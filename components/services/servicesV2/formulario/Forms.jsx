@@ -7,38 +7,40 @@ import { toast } from "sonner";
 
 // Componente principal del formulario personalizado
 export default function Formulario() {
+  //Nuevo precio base
+  const precioBase = 14900;
   // Estado inicial de los ítems del formulario con valores predeterminados
   const [items, setItems] = useState([
     {
       detalle: "Cantidad de posteos e historias básicas",
       cantidad: 0,
-      valor: 14900,
+      valor: precioBase.toFixed(2),
       info: "Son posteos de una sola imagen, normalmente se suele utilizar este tipo de recursos para dar avisos en general a la comunidad, estos mismos posteos se publicarán también en las historias, es por esto que llamamos a esta categoría “posteo e historias básicas”",
     },
     {
       detalle: "Cantidad de historias tamaño completo",
       cantidad: 0,
-      valor: 14900,
+      valor: (precioBase * 0.85).toFixed(2),
       info: "Estas son imagenes exclusivas para las historias, normalmente tienen por objetivo de interactuar con la comunidad, conocerlos o realizar promociones por tiempo limitado",
     },
     {
       detalle: "Cantidad de carruseles",
       cantidad: 0,
-      precioA: 14900,
+      precioA: (precioBase * 0.90).toFixed(2),
       info: "Estos son posteos con varias imágenes que forman parte del mismo contenido, este tipo de recursos junto con los reels, son las herramientas más poderosas del marketing actual. Con este recurso lograremos aparecer tantas veces como cantidad de imágenes añadidas al carrusel haya en el inicio de nuestros seguidores",
       max: 30,
     },
     {
       detalle: "Cantidad de imágenes para el carrusel",
       cantidad: 0,
-      precioB: 7450,
+      precioB: (precioBase * 0.75).toFixed(2),
       info: "Aquí deberás determinar la cantidad de imágenes que te gustaría que tuvieran tus carruseles, con un mínimo de 1 y con un máximo de 20, cuantas más imágenes añadas al carrusel mayores son las posibilidades de crear posteos increíbles y mayor será el número de veces que aparecerás en el inicio de tus seguidores",
       max: 20,
     },
     {
       detalle: "Idea, guión y edición de videos",
       cantidad: 0,
-      valor: 39900,
+      valor: (precioBase * 2.68).toFixed(2),
       info: "Esta es sin duda la herramienta más poderosa del marketing de redes sociales en la actualidad. Esta opción está pensada para que te brindemos ideas disruptivas con grandes posibilidades de obtener gran alcance, además de brindarte el guión estructurado con estrategias únicas desarrolladas por nosotros, te vamos a asesorar además en las formas correctas en las que deberás brindarnos el material grabado y con él generamos el paso final para un video único “una edición verdaderamente profesional”"},
     {
       detalle: "¿Deseas agregar efemérides?",
@@ -135,66 +137,73 @@ export default function Formulario() {
   // Estado para habilitar o deshabilitar la edición del formulario
   const [isEditable, setIsEditable] = useState(false);
 
+  const handleEfemeridesToggle = (checked) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      efemerides: checked,
+    }));
+  
+    setItems((prevItems) => {
+      const newItems = [...prevItems];
+      
+      // Suponiendo que el índice 5 corresponde a "Efemérides"
+      newItems[5].cantidad = checked ? 1 : 0; 
+      newItems[5].valor = checked ? (14900 - 14900 * 0.25) * 3 : 0;
+  
+      // Reiniciar el valor de "Efemérides" si el interruptor está desactivado
+      if (!checked) {
+        newItems[5].valor = 0;
+      }
+  
+      // Recalcular el total con los nuevos valores
+      setTotal(calcularValorTotal(newItems));
+  
+      return newItems; // Retornar el nuevo estado de los ítems
+    });
+  };
+
   const handleToggleChange = (e) => {
     const { name, checked } = e.target;
   
-    // Actualizar el estado de formData
     setFormData((prevData) => {
       const updatedData = { ...prevData, [name]: checked };
   
       // Verificar si al menos uno de los interruptores de redes sociales está activado
-      const isAnySocialMediaActive = 
-        updatedData.facebook || 
-        updatedData.instagram || 
-        updatedData.tiktok;
+      const isAnySocialMediaActive =
+        updatedData.facebook || updatedData.instagram || updatedData.tiktok;
   
       setIsEditable(isAnySocialMediaActive); // Habilitar o deshabilitar la edición
   
-      // Si no hay interruptores de redes sociales activos, restablecer cantidades y desactivar efemérides
       if (!isAnySocialMediaActive) {
-        const newItems = items.map((item) => {
-          return { ...item, cantidad: 0 }; // Restablecer cantidades a 0
-        });
+        // Si no hay redes sociales activas, restablecer cantidades y reiniciar todo
+        setItems((prevItems) =>
+          prevItems.map((item) => ({
+            ...item,
+            cantidad: 0, // Cantidad a 0
+            valor: 0,    // Valor a 0 (reinicio completo)
+          }))
+        );
+        setTotal(0); // Restablecer total a 0
   
-        setItems(newItems);
-        updatedData.efemerides = false; // Desactivar efemérides
+        // Reiniciar efemérides y otros valores en formData
+        return { ...updatedData, efemerides: false, otherField1: null, otherField2: null }; // Reinicia otras configuraciones si es necesario
       }
   
-      // Habilitar o deshabilitar los índices según el estado de los interruptores
-      const newItems = items.map((item, index) => {
-        if (index === 1) {
-          // Habilitar índice 1 si cualquiera de los interruptores de redes sociales está activo
-          return { ...item, habilitado: isAnySocialMediaActive };
-        }
-        if (index === 5) {
-          // Habilitar índice 5 (efemérides) solo si el interruptor de efemérides está activo
-          return { ...item, habilitado: updatedData.efemerides };
-        }
-        if (index === 6 || index === 7) {
-          // Habilitar índices 6 y 7 solo si Facebook o Instagram están activos
-          return { ...item, habilitado: updatedData.facebook || updatedData.instagram };
-        }
-        // Deshabilitar otros índices
-        return { ...item, habilitado: false };
-      });
+      // Manejar cantidades específicas según el interruptor activado
+      setItems((prevItems) =>
+        prevItems.map((item) => {
+          if (name === "tiktok" && item.nombre === "TikTok") {
+            return {
+              ...item,
+              cantidad: checked ? 1 : 0, // Ajustar cantidad para TikTok
+            };
+          }
+          return item; // Otros ítems no se modifican aquí
+        })
+      );
   
-      setItems(newItems);
-  
-      // Agregar $15,000 al total si TikTok está activo
-      if (updatedData.tiktok) {
-        setTotal((prevTotal) => prevTotal + 15000); // Asegúrate de que `setTotal` esté definido y maneje el total correctamente
-      }
-  
-      return updatedData; // Retornar el nuevo estado
+      return updatedData;
     });
-  
-    // Manejar el estado de las efemérides
-    if (name === "efemerides") {
-      const newItems = [...items];
-      newItems[5].cantidad = checked ? 1 : 0;
-      newItems[5].valor = checked ? (14900 - 14900 * 0.25) * 3 : 0; // Asegúrate de que esto sea un número
-      setItems(newItems);
-    }
   };
 
 // Incrementar la cantidad del ítem en el índice dado
@@ -202,8 +211,12 @@ const handleIncrement = (index) => {
   const newItems = [...items];
 
   if (index === 2) {
-    newItems[2].cantidad += 1;
-    newItems[3].cantidad = 1; // Establecer a 1 si se añade un carrusel
+    newItems[2].cantidad += 1; // Incrementar la cantidad de carruseles
+
+    // Solo establecer imágenes a 1 si no hay imágenes seleccionadas
+    if (newItems[2].cantidad === 1 && newItems[3].cantidad === 0) {
+      newItems[3].cantidad = 1; // Establecer a 1 solo en el primer carrusel
+    }
   } else if (index === 3) {
     if (newItems[2].cantidad > 0 && newItems[3].cantidad < 20) { // Validar que no exceda 20
       newItems[3].cantidad += 1;
@@ -220,7 +233,7 @@ const handleIncrement = (index) => {
   } else {
     newItems[index].cantidad += 1;
   }
-  
+
   setItems(newItems);
 };
 
@@ -230,12 +243,16 @@ const handleDecrement = (index) => {
 
   if (index === 2) {
     if (newItems[2].cantidad > 0) {
-      newItems[2].cantidad -= 1;
-      newItems[3].cantidad = 0; // Reiniciar cantidad de imágenes
+      newItems[2].cantidad -= 1; // Decrementar la cantidad de carruseles
+
+      // Si no quedan carruseles, reiniciar las imágenes a 0
+      if (newItems[2].cantidad === 0) {
+        newItems[3].cantidad = 0; // Reiniciar cantidad de imágenes solo si no hay carruseles
+      }
     }
   } else if (index === 3) {
     if (newItems[3].cantidad > 0) {
-      newItems[3].cantidad -= 1; // Decrementar en 1
+      newItems[3].cantidad -= 1; // Decrementar la cantidad de imágenes
     }
   } else if (index === 6) {
     // Lógica para el índice 6
@@ -251,9 +268,10 @@ const handleDecrement = (index) => {
       newItems[index].cantidad -= 1; // Decrementar en 1
     }
   }
-  
+
   setItems(newItems);
 };
+
 const calcularSubtotalCarruseles = () => {
   const cantidadCarruseles = items[2].cantidad; // Cantidad de carruseles
   const cantidadImagenes = items[3].cantidad; // Cantidad de imágenes
@@ -262,13 +280,13 @@ const calcularSubtotalCarruseles = () => {
 
   // Determinar el costo por imagen con descuentos según la cantidad de imágenes
   if (cantidadImagenes < 5) {
-    costoImagen = 7450;
+    costoImagen = (14900 * 0,75);
   } else if (cantidadImagenes < 10) {
-    costoImagen = 7450 * 0.85; // 15% de descuento
+    costoImagen = (14900 * 0.65); // 15% de descuento
   } else if (cantidadImagenes < 15) {
-    costoImagen = 7450 * 0.7; // 30% de descuento
+    costoImagen = (14900 * 0.55); // 30% de descuento
   } else if (cantidadImagenes <= 20) {
-    costoImagen = 7450 * 0.55; // 45% de descuento
+    costoImagen = (14900 * 0.45); // 45% de descuento
   } else {
     costoImagen = 0; // No se permite más de 20 imágenes
   }
@@ -359,40 +377,63 @@ const calcularSubtotalCarruseles = () => {
 
   // Restablece todos los campos del formulario a sus valores iniciales
   const limpiarFormulario = () => {
+    console.log("Limpiando formulario...");
+    
+    // Restablecer el estado de los interruptores
     setFormData({
       facebook: false,
       instagram: false,
       tiktok: false,
       efemerides: false,
     });
+  
+    // Restablecer todos los ítems a sus valores iniciales
     const itemsReseteados = items.map((item) => ({
       ...item,
-      cantidad: 0,
-      valor: item.detalle === "¿Deseas agregar efemérides?" ? 0 : item.valor,
+      cantidad: 0, // Restablecer cantidad a 0
+      valor: 0, // Restablecer valor a 0
     }));
+  
+    // También restablecer el presupuesto
+    itemsReseteados[7].presupuesto = 0; // Restablecer presupuesto a 0
+  
     setItems(itemsReseteados);
+    console.log("Formulario limpio:", itemsReseteados);
+    
+    // Recalcular el total después de limpiar
+    const nuevoTotal = calcularValorTotal(); // Llama a la función para actualizar el total
+    setTotal(nuevoTotal); // Asegúrate de tener un estado para el total
   };
 
  const [total, setTotal] = useState(0); // Definición del estado del total
 
 // Función para calcular el valor total
 const calcularValorTotal = () => {
-  return items.reduce((acc, item, index) => {
-    const itemValor = item.valor || 0; // Asegúrate de que valor sea un número
-    const itemCantidad = item.cantidad || 0; // Asegúrate de que cantidad sea un número
+  // Recalcular el total basado en los valores y cantidades de los ítems
+  let total = items.reduce((acc, item, index) => {
+    const itemValor = item.valor || 0; // Asegúrate de que 'valor' sea un número
+    const itemCantidad = item.cantidad || 0; // Asegúrate de que 'cantidad' sea un número
 
     // Si es el índice 2 (carruseles), sumar el subtotal de los carruseles
     if (index === 2) {
       return acc + calcularSubtotalCarruseles(); // Sumar el subtotal de los carruseles
     }
 
-    // Sumar el valor del índice 7 (presupuesto total)
+    // Si el índice 7 es presupuesto total, simplemente sumar el valor calculado de presupuesto
     if (index === 7) {
-      return acc + item.valor; // Sumar el valor calculado del presupuesto
+      return acc + (item.valor || 0); // Sumar el valor calculado del presupuesto
     }
 
+    // Para los ítems que no son carruseles ni presupuesto, hacer multiplicación normal
     return acc + (itemCantidad * itemValor);
   }, 0);
+
+  // Si TikTok está activado, agregar $15,000 al total
+  if (formData.tiktok) {
+    total += 15000;
+  }
+
+  return total;
 };
 
 const [showWarningModal, setShowWarningModal] = useState(false);
@@ -404,8 +445,8 @@ const handleSubmit = (e) => {
 
   // Verificar el valor del índice 7
   const presupuesto = items[7].presupuesto; // Asegúrate de que este sea el valor correcto
-  if (presupuesto < 4500) {
-    setModalMessage("El valor mínimo para publicidad Meta es de $4500");
+  if (presupuesto < 4470) {
+    setModalMessage("El valor mínimo para publicidad Meta es de $4470");
     setShowWarningModal(true);
   } else {
     // Aquí puedes agregar la lógica para enviar el formulario
@@ -455,6 +496,26 @@ const validarFormulario = () => {
     console.error('Formulario no válido');
     return false; // Retorna false si hay errores
   }
+};
+
+const generarPaquetePersonalizado = () => {
+  // Creamos un objeto llamado 'paquetePersonalizado' que contendrá los datos finales
+  const paquetePersonalizado = {
+    // 'items' será un arreglo con los ítems seleccionados (cantidad > 0)
+    items: items
+      .filter((item) => item.cantidad > 0) // Filtramos solo los ítems con cantidad mayor a 0
+      .map((item) => ({
+        // Transformamos los ítems seleccionados para incluir solo los datos relevantes
+        nombre: item.nombre,   // Incluimos el nombre del ítem
+        cantidad: item.cantidad, // Incluimos la cantidad seleccionada del ítem
+        valor: item.valor,     // Incluimos el valor total del ítem
+      })),
+    // Incluimos el valor total calculado de todos los ítems seleccionados
+    total,
+  };
+
+  // Retornamos el paquete personalizado, listo para ser enviado o utilizado
+  return paquetePersonalizado;
 };
 
   // Verifica si alguno de los interruptores de redes sociales está activo
@@ -574,8 +635,9 @@ const validarFormulario = () => {
             type="checkbox"
             name="efemerides"
             checked={formData.efemerides}
-            onChange={handleToggleChange}
+            onChange={(e) => handleEfemeridesToggle(e.target.checked)}
             className="hidden"
+            disabled={!formData.facebook && !formData.instagram && !formData.tiktok}
           />
           <span
             className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${
@@ -621,18 +683,28 @@ const validarFormulario = () => {
       ) : index === 7 ? (
         // Campo de entrada para el índice 7
         <div className="flex relative justify-center items-center">
-          <span className="flex relative left-[3%] text-black text-center font-semibold">$</span>
-          <input
-            type="text"
-            value={item.presupuesto}
-            onChange={(e) => handleInputChange(index, e.target.value)}
-            onBlur={() => handleBlur(index)} // Validar al perder el foco
-            disabled={!isEditable} // Deshabilitar si no es editable
-            className={`focus:outline-none focus:border-orange-500 text-center border-2 
-              ${error && index === 7 ? 'border-red-500' : 'border-orange-500'} 
-              bg-white text-black font-semibold rounded text-sm w-16 pl-5 appearance-none`}
-            style={{ MozAppearance: "textfield",width: `${Math.max(item.presupuesto.length, 4)}ch` }}
-          />
+          <div className="flex items-center">
+              <span className="text-black font-semibold mr-2">$</span> {/* Símbolo $ al lado izquierdo */}
+              <input
+                type="text"
+                value={item.presupuesto}
+                onChange={(e) => handleInputChange(index, e.target.value)}
+                onBlur={() => handleBlur(index)} // Validar al perder el foco
+                disabled={!isEditable} // Deshabilitar si no es editable
+                maxLength={12}
+                className={`focus:outline-none focus:border-orange-500 border-2 
+                  ${error && index === 7 ? 'border-red-500' : 'border-orange-500'} 
+                  bg-white text-black font-semibold rounded text-sm appearance-none`}
+                style={{
+                  MozAppearance: "textfield",
+                  width: 
+                    item.presupuesto && !isNaN(item.presupuesto) && parseFloat(item.presupuesto) > 0
+                      ? `${Math.max(item.presupuesto.length * 0.7 + 4, 7)}ch` // Ancho dinámico
+                      : "6ch", // Ancho mínimo cuando vacío o 0
+                  textAlign: "center",paddingX: "0.5vh" // Alinear el texto a la derecha para mejor lectura
+                }}
+              />
+            </div>
           {error && index === 7 && <p className="text-red-500 text-xs">{error}</p>}
         </div>
       ) : (
@@ -662,12 +734,12 @@ const validarFormulario = () => {
 
       {/* Columna de valor */}
       <div className="text-sm text-center">
-        {index === 6 ? "" : 
-        (index === 5 ? `$${items[5].valor}` : 
-        (index === 2 ? "" : 
-        (index === 3 ? `$${Math.round(calcularSubtotalCarruseles())}` : 
-        (index === 7 ? `$${Math.round(items[7].presupuesto * (items[6].cantidad || 0))}` : 
-        `$${Math.round(item.cantidad * item.valor)}`))))}
+        {index === 6 ? "" :
+        (index === 5 ? `$${items[5].valor.toFixed(2)}` :
+        (index === 2 ? "" :
+        (index === 3 ? `$${calcularSubtotalCarruseles().toFixed(2)}` :
+        (index === 7 ? `$${(items[7].presupuesto * (items[6].cantidad || 0)).toFixed(2)}` :
+        `$${(item.cantidad * item.valor).toFixed(2)}`))))}
       </div>
     </div>
     {/* Línea horizontal para separar los ítems */}
@@ -740,4 +812,3 @@ const validarFormulario = () => {
     </section>
   );
 }
-
