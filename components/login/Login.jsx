@@ -9,8 +9,9 @@ import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPassword
 import { auth } from "@/firebase/config";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
+import { useRouter } from 'next/navigation';
 
-const Login = ({ setShowLogin }) => {
+const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isRegistering, setIsRegistering] = useState(false);
@@ -25,13 +26,14 @@ const Login = ({ setShowLogin }) => {
     const [confirmNewPassword, setConfirmNewPassword] = useState('');
     const [codeSent, setCodeSent] = useState(false);
     const [codeVerified, setCodeVerified] = useState(false);
+    const router = useRouter();
 
     const handleEmailLogin = async () => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
             console.log("Usuario creado:", user);
-            setShowLogin(false);
+            (false);
             toast.success("Inicio de sesión exitoso!");
         } catch (error) {
             console.log(error);
@@ -42,8 +44,9 @@ const Login = ({ setShowLogin }) => {
     const handleGoogleLogin = async () => {
         try {
             await logInWithGoogle();
-            setShowLogin(false);
+            (false);
             toast.success("Inicio de sesión exitoso!");
+            router.push("/");
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -53,7 +56,7 @@ const Login = ({ setShowLogin }) => {
     const handleFacebookLogin = async () => {
         try {
             await logInWithFacebook();
-            setShowLogin(false);
+            (false);
             toast.success("Inicio de sesión exitoso!");
         } catch (error) {
             console.log(error);
@@ -110,7 +113,7 @@ const Login = ({ setShowLogin }) => {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password, nombreUser, apellidoUser);
             const user = userCredential.user;
             console.log(" Usuario creado:", user);
-            setShowLogin(false);
+            (false);
             toast.success("Registro exitoso!");
         } catch (error) {
             console.log(error);
