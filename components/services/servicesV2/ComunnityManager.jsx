@@ -283,7 +283,7 @@ const CommunityManager = () => {
         coherente y atractiva.
       </span>
       
-        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
+        <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-white font-bold py-2 px-4 text-2xl hover:text-[#FB8A00] duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-10 relative">
         <Link href="/contact#contact-form">Contactar</Link>
         </button>
       
@@ -377,7 +377,7 @@ const CommunityManager = () => {
       </div>
 
       {/*Formulario*/}
-      <Forms 
+      <Forms
       style={{paddingX: "2%"}}
       />
 

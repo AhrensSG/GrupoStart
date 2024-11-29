@@ -78,7 +78,7 @@ const Media = () => {
       </section>
 
       {/* Section 2 */}
-      <section className="relative bg-white flex flex-col justify-center items-center w-full">
+      <section className="relative bg-white flex-col justify-center items-center w-full">
         <div className="w-full justify-start">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ const Media = () => {
         </div>
         <br/>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col grid place-items: center z-10">
+        <div className="relative justify-center items-center object-center flex-col place-items: center z-10">
           <Image
             src={"/services/Jirafe5.svg"}
             width={270}
@@ -131,12 +131,12 @@ const Media = () => {
         >
           {/* Text */}
           <div className="w-full relative flex flex-col items-start justify-center bg-white pl-[4%]">
-            <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-start text-2xl md:text-4xl lg:text-5xl justify-start">
+            <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-start  md:text-4xl lg:text-5xl justify-start">
               Marcas<br />
               que perduran<br />
               en el tiempo
             </span>
-            <span className="text text-lg mb-[40px] text-start text-2xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
+            <span className="text mb-[40px] text-start lg:text-2xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
               Si queres que tu negocio<br />
               sea sostenible debes<br />
               consolidar una marca.<br/>
@@ -146,7 +146,7 @@ const Media = () => {
             </span>
 
            
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 item-start flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
               <Link href="/contact#contact-form">Contratar</Link>
               </button>
           
@@ -174,14 +174,14 @@ const Media = () => {
       </section>
 
       {/* Section 4 */}
-      <section className="relative bg-[#FFFFFF] flex flex-col justify-center items-center lg:py-6">
+      <section className="relative bg-[#FFFFFF] flex-col justify-center items-center lg:py-6">
         <div className="text-center justify-center items-center mb-8 mt-0 w-full sm:mx-auto relative">
           <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
             Ejemplo de diseño de identidad Standar
           </span>
         </div>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col grid place-items:center md:w-3/4">
+        <div className="relative justify-center items-center object-center  flex-col place-items:center md:w-3/4">
           <Image
             src={"/services/imgSct4Media.png"}
             width={1020}
@@ -261,7 +261,7 @@ const Media = () => {
               5 Orden, equilibrio y resaltar lo importante
             </span>
             
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 item-start  flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
                 Quiero contratar
               </button>
             
@@ -315,7 +315,7 @@ const Media = () => {
               destaque
             </span>
             
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded flex flex-col justify-center text-2xl hover:text-[#FFFFFF] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-24" style={{zIndex: 16}} onClick={handleClick}>
+              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 flex-col justify-center text-2xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-24" style={{zIndex: 16}} onClick={handleClick}>
                 Quiero Contratar
               </button>
             
@@ -333,13 +333,13 @@ const Media = () => {
       {/* Section 9 */}
       <section className="relative bg-[#0853FC] flex flex-col justify-center items-center py-6">
         <div className="text-center my-3">
-          <span className="text text-4xl font-bold my-4 text-[#FFFFFF] text-center text-2xl md:text-3xl lg:text-5xl justify-center items-center flex-col relative">
+          <span className="text font-bold my-4 text-[#FFFFFF] text-center sm:filetext-2xl md:text-3xl lg:text-5xl justify-center items-center flex-col relative">
             Los videos cortos lideran las tendencias<br />
             comunicativas en todas las plataformas
           </span>
         </div>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex flex-col grid place-items: center md:w-3/4">
+        <div className="relative justify-center items-center object-center  flex-col place-items: center md:w-3/4">
           <Image
             src={"/services/imgSct9Media.png"}
             width={1070}
@@ -389,7 +389,7 @@ const Media = () => {
               para empezar un video.
             </span>
             
-              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded item-start flex flex-col gap-2 justify-start text-3xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
+              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] py-2 px-4  item-start flex-col gap-2 justify-start text-3xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
                 Contratar
               </button>
             
@@ -495,7 +495,7 @@ const Media = () => {
               en tu video.
             </span>
             
-              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] font-medium py-2 px-4 rounded flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative" onclick={handleClick}>
+              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] py-2 px-4 flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative" onclick={handleClick}>
                 Contratar
               </button>
           

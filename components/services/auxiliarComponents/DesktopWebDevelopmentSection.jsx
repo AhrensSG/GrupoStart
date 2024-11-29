@@ -86,6 +86,15 @@ const DesktopWebDevelopmentSection = () => {
     return router.push("/payment");
   };
 
+  const handleWspClick = () => {
+    // Redirige al link de WhatsApp con el número y un mensaje personalizado
+    window.open(
+      "https://wa.me/+543704619402?text=¡Hola!%20Me%20gustaría%20saber%20más%20sobre%20el%20Plan%20Identidad%20Completa",
+      "_blank",
+      "noopener noreferrer"
+    );
+  };
+
   return (
     <div className="py-8 md:px-[2%] lg:px-[4%] xl:px-[8%] xxl:px-[16%] w-full flex-row relative justify-center" style={{ background: '#FFFFFF' }}>
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
@@ -136,7 +145,7 @@ const DesktopWebDevelopmentSection = () => {
             'Modelado 3D de interiores'
           ]}
           price="Etapa sujeta a aprobación"
-          onButtonClick={() => handleBuyNow(7, "Plan Identidad Completa", "Pedir Cotización")}
+          onButtonClick={() => handleWspClick("Plan Identidad Completa")}
           buttonLabel="Cotizar"
           crossedItems={[]}
         />

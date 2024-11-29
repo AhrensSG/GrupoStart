@@ -339,24 +339,6 @@ const calcularSubtotalCarruseles = () => {
   };
 
 
-  const handlePresupuestoChange = (e) => {
-    const nuevoPresupuesto = parseFloat(e.target.value) || 0;
-    setItems((prevItems) => {
-      const newItems = [...prevItems];
-      newItems[7].presupuesto = nuevoPresupuesto;
-      return newItems;
-    });
-  };
-
-  // Actualiza la cantidad de días en el índice 6
-  const handleCantidadChange = (index, cantidad) => {
-    setItems((prevItems) => {
-      const newItems = [...prevItems];
-      newItems[index].cantidad = parseInt(cantidad, 10) || 0;
-      return newItems;
-    });
-  };
-
   const calcularPresupuestoTotal = () => {
     const presupuestoPorDia = items[7].presupuesto || 0;
     const cantidadDeDias = items[6].cantidad || 0;
@@ -375,35 +357,7 @@ const calcularSubtotalCarruseles = () => {
   }, [items[6].cantidad, items[7].presupuesto]); // Dependencias: cantidad de días y presupuesto por día
 
 
-  // Restablece todos los campos del formulario a sus valores iniciales
-  const limpiarFormulario = () => {
-    console.log("Limpiando formulario...");
-    
-    // Restablecer el estado de los interruptores
-    setFormData({
-      facebook: false,
-      instagram: false,
-      tiktok: false,
-      efemerides: false,
-    });
-  
-    // Restablecer todos los ítems a sus valores iniciales
-    const itemsReseteados = items.map((item) => ({
-      ...item,
-      cantidad: 0, // Restablecer cantidad a 0
-      valor: 0, // Restablecer valor a 0
-    }));
-  
-    // También restablecer el presupuesto
-    itemsReseteados[7].presupuesto = 0; // Restablecer presupuesto a 0
-  
-    setItems(itemsReseteados);
-    console.log("Formulario limpio:", itemsReseteados);
-    
-    // Recalcular el total después de limpiar
-    const nuevoTotal = calcularValorTotal(); // Llama a la función para actualizar el total
-    setTotal(nuevoTotal); // Asegúrate de tener un estado para el total
-  };
+
 
  const [total, setTotal] = useState(0); // Definición del estado del total
 
@@ -440,21 +394,7 @@ const [showWarningModal, setShowWarningModal] = useState(false);
 const [showSuccessModal, setShowSuccessModal] = useState(false);
 const [modalMessage, setModalMessage] = useState('');
 
-const handleSubmit = (e) => {
-  e.preventDefault(); // Evitar el envío del formulario por defecto
 
-  // Verificar el valor del índice 7
-  const presupuesto = items[7].presupuesto; // Asegúrate de que este sea el valor correcto
-  if (presupuesto < 4470) {
-    setModalMessage("El valor mínimo para publicidad Meta es de $4470");
-    setShowWarningModal(true);
-  } else {
-    // Aquí puedes agregar la lógica para enviar el formulario
-    sendForm();
-    setModalMessage("El formulario se ha enviado con éxito.");
-    setShowSuccessModal(true);
-  }
-};
 
 const handleCloseWarningModal = () => {
   setShowWarningModal(false);
