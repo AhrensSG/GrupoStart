@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 xs:h-[556px] w-[307px] md:h-[600px] xs:w-auto sm:flex-grow xs:flex-grow  relative container flex flex-col pb-1">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 sm:h-[556px] w-[307px] md:h-[600px] sm:w-auto sm:flex-grow  relative container flex flex-col pb-1">
       <div className="items-center justify-center text-center pt-5 pb-[12px]">
         <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white py-2 px-6">
           {title}
@@ -40,7 +40,7 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       {/* Precios */}
       <div className="flex justify-center items-center xs:pt-[10px] md:pt-0 relative w-full">
         <div className="text-center flex-col justify-center items-center gap-6 relative">
-          <span className="text-orange-500 font-extrabold text-ligth text-[26px] w-[202px] xs:h-[39px] md:h-auto">
+          <span className="text-orange-500 font-extrabold text-ligth text-[26px] w-[202px] sm:h-[39px] md:h-auto">
             ${price.original}
           </span>
         </div>
@@ -131,7 +131,7 @@ const DesktopBrandingSection = () => {
             position: relative;
           }
         `}</style>
-        <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+        <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
           <div className="rounded-lg shadow-lg bg-white border border-gray-300">
             <PlanCard
               title="Pack 1"
@@ -148,7 +148,7 @@ const DesktopBrandingSection = () => {
             />
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+        <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
           <div className="rounded-lg shadow-lg bg-white border border-gray-200">
             <PlanCard
               title="Pack 2"
@@ -166,7 +166,7 @@ const DesktopBrandingSection = () => {
             />
           </div>
         </SwiperSlide>
-        <SwiperSlide className="w-[90%] sm:w-full p-4 flex-shrink-0">
+        <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
           <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
             <PlanCard
                title="Pack 3"

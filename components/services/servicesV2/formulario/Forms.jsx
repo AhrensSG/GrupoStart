@@ -464,7 +464,7 @@ const generarPaquetePersonalizado = () => {
   const [error, setError] = useState(''); // Estado para el mensaje de error
 
   return (
-    <section className="py-6 sm:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full xs:px-[5%]">
+    <section className="py-6 sm:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[5%]">
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* Encabezado del formulario */}
       <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
@@ -481,9 +481,9 @@ const generarPaquetePersonalizado = () => {
       </div>
 
       {/* Interruptores de redes sociales */}
-<div className="flex space-x-4 mb-4 justify-center items-center border-t-2 border-t-blue-500 bg-[#0853FC] text-white p-2 rounded-t-full">
+<div className="flex xs:space-x-4 max-xs:space-x-2 mb-4 justify-center items-center border-t-2 border-t-blue-500 bg-[#0853FC] text-white p-2 rounded-t-full">
   {["facebook", "instagram", "tiktok"].map((platform) => (
-    <label key={platform} className="flex items-center space-x-2">
+    <label key={platform} className="flex items-center xs:space-x-2 max-xs:space-x-1">
       <input
         type="checkbox"
         name={platform}
@@ -491,8 +491,8 @@ const generarPaquetePersonalizado = () => {
         onChange={handleToggleChange}
         className="hidden"
       />
-      <span className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${formData[platform] ? "bg-orange-500" : "bg-gray-300"}`}>
-        <span className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform ${formData[platform] ? "translate-x-6" : "translate-x-0"}`}></span>
+      <span className={`xs:w-12 max-xs:w-6 xs:h-6 max-xs:h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${formData[platform] ? "bg-orange-500" : "bg-gray-300"}`}>
+        <span className={`xs:w-5 max-xs:w-4 xs:h-5 max-xs:h-3 bg-white rounded-full shadow-md transform transition-transform ${formData[platform] ? "xs:translate-x-6 max-xs:translate-x-4:" : "translate-x-0"}`}></span>
       </span>
       <span>{platform.charAt(0).toUpperCase() + platform.slice(1)}</span>
     </label>
@@ -549,7 +549,7 @@ const generarPaquetePersonalizado = () => {
             onChange={(e) => handleInputChange(index, e.target.value)}
             min="0"
             disabled={!isEditable} // Deshabilitar si no es editable
-            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm w-8 appearance-none"
+            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-6 max-xs:mx-0 appearance-none"
           />
           <div className="flex flex-col ml-2">
             <button
@@ -600,21 +600,21 @@ const generarPaquetePersonalizado = () => {
             onChange={(e) => handleInputChange(6, e.target.value)}
             min="0"
             disabled={!isEditable} // Deshabilitar si no es editable
-            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm w-8 appearance-none"
+            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-6 appearance-none"
             style={{ MozAppearance: "textfield", width: '50px' }}
           />
           <div className="flex flex-col ml-2">
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 text-xs rounded-t"
+              className="bg-gray-300 text-black px-1 py-0.1 max-xs:py-0.5 text-xs rounded-t"
             >
               +
             </button>
             <button
               onClick={() => handleDecrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 text-xs rounded-b"
+              className="bg-gray-300 text-black px-1 xs:py-0.1 max-xs:py-0.5 text-xs rounded-b"
             >
               -
             </button>
@@ -649,7 +649,7 @@ const generarPaquetePersonalizado = () => {
         </div>
       ) : (
         // Renderizado para otros índices
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center max-xs:mx-[-2vh] xs:mx-0">
           <span className="bg-white text-black px-3 py-0.5 border-2 border-orange-500 rounded text-sm">
             {item.cantidad}
           </span>
@@ -657,14 +657,14 @@ const generarPaquetePersonalizado = () => {
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 text-xs rounded-t"
+              className="bg-gray-300 text-black px-1 xs:py-0.1 max-xs:py-0.5 text-xs rounded-t"
             >
               +
             </button>
             <button
               onClick={() => handleDecrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 text-xs rounded-b"
+              className="bg-gray-300 text-black px-1 xs:py-0.1 max-xs:py-0.5 text-xs rounded-b"
             >
               -
             </button>
@@ -683,13 +683,13 @@ const generarPaquetePersonalizado = () => {
       </div>
     </div>
     {/* Línea horizontal para separar los ítems */}
-    {index !== 2 && index !== 6 && <hr className="border-2 border-black mb-2 " />}
+    {index !== 2 && index !== 6 && <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />}
   </div>
 ))}
 
       {/* Valor total y resultado */}
 
-      <div className="flex items-center mt-4 justify-end">
+      <div className="flex items-center mt-4 xs:justify-end max-xs:justify-center">
         <h3 className="font-extrabold text-lg uppercase mr-4">Valor Total:</h3>
         <span className="font-extrabold text-lg border-2 border-orange-500 pr-2 py-1 rounded text-center">
           ${calcularValorTotal()}
@@ -698,7 +698,7 @@ const generarPaquetePersonalizado = () => {
 
 
       {/* Botón de enviar */}
-      <div className="flex justify-end mt-4">
+      <div className="flex xs:justify-end max-xs:justify-center mt-4">
         <button
           onClick={handleBuyNow}
           className="bg-blue-600 text-white text-1xl px-[95px] py-1 rounded-medium border rounded-tl-xl rounded-br-xl font-lg"

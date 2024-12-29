@@ -15,7 +15,7 @@ import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contratar", crossedItems = [] }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col md:pb-1 xs:pb-5 sm:h-1/2 xs:h-1/2 sm:w-full xs:w-auto md:w-full md:h-full">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col md:pb-1 sm:pb-5 sm:h-1/2 sm:w-full md:w-full md:h-full">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[7px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
@@ -140,7 +140,7 @@ const DesktopWebDevelopmentSection = () => {
             position: relative;
           }
         `}</style>
-          <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+          <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
             <div className="rounded-lg shadow-lg bg-white border border-gray-300">
               <PlanCard
                 title="Identidad Simplificada"
@@ -160,7 +160,7 @@ const DesktopWebDevelopmentSection = () => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+          <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
             <div className="rounded-lg shadow-lg bg-white border border-gray-200">
               <PlanCard
                 title="Identidad Standar"
@@ -181,7 +181,7 @@ const DesktopWebDevelopmentSection = () => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide className="w-[90%] sm:w-full p-4 flex-shrink-0">
+          <SwiperSlide className="w-full p-4 flex-shrink-0">
             <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
               <PlanCard
                 title="Identidad Completa"

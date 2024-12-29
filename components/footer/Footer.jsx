@@ -22,11 +22,11 @@ const socialLinks = [
 
 const Footer = () => {
   return (
-    <footer className="w-full flex xs:flex-col md:flex xs:justify-center md:justify-between items-center bg-[#0853FC] py-5 md:px-[6%] sm:px-0 xs:px-0 relative">
-      <div className="w-full flex xs:flex-col md:flex-row md:justify-between xs:items-center md:items-start xs:gap-4 md:gap-6">
+    <footer className="w-full flex xs:flex-col max-xs:flex-col md:flex max-xs:justify-center xs:justify-center md:justify-between items-center bg-[#0853FC] py-5 md:px-[6%] sm:px-0 xs:px-0 relative">
+      <div className="w-full flex  max-xs:flex-col xs:flex-col md:flex-row md:justify-between max-xs:items-center xs:items-center md:items-start max-xs:gap-4 xs:gap-4 md:gap-6">
         
         {/* Visítanos (Primero en pantallas sm y xs, tercero en pantallas md+) */}
-        <div className="xs:order-2 md:order-3 lg:order-3 xl:order-3 flex flex-col justify-center items-center gap-3 xs:text-center md:text-start w-auto">
+        <div className="max-xs:order-2 xs:order-2 md:order-3 lg:order-3 xl:order-3 flex flex-col justify-center items-center gap-3 max-xs:text-center xs:text-center md:text-start w-auto">
           <span className="xs:text-xl md:text-2xl text-white font-bold">
             Visítanos
           </span>
@@ -44,7 +44,7 @@ const Footer = () => {
               className="cursor-pointer xs:w-[45vw] sm:w-[45vw] md:w-full lg:w-full sm:justify-items-center xs:justify-center"
             />
           </Link>
-          <span className="text-white text-left md:font-normal xs:font-semibold">
+          <span className="text-white max-xs:text-center xs:text-left md:font-normal xs:font-semibold">
             Hipólito Yrigoyen 342, <span className="hidden md:inline"> <br /></span>
             P3600JGA Formosa, <span className="hidden md:inline"> <br /></span>
             Argentina
@@ -52,12 +52,12 @@ const Footer = () => {
         </div>
 
         {/* Seguinos en (Primero en pantallas md+, segundo en pantallas sm y xs) */}
-        <div className="xs:order-1 md:order-1 lg:order-1 xl:order-1 flex md:flex-col xs:flex-row justify-center items-center gap-3 text-center xs:w-auto">
+        <div className="max-xs:order-1 xs:order-1 md:order-1 lg:order-1 xl:order-1 flex md:flex-col xs:flex-row max-xs:flex-col justify-center items-center gap-3 text-center xs:w-auto max-xs:w-auto">
           <span className="xs:text-xl md:text-2xl text-white font-bold">
             Seguinos en
           </span>
           {socialLinks.map((social) => (
-            <div key={social.name} className="flex md:flex-grow xs:flex-row gap-2 xs:items-center md:items-start text-white cursor-pointer md:justify-between">
+            <div key={social.name} className="flex md:flex-grow xs:flex-row max-xs:flex-row gap-2 max-xs:items-center xs:items-center md:items-start text-white cursor-pointer md:justify-between">
               <Link href={social.href} target="_blank" aria-label={`Ir a ${social.name}`}>
                 <Image
                   src={social.iconSrc}
@@ -75,7 +75,7 @@ const Footer = () => {
         </div>
 
         {/* Contacto (Segundo en pantallas sm y xs, en el centro en pantallas md+) */}
-        <div className="xs:order-3 md:order-2 lg:order-2 xl:order-2 flex flex-col justify-center items-center gap-3 text-center xs:w-auto">
+        <div className="max-xs:order-3 xs:order-3 md:order-2 lg:order-2 xl:order-2 flex flex-col justify-center items-center gap-3 text-center xs:w-auto max-xs:w-auto">
           <span className="text-center xs:text-2xl text-white font-bold">
             Contáctanos
           </span>

@@ -148,7 +148,7 @@ const DesktopCommunityManagerSection = () => {
       position: relative;
     }
   `}</style>
-    <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+    <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-gray-300">
         <PlanCard
           title="Plan Básico"
@@ -165,7 +165,7 @@ const DesktopCommunityManagerSection = () => {
         />
       </div>
     </SwiperSlide>
-    <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+    <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-gray-200">
         <PlanCard
           title="Plan Avanzado"
@@ -183,7 +183,7 @@ const DesktopCommunityManagerSection = () => {
         />
       </div>
     </SwiperSlide>
-    <SwiperSlide className="w-[90%] sm:w-full p-4 flex-shrink-0">
+    <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
         <PlanCard
           title="Plan Pro"
