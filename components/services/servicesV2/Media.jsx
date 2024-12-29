@@ -33,49 +33,53 @@ const Media = () => {
     }}
     >
       {/* Section 1 */}
-      <section className="relative bg-[#0853FC] flex w-full pl-[2%] pr-[1%] md:pb-10 lg:pb-2 pt-3">
-        <div className="container flex-col pl-[2%] pt-[55px]">
-          <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-center">Media: edición<br/>de videos<br/>e imágenes</span>
-          <div className="pt-[20px]">
-            <span className="text-white text-xl ">
-              Destacá entre la competencia con<br/>
-              diseños únicos y llamativos, maximizá el<br/>
-              de tus videos con edición<br/>
-              profesional para lograr el éxito,<br/>
+      <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%] md:flex-row sm:flex-col xs:flex-col">
+        <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center sm:items-center xs:items-center sm:flex-col-center xs:flex-col-center"
+            style={{
+              maxWidth: "1600px",
+              paddingLeft: "3%",
+              paddingRight: "2%",
+            }}>
+          <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start sm:text-center xs:text-center">
+            Media: edición<br />de videos<br />e imágenes
+          </span>
+          <div className="pt-[20px] gap-16 sm:justify-center">
+            <span className="text-white text-xl w-full sm:text-center xs:text-center">
+              Destacá entre la competencia con<br />
+              diseños únicos y llamativos, maximizá el<br />
+              potencial de tus videos con edición<br />
+              profesional para lograr el éxito,<br />
               te asesoramos gratis!.
             </span>
           </div>
-          <div className="py-[20px]">
-            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl">
-            <Link href="/contact#contact-form">Contactar</Link>
+          <div className="py-[30px] sm:justify-center xs:justify-center">
+            <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md">
+              <Link href="/contact#contact-form">Contactar</Link>
             </button>
           </div>
         </div>
-        {/* Aquí iría el reproductor de YouTube */}
-        <div className="flex items-end justify-end pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
+
+        {/* Reproductor de video */}
+        <div className="flex items-end justify-end w-full pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-full sm:h-full xs:w-full xs:h-auto sm:flex-row xs:flex-grow">
           <div style={{
-              paddingTop: '10px',
-              width: '842px',
-              height: '474px',
-            }}
-            >
+                paddingTop: '5px',
+                width: '842px',
+                height: '474px',
+              }}>
             <iframe
-              width="842"
-              height="474"
+              width="100%"
+              height="100%"
               src="https://www.youtube.com/embed/dQw4w9WgXcQ"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
-              style={{
-                borderRadius: '68px',
-                width: '100%',
-                height: '100%',
-              }}
+              className="rounded-[68px] flex-row"
             ></iframe>
           </div>
         </div>
       </section>
+
 
       {/* Section 2 */}
       <section className="relative bg-white flex-col justify-center items-center w-full">
@@ -94,94 +98,82 @@ const Media = () => {
           </svg>
         </div>
         <br/>
-        {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center flex-col place-items: center z-10">
-          <Image
-            src={"/services/Jirafe5.svg"}
-            width={270}
-            height={300}
-            quality={100}
-            style={{
-              zIndex: 15,
-              position: 'relative',
-              top: -270,
-              bottom: -200,
-              left: '50%',
-              transform: 'translateX(-50%)' }}
-          />
-        </div>
-        <div className="text-center mt-[-230px]">
-          <span className="text font-bold my-4 text-[#0853FC] text-center md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
-            Trabajemos juntos,<br />
-            tenemos el equipo creativo que necesitas
-          </span>
-        </div>
+        <div className="flex flex-col justify-center items-center relative z-10">
+  {/* Overlap the wave with the image */}
+  <div className="relative flex justify-center items-center -translate-y-1/3">
+    <Image
+      src={"/services/Jirafe5.svg"}
+      width={270}
+      height={300}
+      quality={100}
+      className={`xs:w-[160px] xs:mt-[-20vw] sm:w-[200px] sm:mt-[-30vw] md:w-[250px] md:mt-[-30vw] lg:w-[300px] lg:mt-[-30vw] xl:w-[350px] xl:mt-[-35vw]`}
+    />
+  </div>
+  <div className="text-center mt-[-40px] xs:mt-[-10px]">
+    <span className="font-bold text-[#0853FC] md:text-4xl lg:text-5xl sm:text-3xl xs:text-3xl">
+      Trabajemos juntos,<br />
+      tenemos el equipo creativo que necesitas
+    </span>
+  </div>
+</div>
+
         <br/>
           <Carousel />
       </section>
 
       {/* Section 3 */}
-      <section className="relative flex flex-wrap w-full min-h-screen justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
-        <div className="flex flex-row w-full py-6"
-          style={{
-            maxWidth: "1600px",
-            paddingLeft: "2%",
-            paddingRight: "2%",
-          }}
-        >
-          {/* Text */}
-          <div className="w-full relative flex flex-col items-start justify-center bg-white pl-[4%]">
-            <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-start  md:text-4xl lg:text-5xl justify-start">
-              Marcas<br />
-              que perduran<br />
-              en el tiempo
-            </span>
-            <span className="text mb-[40px] text-start lg:text-2xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
-              Si queres que tu negocio<br />
-              sea sostenible debes<br />
-              consolidar una marca.<br/>
-              Permití que nuestro equipo<br/>
-              creativo genere la identidad<br/>
-              de tu negocio, TU LOGO.
-            </span>
+      <section className="relative flex flex-wrap w-full justify-center items-center bg-white pb-10 px-[4%] py-[5%]">
+  <div className="flex md:flex-row xs:flex-col w-full max-w-[1600px] px-4">
+    {/* Text */}
+    <div className="w-full flex flex-col md:items-start xs:items-center justify-center md:pl-4 xs:pb-[10vw]">
+      <span className="text-4xl font-bold mb-7 text-[#FB8A00] md:text-start xs:text-center lg:text-5xl">
+        Marcas<br />
+        que perduran<br />
+        en el tiempo
+      </span>
+      <span className="text mb-10 md:text-start xs:text-center lg:text-2xl md:text-2xl sm:text-xl leading-relaxed tracking-wide font-light">
+        Si queres que tu negocio<br />
+        sea sostenible debes<br />
+        consolidar una marca.<br />
+        Permití que nuestro equipo<br />
+        creativo genere la identidad<br />
+        de tu negocio, TU LOGO.
+      </span>
 
-           
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 item-start flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
-              <Link href="/contact#contact-form">Contratar</Link>
-              </button>
-          
-          </div>
+      <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-6 text-xl rounded-md shadow-sm hover:text-white transition-all duration-300">
+        <Link href="/contact#contact-form">Contratar</Link>
+      </button>
+    </div>
 
-          <div className="w-full justify-end items-end pr-[2%]">
-            <Image
-              src={"/services/imgSct3Media.png"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={795}
-              height={365}
-              priority={true}
-              quality={100}
-              style={{
-                zIndex: 15,
-                position: 'relative',
-                top: 12,
-                bottom: -100,
-                left: '47%',
-                transform: 'translateX(-50%)' }}
-            />
-          </div>
-        </div>
-      </section>
+    {/* Image */}
+    <div className="w-full justify-end md:pr-4 md:pt-[3vw]">
+      <Image
+        src={"/services/imgSct3Media.png"}
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={795}
+        height={365}
+        priority={true}
+        quality={100}
+        style={{
+          position: 'relative',
+          transform: 'translateY(-10%)',
+        }}
+      />
+    </div>
+  </div>
+</section>
+
 
       {/* Section 4 */}
-      <section className="relative bg-[#FFFFFF] flex-col justify-center items-center lg:py-6">
+      <section className="relative bg-[#FFFFFF] flex-col justify-center items-center lg:py-6 sm:flex-grow">
         <div className="text-center justify-center items-center mb-8 mt-0 w-full sm:mx-auto relative">
-          <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
+          <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center xs:text-xl sm:text-3xl flex-grow">
             Ejemplo de diseño de identidad Standar
           </span>
         </div>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center  flex-col place-items:center md:w-3/4">
+        <div className="relative justify-center items-center object-center flex-grow place-items:center xs:px-[2%] md:px-[4%]">
           <Image
             src={"/services/imgSct4Media.png"}
             width={1020}
@@ -198,10 +190,10 @@ const Media = () => {
       </section>
 
       {/* Section 5 */}
-      <section className="relative bg-[#FFFFFF] w-full pt-2">
+      <section className="relative bg-[#FFFFFF] w-full pt-[10vw] flex-grow">
         <div className="flex flex-row w-full bg-[#FFFFFF] pl-[4%]">
           {/* Image */}
-          <div className="w-full flex justify-start items-start pl-[2%]">
+          <div className="w-full flex-grow justify-start items-start pl-[2%]">
             <Image
               src={"/services/imgSct5Media.png"}
               alt="Imagen de la sección 5"
@@ -215,7 +207,7 @@ const Media = () => {
           </div>
           {/* Text */}
           <div className="flex justify-end items-center text-end h-[180px] w-[632px] rigth-0 py-2 pl-1 pr-0 md:w-1/2 z-3">
-            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 lg:w-[455px] lg:h-[107px] lg:pl-[45px] lg:pr-[10vh] md:pl-[10px] md:pr-[4vh] py-[35px] md:w-[25vh] md:h-1/2 text-lg md:text-xl lg:text-4xl relative flex">
+            <span className="font-bold text-[#FFFFFF] text-end justify-end items-center leading-snug rounded-tl-3xl rounded-bl-3xl bg-blue-600 xl:w-[500px] xl:h-auto xl:py-auto xl:ml-[10vw] xl:pr-[4vw] lg:w-[465px] lg:h-[107px] lg:pl-[45px] lg:pr-[7vh] lg:py-[5vh] md:pl-[10px] md:pr-[4vh] py-[35px] md:w-[25vh] md:h-1/2 xs:pl-[2vw] xs:pr-[4vh] xs:w-[24vh] xs:h-1/3 text-lg md:text-xl lg:text-4xl relative flex">
               TU LOGO es la<br />
               cara de tu negocio
             </span>
@@ -227,50 +219,60 @@ const Media = () => {
       <DesktopWebDevelopmentSection />
 
       {/* Section 6 */}
-      <section className="relative bg-[#FFFFFF]">
-        <div className="flex flex-row w-full bg-[#FFFFFF] py-6">
-          {/* Image */}
-          <div className="w-full items-start justify-start pl-[5%]">
-            <Image
-              src={"/services/imgSct6Media.png"}
-              className="object-cover transition-opacity opacity-0 duration-500"
-              onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={595}
-              height={265}
-              priority={true}
-              quality={100}
-            />
-          </div>
-          <br />
-          {/* Text */}
-          <div className="w-full  relative flex flex-col items-end justify-end text-center pr-[5%]">
-            <span className="text-2xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-3xl lg:text-5xl">
-              ¿Cómo deben ser<br/>
-              los flyers publicitarios?
-            </span>
-            <br/>
-            <span className="font-light mb-[40px] text-black text-end text-xl lg:text-2xl md:text-lg leading-relaxed tracking-wide" style={{top: -2}}>
-              Estos son un instrumento muy poderoso<br/>
-              para hacer publicidad y fortalecer tu marca,<br/>
-              es necesario contar con diseños apropiados<br/>
-              que tengan mensajes directos y precisos.<br/>
-              <br/>
-              5 objetivos para comunicar efectivamente:<br/>
-              1 Mensaje claro 2 Titulos llamativos<br/>
-              3 Imágenes adecuadas 4 Diseño disruptivo<br/>
-              5 Orden, equilibrio y resaltar lo importante
-            </span>
-            
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 item-start  flex-col gap-2 justify-start text-2xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md" onClick={handleClick}>
-                Quiero contratar
-              </button>
-            
-          </div>
-        </div>
-      </section>
+      <section className="relative bg-[#FFFFFF] sm:flex-row">
+  <div className="flex xs:flex-col md:flex-row w-full bg-[#FFFFFF] py-6">
+    {/* Imagen */}
+    <div className="md:w-full xs:w-[45vh] md:items-start xs:items-center md:justify-start xs:justify-center md:pl-[5%] xs:pl-[20vh] xs:h-auto">
+      <Image
+        src={"/services/imgSct6Media.png"}
+        className="object-cover transition-opacity opacity-0 duration-500"
+        onLoad={(event) => event.target.classList.remove("opacity-0")}
+        width={595}
+        height={265}
+        priority={true}
+        quality={100}
+      />
+    </div>
+
+    {/* Textos */}
+    <div className="w-full flex flex-col md:items-end md:justify-end md:pl-0 md:pr-[5%]">
+      {/* Primer Texto */}
+      <div className="flex flex-col items-end justify-end pr-[5%] md:pr-0 md:items-end">
+        <span className="text-2xl font-bold mb-2 text-[#FB8A00] text-end md:text-3xl lg:text-5xl">
+          ¿Cómo deben ser<br />
+          los flyers publicitarios?
+        </span>
+        <span className="font-light mb-10 text-black text-end text-xl lg:text-2xl md:text-lg leading-relaxed tracking-wide">
+          Estos son un instrumento muy poderoso<br />
+          para hacer publicidad y fortalecer tu marca,<br />
+          es necesario contar con diseños apropiados<br />
+          que tengan mensajes directos y precisos.<br />
+        </span>
+      </div>
+
+      {/* Segundo Texto */}
+      <div
+        className="flex flex-col items-center justify-center w-full h-auto md:items-end md:justify-end md:w-auto md:h-auto"
+      >
+        <span className="font-light mb-10 text-black text-xl lg:text-2xl md:text-lg leading-relaxed tracking-wide">
+          5 objetivos para comunicar efectivamente:<br />
+          1 Mensaje claro 2 Títulos llamativos<br />
+          3 Imágenes adecuadas 4 Diseño disruptivo<br />
+          5 Orden, equilibrio y resaltar lo importante
+        </span>
+        <button
+          className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 text-2xl rounded-md duration-300 shadow-sm"
+          onClick={handleClick}
+        >
+          Quiero contratar
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* Section 7 */}
-      <section className="relative bg-[#FFFFFF] flex justify-center items-center w-full px-[2%]">
+      <section className="relative bg-[#FFFFFF] flex justify-center items-center w-full px-[2%] sm:flex-row">
         <Image
           src={"/services/imgSct7Media.png"}
           width={1070}
@@ -282,7 +284,7 @@ const Media = () => {
       </section>
 
       {/* Section 8 */}
-      <section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white md:pb-[27px] sm:pb-[40px]">
+      <section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white md:pb-[27px] sm:pb-[40px] sm:flex-row">
         <div className="flex flex-row w-full px-[2%] md:pb-[10%] sm:pb-[15%]">
           {/* Image */}
           <div className="w-full flex items-start justify-start pl-[5%]">
@@ -307,7 +309,7 @@ const Media = () => {
 
           {/* Text */}
           <div className="w-full relative flex flex-col items-end justify-center bg-grey-700 pr-[3%] z-15">
-            <span className="text-3xl font-bold mb-[28px] text-[#FB8A00] text-end md:text-rigth md:text-4xl lg:text-5xl">
+            <span className="text-3xl font-bold sm:mb-[28px] text-[#FB8A00] text-end md:text-rigth xs:mb-[3vh] xs:text-3xl md:text-4xl lg:text-5xl">
               Una imagen<br />
               profesional<br/>
               para que<br/>
@@ -315,7 +317,7 @@ const Media = () => {
               destaque
             </span>
             
-              <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 flex-col justify-center text-2xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-24" style={{zIndex: 16}} onClick={handleClick}>
+              <button className="sm:bg-[#0853FC] sm:hover:bg-[#FB8A00] xs:bg-[#FB8A00] xs:hover:bg-[#ee8300] text-white font-bold py-2 px-4 flex-col justify-center sm:text-2xl xs:text-xl hover:text-[#FFFFFF] duration-300 shadow-sm shadow-black border-orange-500 rounded-md z-24 xs:mt-[-2vh] sm:mt-[0vh]" style={{zIndex: 16}} onClick={handleClick}>
                 Quiero Contratar
               </button>
             
@@ -331,15 +333,15 @@ const Media = () => {
       </section>
 
       {/* Section 9 */}
-      <section className="relative bg-[#0853FC] flex flex-col justify-center items-center py-6">
+      <section className="relative bg-[#0853FC] flex flex-col justify-center items-center py-6 xs:px-[4%]">
         <div className="text-center my-3">
-          <span className="text font-bold my-4 text-[#FFFFFF] text-center sm:filetext-2xl md:text-3xl lg:text-5xl justify-center items-center flex-col relative">
+          <span className="text font-bold my-4 text-[#FFFFFF] text-center xs:text-2xl md:text-3xl lg:text-5xl justify-center items-center flex-col relative">
             Los videos cortos lideran las tendencias<br />
             comunicativas en todas las plataformas
           </span>
         </div>
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-center object-center  flex-col place-items: center md:w-3/4">
+        <div className="relative justify-center items-center object-center  flex-col place-items: center md:w-3/4 xs:w-full ">
           <Image
             src={"/services/imgSct9Media.png"}
             width={1070}
@@ -356,10 +358,10 @@ const Media = () => {
       </section>
 
       {/* Section 10 */}
-      <section className="w-full relative flex">
-        <div className="flex flex-row w-full bg-[#0853FC] px-[2%]">
+      <section className="w-full relative flex xs:flex-row">
+        <div className="flex flex-row w-full bg-[#0853FC] px-[4%]">
           {/* Image */}
-          <div className="w-full items-start justify-center pl-[4%] md:pt-[10%]">
+          <div className="md:w-full xs:w-auto xs:flex-grow xs:pt-[25%] sm:pt-[15%] h-auto items-start justify-center md:pl-[4%] md:pt-[10%]">
             <Image
               src={"/services/imgSct10Media.png"}
               className="object-cover transition-opacity opacity-0 duration-500"
@@ -372,14 +374,14 @@ const Media = () => {
           </div>
           <br />
           {/* Text */}
-          <div className="lg:w-full md:w-1/2 relative flex flex-col items-end justify-center text-end pr-[4%]">
-            <span className="lg:text-5xl md:text-3xl font-bold mb-[2px] text-[#FB8A00] text-end">
+          <div className="lg:w-full md:w-1/2 xs:w-full h-auto relative flex flex-col items-end justify-center text-end pr-[4%]">
+            <span className="lg:text-5xl md:text-3xl xs:text-2xl font-bold mb-[2px] text-[#FB8A00] text-end">
               La importancia<br />
               de un guión para<br />
               tu video
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-white text-end md:text-xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-white text-end xs:text-xl sm:text-2xl md:text-xl lg:text-3xl leading-relaxed tracking-wide" style={{top: -2}}>
               La idea junto al guión<br />
               son el pilar de cualquier<br />
               pieza audiovisual, ya sea<br/>
@@ -398,31 +400,31 @@ const Media = () => {
       </section>
 
       {/* Section 11 */}
-      <section className="relative flex w-full justify-center bg-[#0853FC] px-[2%]">
-        <div className="flex flex-row w-full py-6">
+      <section className="relative flex w-full justify-center bg-[#0853FC]  xs:flex-col md:flex-row">
+        <div className="flex md:flex-row xs:flex-col w-full py-6 px-[2%]">
 
           {/* Text */}
-          <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%]" >
-            <span className="font-bold mb-[28px] text-[#FB8A00] text-start md:text-4xl lg:text-5xl justify-items-start">
-              Creamos<br />
-              la historia<br />
+          <div className="w-full relative flex flex-col md:items-start xs:items-center xs:text-center justify-center bg-grey-700 pl-[4%]" >
+            <span className="font-bold mb-[28px] text-[#FB8A00] xs:text-center xs:text-3xl md:text-start md:text-4xl lg:text-5xl justify-items-start">
+              Creamos <span className="hidden md:inline"> <br /></span>
+              la historia <span className="hidden md:inline"> <br /></span>
               perfecta
             </span>
-            <span className="text font-light mb-[40px] text-start justify-center text-white md:text-xl lg:text-3xl leading-relaxed tracking-wide">
-              Utilizamos herramientas<br />
-              de edición profesional<br />
-              como: premiere, after<br/>
-              effects y distintas<br/>
-              inteligencias artificiales<br/>
-              para lograr contar<br/>
-              la historia perfecta.
-            </span>
+            <span className="text font-light mb-[40px] text-white xs:text-xl lg:text-3xl md:text-start leading-relaxed tracking-wide">
+            Utilizamos herramientas <span className="hidden md:inline"> <br /></span>
+            de edición profesional <span className="hidden md:inline"> <br /></span>
+            como: Premiere, After <span className="hidden md:inline"> <br /></span>
+            Effects y distintas <span className="hidden md:inline"> <br /></span>
+            inteligencias artificiales <span className="hidden md:inline"> <br /></span>
+            para lograr contar <span className="hidden md:inline"> <br /></span>
+            la historia perfecta.
+          </span>
           </div>
 
           {/* Video */}
-          <div className="flex relative items-end justify-center object-center md:py-[5%] lg:pr-[3%] md:pr-[3%] rounded lg:w-full h-auto md:w-1/2">
+          <div className="flex relative items-end justify-center object-center xs:px-[4%] md:py-[5%] lg:pr-[3%] md:pr-[3%] rounded lg:w-full h-auto md:w-[45vh] flex-grow xl:w-[1020px]">
           <div style={{
-              width: '750px',
+              width: '650px',
               height: '465px',
             }}
             >
@@ -430,7 +432,7 @@ const Media = () => {
               src={"/services/vidSct11Media.mp4"}
               className="object-cover transition-opacity opacity-0 duration-500 w-full h-full"
               onLoad={(event) => event.target.classList.remove("opacity-0")}
-              width={845}
+              width={745}
               height={465}
               priority={true}
               quality={100}
@@ -454,12 +456,12 @@ const Media = () => {
 
       {/* Section 12 */}
       <section className="relative flex w-full justify-center bg-[#0853FC] px-[2%]">
-        <div className="flex flex-row w-full py-6">
+        <div className="flex md:flex-row xs:flex-col xs:px-[4%] w-full py-6">
           {/* Video */}
-          <div className="flex items-start justify-center relative pl-[4%] md:py-[5%] rounded lg:w-full h-auto md:w-1/2 priority-true">
+          <div className="flex items-start justify-center relative md:pl-[4%] md:py-[5%] rounded lg:w-full h-auto md:w-[45vh] priority-true flex-grow">
           <div style={{
               
-              width: '750px',
+              width: '650px',
               height: '465px',
             }}
             >
@@ -479,23 +481,23 @@ const Media = () => {
           </div>
           </div>
           {/* Text */}
-          <div className="lg:w-full md:w-1/2 relative flex flex-col items-end justify-center text-end pr-[2%]">
-            <span className="font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl">
-              Añadimos<br />
-              efectos<br />
-              llamativos<br />
+          <div className="lg:w-full md:w-1/2 relative flex flex-col md:items-end xs:items-center justify-center text-end pr-[2%]">
+            <span className="font-bold mb-[2px] text-[#FB8A00] md:text-end xs:text-center xs:text-3xl md:text-4xl lg:text-5xl xs:pt-5 md:pt-0">
+              Añadimos <span className="hidden md:inline"> <br /></span>
+              efectos <span className="hidden md:inline"> <br /></span>
+              llamativos <span className="hidden md:inline"> <br /></span>
               a los videos
             </span>
-            <span className="font-light mb-[40px] text-[#FFFFFF] text-end md:text-lg lg:text-3xl leading-relaxed tracking-wide">
-              Cientos de efectos y<br />
-              transcisiones creadas<br />
-              por los profesionales<br/>
-              y ajustadas para crear<br/>
-              el mensaje perfecto<br/>
+            <span className="font-light mb-[40px] text-[#FFFFFF] md:text-end xs:text-center xs:text-xl md:text-lg lg:text-3xl leading-relaxed tracking-wide">
+              Cientos de efectos y <span className="hidden md:inline"> <br /></span>
+              transcisiones creadas <span className="hidden md:inline"> <br /></span>
+              por los profesionales <span className="hidden md:inline"> <br /></span>
+              y ajustadas para crear <span className="hidden md:inline"> <br /></span>
+              el mensaje perfecto <span className="hidden md:inline"> <br /></span>
               en tu video.
             </span>
             
-              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] py-2 px-4 flex flex-col gap-2 lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative" onclick={handleClick}>
+              <button className="bg-[#FB8A00] hover:bg-[#FFFFFF] text-[#FFFFFF] py-2 px-4 flex flex-col gap-2 xs:text-xl lg:text-3xl md:text-xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md justify-start items-start relative" onclick={handleClick}>
                 Contratar
               </button>
           
@@ -504,7 +506,7 @@ const Media = () => {
       </section>
 
         {/*Section 13*/}
-      <section className="w-full justify-items-center px-[2%] py-[2%] bg-[#0853FC]">
+      <section className="w-full justify-items-center px-[2%] py-[2%] bg-[#0853FC] sm:flex-row">
       <div className="text-center flex-col  relative justify-center items-center text-2xl md:text-4xl lg:text-5xl pt-12">
           <h2 className="text-[#FFFFFF] font-semibold pb-6">
             Una comunicación de impacto<br />

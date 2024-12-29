@@ -8,10 +8,14 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useContext, useState } from "react";
 import { toast } from "sonner";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contratar", crossedItems = [] }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col pb-1 sm:h-1/2 sm:w-3/4 md:w-full md:h-full">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col md:pb-1 xs:pb-5 sm:h-1/2 xs:h-1/2 sm:w-full xs:w-auto md:w-full md:h-full">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[7px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
@@ -101,7 +105,111 @@ const DesktopWebDevelopmentSection = () => {
       <div className="items-center justify-center text-center py-12">
         <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#0853FC] text-white py-3 px-[100px]">Planes de Identidad</span>
       </div>
-      <div className="grid grid-cols-3 justify-items-center items-center object-center lg:gap-[5%] px-[50%] md:px-0 md:gap-0 flex-row">
+
+      {/* Carrusel en pantallas pequeñas */}
+      <div className="block sm:block md:hidden justify-center text-center pb-3">
+        <Swiper
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView="auto" // Auto para ajuste flexible, pero se puede poner un valor fijo si es necesario
+          spaceBetween={15} // Espaciado entre tarjetas
+          className="w-full max-w-md overflow-hidden relative pb-12"
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          modules={[Pagination]}
+        >
+          {/* Estilos globales para personalizar los puntos */}
+        <style jsx global>{`
+          .swiper-pagination-bullet {
+            background-color: #ffa500; /* Naranja */
+            opacity: 0.5; /* Transparencia */
+            width: 12px; /* Tamaño del punto */
+            height: 12px;
+            paddingTop: 10vh;
+          }
+          .swiper-pagination-bullet-active {
+            background-color: #ff8c00; /* Naranja más oscuro para el activo */
+            opacity: 1; /* Sin transparencia */
+          }
+          .swiper-pagination {
+            paddingTop: 12vh; /* Más abajo */
+            top: 12vh;
+            bottom: -60px;
+            position: relative;
+          }
+        `}</style>
+          <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+            <div className="rounded-lg shadow-lg bg-white border border-gray-300">
+              <PlanCard
+                title="Identidad Simplificada"
+                features={[
+                  'Creación de logo (icono, inicial o imagen)',
+                  'Búsqueda y selección de tipografía',
+                  'Elección de colores corporativos',
+                  'Manual básico de aprox. 8 páginas',
+                  'Estudio de competencia',
+                  'Diseño de mockups, perfil y portada de facebook',
+                  'Modelado 3D de interiores'
+                ]}
+                price={119900}
+                onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 119900)}
+                crossedItems={[4, 5, 6]}
+                listClassName="px-[5%] py-4"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+            <div className="rounded-lg shadow-lg bg-white border border-gray-200">
+              <PlanCard
+                title="Identidad Standar"
+                className="pb-2"
+                features={[
+                  'Creación de logo (icono, inicial o imagen)',
+                  'Búsqueda y selección de tipografía',
+                  'Elección de colores corporativos',
+                  'Manual básico de aprox. 8 páginas',
+                  'Estudio de competencia',
+                  'Diseño de mockups, perfil y portada de facebook',
+                  'Modelado 3D de interiores'
+                ]}
+                price={179900}
+                onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 179900)}
+                crossedItems={[6]}
+                listClassName="px-[5%] py-4"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide className="w-[90%] sm:w-full p-4 flex-shrink-0">
+            <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
+              <PlanCard
+                title="Identidad Completa"
+                features={[
+                  'Creación de logo (icono, inicial o imagen)',
+                  'Búsqueda y selección de tipografía',
+                  'Elección de colores corporativos',
+                  'Manual básico de aprox. 8 páginas',
+                  'Estudio de competencia',
+                  'Diseño de mockups, perfil y portada de facebook',
+                  'Modelado 3D de interiores'
+                ]}
+                price="Etapa sujeta a aprobación"
+                onButtonClick={() => handleWspClick("Plan Identidad Completa")}
+                buttonLabel="Cotizar"
+                crossedItems={[]}
+                listClassName="px-[5%] py-4"
+              />
+            </div>
+          </SwiperSlide>
+        </Swiper>
+        {/* Mensaje debajo del carrusel */}
+        <p className="mt-4 text-sm font-bold text-gray-600">
+          Deslizá para visualizar un plan
+        </p>
+      </div>
+
+      <div className="hidden md:grid lg:grid xl:grid grid-cols-3 gap-4 justify-center items-center">
         <PlanCard
           title="Identidad Simplificada"
           features={[

@@ -65,18 +65,18 @@ const CommunityManager = () => {
 
 <aside className="relative flex-col w-full bg-white mx-[1%]">
       {/*Section 1*/}
-    <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%]">
-    <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px]"
+    <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%] md:flex-row sm:flex-col xs:flex-col">
+    <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center"
             style={{
             maxWidth: "1600px",
             paddingLeft: "3%",
             paddingRight: "2%",
           }}>
-      <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start">
+      <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start sm:text-center">
         Gestión de<br />Redes Sociales
       </span>
-      <div className="pt-[20px] gap-16">
-        <span className="text-white text-xl w-full">
+      <div className="pt-[20px] gap-16 sm:justify-center">
+        <span className="text-white text-xl w-full sm:text-center">
           Es tiempo de invertir en tus redes<br />
           para impulsar tu negocio, creación y<br />
           gestión de contenidos que conecten<br/>
@@ -85,7 +85,7 @@ const CommunityManager = () => {
           este video explicativo.
         </span>
       </div>
-      <div className="py-[30px]">
+      <div className="py-[30px] sm:justify-center">
         <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md" onClick={scrollToPlanCards}>
           Comenzar
         </button>
@@ -93,7 +93,7 @@ const CommunityManager = () => {
     </div>
     
     {/* Sección del reproductor de video */}
-    <div className="flex items-end justify-end w-full pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
+    <div className="flex items-end justify-end w-full pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-full sm:h-full xs:w-full xs:h-auto sm:flex-row xs:flex-row">
           <div style={{
               paddingTop: '5px',
               width: '842px',
@@ -108,7 +108,7 @@ const CommunityManager = () => {
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
-          className="rounded-[68px]"
+          className="rounded-[68px] flex-row"
         ></iframe>
       </div>
       </div>
@@ -133,60 +133,62 @@ const CommunityManager = () => {
   </div>
 
   {/* Overlap the wave with the image */}
-  <div className="relative justify-center items-center object-center flex flex-col z-10">
-    <Image
-      src={"/services/Jirafe3.svg"}
-      width={270}
-      height={300}
-      quality={100}
-      className="w-full max-w-xs md:max-w-md lg:max-w-lg"
-      style={{
-        zIndex: 15,
-        position: "relative",
-        top: -260,
-        bottom: -200,
-        left: "50%",
-        transform: "translateX(-50%)",
-      }}
-    />
+  <div className="relative flex flex-col items-center z-10">
+  {/* Contenedor de Imagen */}
+  <div className="relative flex justify-center items-center w-full">
+  <Image
+  src={"/services/Jirafe3.svg"}
+  width={270}
+  height={300}
+  quality={100}
+  className={`
+    xs:w-[160px] xs:mt-[-15%] xs:translate-y-[-16%]
+    sm:w-[200px] sm:mt-0
+    md:w-[250px] md:mt-[-10%] md:translate-y-[-33%] md:mb-[-10vw]
+    lg:w-[300px] lg:mt-[-30%] lg:translate-y-[-33%] lg:mb-[-14vw]
+    xl:w-[350px] xl:mt-[-40%] xl:translate-y-[-33%]
+  `}
+/>
+
   </div>
 
-  {/* Text section */}
-  <div className="text-center mt-[-230px]">
+  {/* Sección de Texto */}
+  <div className="text-center mt-5 md:mt-10 lg:mt-14">
     <span className="text-2xl md:text-4xl lg:text-5xl font-bold text-[#0853FC]">
       Ayudamos a que tus redes<br />
       alcancen su máximo potencial.
     </span>
   </div>
+</div>
 
     <Carousel />
       </section>
 
 {/* Section 3 */}
-<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-60px]">
-  <div className="flex flex-row w-full">
+<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-60px] sm:bottom-[-30px] xs:bottom-[-10px] sm:flex-col">
+  <div className="flex md:flex-row w-full sm:flex-col sm:items-center">
     {/* Text */}
-    <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[4%]">
-      <span className="text-2xl md:text-3xl lg:text-5xl font-bold mb-[28px] text-[#FB8A00] text-start">
+    <div className="w-full relative flex flex-col md:items-start sm:items-center justify-center bg-grey-700 pl-[4%]">
+      <span className="xs:text-2xl sm:text-4xl md:text-3xl lg:text-5xl sm:text-center font-bold mb-[28px] text-[#FB8A00] md:text-start lg:text-start">
         Hacemos<br />
         crecer<br />
         tu negocio<br />
         en redes
       </span>
-      <span className="text-lg md:text-xl sm:text-4xl lg:text-3xl mb-[40px] text-start leading-relaxed tracking-wide">
+      <span className="xs:text-lg md:text-xl sm:text-xl lg:text-3xl sm:text-center mb-[40px] md:text-start leading-relaxed tracking-wide">
         Llegá a nuevos<br />
         clientes en todas<br />
         las plataformas Meta
       </span>
       
-        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF]  duration-300 shadow-sm shadow-black border-orange-500 " onClick={scrollToPlanCards}>
+        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded text-2xl hover:text-[#FFFFFF]  duration-300 shadow-md shadow-black border-orange-500 md:mb-[2%]" onClick={scrollToPlanCards}>
           Empezar
         </button>
       
     </div>
 
     {/* Image */}
-    <div className="w-full flex justify-end pr-[4%]">
+    <div className="w-full flex md:justify-end sm:justify-items-center pr-[4%]">
       <Image
         src={"/services/ImgSct3GR.png"}
         alt="Imagen de la sección 3"
@@ -203,10 +205,10 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 4 */}
-<section className="relative bg-[#FFFFFF]">
-  <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%]">
+<section className="relative bg-[#FFFFFF] sm:flex-col md:mt-6 xs:my-8">
+  <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%] sm:flex-row xs:flex-grow xs:py-2">
     {/* Image */}
-    <div className="w-full flex justify-start pl-[4%] md:w-3/4">
+    <div className="w-full flex justify-start pl-[4%] md:w-[50vw] md:mt-5 sm:w-[70vw] xs:w-[50vw] xs:margin-2 xs:justify-items-center">
       <Image
         src={"/services/ImgSct4GR.png"}
         alt="Imagen de la sección 4"
@@ -231,10 +233,10 @@ const CommunityManager = () => {
 
 
 {/* Section 5 */}
-<section className="relative bg-[#FFFFFF] px-[2%]">
-  <div className="flex flex-row w-full bg-[#FFFFFF] md:py-6 lg:py-1">
+<section className="relative bg-[#FFFFFF] px-[2%] lg:flex-grow md:flex-grow sm:flex-col xs:flex-col">
+  <div className="flex md:flex-row w-full bg-[#FFFFFF] md:py-6 lg:py-1 xs:flex-col">
     {/* Image */}
-    <div className="flex items-start justify-center md:pl-[4%] lg:w-[100vh] lg:h-[80vh] md:w-[53vh] md:h-[53vh] lg:pt-[6%] md:pt-[7%]">
+    <div className="flex items-start justify-center md:pl-[4%] xl:w-full xl:h-full lg:w-[85vh] lg:h-[80vh] md:w-[40vh] md:h-[53vh] lg:pt-[6%] md:pt-[7%] xs:px-[2%]">
       <Image
         src={"/services/ImgSct5GR.png"}
         alt="Imagen de la sección 5"
@@ -248,7 +250,7 @@ const CommunityManager = () => {
     </div>
     {/* Text */}
     <div className="lg:w-2/4 md:w-2/4 relative flex flex-col items-end justify-center text-end mt-2 lg:pr-[4%] md:pr-[2%]">
-      <span className=" md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
+      <span className="xs:text-2xl md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] text-end">
         Conocé a tu audiencia<br />
         es la clave del éxito
       </span>
@@ -266,7 +268,7 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 6 */}
-<section className="relative flex flex-wrap w-screen h-auto justify-center items-center bg-white">
+<section className="relative flex flex-wrap w-screen h-auto justify-center items-center bg-white sm:flex-row">
   <div className="flex flex-row w-full lg:-mb-[10%] md:mb-[3%]">
     {/* Text */}
     <div className="w-full relative flex flex-col items-start justify-center bg-grey-700 pl-[5%]">
@@ -274,7 +276,7 @@ const CommunityManager = () => {
         Tu perfil es tu tarjeta<br />
         de presentación
       </span>
-      <span className="text-lg md:text-xl sm:text-lg lg:text-2xl md:pb-[5%] text-start leading-relaxed tracking-wide">
+      <span className="xs:text-md md:text-xl sm:text-lg lg:text-2xl md:pb-[5%] text-start leading-relaxed tracking-wide font-ligth">
         Tu biografía es la primera impresión que los posibles<br />
         clientes tienen de tu marca en redes sociales.<br />
         Optimizamos tu diseño y contenido para reflejar la<br />
@@ -290,7 +292,7 @@ const CommunityManager = () => {
     </div>
 
     {/* Image */}
-    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%] md:w-3/4 md:mb-1 ">
+    <div className="w-full flex justify-end items-end mt-6 rounded-br-xl right-0 pl-[2%] md:w-3/4 md:mb-[-15%] xs:mb-[-10%] lg:mb-0">
       <Image
         src={"/services/ImgSct6GR.png"}
         alt="Imagen de la sección 6"
@@ -312,10 +314,10 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 7 */}
-<section className="relative bg-[#0853FC] py-6 px-[2%]">
+<section className="relative bg-[#0853FC] py-6 px-[2%] sm:flex-row">
   <div className="flex flex-row w-full">
         {/* Image */}
-        <div className="w-full flex justify-start mt-6 pl-[3%]">
+        <div className="md:w-full flex justify-start mt-6 pl-[3%] xs:w-full sm:w-full h-auto">
       <Image
         src={"/services/ImgSct7GR.png"}
         alt="Imagen de la sección 7"
@@ -328,14 +330,14 @@ const CommunityManager = () => {
       />
     </div>
     {/* Text */}
-    <div className="w-full md:w-1/2 relative flex flex-col items-end justify-center text-center md:text-end pr-0 md:pr-16">
-      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[2px] text-[#FFFFFF]">
+    <div className="w-full md:w-1/2 sm:w-1/2 xs:w-1/3 relative flex flex-col items-end justify-center text-center md:text-end pr-0 md:pr-16">
+      <span className="xs:text-2xl md:text-4xl lg:text-5xl font-bold mb-[2px] text-[#FFFFFF]">
         Creamos los<br />
         contenidos<br />
         estratégicos<br />
         que atraen
       </span>
-      <span className="text-2xl md:text-4xl lg:text-5xl font-bold mb-[40px] text-[#FB8A00] mt-4">
+      <span className="xs:text-2xl md:text-4xl lg:text-5xl font-bold mb-[40px] text-[#FB8A00] mt-4">
         y conectan con<br />
         tu audiencia
       </span>
@@ -382,8 +384,8 @@ const CommunityManager = () => {
       />
 
       {/*Section FootSuperior*/}
-      <section className="w-full px-[2%]">
-        <div className="flex flex-row w-full bg-[#FFFFFF] px-[2%]">
+      <section className="w-full px-[2%] sm:flex-row">
+        <div className="flex flex-row md:w-full xs:w-auto bg-[#FFFFFF] px-[2%]">
           {/* Image */}
           <div className="w-full pl-[2%]">
             <Image
@@ -407,13 +409,13 @@ const CommunityManager = () => {
           <br />
           {/* Text */}
           <div className="w-full relative flex flex-col items-end justify-end text-end pr-[3%] pb-[8%]">
-            <span className="text-5xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-5xl lg:text-6xl pr-[1%]">
+            <span className="xs:text-3xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-5xl lg:text-6xl pr-[1%]">
               ¿Estás listo<br />
               para trabajar<br />
               en serio?
             </span>
             <br/>
-            <span className="font-light mb-[40px] text-end text-3xl leading-relaxed tracking-wide pr-[1%]" style={{top: -2}}>
+            <span className="font-light mb-[40px] text-end xs:text-lg md:text-3xl leading-relaxed tracking-wide pr-[1%]" style={{top: -2}}>
               Te ayudamos a elegir<br />
               el plan para potenciar<br />
               las redes de tu negocio

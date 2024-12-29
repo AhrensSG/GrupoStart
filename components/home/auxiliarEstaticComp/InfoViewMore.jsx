@@ -4,44 +4,45 @@ import Link from "next/link";
 
 const InfoViewMore = () => {
   return (
-    <section className="relative w-full justify-center items-center bg-white h-full">
-      <div className="flex flex-row w-full lg:pb-[10%] md:pb-[12%] lg:px-0 md:px-0 h-full"> {/* Añadido el padding aquí */}
+    <section className="relative w-full justify-center items-center bg-white h-full md:mt-1">
+      <div className="flex xs:flex-col md:flex-row w-full lg:pb-[10%] md:pb-[12%] xs:pb-[15%] lg:px-0 md:px-0 h-full items-center">
         {/* Imagen */}
-        <div className="w-full md:w-[75%] md:pl-[3%] lg:pl-[2%]">
+        <div className="flex xs:justify-items-center md:items-start md:justify-start lg:w-full md:w-[75%] xs:w-[40vh] order-2 md:order-1 xs:px-[6%] md:px-0">
           <Image
             src={"/jirafe1.svg"}
-            className="object-cover transition-opacity opacity-0 duration-500 "
+            alt="Jirafa futurista"
+            className="object-contain transition-opacity opacity-0 duration-500"
             onLoad={(event) => event.target.classList.remove("opacity-0")}
-            width={630}
-            height={235}
+            width={600}
+            height={400}
             priority={true}
             quality={100}
+            sizes="(max-width: 640px) 90vw, (max-width: 768px) 50vw"
+            style={{
+              maxWidth: "100%",
+              height: "auto",
+            }}
           />
         </div>
-        <br />
+
         {/* Texto */}
-        <div className="w-full relative flex flex-col items-center justify-center">
-          <h1 className="xl:text-4xl font-bold lg:mb-[28px] md:mb-[14px] text-[#0853FC] text-center md:text-2xl lg:text-4xl">
+        <div className="w-full relative flex flex-col items-center justify-center order-1 md:order-2 text-center md:text-left md:px-4 xs:px-2 xs:pb-4">
+          <h1 className="xl:text-4xl font-bold lg:mb-[28px] xs:mb-[14px] text-[#0853FC] xs:text-3xl md:text-2xl lg:text-4xl xs:pt-4">
             La Era de las Redes Sociales
           </h1>
-          <span className="text mb-[10px] text-center md:text-xl sm:text-md lg:text-3xl leading-relaxed tracking-wide">
-            La era de las redes sociales fue un
-            <br />
-            verdadero Tsunami para el marketing tradicional
-            <br />
-            ¿Estás preparado para surfear la ola?
-            <br />
-            No te quedes debajo de ella, puede ser peligroso,
-            <br />
+          <span className="mb-[10px] xs:text-xl lg:text-2xl leading-relaxed tracking-wide text-center">
+            La era de las redes sociales fue un <span className="hidden md:inline"> <br /></span>
+            verdadero Tsunami para el marketing tradicional <span className="hidden md:inline"> <br /></span>
+            ¿Estás preparado para surfear la ola? <span className="hidden md:inline"> <br /></span>
+            No te quedes debajo de ella, puede ser peligroso, <span className="hidden md:inline"> <br /></span>
             además surfearla es mucho más divertido.
           </span>
-
-            <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 rounded item-center flex flex-row gap-2 items-center justify-center p-1 px-10 text-2xl hover:text-[#FB8A00] font-medium duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
+          <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 flex items-center justify-center text-lg sm:text-xl md:text-2xl hover:text-[#FB8A00] duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
             <Link href="/services/DesktopCommunityManager">Más Info</Link>
-            </button>
-
+          </button>
         </div>
       </div>
+
       {/* Ola gráfica */}
       <div className="absolute w-full justify-end bottom-0">
         <svg

@@ -464,7 +464,7 @@ const generarPaquetePersonalizado = () => {
   const [error, setError] = useState(''); // Estado para el mensaje de error
 
   return (
-    <section className="py-6 px-[100px] bg-[#FFFFFF] relative md:flex-wrap">
+    <section className="py-6 sm:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full xs:px-[5%]">
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* Encabezado del formulario */}
       <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">

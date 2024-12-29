@@ -27,7 +27,8 @@
     "react-player": "^2.16.0",
     "sequelize": "^6.37.3",
     "sonner": "^1.4.32",
-    "styled-components": "^6.1.12"
+    "styled-components": "^6.1.12",
+    "swiper": "^11.1.15"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",

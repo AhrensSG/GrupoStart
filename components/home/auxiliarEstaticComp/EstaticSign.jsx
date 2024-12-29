@@ -3,30 +3,42 @@ import React from "react";
 
 const EstaticSign = () => {
   return (
-    <section className="relative flex flex-wrap w-full h-screen ">
-      {/* Contenedor de la imagen de la Jirafa */}
-      <div className="relative w-full h-full block">
-        <Image
-          src={"/FutureJirafe.jpg"}
-          alt="FutureJirafe"
-          layout="fill"
-          className="justify-center object-center object-cover"
-          onLoad={(event) => event.target.classList.remove("opacity-0")}
-          priority={true}
-          quality={100}
-        />
+    <section className="relative flex md:flex-wrap w-full h-screen ">
+      {/* Contenedor de la imagen de fondo */}
+      <div className="relative w-full h-full">
+        {/* Imagen para pantallas md y superiores */}
+        <div className="hidden md:block mx-auto">
+          <Image
+            src="/FutureJirafe.jpg"
+            alt="FutureJirafe"
+            layout="fill"
+            className="object-cover"
+            priority={true}
+            quality={100}
+          />
+        </div>
+        {/* Imagen para pantallas xs y sm */}
+        <div className="block md:hidden">
+          <Image
+            src="/jirafaMobile.png"
+            alt="FutureJirafe Mobile"
+            className="object-cover"
+            layout="fill"
+            priority={true}
+            quality={100}
+          />
+        </div>
       </div>
 
       {/* Contenedor del texto */}
-      <div className="absolute inset-0 flex flex-col justify-center items-center text-end w-1/2 h-full py-10 lg:py-20 ml-auto sm:text-3xl right-0">
-        <div className="text-6xl lg:text-6xl xl:text-7xl text-white leading-tight items-start justify-center static py-[15px] my-[5px]">
+      <div className="absolute inset-0 flex flex-col md:justify-center items-center md:text-end xs:text-center xs:justify-items-start xs:align-text-top md:w-1/2 xs:w-auto h-full py-10 lg:py-20 ml-auto right-0 xs:px-[3%] md:px-0 md:mr-6">
+        <div className="xs:text-5xl md:text-6xl xl:text-7xl text-white leading-tight items-start justify-center static py-[15px] my-[5px]">
           <span className="font-bold uppercase drop-shadow-[0_10px_10px_rgba(0,0,0,0.25)]">
-            EL FUTURO <br /> ESTÁ AQUÍ
+            EL FUTURO <span className="hidden md:inline"> <br /></span> ESTÁ AQUÍ
           </span>
           <span className="text-[#FB8A00] font-semibold mt-4 uppercase block drop-shadow-[0_10px_10px_rgba(0,0,0,0.25)]">
-            NO TE QUEDES
-            <br />
-            VIENDO <br />
+            NO TE QUEDES <span className="hidden md:inline"> <br /></span>
+            VIENDO <span className="hidden md:inline"> <br /></span>
             ¡SÚMATE!
           </span>
         </div>

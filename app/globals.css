@@ -123,6 +123,9 @@ section {
   .footer {
     padding: 15px;
   }
+  .swiper-container {
+    display: block; /* Ensure the swiper is displayed */
+  }
 }
 
 /* Pantallas medianas */

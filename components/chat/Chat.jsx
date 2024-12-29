@@ -22,10 +22,10 @@ const Chat = () => {
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-4 lg:right-11 md:right-10 z-20 flex flex-col items-center space-y-4 lg:mr-[2%]">
+      <div className="fixed bottom-4 z-20 flex flex-col items-center space-y-4 right-4 sm:right-0 md:right-10 lg:right-11 xl:right-12 sm:left-auto">
         {/* Botón secundario superior flotante */}
         <button
-          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center lg:w-[70%] lg:h-[30%] md:w-[68%] md:h-[30%]"
+          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center lg:w-[70%] lg:h-[30%] md:w-[68%] md:h-[30%] sm:w-[60%] sm:h-[30%]"
           onClick={handleButtonClick}
         >
           <Image
@@ -33,10 +33,10 @@ const Chat = () => {
             alt="OpenChat"
             width={26}
             height={27} // Ajusta el tamaño si es necesario
-            className="transform rotate-90 filter invert brightness-0 px-1 py-[-1] hover-invert-1 "
+            className="transform rotate-90 filter invert brightness-0 px-1 py-[-1] hover-invert-1"
           />
         </button>
-        
+
         {/* Contenedor para el botón principal y el desplegable */}
         <div
           className="relative"
@@ -50,18 +50,18 @@ const Chat = () => {
             </div>
           )}
           <div className="md:justify-items-end">
-          {/* Botón flotante principal con SVG */}
-          <button
-            className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center relative w-full h-full"
-            onClick={handleClick}
-          >
-            <Image
-              src="/imgChatIcon.png" // La ruta de tu archivo SVG
-              alt="Chat icon"
-              width={50}
-              height={50} // Ajusta el tamaño si es necesario
-            />
-          </button>
+            {/* Botón flotante principal con SVG */}
+            <button
+              className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center relative w-full h-full"
+              onClick={handleClick}
+            >
+              <Image
+                src="/imgChatIcon.png" // La ruta de tu archivo SVG
+                alt="Chat icon"
+                width={50}
+                height={50} // Ajusta el tamaño si es necesario
+              />
+            </button>
           </div>
         </div>
       </div>
@@ -70,3 +70,4 @@ const Chat = () => {
 };
 
 export default Chat;
+

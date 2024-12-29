@@ -16,12 +16,12 @@ const FounderCard = ({ img, name, profession, description }) => {
           />
         </div>
 
-        <div className="w-48 h-full flex flex-col lg:mt-5 xl:mt-8 pt-[2px] flex-col relative">
+        <div className="w-48 h-full flex lg:mt-5 xl:mt-8 pt-[2px] flex-col relative">
           <div className="flex flex-col text-center justify-center items-center -top-6">
             <h4 className="text-3xl md:text-2xl lg:text-3xl xl:text-xl font-medium whitespace-nowrap text-center items-center justify-center">
               {name}
             </h4>
-            <span className="text text-1xl md:text-2xl font-medium pt-[24px] whitespace-nowrap">
+            <span className="text xs:text-xl md:text-2xl font-medium pt-[24px] whitespace-nowrap">
               {profession}
             </span>
           </div>

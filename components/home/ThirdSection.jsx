@@ -20,7 +20,7 @@ const ThirdSection = () => {
   ];
 
   return (
-    <section className="w-full relative flex flex-col z-0 justify-center"> {/* Ocupa todo el ancho de la pantalla */}
+    <section className="w-full relative flex flex-col z-0 justify-center items-center"> {/* Ocupa todo el ancho de la pantalla */}
       <aside className="relative flex z-5 w-full justify-center">
         <div className="w-full bg-gradient-to-b from-[#0853FC] via-[#FFFFFF] to-[#FFFFFF] p-6">
           <div className="flex flex-col justify-items-center mb-6 px-[2%] gap-6"> {/* Padding interno del 2% */}
@@ -30,7 +30,7 @@ const ThirdSection = () => {
             </p>
             <div className="relative py-[31px] px-5 flex justify-center">
   <h2
-    className="font-light bg-[#FB8A00] text-white justify-items-center text-center rounded-tl-xl rounded-br-xl lg:text-3xl md:text-2xl"
+    className="font-light bg-[#FB8A00] text-white justify-items-center text-center rounded-tl-xl rounded-br-xl lg:text-3xl md:text-2xl sm:text-xl"
     style={{ width: '519px', height: '66px', lineHeight: '66px', justifyContent: "center" }}
   >
     Clientes que confian en nosotros
@@ -39,14 +39,14 @@ const ThirdSection = () => {
 
 <div className="flex flex-col justify-center mb-2 mx-[4%]">
   {/* Contenedor de las imágenes en dos filas */}
-  <div className="flex justify-center px-[2%]">
-    <div className="grid grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 pt-[22px] w-full">
+  <div className="flex justify-center md:px-[2%] xs:px-0">
+    <div className="grid xxs:grid-cols-3 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 sm:gap-6 xs:gap-6 pt-[22px] w-full items-center">
       {imageList.slice(0, 6).map((image, index) => (
         <Image
           key={index}
           src={image.src}
           alt={image.alt}
-          className="object-cover object-center"
+          className="object-cover object-center w-full"
           width={165}
           height={155}
           priority={true}
@@ -56,14 +56,14 @@ const ThirdSection = () => {
     </div>
   </div>
 
-  <div className="flex justify-center px-[2%]">
-    <div className="grid grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 pt-[22px] w-full">
+  <div className="flex justify-center md:px-[2%] xs:px-0">
+    <div className="grid xxs:grid-cols-3 xs:grid-cols-3 sm:grid-cols-3 md:grid-cols-6 xl:gap-1 lg:gap-2 md:gap-2 sm:gap-6 xs:gap-6 md:pt-[22px] xs:pt-[35px] w-full items-center">
       {imageList.slice(6).map((image, index) => (
         <Image
           key={index}
           src={image.src}
           alt={image.alt}
-          className="object-cover object-center"
+          className="object-cover object-center w-full"
           width={160}
           height={145}
           priority={true}

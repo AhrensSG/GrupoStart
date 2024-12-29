@@ -45,54 +45,53 @@ const Branding = () => {
       }}
     >
           {/*Section 1*/}
-            <section className="relative bg-[#0853FC] flex w-full pl-[2%] py-3">
-            <div className="container flex-col pb-2 gap-16 ml-1 pl-[1%] pt-[55px]" 
-            style={{
-            maxWidth: "1600px",
-            paddingLeft: "2%",
-            paddingRight: "2%",
-          }}>
-              <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-center">Herramientas<br/>útiles</span>
-              <div className="pt-[20px] gap-16">
-                <span className="text-white text-xl">
-                Envia a los interesados en tu negocio<br/>
-                a una web con una presentación<br/>
-                ampliada, además de botones con<br/>
-                acceso rápido aun chat con vos en<br/>
-                whatsapp, ubicacion en google maps<br/>
-                y todas tus redes sociales.</span>
+          <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%] md:flex-row sm:flex-col xs:flex-col">
+            <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center"
+                style={{
+                  maxWidth: "1600px",
+                  paddingLeft: "2%",
+                  paddingRight: "2%",
+                }}>
+              <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start sm:text-center">
+                Branding<br />y diseño<br />personalizado
+              </span>
+              <div className="pt-[20px] gap-16 sm:justify-center">
+                <span className="text-white text-xl w-full sm:text-center">
+                  Posicioná tu marca con diseños<br />
+                  exclusivos y una identidad única.<br />
+                  Creamos soluciones que reflejan<br />
+                  tus valores, logrando conectar<br />
+                  emocionalmente con tus clientes.
+                </span>
               </div>
-              <div className="py-[20px]">
-              <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={scrollToSection3}>
-                +INFO
-              </button>
+              <div className="py-[30px] sm:justify-center">
+                <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md" onClick={scrollToSection3}>
+                  Conocer Más
+                </button>
               </div>
             </div>
-              {/* Aquí iría el reproductor de YouTube */}
-              <div className="flex items-end justify-end w-full pr-[3%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-1/4 sm:h-1/4">
-          <div style={{
-              paddingTop: '10px',
-              width: '842px',
-              height: '474px',
-            }}
-            >
-            <iframe
-              width="842"
-              height="474"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              style={{
-                borderRadius: '68px',
-                width: '100%',
-                height: '100%',
-              }}
-            ></iframe>
-          </div>
-          </div>
-            </section>
+
+            {/* Reproductor de video */}
+            <div className="flex items-end justify-end w-full md:pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-full sm:h-full xs:w-full xs:h-auto sm:flex-row xs:flex-row">
+              <div style={{
+                    paddingTop: '5px',
+                    width: '842px',
+                    height: '474px',
+                  }}>
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="rounded-[68px] flex-row"
+                ></iframe>
+              </div>
+            </div>
+          </section>
+
     
           {/* Section 2 */}
           <section className="relative bg-white flex flex-col justify-center items-center w-full">
@@ -112,23 +111,17 @@ const Branding = () => {
             </div>
             <br/>
               {/* Overlap the wave with the image */}
-              <div className="relative justify-center items-center object-center flex flex-col grid place-items: center z-10">
+              <div className="relative justify-center items-center object-center flex-col place-items:center z-10">
                 <Image
                   src={"/services/Jirafe12.svg"}
                   width={270}
                   height={300}
                   quality={100}
-                  style={{
-                  zIndex: 15,
-                  position: 'relative',
-                  top: -260,
-                  bottom: -200,
-                  left: '50%',
-                  transform: 'translateX(-50%)' }}
+                  className={`xs:w-[160px] xs:mt-[-20vw] sm:w-[200px] sm:mt-[-30vw] md:w-[250px] md:mt-[-30vw] lg:w-[300px] lg:mt-[-30vw] xl:w-[350px] xl:mt-[-35vw]`}
                 />
               </div>
-              <div className="text-center mt-[-230px]">
-                <span className="text text-4xl font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
+              <div className="text-center md:mt-[5px] xs:mt-[-2px]">
+                <span className=" font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
                   Sumate a los negocios<br />
                   que ya tienen sus tarjetas QR
                 </span>
@@ -137,7 +130,7 @@ const Branding = () => {
                 <Carousel />
           </section>
           {/* Section 3 */}
-          <section ref={section3Ref} className="relative flex flex-wrap w-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px]">
+          <section ref={section3Ref} className="relative flex flex-wrap w-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px] sm:flex-row">
           <div className="flex flex-col md:flex-row w-full p-6"
           style={{
             maxWidth: "1600px",
@@ -157,7 +150,7 @@ const Branding = () => {
                 quality={100}
               />
             </div> */}
-          <div className="w-full justify-start items-start md:w-3/4 pl-[4%]">
+          <div className="w-full md:justify-start xs:justify-center xs:items-center xs:bottom-[40vh] md:items-start md:w-3/4 md:pl-[4%]">
                 <Image
                   src={"/services/imgSct3HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500"
@@ -166,31 +159,24 @@ const Branding = () => {
                   height={255}
                   priority={true}
                   quality={100}
-                  style={{
-                    zIndex: 15,
-                    position: 'relative',
-                    top: 100,
-                    bottom: -200,
-                    left: '45%',
-                    transform: 'translateX(-50%)' }}
                 />
               </div>
          {/* Text */}
-              <div className="w-full relative flex flex-col items-end justify-center bg-grey-700 pr-[3%] pt-2">
-              <span className="text-4xl font-bold mb-[28px] text-[#FB8A00] text-end text-2xl md:text-3xl lg:text-5xl justify-center">
-                  ¿Por qué utilizar un<br />
-                  código QR en tus tarjetas<br />
+              <div className="w-full relative flex flex-col md:items-end xs:items-center justify-center bg-grey-700 md:pr-[3%] pt-2">
+              <span className="font-bold mb-[28px] text-[#FB8A00] md:text-end xs:text-center xs:text-2xl md:text-3xl lg:text-5xl justify-center">
+                  ¿Por qué utilizar un <span className="hidden md:inline"> <br /></span>
+                  código QR en tus tarjetas <span className="hidden md:inline"> <br /></span>
                   de presentación?
                 </span>
-                <span className="text text-lg text-end text-xl md:text-2xl sm:text-4xl leading-relaxed tracking-wide">
-                    Los QR son una herramienta poderosa<br />
-                    capaz de almacenar información en ellos<br />
-                    como por ejemplo una dirección web.<br/>
-                    Es por ello que aprovechamos esta cualidad<br/>
-                    para dirigir atus potenciales clientes con un<br/>
-                    código QR personalizado hacia una web<br/>
-                    de presentación que vamos a configurar<br/>
-                    para vos detallando una presentación de tu<br/>
+                <span className="text xs:text-xl md:text-end xs:text-center md:text-2xl leading-relaxed tracking-wide">
+                    Los QR son una herramienta poderosa <span className="hidden md:inline"> <br /></span>
+                    capaz de almacenar información en ellos <span className="hidden md:inline"> <br /></span>
+                    como por ejemplo una dirección web. <span className="hidden md:inline"> <br /></span>
+                    Es por ello que aprovechamos esta cualidad <span className="hidden md:inline"> <br /></span>
+                    para dirigir atus potenciales clientes con un <span className="hidden md:inline"> <br /></span>
+                    código QR personalizado hacia una web <span className="hidden md:inline"> <br /></span>
+                    de presentación que vamos a configurar <span className="hidden md:inline"> <br /></span>
+                    para vos detallando una presentación de tu <span className="hidden md:inline"> <br /></span>
                     negocio y todos tus puntos de contacto.
                 </span>
               </div>
@@ -201,7 +187,7 @@ const Branding = () => {
             
           </section>
           {/*Section 4*/}
-          <section className="relative flex flex-wrap w-full justify-center">
+          <section className="relative flex flex-wrap w-full justify-center sm:flex-row">
         <div className="flex flex-col md:flex-row w-full bg-[#FFFFFF] p-6"
         style={{
           maxWidth: "1600px",
@@ -210,15 +196,15 @@ const Branding = () => {
         }}
         >
           {/* Text */}
-          <div className="w-full relative flex flex-col items-start justify-center text-center pl-[3%]">
-          <span className="font-bold mb-[40px] text-[#0853FC] text-start text-4xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide pr-16" style={{top: -2}}>
-              Facilitale<br />
-              a tus clientes<br/>
-              el acceso a tu<br/>
-              información<br />
-              en la web o<br />
-              también lo tendrás<br />
-              impreso en el dorso<br/>
+          <div className="w-full relative flex md:flex-col items-start justify-center text-center md:pl-[3%]">
+          <span className="font-bold mb-[40px] text-[#0853FC] md:text-start xs:text-center xs:text-3xl md:text-4xl lg:text-5xl leading-relaxed tracking-wide md:pr-16" style={{top: -2}}>
+              Facilitale <span className="hidden md:inline"> <br /></span>
+              a tus clientes <span className="hidden md:inline"> <br /></span>
+              el acceso a tu <span className="hidden md:inline"> <br /></span>
+              información <span className="hidden md:inline"> <br /></span>
+              en la web o <span className="hidden md:inline"> <br /></span>
+              también lo tendrás <span className="hidden md:inline"> <br /></span>
+              impreso en el dorso <span className="hidden md:inline"> <br /></span>
               de las tarjetas
             </span>
           </div>
@@ -239,15 +225,15 @@ const Branding = () => {
           </section>
 
           {/*Section 5*/}
-          <section className="relative flex flex-wrap w-full justify-center items-center bg-white"
+          <section className="relative flex flex-wrap w-full justify-center items-center bg-white sm:flex-row"
           style={{
             maxWidth: "1600px",
             paddingLeft: "2%",
             paddingRight: "2%",
           }}
           >
-              <span className="text-4xl font-bold pb-[16px] text-black text-center items-center md:text-4xl lg:text-5xl pr-16">
-                Tus tarjetas 100% personalizadas<br/>
+              <span className="xs:text-3xl font-bold pb-[16px] text-black text-center items-center md:text-4xl lg:text-5xl xs:px-0 md:px-2">
+                Tus tarjetas 100% personalizadas <span className="hidden md:inline"> <br /></span>
                 con tu foto, colores, letras o tu logo
               </span>
             {/* Image */}
@@ -276,10 +262,10 @@ const Branding = () => {
           </section>
 
           {/*Section 6*/}
-          <section className="w-full relative">
-          <div className="flex flex-row w-full bg-[#0051FF] p-6">
+          <section className="w-full relative flex">
+          <div className="flex md:flex-row xs:flex-col w-full bg-[#0051FF] p-6">
               {/* Image */}
-              <div className="w-full pl-[3%]">
+              <div className="md:w-full xs:w-auto md:pl-[3%] md:m-0 xs:m-6 xs:pl-0">
                 <Image
                   src={"/services/imgSct6HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500 z-10"
@@ -294,17 +280,17 @@ const Branding = () => {
               {/* Text */}
               <div className="w-full relative flex flex-col items-end justify-center text-center pr-[4%]">
                 <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl pb-5">
-                  Una landing page<br />
+                  Una landing page <span className="hidden md:inline"> <br /></span>
                   solo para vos
                 </span>
                 <span className="font-light mb-[40px] text-end text-[#FFFFFF] lg:text-3xl md:text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
-                    El QR enviará a la gente que quiera<br />
-                    saber más sobre vos a landing<br />
-                    page, donde tendrán una<br/>
-                    presentación completa de tu<br/>
-                    negocio y pueden chatear con vos<br/>
-                    al instante por Whatsapp, ver tu<br/>
-                    dirección en Google Maps y<br/>
+                    El QR enviará a la gente que quiera <span className="hidden md:inline"> <br /></span>
+                    saber más sobre vos a landing <span className="hidden md:inline"> <br /></span>
+                    page, donde tendrán una <span className="hidden md:inline"> <br /></span>
+                    presentación completa de tu <span className="hidden md:inline"> <br /></span>
+                    negocio y pueden chatear con vos <span className="hidden md:inline"> <br /></span>
+                    al instante por Whatsapp, ver tu <span className="hidden md:inline"> <br /></span>
+                    dirección en Google Maps y <span className="hidden md:inline"> <br /></span>
                     seguirte en tus redes sociales.
                 </span>
                 
@@ -316,12 +302,12 @@ const Branding = () => {
             </div>
           </section>
           {/*Section 7*/}
-          <section className="relative bg-[#0853FC] flex w-full px-[2%]">
+          <section className="relative bg-[#0853FC] flex w-full px-[2%] sm:flex-row">
   <div className="grid grid-cols-2 gap-4 w-full">
     {/* Columna izquierda: Lista + Texto */}
     <div className="flex flex-col justify-start">
       {/* Lista */}
-      <ul className="list pl-[5%] space-y-[58px] text-left font-bold text-3xl text-orange-500">
+      <ul className="list pl-[5%] md:space-y-[58px] xs:space-y-[12px] text-left font-bold md:text-3xl xs:text-2xl text-orange-500">
         {[
           "Diseño<br/>personalizado",
           "Landing page<br/>completa",
@@ -331,7 +317,7 @@ const Branding = () => {
         ].map((item, index) => (
           <li key={index} className="relative flex items-center">
             {/* Punto naranja */}
-            <div className="w-[58px] h-[58px] rounded-full bg-[#FB8A00] mr-4 flex-shrink-0" />
+            <div className="md:w-[58px] xs:w-[32px] xs:h-[32px] md:h-[58px] rounded-full bg-[#FB8A00] mr-4 flex-shrink-0" />
             <span className="leading-tight">
               {item.split("<br/>").map((line, i) => (
                 <React.Fragment key={i}>
@@ -345,18 +331,18 @@ const Branding = () => {
       </ul>
 
       {/* Texto debajo de la lista */}
-      <div className="mt-12 pl-[5%]">
-        <span className="text-4xl font-bold text-[#FFFFFF] md:text-4xl lg:text-5xl">
-          ¿Listo para<br />
-          mejorar tu imagen<br />
-          y potenciar tu negocio<br />
-          con esta herramienta?
+      <div className="mt-12 pl-[5%] xs:z-10 md:z-0 xs:justify-items-end xs:relative">
+        <span className="xs:text-3xl font-bold text-[#FFFFFF] md:text-4xl lg:text-5xl">
+          ¿Listo para <span className="hidden md:inline"> <br /></span>
+          mejorar tu imagen <span className="hidden md:inline"> <br /></span>
+          y potenciar tu negocio <span className="hidden md:inline"> <br /></span>
+          con esta herramienta? <span className="hidden md:inline"> <br /></span>
         </span>
       </div>
     </div>
 
     {/* Columna derecha: Imagen */}
-    <div className="flex justify-end items-center pr-[5%]">
+    <div className="flex justify-center items-center pr-[5%] h-auto">
       <Image
         src={"/services/imgSct7HU.png"}
         className="object-cover transition-opacity opacity-0 duration-500"
@@ -377,7 +363,7 @@ const Branding = () => {
           </div>
 
           {/*Section 8*/}
-          <section className="w-full bg-[#0051FF] text-white px-[2%]">
+          <section className="w-full bg-[#0051FF] text-white px-[2%] sm:flex-row">
             {/* Title */}
             <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
               <h2 className="text-[#FFFFFF] font-semibold pt-4">
@@ -385,9 +371,9 @@ const Branding = () => {
                 o quieres pedir una cantidad personalizada?
               </h2>
             </div>
-        <div className="flex relative items-center justify-center text-center mx-[60px] px-[270px] py-8">
+        <div className="flex relative items-center justify-center text-center md:mx-[60px] md:px-[270px] xs:mx-auto xs:px-auto py-8">
         
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl" onClick={handleClick}>
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl mx-auto" onClick={handleClick}>
                 Hablá con un asesor
         </button>
         

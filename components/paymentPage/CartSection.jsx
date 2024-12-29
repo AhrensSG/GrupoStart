@@ -229,7 +229,7 @@ const CartSection = () => {
     </div>
 
     {/* PAYMENT INFORMATION SECTION */}
-    <div className="max-w-screen-lg bg-white w-full shadow-md shadow-[#0853FC]/40 px-20 py-6 mt-4 border border-[#0853FC] rounded-md flex flex-col justify-center items-center gap-8">
+    <div className="max-w-screen-lg bg-white w-full shadow-md shadow-[#0853FC]/40 px-20 py-6 mt-4 border border-[#0853FC] rounded-md flex flex-col justify-center items-center md:gap-8 xs:gap-12">
       <span className="text-xl font-medium">Información de compra</span>
       {/* FORM */}
       <form
@@ -237,7 +237,7 @@ const CartSection = () => {
         className="w-full grid place-items-center gap-8"
       >
         <div className="w-full flex flex-row justify-around items-center">
-          <div className="max-w-72 w-full flex flex-col gap-5">
+          <div className="max-w-72 w-full flex flex-col gap-5 xs:p-2 md:p-0">
             <div className="flex flex-row gap-2 justify-start items-center">
               <div className="border-2 border-[#FB8A00] px-2 rounded-full">
                 <span className="text-[#FB8A00] text-lg">1</span>
@@ -290,7 +290,7 @@ const CartSection = () => {
             </div>
           </div>
 
-          <div className="max-w-72 w-full flex flex-col gap-5">
+          <div className="max-w-72 w-full flex flex-col gap-5 xs:p-2 md:p-0">
             <div className="flex flex-row gap-2 justify-start items-center">
               <div className="border-2 border-[#FB8A00] px-2 rounded-full">
                 <span className="text-[#FB8A00] text-lg">2</span>

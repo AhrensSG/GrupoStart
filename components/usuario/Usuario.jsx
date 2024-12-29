@@ -254,11 +254,11 @@ const Usuario = ({
     switch (selectedSection) {
       case "perfil":
         return (
-          <section ref={perfilRef} className="w-full flex flex-col space-y-6"id="dataUserAndCompany">
+          <section ref={perfilRef} className="w-full md:flex-row xs:flex-col space-y-6"id="dataUserAndCompany">
             <h2 className="text-2xl text-orange-500 font-bold">Mi Perfil</h2>
-            <div className="flex flex-row space-x-4">
+            <div className="flex md:flex-row xs:flex-col md:space-x-4">
               {/* Tarjeta de Datos Personales */}
-              <div className="bg-white rounded-xl w-1/3 min-h-screen border-black p-3 relative">
+              <div className="bg-white rounded-xl md:w-1/3 xs:w-full xs:m-2 md:0 md:min-h-screen xs:h-auto border-black p-3 relative">
                 <h3 className="text-xl font-bold text-orange-500">Datos Personales</h3>
                 {isEditing ? (
           <div className="space-x-2 mt-4">
@@ -303,7 +303,7 @@ const Usuario = ({
               </div>
 
               {/* Tarjeta de Datos de la Empresa */}
-              <div className="bg-white rounded-xl w-2/3 min-h-screen border-black p-3 relative">
+              <div className="bg-white rounded-xl md:w-2/3 xs:w-full md:min-h-screen xs:h-auto xs:m-2 md:m-0 border-black p-3 relative md:my-2">
                 <h3 className="text-xl font-bold text-orange-500">Datos de la Empresa</h3>
                 {isEditing ? (
           <div className="space-x-2 mt-4">
@@ -312,7 +312,7 @@ const Usuario = ({
                   <button className="bg-blue-500 text-white p-2 rounded" onClick={handleSaveChanges}>Guardar Cambios</button>
                 </div>
           </div>
-        ) : (<button className="absolute top-0 right-0 mt-2 mr-2">
+        ) : (<button className="absolute top-0 right-0 mt-2 mr-2 p-2">
                 <svg viewBox="0 0 512 512" id="pencil" width={30} height={30} onClick={handleEdit}>
                   <path fill="#0853fc" d="M64 368v80h80l235.727-235.729-79.999-79.998L64 368zm377.602-217.602c8.531-8.531 8.531-21.334 0-29.865l-50.135-50.135c-8.531-8.531-21.334-8.531-29.865 0l-39.468 39.469 79.999 79.998 39.469-39.467z" class="color010101 svgShape"></path>
                 </svg>
@@ -540,7 +540,7 @@ const Usuario = ({
 
 
   return (
-    <main className="flex flex-col min-h-screen bg-[#0853FC] px-[2%] relative">
+    <main className="flex flex-col md:min-h-screen w-auto xs:h-auto bg-[#0853FC] px-[2%] relative">
       {/* Imagen de fondo usando el componente Image actualizado */}
       <div className="absolute inset-0 w-full full -z-8">
         <Image 

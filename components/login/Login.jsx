@@ -126,32 +126,60 @@ const Login = () => {
     };
 
     return (
-        <section className="flex w-full min-h-screen relative" style={{ backgroundImage: "url('/login/BGlogin.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
-    <aside className="flex flex-col items-start justify-start w-1/3 mx-[5%] my-[2%]">
-        <Link href={"/#home"} className="min-w-max mb-4">
-            <Image src="/OrangeLogo.svg" alt="Logo" width={150} height={101} priority />
-        </Link>
+        <section className="w-full min-h-screen flex absolute justify-items-center">
+            <aside
+                className="w-full h-auto my-0 py-auto relative flex xs:flex-col md:flex xs:grid-cols-1 md:grid-cols-3 justify-items-center"
+                style={{
+                backgroundImage: "url('/login/BGlogin.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                }}
+            >
+  <div className="md:flex xs:flex-col ">
+    {/* Logo */}
+    <div className="xs:items-center w-auto xs:justify-center md:items-start md:justify-start h-auto flex md:absolute">
+        <aside className="md:items-start xs:items-center md:justify-start xs:justify-center xs:h-[10vh] md:h-[15vh] xs:w-auto md:mx-[2%] md:pl-6 md:mt-1 xs:my-0 xs:py-0 md:flex-row xs:flex-col">
+      <Link href={"/#home"} className="w-auto mb-0">
+        <Image
+          src="/OrangeLogo.svg"
+          alt="Logo"
+          width={160}
+          height={101}
+          priority
+        />
+      </Link>
     </aside>
-    <aside className="flex justify-start items-center w-3/2 min-h-screen pl-2">
-        <Image src="/login/Slogo.png" alt="S Logo" width={650} height={650} className="mx-auto" />
-    </aside>
-    <aside className="flex justify-end items-center w-2/3 min-h-screen pr-[14%] pl-[2%]">
-        <AnimatePresence>
+    </div>
+
+    <div className="flex-row w-auto md:mb-1 justify-items-center md:mt-[1vh] xs:mt-1 grid xs:grid-cols-1 md:grid-cols-2 px-[2%]">
+    {/* Logo central Md+ */}
+    <aside className="hidden md:flex justify-items-center w-2/3">
+      <Image
+        src="/login/Slogo.png"
+        alt="S Logo"
+        width={350}
+        height={150}
+        className="justify-items-center ml-[6vw] mr-0 my-[7vh] flex flex-grow"
+      />
+    </aside> 
+     {/* Form */}
+    <aside className="justify-center xs:items-center md:items-end xs:flex-col md:flex-row relative py-3">
+     <AnimatePresence>
             <motion.div
                 initial={{ scale: 0.5 }}
                 animate={{ scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="bg-blue-500 bg-opacity-65 rounded-2xl shadow-lg p-8 w-96 border-grey-700 border-opacity-40 border-2"
+                className="bg-blue-500 bg-opacity-65 rounded-2xl shadow-lg p-6 md:w-[30vw] xs:w-[60vw] border-grey-700 border-opacity-40 border-2 justify-center xs:items-center md:items-end md:my-0 mx-0 h-auto flex-auto"
             >
-                <h2 className="text-2xl font-bold text-orange-500 mb-2 text-center">
+                <h2 className="text-2xl font-bold text-orange-500 mb-1 text-center">
                     {isRegistering ? "Únete a nosotros hoy" : isForgotPassword ? (codeSent ? "Verifica tu código" : "Restablecer contraseña") : "Bienvenido de vuelta"}
                 </h2>
                 <p className="text-white text-center font-light">
                     {isRegistering ? "El camino a Impulsar tu Negocio" : isForgotPassword ? (codeSent ? "Introduce el código que recibiste" : "Introduce tu correo para restablecer la contraseña") : "Nos alegra verte otra vez :)"}
                 </p>
                 <br />
-                <div className="flex items-center justify-center mb-4">
+                <div className="flex items-center justify-center mb-3">
                     <span className="text-white font-light">{isRegistering ? "Regístrate con:" : isForgotPassword ? "" : "Inicia sesión con:"}</span>
                     {!isForgotPassword && (
                         <>
@@ -274,7 +302,7 @@ const Login = () => {
                                 {isRegistering && (
                                 
                                 <>
-                                                <div className="mb-4 w-full">
+                                                <div className="mb-4 w-full h-auto">
                                                 <label className="block text-white text-sm font-semibold mb-2" htmlFor="nombreUser">
                                                     Nombre
                                                 </label>
@@ -372,7 +400,10 @@ const Login = () => {
                         </div>
                     </motion.div>
                 </AnimatePresence>
-            </aside>
+      </aside>
+      </div>
+      </div>
+        </aside>
         </section>
     );
 };
