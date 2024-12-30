@@ -206,7 +206,7 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 4 */}
-<section className="relative bg-[#FFFFFF] max-xs:flex-col sm:flex-col md:flex-row md:mt-6 xs:my-8 max-xs:mt-6">
+<section className="relative bg-[#FFFFFF] max-xs:flex-col sm:flex-col md:flex-row md:mt-6 xs:my-8 max-xs:mt-2">
   <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%] sm:flex-row xs:flex-grow max-xs:flex-col xs:py-2 max-xs:py-8">
     {/* Image */}
     <div className="w-full flex justify-start pl-[4%] md:w-[50vw] md:mt-5 sm:w-[70vw] xs:w-[50vw] xs:margin-2 xs:justify-items-center max-xs:justify-items-center max-xs:w-auto max-xs:mt-12">

@@ -464,11 +464,11 @@ const generarPaquetePersonalizado = () => {
   const [error, setError] = useState(''); // Estado para el mensaje de error
 
   return (
-    <section className="py-6 sm:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[5%]">
+    <section className="py-6 sm:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[5%] max-xs:px-[2%]">
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* Encabezado del formulario */}
       <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
-        <span className="bg-[#FB8A00] text-white font-bold py-[11px] px-[38px] rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center text-3xl">
+        <span className="bg-[#FB8A00] text-white font-bold xs:py-[11px] xs:px-[38px] max-xs:py-2 max-xs:px-4 rounded-medium border rounded-tl-full rounded-br-full text-center items-center justify-center xs:text-3xl max-xs:text-xl">
           Plan Personalizado
         </span>
       </div>
@@ -512,7 +512,7 @@ const generarPaquetePersonalizado = () => {
 {/* Formulario con columnas y líneas continuas para cada ítem */}
 {items.map((item, index) => (
   <div key={index}>
-    <div className="grid grid-cols-3 items-center mb-2">
+    <div className="grid xs:grid-cols-3 max-xs:grid-cols-[2fr_1fr_1fr] items-center mb-2">
       <div
         className="text-black-900 text-sm font-bold flex items-center justify-center"
         onMouseOver={(e) => handleMouseOver(e, item.info)}
@@ -555,14 +555,14 @@ const generarPaquetePersonalizado = () => {
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 text-xs rounded-t"
+              className="bg-gray-300 text-black rounded-t xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold"
             >
               +
             </button>
             <button
               onClick={() => handleDecrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 text-xs rounded-b"
+              className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
             >
               -
             </button>
@@ -600,21 +600,21 @@ const generarPaquetePersonalizado = () => {
             onChange={(e) => handleInputChange(6, e.target.value)}
             min="0"
             disabled={!isEditable} // Deshabilitar si no es editable
-            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-6 appearance-none"
-            style={{ MozAppearance: "textfield", width: '50px' }}
+            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-6 max-xs:mx-0 appearance-none"
+            style={{ MozAppearance: "textfield" }}
           />
           <div className="flex flex-col ml-2">
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 py-0.1 max-xs:py-0.5 text-xs rounded-t"
+              className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-t"
             >
               +
             </button>
             <button
               onClick={() => handleDecrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 xs:py-0.1 max-xs:py-0.5 text-xs rounded-b"
+              className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
             >
               -
             </button>
