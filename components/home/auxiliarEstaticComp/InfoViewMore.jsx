@@ -5,9 +5,9 @@ import Link from "next/link";
 const InfoViewMore = () => {
   return (
     <section className="relative w-full justify-center items-center bg-white h-full md:mt-1">
-      <div className="flex xs:flex-col md:flex-row w-full lg:pb-[10%] md:pb-[12%] xs:pb-[15%] lg:px-0 md:px-0 h-full items-center">
+      <div className="flex max-xs:flex-col xs:flex-col md:flex-row w-full lg:pb-[10%] md:pb-[12%] xs:pb-[15%] max-xs:pb-[16%] lg:px-0 md:px-0 h-full items-center">
         {/* Imagen */}
-        <div className="flex xs:justify-items-center md:items-start md:justify-start lg:w-full md:w-[75%] xs:w-[40vh] order-2 md:order-1 xs:px-[6%] md:px-0">
+        <div className="flex xs:justify-items-center md:items-start md:justify-start lg:w-full md:w-[75%] xs:w-[40vh] max-xs:w-[25vh] order-2 md:order-1 xs:px-[6%] md:px-0">
           <Image
             src={"/jirafe1.svg"}
             alt="Jirafa futurista"
@@ -26,8 +26,8 @@ const InfoViewMore = () => {
         </div>
 
         {/* Texto */}
-        <div className="w-full relative flex flex-col items-center justify-center order-1 md:order-2 text-center md:text-left md:px-4 xs:px-2 xs:pb-4">
-          <h1 className="xl:text-4xl font-bold lg:mb-[28px] xs:mb-[14px] text-[#0853FC] xs:text-3xl md:text-2xl lg:text-4xl xs:pt-4">
+        <div className="w-full relative flex flex-col items-center justify-center order-1 md:order-2 text-center md:text-left md:px-4 xs:px-2 xs:pb-4 max-xs:pb-6">
+          <h1 className="xl:text-4xl font-bold lg:mb-[28px] xs:mb-[14px] text-[#0853FC] max-xs:text-3xl xs:text-3xl md:text-2xl lg:text-4xl xs:pt-4">
             La Era de las Redes Sociales
           </h1>
           <span className="mb-[10px] xs:text-xl lg:text-2xl leading-relaxed tracking-wide text-center">

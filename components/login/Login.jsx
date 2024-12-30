@@ -128,17 +128,17 @@ const Login = () => {
     return (
         <section className="w-full min-h-screen flex absolute justify-items-center">
             <aside
-                className="w-full h-auto my-0 py-auto relative flex xs:flex-col md:flex xs:grid-cols-1 md:grid-cols-3 justify-items-center"
+                className="w-full h-auto my-0 py-auto relative flex max-xs:flex-col xs:flex-col md:flex max-xs:grid-cols-1 xs:grid-cols-1 md:grid-cols-3 justify-items-center"
                 style={{
                 backgroundImage: "url('/login/BGlogin.png')",
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 }}
             >
-  <div className="md:flex xs:flex-col ">
+  <div className="md:flex xs:flex-col max-xs:flex-col">
     {/* Logo */}
-    <div className="xs:items-center w-auto xs:justify-center md:items-start md:justify-start h-auto flex md:absolute">
-        <aside className="md:items-start xs:items-center md:justify-start xs:justify-center xs:h-[10vh] md:h-[15vh] xs:w-auto md:mx-[2%] md:pl-6 md:mt-1 xs:my-0 xs:py-0 md:flex-row xs:flex-col">
+    <div className="xs:items-center max-xs:items-center max-xs:justify-center w-auto xs:justify-center md:items-start md:justify-start h-auto flex md:absolute">
+        <aside className="md:items-start xs:items-center max-xs:justify-items-center md:justify-start xs:justify-center xs:h-[10vh] md:h-[15vh] max-xs:w-auto xs:w-auto md:mx-[2%] md:pl-6 md:mt-1 xs:my-0 xs:py-0 md:flex-row xs:flex-col max-xs:flex-col">
       <Link href={"/#home"} className="w-auto mb-0">
         <Image
           src="/OrangeLogo.svg"

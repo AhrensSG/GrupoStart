@@ -254,17 +254,17 @@ const Usuario = ({
     switch (selectedSection) {
       case "perfil":
         return (
-          <section ref={perfilRef} className="w-full md:flex-row xs:flex-col space-y-6"id="dataUserAndCompany">
+          <section ref={perfilRef} className="w-full md:flex-row xs:flex-col max-xs:flex-col space-y-6"id="dataUserAndCompany">
             <h2 className="text-2xl text-orange-500 font-bold">Mi Perfil</h2>
-            <div className="flex md:flex-row xs:flex-col md:space-x-4">
+            <div className="flex md:flex-row xs:flex-col max-xs:flex-col md:space-x-4">
               {/* Tarjeta de Datos Personales */}
-              <div className="bg-white rounded-xl md:w-1/3 xs:w-full xs:m-2 md:0 md:min-h-screen xs:h-auto border-black p-3 relative">
+              <div className="bg-white rounded-xl md:w-1/3 xs:w-full max-xs:w-full max-xs:m-1 xs:m-2 md:0 md:min-h-screen xs:h-auto max-xs:h-auto border-black p-3 relative">
                 <h3 className="text-xl font-bold text-orange-500">Datos Personales</h3>
                 {isEditing ? (
-          <div className="space-x-2 mt-4">
+          <div className="xs:space-x-2  max-xs:space-x-0 mt-4">
                             <div className="flex justify-between mt-4">
-                  <button className="bg-red-500 text-white p-2 rounded" onClick={handleCancelEdit}>Cancelar</button>
-                  <button className="bg-blue-500 text-white p-2 rounded" onClick={handleSaveChanges}>Guardar Cambios</button>
+                  <button className="bg-red-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleCancelEdit}>Cancelar</button>
+                  <button className="bg-blue-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleSaveChanges}>Guardar Cambios</button>
                 </div>
           </div>
         ) : (<button className="absolute top-0 right-0 mt-2 mr-2">
@@ -303,13 +303,13 @@ const Usuario = ({
               </div>
 
               {/* Tarjeta de Datos de la Empresa */}
-              <div className="bg-white rounded-xl md:w-2/3 xs:w-full md:min-h-screen xs:h-auto xs:m-2 md:m-0 border-black p-3 relative md:my-2">
+              <div className="bg-white rounded-xl md:w-2/3 xs:w-full max-xs:w-full md:min-h-screen xs:h-auto max-xs:h-auto max-xs:m-1 xs:m-2 md:m-0 border-black p-3 relative md:my-2">
                 <h3 className="text-xl font-bold text-orange-500">Datos de la Empresa</h3>
                 {isEditing ? (
           <div className="space-x-2 mt-4">
                             <div className="flex justify-between mt-4">
-                  <button className="bg-red-500 text-white p-2 rounded" onClick={handleCancelEdit}>Cancelar</button>
-                  <button className="bg-blue-500 text-white p-2 rounded" onClick={handleSaveChanges}>Guardar Cambios</button>
+                  <button className="bg-red-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleCancelEdit}>Cancelar</button>
+                  <button className="bg-blue-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleSaveChanges}>Guardar Cambios</button>
                 </div>
           </div>
         ) : (<button className="absolute top-0 right-0 mt-2 mr-2 p-2">
@@ -518,7 +518,7 @@ const Usuario = ({
             <h2 className="text-orange-500 font-bold text-2xl">Mis Cursos</h2>
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-lg font-bold text-orange-500">Cursos</h2>
-              <span className="font-extrabold text-4xl justify-center items-center text-center">PROXIMAMENTE</span>
+              <span className="font-extrabold xs:text-4xl max-xs:text-2xl justify-center items-center text-center">PROXIMAMENTE</span>
             </div>
           </section>
         );
@@ -528,7 +528,7 @@ const Usuario = ({
           <section ref={mentoriaRef} className="w-full flex flex-col space-y-6">
             <div className="bg-white rounded-lg shadow-lg p-6">
               <h2 className="text-lg font-bold text-orange-500">Mentoría</h2>
-              <span className="font-extrabold text-4xl justify-center items-center text-center">PROXIMAMENTE</span>
+              <span className="font-extrabold xs:text-4xl max-xs:text-3xl justify-center items-center text-center">PROXIMAMENTE</span>
             </div>
           </section>
         );
@@ -569,35 +569,51 @@ const Usuario = ({
         </div>
       </section>
 
-      <div className="flex flex-row w-full min-h-screen">
+      <div className="flex xs:flex-row max-xs:flex-col w-full min-h-screen">
         {/* Menú estático en la izquierda */}
-        <aside className="w-1/4 bg-white rounded-xl p-4 h-full sticky top-0 z-20">
-          <ul className="space-y-2">
-            <li
-              className={`p-2 rounded cursor-pointer ${selectedSection === "perfil" ? "bg-blue-500 text-white" : "hover:bg-gray-300"}`}
-              onClick={() => setSelectedSection("perfil")}
-            >
-              Mi Perfil
-            </li>
-            <li
-              className={`p-2 rounded cursor-pointer ${selectedSection === "servicios" ? "bg-blue-500 text-white" : "hover:bg-gray-300"}`}
-              onClick={() => setSelectedSection("servicios")}
-            >
-              Mis Servicios
-            </li>
-            <li
-              className={`p-2 rounded cursor-pointer ${selectedSection === "cursos" ? "bg-blue-500 text-white" : "hover:bg-gray-300"}`}
-              onClick={() => setSelectedSection("cursos")}
-            >
-              Mis Cursos
-            </li>
-            <li
-              className={`p-2 rounded cursor-pointer ${selectedSection === "mentoria" ? "bg-blue-500 text-white" : "hover:bg-gray-300"}`}
-              onClick={() => setSelectedSection("mentoria")}
-            >
-              Mentoría
-            </li>
-          </ul>
+        <aside className="xs:w-1/4 max-xs:w-full bg-white rounded-xl p-4 h-full xs:sticky top-0 z-20">
+        <ul className="space-y-2 max-xs:grid max-xs:grid-cols-4 xs:flex xs:space-x-4 xs:space-y-0">
+              <li
+                className={`p-2 rounded cursor-pointer ${
+                  selectedSection === "perfil"
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-gray-300"
+                }`}
+                onClick={() => setSelectedSection("perfil")}
+              >
+                Mi Perfil
+              </li>
+              <li
+                className={`p-2 rounded cursor-pointer ${
+                  selectedSection === "servicios"
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-gray-300"
+                }`}
+                onClick={() => setSelectedSection("servicios")}
+              >
+                Mis Servicios
+              </li>
+              <li
+                className={`p-2 rounded cursor-pointer ${
+                  selectedSection === "cursos"
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-gray-300"
+                }`}
+                onClick={() => setSelectedSection("cursos")}
+              >
+                Mis Cursos
+              </li>
+              <li
+                className={`p-2 rounded cursor-pointer ${
+                  selectedSection === "mentoria"
+                    ? "bg-blue-500 text-white"
+                    : "hover:bg-gray-300"
+                }`}
+                onClick={() => setSelectedSection("mentoria")}
+              >
+                Mentoría
+              </li>
+            </ul>
 
           {/* Información del usuario */}
           <div className="mt-4 flex items-center justify-center">
@@ -606,7 +622,7 @@ const Usuario = ({
           <path fill="#0853fc" fillRule="evenodd" d="M12 3C10.3431 3 9 4.34315 9 6C9 7.65685 10.3431 9 12 9C13.6569 9 15 7.65685 15 6C15 4.34315 13.6569 3 12 3ZM7 6C7 3.23858 9.23858 1 12 1C14.7614 1 17 3.23858 17 6C17 8.76142 14.7614 11 12 11C9.23858 11 7 8.76142 7 6Z" clipRule="evenodd" className="color1e93ff svgShape"></path>
           <path fill="#0853fc" fillRule="evenodd" d="M3 20C3 16.134 6.13401 13 10 13H14C17.866 13 21 16.134 21 20C21 21.6569 19.6569 23 18 23H6C4.34315 23 3 21.6569 3 20ZM10 15C7.23858 15 5 17.2386 5 20C5 20.5523 5.44772 21 6 21H18C18.5523 21 19 20.5523 19 20C19 17.2386 16.7614 15 14 15H10Z" clipRule="evenodd" className="color024493 svgShape"></path>
         </svg>
-            <div className="ml-2 flex-col">
+            <div className="ml-2 xs:flex-col max-xs:flex-row">
                 <h3>ID:{idUsuario}</h3>
               <h2 className="text-lg font-semibold">{nombreUser } {apellidoUser }</h2>
               <br/>
@@ -626,11 +642,11 @@ const Usuario = ({
         </aside>
 
         {/* Sección dinámica */}
-        <section className="w-3/4 p-6 space-y-2 z-20">
+        <section className="xs:w-3/4 max-xs:w-full p-6 space-y-2 z-20">
           {renderSectionContent()}
           {modalVisible && (
   <div className="fixed inset-0 bg-orange-200 bg-opacity-70 flex items-center justify-center z-50">
-    <div className="bg-white rounded-lg p-6 w-1/3 shadow-lg text-center">
+    <div className="bg-white rounded-lg p-6 xs:w-1/3 max-xs:w-full shadow-lg text-center">
       <p>{modalMessage}</p>
       <div className="mt-4 space-x-2">
         <button

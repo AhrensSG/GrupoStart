@@ -31,8 +31,8 @@ const EstaticSign = () => {
       </div>
 
       {/* Contenedor del texto */}
-      <div className="absolute inset-0 flex flex-col md:justify-center items-center md:text-end xs:text-center xs:justify-items-start xs:align-text-top md:w-1/2 xs:w-auto h-full py-10 lg:py-20 ml-auto right-0 xs:px-[3%] md:px-0 md:mr-6">
-        <div className="xs:text-5xl md:text-6xl xl:text-7xl text-white leading-tight items-start justify-center static py-[15px] my-[5px]">
+      <div className="absolute inset-0 flex flex-col md:justify-center items-center md:text-end max-xs:text-center xs:text-center xs:justify-items-start max-xs:justify-start max-xs:align-text-top xs:align-text-top md:w-1/2 xs:w-auto max-xs:w-auto h-full py-10 lg:py-20 ml-auto right-0 xs:px-[3%] max-xs:px-[1%] md:px-0 md:mr-6">
+        <div className="max-xs:text-4xl xs:text-5xl md:text-6xl xl:text-7xl text-white leading-tight items-start justify-center static py-[15px] my-[5px]">
           <span className="font-bold uppercase drop-shadow-[0_10px_10px_rgba(0,0,0,0.25)]">
             EL FUTURO <span className="hidden md:inline"> <br /></span> ESTÁ AQUÍ
           </span>

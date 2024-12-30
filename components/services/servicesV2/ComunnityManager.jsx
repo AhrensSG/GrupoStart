@@ -156,7 +156,7 @@ const CommunityManager = () => {
   {/* Sección de Texto */}
   <div className="text-center mt-5 md:mt-10 lg:mt-14">
     <span className="sm:text-2xl md:text-4xl lg:text-5xl font-bold text-[#0853FC]">
-      Ayudamos a que tus redes<br />
+      Ayudamos a que tus redes <span className="hidden md:inline"> <br /></span>
       alcancen su máximo potencial.
     </span>
   </div>
@@ -166,7 +166,7 @@ const CommunityManager = () => {
       </section>
 
 {/* Section 3 */}
-<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-60px] sm:bottom-[-30px] xs:bottom-[-10px] sm:flex-col max-xs:flex-col">
+<section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-60px] sm:bottom-[-30px] xs:bottom-[-10px] max-xs:bottom-0 sm:flex-col max-xs:flex-col">
   <div className="flex md:flex-row w-full sm:flex-col max-xs:flex-col sm:items-center max-xs:items-center">
     {/* Text */}
     <div className="w-full relative flex flex-col md:items-start sm:items-center max-xs:items-center justify-center bg-grey-700 md:pl-[4%]">
@@ -206,7 +206,7 @@ const CommunityManager = () => {
 </section>
 
 {/* Section 4 */}
-<section className="relative bg-[#FFFFFF] max-xs:flex-col sm:flex-col md:flex-row md:mt-6 xs:my-8 max-xs:mt-16">
+<section className="relative bg-[#FFFFFF] max-xs:flex-col sm:flex-col md:flex-row md:mt-6 xs:my-8 max-xs:mt-6">
   <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%] sm:flex-row xs:flex-grow max-xs:flex-col xs:py-2 max-xs:py-8">
     {/* Image */}
     <div className="w-full flex justify-start pl-[4%] md:w-[50vw] md:mt-5 sm:w-[70vw] xs:w-[50vw] xs:margin-2 xs:justify-items-center max-xs:justify-items-center max-xs:w-auto max-xs:mt-12">

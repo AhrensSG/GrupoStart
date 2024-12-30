@@ -16,13 +16,13 @@ import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 sm:h-[556px] w-[307px] md:h-[600px] sm:w-auto sm:flex-grow  relative container flex flex-col pb-1">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 sm:h-[556px] w-[307px] md:h-[600px] sm:w-auto sm:flex-grow max-xs:w-full max-xs:h-auto  relative container flex flex-col pb-1">
       <div className="items-center justify-center text-center pt-5 pb-[12px]">
         <span className="text-[24px] font-bold items-center justify-center text-center rounded-medium border rounded-tl-lg rounded-br-lg bg-[#FB8A00] text-white py-2 px-6">
           {title}
         </span>
       </div>
-      <ul className="list-none pl-[33px] pr-[12px] lg:pt-[8px] h-[210px] w-[300px] flex-grow justify-center relative md:pt-3 md:pb-0 md:h-auto sm:px-1 sm:pt-10 xs:h-auto xs:w-auto xs:px-1 xs:pt-10">
+      <ul className="list-none pl-[33px] pr-[12px] lg:pt-[8px] h-[210px] w-[300px] flex-grow justify-center relative md:pt-3 md:pb-0 md:h-auto sm:px-1 sm:pt-10 xs:h-auto xs:w-auto max-xs:w-auto max-xs:h-auto xs:px-1 xs:pt-10">
         {" "}
         {/* Changed list style for spacing */}
         {features.map((feature, index) => (
@@ -92,7 +92,7 @@ const DesktopBrandingSection = () => {
     >
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       <div className="items-center justify-center text-center py-12">
-        <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#FFFFFF] text-[#FB8A00] py-3 px-[100px]">
+        <span className="xs:text-3xl max-xs:text-xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#FFFFFF] text-[#FB8A00] py-3 xs:px-[100px] max-xs:px-4">
           Packs de tarjetas
         </span>
       </div>

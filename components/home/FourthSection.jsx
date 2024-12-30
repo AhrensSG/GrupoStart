@@ -19,10 +19,10 @@ const FourthSection = () => {
   />
   <div className="xl:mt-12 text-center text-black max-w-md lg:pb-24 xl:pb-20 justify-center items-center">
     <div className="w-full h-full flex flex-col items-center md:gap-4 lg:gap-5 xl:gap-5">
-      <h2 className="lg:text-4xl xs:text-4xl xl:text-5xl md:text-white xs:text-gray-500 font-extrabold uppercase">
+      <h2 className="lg:text-4xl xs:text-4xl max-xs:text-3xl xl:text-5xl md:text-white max-xs:text-gray-500 xs:text-gray-500 font-extrabold uppercase">
         Fundadores
       </h2>
-      <p className="lg:text-2xl xl:text-3xl xs:text-xl font-normal xs:w-auto md:w-full lg:w-[300px] xl:w-[450px] xs:pb-5 md:pb-10 xl:pb-24">
+      <p className="lg:text-2xl xl:text-3xl xs:text-xl font-normal xs:w-auto md:w-full lg:w-[300px] xl:w-[450px]  max-xs:pb-2 xs:pb-5 md:pb-10 xl:pb-24">
         El destino une a estos <span className="hidden md:inline"> <br /></span>
          emprendedores en una <span className="hidden md:inline"> <br /></span>
          historia un poco cómica en <span className="hidden md:inline"> <br /></span>
@@ -41,7 +41,7 @@ const FourthSection = () => {
   />
 </div>
 
-      <div className="w-full flex flex-col justify-center items-center xl:py-0 lg:py-8 md:py-12 sm:py-16 lg:gap-14">
+      <div className="w-full flex flex-col justify-center items-center xl:py-0 lg:py-8 md:py-12 sm:py-16 max-xs:py-[8vh] lg:gap-14">
         <div className="relative md:-top-[108px] xl:-top-36 sm:-top-[26px]">
           <Link href="/about">
             <button className="flex flex-row items-center justify-center bg-[#0853FC] p-1 px-6 text-white text-2xl font-light rounded-tl-2xl rounded-br-2xl border border-blue-500">

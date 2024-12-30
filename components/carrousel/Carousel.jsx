@@ -62,11 +62,11 @@ const Carousel = () => {
             </button>
 
             {/* Carrusel */}
-            <div className="flex items-center justify-center gap-6 sm:gap-8 md:gap-8 lg:gap-10 xl:gap-10 relative">
+            <div className="flex items-center justify-center max-xs:gap-4 xs:gap-6 sm:gap-8 md:gap-8 lg:gap-10 xl:gap-10 relative">
                 {itemsToShow.map((image, index) => (
                     <div
                         key={index}
-                        className="flex-shrink-0 w-[100px] sm:w-[120px] md:w-[140px] lg:w-[155px] xl:w-[160px] h-[100px] sm:h-[120px] md:h-[140px] lg:h-[155px] xl:h-[160px]"
+                        className="flex-shrink-0 max-xs:w-[80px] xs:w-[100px] sm:w-[120px] md:w-[140px] lg:w-[155px] xl:w-[160px] h-[100px] sm:h-[120px] md:h-[140px] lg:h-[155px] xl:h-[160px]"
                     >
                         <Image
                             src={image.src}

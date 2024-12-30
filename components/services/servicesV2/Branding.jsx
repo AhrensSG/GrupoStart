@@ -45,34 +45,34 @@ const Branding = () => {
       }}
     >
           {/*Section 1*/}
-          <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%] md:flex-row sm:flex-col xs:flex-col">
-            <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center"
+          <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%] md:flex-row sm:flex-col xs:flex-col max-xs:flex-col">
+            <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center max-xs:text-center"
                 style={{
                   maxWidth: "1600px",
                   paddingLeft: "2%",
                   paddingRight: "2%",
                 }}>
-              <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start items-start text-start sm:text-center">
-                Branding<br />y diseño<br />personalizado
+              <span className="text-5xl text-[#FB8A00] pb-[15px] font-bold justify-start md:items-start md:text-start sm:text-center max-xs:text-center max-xs:items-center">
+                Branding <span className="hidden md:inline"> <br /></span>y diseño <span className="hidden md:inline"> <br /></span>personalizado
               </span>
-              <div className="pt-[20px] gap-16 sm:justify-center">
-                <span className="text-white text-xl w-full sm:text-center">
-                  Posicioná tu marca con diseños<br />
-                  exclusivos y una identidad única.<br />
-                  Creamos soluciones que reflejan<br />
-                  tus valores, logrando conectar<br />
+              <div className="pt-[20px] gap-16 sm:justify-center max-xs:justify-center">
+                <span className="text-white text-xl w-full sm:text-center max-xs:text-center">
+                  Posicioná tu marca con diseños <span className="hidden md:inline"> <br /></span>
+                  exclusivos y una identidad única. <span className="hidden md:inline"> <br /></span>
+                  Creamos soluciones que reflejan <span className="hidden md:inline"> <br /></span>
+                  tus valores, logrando conectar <span className="hidden md:inline"> <br /></span>
                   emocionalmente con tus clientes.
                 </span>
               </div>
-              <div className="py-[30px] sm:justify-center">
-                <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded text-md" onClick={scrollToSection3}>
+              <div className="py-[30px] sm:justify-center max-xs:justify-center">
+                <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 xs:px-4 max-xs:px-2 rounded text-md" onClick={scrollToSection3}>
                   Conocer Más
                 </button>
               </div>
             </div>
 
             {/* Reproductor de video */}
-            <div className="flex items-end justify-end w-full md:pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-full sm:h-full xs:w-full xs:h-auto sm:flex-row xs:flex-row">
+            <div className="flex md:items-end md:justify-end w-full md:pr-[2%] rounded lg:w-full lg:h-full md:w-1/2 md:h-1/2 sm:w-full sm:h-full xs:w-full xs:h-auto sm:flex-row xs:flex-row max-xs:px-0 max-xs:w-full max-xs:h-auto max-xs:flex">
               <div style={{
                     paddingTop: '5px',
                     width: '842px',
@@ -117,12 +117,12 @@ const Branding = () => {
                   width={270}
                   height={300}
                   quality={100}
-                  className={`xs:w-[160px] xs:mt-[-20vw] sm:w-[200px] sm:mt-[-30vw] md:w-[250px] md:mt-[-30vw] lg:w-[300px] lg:mt-[-30vw] xl:w-[350px] xl:mt-[-35vw]`}
+                  className={`max-xs:w-[115px] max-xs:mt-[-35%] max-xs:translate-y-[-30%] xs:w-[160px] xs:mt-[-20vw] sm:w-[200px] sm:mt-[-30vw] md:w-[250px] md:mt-[-30vw] lg:w-[300px] lg:mt-[-30vw] xl:w-[350px] xl:mt-[-35vw]`}
                 />
               </div>
               <div className="text-center md:mt-[5px] xs:mt-[-2px]">
                 <span className=" font-bold my-4 text-[#0853FC] text-center text-2xl md:text-4xl lg:text-5xl justify-center items-center flex-col relative z-15">
-                  Sumate a los negocios<br />
+                  Sumate a los negocios <span className="hidden md:inline"> <br /></span>
                   que ya tienen sus tarjetas QR
                 </span>
               </div>
@@ -131,7 +131,7 @@ const Branding = () => {
           </section>
           {/* Section 3 */}
           <section ref={section3Ref} className="relative flex flex-wrap w-full justify-center items-center bg-white md:pb-[77px] sm:pb-[10px] sm:flex-row">
-          <div className="flex flex-col md:flex-row w-full p-6"
+          <div className="flex max-xs:flex-col md:flex-row w-full p-6"
           style={{
             maxWidth: "1600px",
             paddingLeft: "2%",
@@ -150,7 +150,7 @@ const Branding = () => {
                 quality={100}
               />
             </div> */}
-          <div className="w-full md:justify-start xs:justify-center xs:items-center xs:bottom-[40vh] md:items-start md:w-3/4 md:pl-[4%]">
+          <div className="w-full md:justify-start xs:justify-center max-xs:justify-center max-xs:items-center xs:items-center xs:bottom-[40vh] md:items-start md:w-3/4 md:pl-[4%]">
                 <Image
                   src={"/services/imgSct3HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500"
@@ -163,12 +163,12 @@ const Branding = () => {
               </div>
          {/* Text */}
               <div className="w-full relative flex flex-col md:items-end xs:items-center justify-center bg-grey-700 md:pr-[3%] pt-2">
-              <span className="font-bold mb-[28px] text-[#FB8A00] md:text-end xs:text-center xs:text-2xl md:text-3xl lg:text-5xl justify-center">
+              <span className="font-bold mb-[28px] text-[#FB8A00] md:text-end xs:text-center max-xs:text-center max-xs:text-xl xs:text-2xl md:text-3xl lg:text-5xl justify-center">
                   ¿Por qué utilizar un <span className="hidden md:inline"> <br /></span>
                   código QR en tus tarjetas <span className="hidden md:inline"> <br /></span>
                   de presentación?
                 </span>
-                <span className="text xs:text-xl md:text-end xs:text-center md:text-2xl leading-relaxed tracking-wide">
+                <span className="text xs:text-xl md:text-end xs:text-center max-xs:text-center md:text-2xl leading-relaxed tracking-wide">
                     Los QR son una herramienta poderosa <span className="hidden md:inline"> <br /></span>
                     capaz de almacenar información en ellos <span className="hidden md:inline"> <br /></span>
                     como por ejemplo una dirección web. <span className="hidden md:inline"> <br /></span>
@@ -263,9 +263,9 @@ const Branding = () => {
 
           {/*Section 6*/}
           <section className="w-full relative flex">
-          <div className="flex md:flex-row xs:flex-col w-full bg-[#0051FF] p-6">
+          <div className="flex md:flex-row xs:flex-col max-xs:flex-col w-full bg-[#0051FF] p-6">
               {/* Image */}
-              <div className="md:w-full xs:w-auto md:pl-[3%] md:m-0 xs:m-6 xs:pl-0">
+              <div className="md:w-full xs:w-auto max-xs:w-auto md:pl-[3%] md:m-0 xs:m-6 xs:pl-0">
                 <Image
                   src={"/services/imgSct6HU.png"}
                   className="object-cover transition-opacity opacity-0 duration-500 z-10"
@@ -278,12 +278,12 @@ const Branding = () => {
               </div>
               <br />
               {/* Text */}
-              <div className="w-full relative flex flex-col items-end justify-center text-center pr-[4%]">
-                <span className="text-4xl font-bold mb-[2px] text-[#FB8A00] text-end md:text-4xl lg:text-5xl pb-5">
+              <div className="w-full relative flex flex-col xs:items-end max-xs:items-center justify-center text-center pr-[4%]">
+                <span className="max-xs:text-3xl font-bold mb-[2px] text-[#FB8A00] xs:text-end max-xs:text-center md:text-4xl lg:text-5xl pb-5">
                   Una landing page <span className="hidden md:inline"> <br /></span>
                   solo para vos
                 </span>
-                <span className="font-light mb-[40px] text-end text-[#FFFFFF] lg:text-3xl md:text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
+                <span className="font-light mb-[40px] xs:text-end max-xs:text-center text-[#FFFFFF] lg:text-3xl md:text-2xl leading-relaxed tracking-wide" style={{top: -2}}>
                     El QR enviará a la gente que quiera <span className="hidden md:inline"> <br /></span>
                     saber más sobre vos a landing <span className="hidden md:inline"> <br /></span>
                     page, donde tendrán una <span className="hidden md:inline"> <br /></span>
@@ -294,7 +294,7 @@ const Branding = () => {
                     seguirte en tus redes sociales.
                 </span>
                 
-                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold py-2 px-4 rounded item-center flex flex-col gap-2 justify-center text-2xl hover:text-[#0051FF]  duration-300 shadow-sm shadow-black border-orange-500 " onClick={scrollToPlanCards}>
+                  <button className="bg-[#FB8A00] hover:bg-[#FB8A00] text-white font-bold xs:py-2 max-xs:py-1 max-xs:px-2 xs:px-4 rounded items-center flex flex-col gap-2 justify-center xs:text-2xl max-xs:text-lg hover:text-[#0051FF]  duration-300 shadow-sm shadow-black border-orange-500 " onClick={scrollToPlanCards}>
                     Solicitar
                   </button>
                 
@@ -307,7 +307,7 @@ const Branding = () => {
     {/* Columna izquierda: Lista + Texto */}
     <div className="flex flex-col justify-start">
       {/* Lista */}
-      <ul className="list pl-[5%] md:space-y-[58px] xs:space-y-[12px] text-left font-bold md:text-3xl xs:text-2xl text-orange-500">
+      <ul className="list pl-[5%] md:space-y-[58px] xs:space-y-[12px] max-xs:space-y-[12px] text-left font-bold md:text-3xl xs:text-2xl max-xs:text-lg text-orange-500">
         {[
           "Diseño<br/>personalizado",
           "Landing page<br/>completa",
@@ -317,7 +317,7 @@ const Branding = () => {
         ].map((item, index) => (
           <li key={index} className="relative flex items-center">
             {/* Punto naranja */}
-            <div className="md:w-[58px] xs:w-[32px] xs:h-[32px] md:h-[58px] rounded-full bg-[#FB8A00] mr-4 flex-shrink-0" />
+            <div className="md:w-[58px] xs:w-[32px] xs:h-[32px] max-xs:w-[16px] max-xs:h-[16px] md:h-[58px] rounded-full bg-[#FB8A00] mr-4 flex-shrink-0" />
             <span className="leading-tight">
               {item.split("<br/>").map((line, i) => (
                 <React.Fragment key={i}>
@@ -365,15 +365,15 @@ const Branding = () => {
           {/*Section 8*/}
           <section className="w-full bg-[#0051FF] text-white px-[2%] sm:flex-row">
             {/* Title */}
-            <div className="text-center justify-center items-center text-2xl md:text-5xl lg:text-5xl">
+            <div className="text-center justify-center items-center max-xs:text-2xl md:text-5xl lg:text-5xl">
               <h2 className="text-[#FFFFFF] font-semibold pt-4">
-                ¿Tienes alguna duda sobre este servicio<br />
+                ¿Tienes alguna duda sobre este servicio <span className="hidden md:inline"> <br /></span>
                 o quieres pedir una cantidad personalizada?
               </h2>
             </div>
         <div className="flex relative items-center justify-center text-center md:mx-[60px] md:px-[270px] xs:mx-auto xs:px-auto py-8">
         
-        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth py-1 px-4 rounded text-md text-2xl mx-auto" onClick={handleClick}>
+        <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-ligth xs:py-1 xs:px-4 max-xs:py-1 max-xs:px-2 rounded text-md xs:text-2xl max-xs:text-lg mx-auto" onClick={handleClick}>
                 Hablá con un asesor
         </button>
         

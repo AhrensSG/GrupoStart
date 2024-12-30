@@ -1,12 +1,14 @@
 import React from "react";
 import ServiceCard from "./auxiliarComponents/ServiceCard";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 
 const SecondSection = () => {
   return (
-    <section id="services" className="w-full bg-[#0853FC] py-8 sm:px-6 sm:py-12 md:px-[5.5%]">
-      <div className="max-w-7xl mx-auto flex flex-col items-center gap-12 lg:gap-16">
+    <section id="services" className="w-full bg-[#0853FC] py-8 sm:px-6 sm:py-12 md:px-[5.5%] max-xs:relative">
+      <div className="xs:max-w-7xl mx-auto flex flex-col items-center md:gap-12 lg:gap-16 max-xs:w-full">
         <h2 className="text-2xl sm:text-3xl lg:text-3xl xl:text-5xl text-white font-bold text-center mb-8">
           CONOCÉ NUESTROS SERVICIOS
         </h2>
@@ -17,9 +19,34 @@ const SecondSection = () => {
     centeredSlides={true}
     slidesPerView="auto" // Auto para ajuste flexible, pero se puede poner un valor fijo si es necesario
     spaceBetween={15} // Espaciado entre tarjetas
-    className="w-full max-w-md overflow-hidden"
+    className="w-full xs:max-w-md max-xs:max-w-sm overflow-hidden relative max-xs:px-[1%] max-xs:mx-[1%]"
+    pagination={{
+      clickable: true,
+      dynamicBullets: true,
+    }}
+    modules={[Pagination]}
   >
-    <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+    {/* Estilos globales para personalizar los puntos */}
+  <style jsx global>{`
+    .swiper-pagination-bullet {
+      background-color: #ffa500; /* Naranja */
+      opacity: 0.5; /* Transparencia */
+      width: 12px; /* Tamaño del punto */
+      height: 12px;
+      paddingTop: 10vh;
+    }
+    .swiper-pagination-bullet-active {
+      background-color: #ff8c00; /* Naranja más oscuro para el activo */
+      opacity: 1; /* Sin transparencia */
+    }
+    .swiper-pagination {
+      paddingTop: 12vh; /* Más abajo */
+      top: 12vh;
+      bottom: -60px;
+      position: relative;
+    }
+  `}</style>
+    <SwiperSlide className="md:w-[90%] sm:w-auto max-xs:w-[5vw] p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg">
       <ServiceCard
             img={"/services/Jirafe3.svg"}
@@ -38,7 +65,7 @@ const SecondSection = () => {
           />
       </div>
     </SwiperSlide>
-    <SwiperSlide className="w-[90%] sm:w-[85%] p-4 flex-shrink-0">
+    <SwiperSlide className="md:w-[90%] sm:w-[85%] max-xs:w-[5vw] p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg ">
       <ServiceCard
             img={"/services/Jirafe2.svg"}
@@ -55,7 +82,7 @@ const SecondSection = () => {
           />
       </div>
     </SwiperSlide>
-    <SwiperSlide className="w-[90%] sm:w-full p-4 flex-shrink-0">
+    <SwiperSlide className="md:w-[90%] sm:w-full max-xs:w-[5vw] p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg">
       <ServiceCard
             img={"/services/Jirafe12.svg"}

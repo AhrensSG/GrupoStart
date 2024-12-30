@@ -15,7 +15,7 @@ import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contratar", crossedItems = [] }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col md:pb-1 sm:pb-5 sm:h-1/2 sm:w-full md:w-full md:h-full">
+    <div className="bg-[#FFFFFF] shadow-lg rounded-lg border border-gray-300 leading-8 h-[536px] w-[307px] relative container flex flex-col md:pb-1 sm:pb-5 sm:h-1/2 sm:w-full max-xs:w-full md:w-full md:h-full">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[7px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
@@ -24,9 +24,9 @@ const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contra
       </div>
 
       {/* Lista de características */}
-      <ul className="list-none pl-[33px] pr-[10px] pt-[5px] h-[265px] sm:h-1/4 md:h-3/4 flex-grow justify-center">
+      <ul className="list-none pl-[33px] pr-[10px] pt-[5px] h-[265px] sm:h-1/4 md:h-3/4 max-xs:h-auto max-xs:justify-items-center max-xs:space-y-3 flex-grow justify-center">
         {features.map((feature, index) => (
-          <li key={index} className="flex items-center w-full mb-2">
+          <li key={index} className="flex items-center w-full mb-2 max-xs:space-y-2">
             <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
               <Image
                 src={crossedItems.includes(index) ? "/services/IconX.svg" : "/services/CheckIcon.svg"}
@@ -103,7 +103,7 @@ const DesktopWebDevelopmentSection = () => {
     <div className="py-8 md:px-[2%] lg:px-[4%] xl:px-[8%] xxl:px-[16%] w-full flex-row relative justify-center" style={{ background: '#FFFFFF' }}>
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       <div className="items-center justify-center text-center py-12">
-        <span className="text-3xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#0853FC] text-white py-3 px-[100px]">Planes de Identidad</span>
+        <span className="xs:text-3xl max-xs:text-2xl font-bold text-center items-center justify-center mb-8 rounded-medium rounded-tl-xl rounded-br-xl bg-[#0853FC] text-white py-3 xs:px-[100px] max-xs:px-6">Planes de Identidad</span>
       </div>
 
       {/* Carrusel en pantallas pequeñas */}
@@ -140,7 +140,7 @@ const DesktopWebDevelopmentSection = () => {
             position: relative;
           }
         `}</style>
-          <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
+          <SwiperSlide className="w-full p-4 flex-shrink-0">
             <div className="rounded-lg shadow-lg bg-white border border-gray-300">
               <PlanCard
                 title="Identidad Simplificada"
@@ -160,7 +160,7 @@ const DesktopWebDevelopmentSection = () => {
               />
             </div>
           </SwiperSlide>
-          <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
+          <SwiperSlide className="w-full p-4 flex-shrink-0">
             <div className="rounded-lg shadow-lg bg-white border border-gray-200">
               <PlanCard
                 title="Identidad Standar"

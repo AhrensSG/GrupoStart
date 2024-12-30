@@ -22,10 +22,10 @@ const Chat = () => {
   return (
     <>
       {/* Floating Button */}
-      <div className="fixed bottom-4 z-20 flex flex-col items-center space-y-4 right-4 sm:right-0 md:right-10 lg:right-11 xl:right-12 sm:left-auto">
+      <div className="fixed bottom-4 z-20 flex flex-col items-center xs:space-y-4 max-xs:space-y-2 right-4 sm:right-0 md:right-10 lg:right-11 xl:right-12 sm:left-auto">
         {/* Botón secundario superior flotante */}
         <button
-          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center lg:w-[70%] lg:h-[30%] md:w-[68%] md:h-[30%] sm:w-[60%] sm:h-[30%]"
+          className="bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center lg:w-[70%] lg:h-[30%] md:w-[68%] md:h-[30%] sm:w-[60%] sm:h-[30%] max-xs:w-[6vh] max-xs:h-[6vh]"
           onClick={handleButtonClick}
         >
           <Image
@@ -52,7 +52,7 @@ const Chat = () => {
           <div className="md:justify-items-end">
             {/* Botón flotante principal con SVG */}
             <button
-              className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center relative w-full h-full"
+              className="bg-orange-500 text-white p-5 rounded-full shadow-lg hover:bg-orange-600 focus:outline-none transition-all duration-300 ease-in-out justify-items-center relative xs:w-full xs:h-full max-xs:w-[8vh] max-xs:h-[8vh]"
               onClick={handleClick}
             >
               <Image

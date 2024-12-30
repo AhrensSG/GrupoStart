@@ -26,21 +26,21 @@ const About = () => {
       <section className="relative bg-[#0853FC] flex w-full px-[5%] justify-items-center flex-col">
           {/* Sección de texto y botón */}
           <div className="w-full relative flex flex-col justify-center items-center text-center py-2">
-            <span className="lg:text-5xl md:text-3xl xs:text-2xl font-bold text-[#FB8A00] text-center justify-center items-center leading-snug">
-              Todo sobre nosotros:<br />
-              nuestra historia, objetivos, filosofía,<br />
-              visión y proyectos futuros<br/>
+            <span className="lg:text-5xl md:text-3xl xs:text-2xl font-bold text-[#FB8A00] text-center justify-center items-center relative leading-snug">
+              Todo sobre nosotros: <span className="hidden md:inline"> <br /></span>
+              nuestra historia, objetivos, filosofía, <span className="hidden md:inline"> <br /></span>
+              visión y proyectos futuros <span className="hidden md:inline"> <br /></span>
             </span>
             <br/>
-              <span className="lg:text-xl sm:text-lg xs:text-md text-white text-center flex flex-col justify-center items-center lg:w-[1000px] lg:h-[300px] md:w-auto md:h-auto sm:px-[5%] leading-relaxed">
-                Somos una agencia de marketing completa de 360 grados,<br />
-                enfocada en conectar a los negocios al mundo digital y generar<br />
-                resultados positivos para nuestros clientes.<br />
+              <span className="lg:text-xl sm:text-lg xs:text-md text-white text-center flex flex-col justify-center items-center relative lg:w-auto lg:h-auto md:w-auto md:h-auto sm:px-[5%] leading-relaxed">
+                Somos una agencia de marketing completa de 360 grados, <span className="hidden md:inline"> <br /></span>
+                enfocada en conectar a los negocios al mundo digital y generar <span className="hidden md:inline"> <br /></span>
+                resultados positivos para nuestros clientes. <span className="hidden md:inline"> <br /></span>
                 <br />
-                Pensamos la estrategia adecuada, creamos contenidos,<br />
-                publicidad efectiva, imágenes y videos profesionales, estamos en<br />
-                varios países ayudando a negocios de todos los niveles,<br />
-                desde emprendedores hasta empresarios corporativos.<br/>
+                Pensamos la estrategia adecuada, creamos contenidos, <span className="hidden md:inline"> <br /></span>
+                publicidad efectiva, imágenes y videos profesionales, estamos en <span className="hidden md:inline"> <br /></span>
+                varios países ayudando a negocios de todos los niveles, <span className="hidden md:inline"> <br /></span>
+                desde emprendedores hasta empresarios corporativos. <span className="hidden md:inline"> <br /></span>
               </span>
             </div>
       </section>
@@ -70,7 +70,7 @@ const About = () => {
             width={338}
             height={338}
             quality={100}
-            className="lg:w-[100%] lg:h-[100%] relative lg:-top-[2%] md:w-[12vh] md:h-[12vh] md:-pt-[3vh] md:bottom-0 md:-mt-[10vh] xs:w-[10vh]"
+            className="lg:w-[100%] lg:h-[100%] relative lg:-top-[2%] md:w-[12vh] md:h-[12vh] md:-pt-[3vh] md:bottom-0 md:-mt-[10vh] xs:w-[10vh] max-xs:w-[12vh] max-xs:-mt-[25%]"
             style={{
               zIndex: 15,
               position: "relative",
@@ -82,7 +82,7 @@ const About = () => {
 
         {/* Text section */}
         <div className="text-center lg:pt-[1%] md:mt-[5%] mb-[4%] relative px-[1%]">
-          <span className="xs:text-3xl md:text-4xl lg:text-6xl font-bold text-[#0853FC] leading-tight">
+          <span className="max-xs:text-xl xs:text-3xl md:text-4xl lg:text-6xl font-bold text-[#0853FC] leading-tight">
             Trabajamos con negocios<br />
             en todos los niveles de desarrollo
             </span>
@@ -98,8 +98,8 @@ const About = () => {
 
       {/* Section 3 - Línea de tiempo */}
       <section className="bg-[#FFFFFF] w-full flex flex-col items-center justify-center">
-        <h3 className="lg:text-3xl sm:text-xl xs:text-lg font-light text-black justify-center text-center items-center">Historia</h3>
-        <h2 className="lg:text-5xl md:text-3xl xs:text-xl font-bold mb-8 text-[#FB8A00]">Así nació Start</h2>
+        <h3 className="lg:text-3xl sm:text-xl max-xs:text-lg font-light text-black justify-center text-center items-center">Historia</h3>
+        <h2 className="lg:text-5xl md:text-3xl max-xs:text-xl font-bold mb-8 text-[#FB8A00]">Así nació Start</h2>
 
         
           {/* 2022 */}
@@ -124,7 +124,7 @@ const About = () => {
                 height={328}
                 className="rounded-full border-4 border-blue-500"
               />
-              <p className="text-2xl font-bold mt-4">Ivan E. Ayala</p>
+              <p className="xs:text-2xl max-xs:text-lg font-bold mt-4">Ivan E. Ayala</p>
               <p className="text-lg">CEO y Co Fundador</p>
             </div>
 
@@ -136,20 +136,20 @@ const About = () => {
                 height={328}
                 className="rounded-full border-4 border-blue-500"
               />
-              <p className="text-2xl font-bold mt-4">Sebastian D. Vera</p>
+              <p className="xs:text-2xl max-xs:text-lg font-bold mt-4">Sebastian D. Vera</p>
               <p className="text-lg">CEO y Co Fundador</p>
             </div>
           </div>
     </div>
 {/* Sección de objetivos */}
-<div className="flex flex-col h-auto md:items-start lg:justify-center md:text-start pt-7 relative lg:w-[100%] md:pl-0 md:w-[90%] md:justify-start lg:left-[13.5%] md:mt-[8vh] md:mr-[4vh] sm:left-0 xs:items-center xs:text-center">
-  <div className="bg-[#FB8A00] text-white font-bold px-[66px] py-[11px] xs:text-2xl rounded-tl-full rounded-br-full xl:mb-3 lg:mb-2 min-lg:mr-[10%] max-lg:mr-[6%] md:mb-0 md:mt-8 justify-start md:text-left xs:text-center xs:w-auto flex-grow relative min-md:mr-2">
+<div className="flex flex-col h-auto md:items-start lg:justify-center md:text-start pt-7 relative lg:w-[100%] md:pl-0 md:w-[90%] md:justify-start lg:left-[13.5%] md:mt-[8vh] md:mr-[4vh] sm:left-0 xs:items-center xs:text-center max-xs:items-center max-xs:text-center mx-1">
+  <div className="bg-[#FB8A00] text-white font-bold px-[66px] py-[11px] xs:text-2xl rounded-tl-full rounded-br-full xl:mb-3 lg:mb-2 min-lg:mr-[10%] max-lg:mr-[6%] md:mb-0 md:mt-8 justify-start md:text-left xs:text-center xs:w-auto max-xs:w-auto max-xs:text-center max-xs:items-center max-xs:mx-1 flex-grow relative min-md:mr-2">
     Objetivos que nos inspiran
   </div>
 
   <br />
 
-  <span className="lg:block xs:px-[2%] leading-relaxed text-black lg:text-xl md:text-lg xs:text-lg md:text-start xs:text-center justify-center md:items-start xs:items-center xl:ml-[0%] lg:w-2/3 lg:pr-[16%] md:w-[45vh] md:mr-[8%] relative lg:left md:flex-grow md:justify-between md:static">
+  <span className="lg:block max-xs:px-[1%] xs:px-[2%] leading-relaxed text-black lg:text-xl md:text-lg xs:text-lg md:text-start xs:text-center justify-center md:items-start xs:items-center max-xs:items-center max-xs:text-center xl:ml-[0%] lg:w-2/3 lg:pr-[16%] md:w-[45vh] md:mr-[8%] relative lg:left md:flex-grow md:justify-between md:static">
     Start se fundó en Formosa Argentina a comienzos del año 2023, <span className="hidden md:inline"> <br /></span>
     aunque nuestra historia comienza mucho antes con el objetivo de <span className="hidden md:inline"> <br /></span>
     erradicar uno de los problemas más grandes presentes en todos <span className="hidden md:inline"> <br /></span>
@@ -160,7 +160,7 @@ const About = () => {
 
 <div className="w-full pb-[2vh] lg:px-6 lg:w-[70%] md:w-[105%]">
   {/* 2do Bloque */}
-  <div className="lg:w-full md:w-[95%] py-[2vh] flex flex-col md:flex-row items-start justify-center md:text-end xs:text-center lg:px-4">
+  <div className="lg:w-full md:w-[95%] py-[2vh] flex flex-col md:flex-row items-start justify-center md:text-end xs:text-center max-xs:text-center lg:px-4">
     {/* Línea recta para XS y SM */}
     <div className="block md:hidden w-[2px] h-[50px] bg-[#0853FC] mx-auto"></div>
 
@@ -171,8 +171,8 @@ const About = () => {
       </svg>
     </div>
 
-    <div className="lg:w-full md:pl-6 pt-6 lg:pl-0 xs:px-[2%]">
-      <span className=" md:text-end xs:text-center justify-center md:items-end xs:items-center lg:text-xl xs:text-lg leading-relaxed" style={{ top: 500, bottom: -70 }}>
+    <div className="lg:w-full md:pl-6 pt-6 lg:pl-0 xs:px-[2%] max-xs:px-[1%]">
+      <span className=" md:text-end xs:text-center max-xs:text-center justify-center md:items-end xs:items-center max-xs:items-center lg:text-xl xs:text-lg leading-relaxed" style={{ top: 500, bottom: -70 }}>
         Culminaba la pandemia del covid-19 que tanto afligió al <span className="hidden md:inline"> <br /></span>
         mundo, Iván organizaba un evento de entretenimiento <span className="hidden md:inline"> <br /></span>
         y relaciones públicas, en ese momento se encontraba <span className="hidden md:inline"> <br /></span>
@@ -184,12 +184,12 @@ const About = () => {
   </div>
 
   {/* 3er Bloque */}
-  <div className="lg:px-0 w-full pt-6 flex flex-col md:flex-row md:text-start md:items-start xs:text-center xs:items-center justify-center xs:px-[2%]">
-    <div className="flex xs:flex-col md:flex-row lg:justify-between xs:justify-center lg:w-full md:w-[83%] xs:text-center xs:justify-items-center">
+  <div className="lg:px-0 w-full pt-6 flex flex-col md:flex-row md:text-start md:items-start xs:text-center max-xs:text-center max-xs:items-center xs:items-center justify-center xs:px-[2%] max-xs:px-[1%]">
+    <div className="flex max-xs:flex-col xs:flex-col md:flex-row lg:justify-between xs:justify-center lg:w-full md:w-[83%] xs:text-center xs:justify-items-center">
       {/* Línea recta para XS y SM */}
       <div className="block md:hidden w-[2px] h-[50px] bg-[#0853FC] mx-auto mb-3"></div>
-      <div className="lg:w-3/4 max-md:w-[33%] min-md:w-[25%] sm:w-full xs:w-full xs:items-center xs:text-center xs:justify-center md:text-start md:items-start">
-        <span className="lg:text-xl xs:text-lg leading-relaxed md:text-start xs:text-center justify-center md:items-start xs:items-center">
+      <div className="lg:w-3/4 max-md:w-[33%] min-md:w-[25%] sm:w-full xs:w-full max-xs:w-full max-xs:justify-items-center max-xs:text-center xs:items-center xs:text-center xs:justify-center md:text-start md:items-start">
+        <span className="lg:text-xl xs:text-lg leading-relaxed md:text-start xs:text-center max-xs:text-center justify-center md:items-start xs:items-center max-xs:items-center">
           Seba, un diseñador gráfico y publicista con una amplia trayectoria, <span className="hidden md:inline"> <br /></span>
           estaba de pasada para saludar al dueño del lugar, nota la presencia <span className="hidden md:inline"> <br /></span>
           de varios influencers, se acercó preguntando por el organizador, <span className="hidden md:inline"> <br /></span>
@@ -231,23 +231,23 @@ const About = () => {
   <div className="flex flex-col items-center justify-center relative px-8">
 
     {/* Founder 1 - Iván Ayala */}
-    <div className="w-full flex flex-col items-start text-end mb-12 max-w-[850px] relative">
+    <div className="w-full flex flex-col xs:items-start max-xs:items-center max-xs:text-center xs:text-end mb-12 max-w-[850px] relative">
       {/* Nombre del fundador */}
-      <div className="bg-[#FB8A00] text-white font-bold px-4 py-2 rounded-tl-full rounded-br-full lg:w-[250px] md:w-auto lg:text-3xl xs:text-2xl text-center">
+      <div className="bg-[#FB8A00] text-white font-bold xs:px-4 py-2 max-xs:px-4 rounded-tl-full rounded-br-full lg:w-[250px] md:w-auto lg:text-3xl xs:text-2xl text-center">
         Iván Ayala
       </div>
       {/* Texto descripción */}
       <div className="bg-white text-[#0853FC] font-light xs:text-xl p-8 mt-4 rounded-lg shadow-md w-full h-auto">
         <p className="lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Estudié comercio exterior y emprendo desde los 18 años. Lideró con<br/>
-          pasión el área de Community Managers y Social Media en Grupo Start,<br/>
-          donde mi mayor talento radica en crear estructuras de trabajo funcionales<br/>
+          Estudié comercio exterior y emprendo desde los 18 años. Lideró con <span className="hidden md:inline"> <br /></span>
+          pasión el área de Community Managers y Social Media en Grupo Start, <span className="hidden md:inline"> <br /></span>
+          donde mi mayor talento radica en crear estructuras de trabajo funcionales <span className="hidden md:inline"> <br /></span>
           que optimicen los procesos contemplando a las personas y sus talentos.
         </p>
         <p className="mt-6 lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Siempre impulso a mi equipo y a mis clientes a alcanzar nuevas alturas,<br/>
-          integrando la tecnología y la innovación en cada estrategia.<br/>
-          Creo firmemente que alinear nuestras pasiones con nuestras tareas diarias<br/>
+          Siempre impulso a mi equipo y a mis clientes a alcanzar nuevas alturas, <span className="hidden md:inline"> <br /></span>
+          integrando la tecnología y la innovación en cada estrategia. <span className="hidden md:inline"> <br /></span>
+          Creo firmemente que alinear nuestras pasiones con nuestras tareas diarias <span className="hidden md:inline"> <br /></span>
           es el camino hacia el éxito y la libertad.
         </p>
       </div>
@@ -259,7 +259,7 @@ const About = () => {
     </div>
 
     {/* Founder 2 - Sebastián Vera */}
-    <div className="w-full flex flex-col items-start text-start max-w-[850px] relative">
+    <div className="w-full flex flex-col xs:items-start xs:text-start max-xs:text-center max-xs:items-center max-w-[850px] relative">
       {/* Nombre del fundador */}
       <div className="bg-[#FB8A00] text-white font-bold px-4 py-2 rounded-tl-full rounded-br-full lg:w-[250px] xs:w-auto lg:text-3xl xs:text-2xl justify-center items-center text-center">
         Sebastián Vera
@@ -267,15 +267,15 @@ const About = () => {
       {/* Texto descripción */}
       <div className="bg-white text-[#0853FC] font-light xs:text-xl p-8 mt-4 rounded-lg shadow-md w-full h-auto">
         <p className="lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Visionario emprendedor, diseñador gráfico y publicista con amplia<br/>
-          trayectoria en la industria, lidero y coordino con éxito las áreas de diseño<br/>
+          Visionario emprendedor, diseñador gráfico y publicista con amplia <span className="hidden md:inline"> <br /></span>
+          trayectoria en la industria, lidero y coordino con éxito las áreas de diseño <span className="hidden md:inline"> <br /></span>
           gráfico, marketing y ventas.
         </p>
         <p className="mt-6 lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Apasionado por la innovación y el crecimiento, “hacer que suceda” es mi<br/>
-          frase favorita. Colaboré con varias marcas en su identidad y expansión,<br/>
-          también con autores en el lanzamiento de sus libros. Creo firmemente en<br/>
-          el trabajo en equipo, y estoy activamente para brindar a los negocios<br/>
+          Apasionado por la innovación y el crecimiento, “hacer que suceda” es mi <span className="hidden md:inline"> <br /></span>
+          frase favorita. Colaboré con varias marcas en su identidad y expansión, <span className="hidden md:inline"> <br /></span>
+          también con autores en el lanzamiento de sus libros. Creo firmemente en <span className="hidden md:inline"> <br /></span>
+          el trabajo en equipo, y estoy activamente para brindar a los negocios <span className="hidden md:inline"> <br /></span>
           un servicio de calidad que les permita alcanzar sus objetivos de desarrollo.
         </p>
       </div>
@@ -288,15 +288,15 @@ const About = () => {
     <section className="bg-[#0853FC] w-full lg:pb-8 md:pb-1 px-[2%]">
   {/* Título */}
   <div className="text-center mb-8">
-    <h2 className="text-white lg:text-4xl xs:text-3xl font-extrabold">
+    <h2 className="text-white lg:text-4xl xs:text-3xl max-xs:text-2xl font-extrabold">
       Backstages con algunos influencers
     </h2>
   </div>
 
   {/* Contenedor de imágenes */}
-  <div className="grid lg:grid-cols-4 md:grid-cols-4 xs:grid-cols-2 xs:gap-3 md:gap-5 lg:gap-7 lg:pb-6 md:pb-2 md:px-[2%] xs:justify-items-center">
+  <div className="grid lg:grid-cols-4 md:grid-cols-4 xs:grid-cols-2 max-xs:grid-cols-2 max-xs:gap-2 xs:gap-3 md:gap-5 lg:gap-7 lg:pb-6 md:pb-2 md:px-[2%] xs:justify-items-center">
     {/* Primera Imagen */}
-    <div className="lg:w-full lg:h-[450px] xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
+    <div className="lg:w-full lg:h-[450px] max-xs:w-auto max-xs:h-auto xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
       <Image
         src="/imgColab/BackStg1.png"
         alt="Backstage 1"
@@ -307,7 +307,7 @@ const About = () => {
     </div>
 
     {/* Segunda Imagen */}
-    <div className="lg:w-full lg:h-[450px] xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
+    <div className="lg:w-full lg:h-[450px] max-xs:w-auto max-xs:h-auto xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
       <Image
         src="/imgColab/BackStg2.png"
         alt="Backstage 2"
@@ -318,7 +318,7 @@ const About = () => {
     </div>
 
     {/* Tercera Imagen */}
-    <div className="lg:w-full lg:h-[450px] xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
+    <div className="lg:w-full lg:h-[450px] max-xs:w-auto max-xs:h-auto xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
       <Image
         src="/imgColab/BackStg3.png"
         alt="Backstage 3"
@@ -329,7 +329,7 @@ const About = () => {
     </div>
 
     {/* Cuarta Imagen */}
-    <div className="lg:w-full lg:h-[450px] xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
+    <div className="lg:w-full lg:h-[450px] max-xs:w-auto max-xs:h-auto xs:w-auto xs:h-auto md:h-[420px] rounded-lg relative">
       <Image
         src="/imgColab/BackStg4.png"
         alt="Backstage 4"
@@ -342,36 +342,36 @@ const About = () => {
 </section>
 
 {/*Section 6 Texts, Cards, and Items*/}
-<section className="bg-[#0853FC] w-full lg:py-8 xs:py-4 px-[2%]">
+<section className="bg-[#0853FC] w-full lg:py-8 xs:py-4 max-xs:py-4 px-[2%]">
   {/* Títulos principales */}
   <div className="text-center mb-8">
-    <h1 className="text-orange-500 lg:text-6xl md:text-4xl xs:text-3xl font-extrabold leading-snug">
-      Tu éxito es nuestro compromiso <br /> ¿Estás en el lugar correcto?
+    <h1 className="text-orange-500 lg:text-6xl md:text-4xl xs:text-3xl max-xs:text-xl font-extrabold leading-snug">
+      Tu éxito es nuestro compromiso <span className="hidden md:inline"> <br /></span> ¿Estás en el lugar correcto?
     </h1>
     <p className="text-white lg:text-2xl xs:text-lg font-light mt-4 pb-4">
       Nuestra filosofía y objetivos:
     </p>
     <p className="text-white lg:text-2xl xs:text-lg font-light mt-2 px-[50px]">
-      Si tu compromiso con tu negocio es total, llegaste al lugar correcto, esta vez si vas<br/>
-      a conseguir resultados, no te vamos a prometer que sean inmediatos pero sí<br/>
-      sostenibles y exponenciales. <br />
-      <br/>Somos tu equipo profesional y queremos acompañar a tu negocio en cada etapa.<br/>
+      Si tu compromiso con tu negocio es total, llegaste al lugar correcto, esta vez si vas <span className="hidden md:inline"> <br /></span>
+      a conseguir resultados, no te vamos a prometer que sean inmediatos pero sí <span className="hidden md:inline"> <br /></span>
+      sostenibles y exponenciales.  <span className="hidden md:inline"> <br /></span>
+      <br/>Somos tu equipo profesional y queremos acompañar a tu negocio en cada etapa. <span className="hidden md:inline"> <br /></span>
     </p>
   </div>
 
   {/* Etapas */}
-  <div className="flex justify-center lg:gap-[32px] xs:gap-[10px] md:mb-16 xs:mb-2 md:pb-[80px] xs:pb-1">
-    <div className="flex items-center">
-      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">1 - Desarrollo</div>
+  <div className="flex justify-center lg:gap-[32px] xs:gap-[10px] md:mb-16 xs:mb-2 max-xs:mb-3 md:pb-[80px] xs:pb-1">
+    <div className=" flex xs:flex-row max-xs:flex-col items-center">
+      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] max-xs:px-auto lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto max-xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">1 - Desarrollo</div>
     </div>
     <div className="flex items-center">
-      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">2 - Crecimiento</div>
+      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] max-xs:px-auto lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto max-xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">2 - Crecimiento</div>
     </div>
     <div className="flex items-center">
-      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">3 - Autoridad</div>
+      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] max-xs:px-auto lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto max-xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">3 - Autoridad</div>
     </div>
     <div className="flex items-center">
-      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">4 - Expansión</div>
+      <div className="bg-white rounded-full lg:px-[70px] sm:px-[35px] xs:px-[28px] max-xs:px-auto lg:py-2 md:py-1 text-[#FB8A00] font-bold text-center xs:text-auto max-xs:text-auto lg:text-[1.5vh] xl:text-[2.25vh]">4 - Expansión</div>
     </div>
   </div>
 
@@ -380,7 +380,7 @@ const About = () => {
   {/* Primera tarjeta */}
   <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] md:h-auto w-full flex md:flex-col xs:flex-row md:items-center p-4 mb-4 md:mb-0 relative">
     {/* Imagen */}
-    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 mb-4 xs:mr-2 md:mr-0">
+    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 xs:mb-4 mb-0 xs:mr-2 md:mr-0 max-xs:mr-2">
       <Image
         src="/iconos/unido-co-creacion.png"
         alt="Icono Colaboración"
@@ -390,7 +390,7 @@ const About = () => {
       />
     </div>
     {/* Contenido */}
-    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 md:p-0">
+    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 max-xs:p-1 md:p-0">
       <h3 className="text-white sm:text-lg md:text-2xl font-extrabold underline">
         Co-creación
       </h3>
@@ -407,7 +407,7 @@ const About = () => {
 
   {/* Segunda tarjeta */}
   <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] md:h-auto w-full flex md:flex-col xs:flex-row md:items-center p-4 mb-4 md:mb-0 relative">
-    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 mb-4 xs:mr-2 md:mr-0">
+    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 xs:mb-4 max-xs:mb-0 xs:mr-2 md:mr-0 max-xs:mr-2">
       <Image
         src="/iconos/gestion-del-talento-excelencia.png"
         alt="Icono Excelencia"
@@ -416,7 +416,7 @@ const About = () => {
         quality={100}
       />
     </div>
-    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 md:p-0">
+    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 max-xs:p-1 md:p-0">
       <h3 className="text-white sm:text-lg md:text-2xl font-extrabold underline">
         Excelencia
       </h3>
@@ -432,7 +432,7 @@ const About = () => {
 
   {/* Tercera tarjeta */}
   <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] md:h-auto w-full flex md:flex-col xs:flex-row md:items-center p-4 mb-4 md:mb-0 relative">
-    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 mb-4 xs:mr-2 md:mr-0">
+    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 xs:mb-4 max-xs:mb-0 xs:mr-2 md:mr-0 max-xs:mr-2">
       <Image
         src="/iconos/apreton-de-manos-confianza.png"
         alt="Icono Confianza"
@@ -441,7 +441,7 @@ const About = () => {
         quality={100}
       />
     </div>
-    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 md:p-0">
+    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 max-xs:p-1 md:p-0">
       <h3 className="text-white sm:text-lg md:text-2xl font-extrabold underline">
         Confianza
       </h3>
@@ -456,7 +456,7 @@ const About = () => {
 
   {/* Cuarta tarjeta */}
   <div className="bg-[#FB8A00] rounded-lg lg:w-[270px] md:w-[240px] md:h-auto w-full flex md:flex-col xs:flex-row md:items-center p-4 mb-4 md:mb-0 relative">
-    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 mb-4 xs:mr-2 md:mr-0">
+    <div className="md:absolute md:-top-10 md:left-1/2 md:transform md:-translate-x-1/2 flex-shrink-0 md:flex-none md:mb-0 xs:mb-4 mb-0 xs:mr-2 md:mr-0 max-xs:mr-2">
       <Image
         src="/iconos/digital-innovacion.png"
         alt="Icono Innovación"
@@ -465,7 +465,7 @@ const About = () => {
         quality={100}
       />
     </div>
-    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 md:p-0">
+    <div className="md:mt-8 md:mb-auto md:text-center sm:text-left xs:p-2 max-xs:p-1 md:p-0">
       <h3 className="text-white sm:text-lg md:text-2xl font-extrabold underline">
         Innovación
       </h3>
@@ -484,16 +484,16 @@ const About = () => {
 
   {/* Texto final */}
   <div className="text-center mb-8">
-    <h2 className="text-[#FB8A00] lg:text-5xl xs:text-3xl font-extrabold leading-snug">
-      ¡Recorramos juntos este camino, <br /> estás en el lugar correcto!
+    <h2 className="text-[#FB8A00] lg:text-5xl xs:text-3xl max-xs:text-xl font-extrabold leading-snug">
+      ¡Recorramos juntos este camino,  <span className="hidden md:inline"> <br /></span> estás en el lugar correcto!
     </h2>
     <p className="text-white lg:text-2xl xs:text-lg font-light mt-4 px-4">
-      Los procesos de desarrollo requieren que se deleguen ciertas<br/>
-      actividades, somos el equipo que estás buscando y el que<br/>
+      Los procesos de desarrollo requieren que se deleguen ciertas <span className="hidden md:inline"> <br /></span>
+      actividades, somos el equipo que estás buscando y el que <span className="hidden md:inline"> <br /></span>
       necesitas para tu proyecto.
     </p>
     <p className="text-white lg:text-2xl xs:text-lg font-light mt-2 px-4">
-      Años de experiencia nos permitieron encontrar la receta para<br/>
+      Años de experiencia nos permitieron encontrar la receta para <span className="hidden md:inline"> <br /></span>
       éxito de cualquier marca se inserte al mundo digital.
     </p>
   </div>
@@ -501,7 +501,7 @@ const About = () => {
   {/* Botón */}
   <div className="text-center">
     
-      <button className="bg-orange-500 hover:bg-orange-600 text-white font-light lg:py-3 lg:px-[40px] xs:py-1 xs:px-[20px] rounded-lg lg:text-2xl xs:text-lg" onClick={handleClick}>
+      <button className="bg-orange-500 hover:bg-orange-600 text-white font-light lg:py-3 lg:px-[40px] xs:py-1 xs:px-[20px] max-xs:px-2 rounded-lg lg:text-2xl xs:text-lg" onClick={handleClick}>
         Hablá con un asesor
       </button>
     
@@ -513,7 +513,7 @@ const About = () => {
   {/* Contenedor para centrar tanto el título como la imagen */}
   <div className="flex flex-col justify-center items-center">
     {/* Título principal con ancho igual al de la imagen */}
-    <h1 className="text-[#FB8A00] lg:text-4xl xs:text-2xl font-extrabold text-center w-[800px] mb-8">
+    <h1 className="text-[#FB8A00] lg:text-4xl xs:text-2xl max-xs:text-xl font-extrabold text-center w-[800px] mb-8">
       El futuro de Start se vé prometedor
     </h1>
 
@@ -532,11 +532,11 @@ const About = () => {
 </section>
 
 {/* Section 8 IMG Desc */}
-<section className="bg-[#0853FC] w-full py-8 lg:px-[4%] xs:px-[2%] md:flex-row xs:flex-col">
-  <div className=" flex md:flex-row xs:flex-col items-center justify-center lg:gap-8 lg:pl-[80px]">
+<section className="bg-[#0853FC] w-full py-8 lg:px-[4%] xs:px-[2%] md:flex-row xs:flex-col max-xs:flex-col">
+  <div className=" flex md:flex-row xs:flex-col max-xs:flex-col items-center justify-center lg:gap-8 lg:pl-[80px]">
     
     {/* Imagen */}
-    <div className="md:w-full xs:w-auto justify-center md:items-start lg:pl-[1%] md:pl-[1%]">
+    <div className="md:w-full xs:w-auto max-xs:w-auto max-xs:px-1 justify-center md:items-start lg:pl-[1%] md:pl-[1%]">
       <Image
         src="/iconos/business.png"
         alt="Business meeting"
@@ -547,19 +547,19 @@ const About = () => {
     </div>
     
     {/* Texto descriptivo */}
-    <div className="w-full text-white xs: text-center md:text-end lg:pr-[7%] md:pr-[1%] xs:pr-0">
-      <h1 className="text-[#FB8A00] lg:text-5xl xs:text-3xl font-extrabold mb-6">
-        Soñamos con ayudar <br /> a más negocios
+    <div className="w-full text-white xs:text-center max-xs:text-center max-xs:px-1 md:text-end lg:pr-[7%] md:pr-[1%] xs:pr-0">
+      <h1 className="text-[#FB8A00] lg:text-5xl xs:text-3xl max-xs:text-xl font-extrabold mb-6">
+        Soñamos con ayudar  <span className="hidden md:inline"> <br /></span> a más negocios
       </h1>
       <p className="lg:text-2xl xs:text-lg font-light leading-relaxed">
-        Lograremos que hayan sucursales en<br/>
-        todo América y porque no permitirse <br />
-        soñar ¡En todo el mundo!<br/>
-        La clave para hacer de Start una<br/>
-        empresa eficiente fue la<br/>
-        comunicación, lo sabemos, tenemos<br/>
-        el sistema adecuado y los recursos <br />
-        humanos más capacitados para<br/>
+        Lograremos que hayan sucursales en <span className="hidden md:inline"> <br /></span>
+        todo América y porque no permitirse  <span className="hidden md:inline"> <br /></span>
+        soñar ¡En todo el mundo! <span className="hidden md:inline"> <br /></span>
+        La clave para hacer de Start una <span className="hidden md:inline"> <br /></span>
+        empresa eficiente fue la <span className="hidden md:inline"> <br /></span>
+        comunicación, lo sabemos, tenemos <span className="hidden md:inline"> <br /></span>
+        el sistema adecuado y los recursos <span className="hidden md:inline"> <br /></span>
+        humanos más capacitados para <span className="hidden md:inline"> <br /></span>
         hacerlo a gran escala.
       </p>
     </div>
@@ -568,17 +568,17 @@ const About = () => {
 </section>
 
 {/* Section 9 Cards White */}
-<section className="bg-[#0853FC] w-full py-12 px-[2%] relative flex">
+<section className="bg-[#0853FC] w-full xs:py-12 xs:px-[2%] max-xs:py-0 max-xs:px-[25%] relative flex">
   {/* Contenedor principal */}
-  <div className="flex w-full relative justify-center items-center md:gap-[40px] xs:gap-[1vh]">
+  <div className="flex xs:flex-row max-xs:flex-col w-full relative justify-center items-center md:gap-[40px] xs:gap-[1vh] max-xs:gap-[1vh]">
     {/* Primera Card */}
-    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] xs:w-[22vh] xs:h-[16vh] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] xs:w-[22vh] max-xs:w-full xs:h-[16vh] max-xs:h-auto flex xs:flex-col max-xs:flex-row justify-center items-center p-6">
       <Image
         src="/iconos/clasificacion-100clientes.svg" // Agregar la ruta correcta del icono
         alt="100 Clientes"
         width={162}
         height={162}
-        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] xs:h-[8vh] xs:w-auto "
+        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] xs:h-[8vh] xs:w-auto max-xs:w-auto max-xs:h-[6vh] max-xs:mr-2"
       />
       <h3 className="text-[#FB8A00] lg:text-5xl md:text-3xl xs:text-xl font-bold uppercase text-center">
         +100 Clientes
@@ -586,13 +586,13 @@ const About = () => {
     </div>
 
     {/* Segunda Card (más ancha) */}
-    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[45vh] md:h-[28vh] xs:w-auto xs:h-[16vh] flex flex-col justify-center items-center p-6">
+    <div className="bg-white rounded-2xl lg:w-[72vh] lg:h-[39vh] md:w-[45vh] md:h-[28vh] xs:w-auto max-xs:w-full xs:h-[16vh] max-xs:h-auto flex xs:flex-col max-xs:flex-row justify-center items-center p-6">
       <Image
         src="/iconos/maletin-experiencia.svg" // Agregar la ruta correcta del icono
         alt="Experiencia Profesional"
         width={162}
         height={162}
-        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] xs:h-[8vh] xs:w-auto"
+        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] xs:h-[8vh] xs:w-auto max-xs:w-auto max-xs:h-[6vh] max-xs:mr-2"
       />
       <h3 className="text-[#FB8A00] lg:text-5xl md:text-3xl xs:text-xl font-bold uppercase text-center">
         Experiencia Profesional
@@ -600,13 +600,13 @@ const About = () => {
     </div>
 
     {/* Tercera Card */}
-    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] xs:w-[22vh] xs:h-[16vh] flex flex-col justify-center items-center relative p-6">
+    <div className="bg-white rounded-2xl lg:w-[42vh] lg:h-[39vh] md:w-[32vh] md:h-[28vh] xs:w-[22vh] xs:h-[16vh] max-xs:w-full max-xs:h-auto flex xs:flex-col max-xs:flex-row justify-center items-center relative p-6">
       <Image
         src="/iconos/servicio-al-cliente247.svg" // Agregar la ruta correcta del icono
         alt="Soporte 24/7"
         width={162}
         height={162}
-        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] xs:h-[8vh] xs:w-auto "
+        className="lg:mb-6 md:mb-4 lg:w-[20vh] lg:h-[20vh] md:w-[15vh] xs:h-[8vh] xs:w-auto max-xs:w-auto max-xs:h-[6vh] max-xs:mr-2"
       />
       <h3 className="text-[#FB8A00] lg:text-5xl md:text-3xl xs:text-xl font-bold uppercase text-center">
         Soporte 24/7
@@ -619,8 +619,8 @@ const About = () => {
 <section className="bg-[#0853FC] w-full py-8 px-[2%]">
   {/* Título principal */}
   <div className="text-center mb-8">
-    <h1 className="text-[#FB8A00] lg:text-6xl xs:text-4xl font-extrabold">
-      No hay nada imposible,<br />
+    <h1 className="text-[#FB8A00] lg:text-6xl xs:text-4xl max-xs:text-2xl font-extrabold">
+      No hay nada imposible, <span className="hidden md:inline"> <br /></span>
       el límite lo ponemos nosotros
     </h1>
   </div>
@@ -628,24 +628,24 @@ const About = () => {
   {/* Descripción */}
   <div className="text-center">
     <p className="text-white lg:text-3xl xs:text-2xl font-light leading-relaxed max-w-5xl mx-auto">
-      La coordinación no será una dificultad y sabemos elegir a los mejores<br/>
-      para garantizar los resultados. Pronto incursionaremos además en las<br/>
-      finanzas, proyectos tecnológicos, cursos de capacitación, encuentros<br/>
-      sociales, exposiciones y mucho más, esto dejará de ser un sueño.<br/>
-      Sabemos que el límite lo ponemos nosotros y no es algo que hayamos<br/>
+      La coordinación no será una dificultad y sabemos elegir a los mejores <span className="hidden md:inline"> <br /></span>
+      para garantizar los resultados. Pronto incursionaremos además en las <span className="hidden md:inline"> <br /></span>
+      finanzas, proyectos tecnológicos, cursos de capacitación, encuentros <span className="hidden md:inline"> <br /></span>
+      sociales, exposiciones y mucho más, esto dejará de ser un sueño. <span className="hidden md:inline"> <br /></span>
+      Sabemos que el límite lo ponemos nosotros y no es algo que hayamos <span className="hidden md:inline"> <br /></span>
       podido encontrar hasta el momento.
     </p>
   </div>
 
   {/* Botones de compromisos */}
-  <div className="flex justify-center mt-8 lg:gap-5 xs:gap-3">
-    <div className="bg-white text-[#FB8A00] xs:px-[3vh] md:px-[6vh] text-center justify-center lg:py-[14px] xs:py-[7px] items-center rounded-full lg:text-2xl md:text-xl xs:text-lg font-extrabold w-auto h-auto">
+  <div className="flex justify-center mt-8 lg:gap-5 xs:gap-3 max-xs:gap-1">
+    <div className="bg-white text-[#FB8A00] max-xs:px-[3vh] xs:px-[3vh] md:px-[6vh] text-center justify-center lg:py-[14px] xs:py-[7px] items-center rounded-full lg:text-2xl md:text-xl xs:text-lg font-extrabold w-auto h-auto">
       + Nivel
     </div>
-    <div className="bg-white text-[#FB8A00] xs:px-[2vh] md:px-[5vh] text-center justify-center lg:py-[14px] xs:py-[7px] items-center rounded-full lg:text-2xl md:text-xl xs:text-lg font-extrabold w-auto h-auto">
+    <div className="bg-white text-[#FB8A00] max-xs:px-[2vh] xs:px-[2vh] md:px-[5vh] text-center justify-center lg:py-[14px] xs:py-[7px] items-center rounded-full lg:text-2xl md:text-xl xs:text-lg font-extrabold w-auto h-auto">
       + Enfoque
     </div>
-    <div className="bg-white text-[#FB8A00] xs:px-[1vh] md:px-[4vh] text-center justify-center lg:py-[14px] xs:py-[7px] items-center rounded-full lg:text-2xl md:text-xl xs:text-lg font-extrabold w-auto h-auto">
+    <div className="bg-white text-[#FB8A00] max-xs:px-[1vh] xs:px-[1vh] md:px-[4vh] text-center justify-center lg:py-[14px] xs:py-[7px] items-center rounded-full lg:text-2xl md:text-xl xs:text-lg font-extrabold w-auto h-auto">
       + Compromiso
     </div>
   </div>
@@ -653,9 +653,9 @@ const About = () => {
 
 
       {/* Section 11 FootSup */}
-      <section className="bg-[#0051FF] text-white p-6 lg:w-full relative">
+      <section className="bg-[#0051FF] text-white xs:p-6 max-xs:px-[2%] lg:w-full relative">
         {/* Title */}
-        <div className="text-center justify-center items-center xs:text-3xl lg:text-5xl">
+        <div className="text-center justify-center items-center xs:text-3xl max-xs:text-xl lg:text-5xl">
           <h2 className="text-[#FFFFFF] font-semibold mt-4">
             Queremos acompañarte al éxito<br />
             máximo de tu negocio
@@ -663,7 +663,7 @@ const About = () => {
         </div>
         <div className="flex relative items-center justify-center text-center lg:mx-[60px] lg:px-[270px] md:px-[240px] py-8">
           
-          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 px-4 rounded lg:text-2xl xs:text-lg" onClick={handleClick}>
+          <button className="bg-[#FB8A00] hover:bg-blue-700 text-white font-light py-1 xs:px-4 max-xs:px-2 rounded lg:text-2xl xs:text-lg" onClick={handleClick}>
             Hablá con un representante
           </button>
           

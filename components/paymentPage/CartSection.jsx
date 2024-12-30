@@ -154,13 +154,13 @@ const CartSection = () => {
   ) : null}
   <div className="max-w-screen-lg w-full">
     {/* TOP SECTION  */}
-    <div className="w-full flex justify-between mb-4">
+    <div className="w-full flex flex-row justify-between mb-4">
       <span className="text-2xl text-[#0853FC] font-medium">Productos</span>
-      <span className="text-2xl text-[#0853FC] font-medium">Resumen</span>
+      <span className="text-2xl text-[#0853FC] font-medium hidden xs:inline">Resumen</span>
     </div>
 
     {/* MAIN CONTAINER */}
-    <div className="max-w-screen-lg w-full flex flex-row justify-between">
+    <div className="max-w-screen-lg w-full flex xs:flex-row max-xs:flex-col xs:justify-between max-xs:justify-items-center max-xs:space-y-3">
 
       {/* Tarjeta de Productos */}
       <div className="w-full max-w-[800px] mr-4">
@@ -202,7 +202,8 @@ const CartSection = () => {
       </div>
 
       {/* Tarjeta de Resumen (Sticky) */}
-      <div className="w-full max-w-[270px] sticky top-10">
+      <span className="text-2xl text-[#0853FC] font-medium hidden max-xs:inline">Resumen</span>
+      <div className="max-xs:w-full xs:max-w-[270px] sticky top-10">
         <div className="bg-white shadow-md shadow-[#0853FC]/40 p-4 border border-[#0853FC] rounded-md">
           <div className="text-xl font-normal flex flex-row justify-between w-full">
             <span>SUBTOTAL:</span>
@@ -229,14 +230,14 @@ const CartSection = () => {
     </div>
 
     {/* PAYMENT INFORMATION SECTION */}
-    <div className="max-w-screen-lg bg-white w-full shadow-md shadow-[#0853FC]/40 px-20 py-6 mt-4 border border-[#0853FC] rounded-md flex flex-col justify-center items-center md:gap-8 xs:gap-12">
+    <div className="max-w-screen-lg bg-white w-full shadow-md shadow-[#0853FC]/40 px-20 py-6 mt-4 border border-[#0853FC] rounded-md flex flex-col justify-center items-center md:gap-8 xs:gap-12 max-xs:space-y-1">
       <span className="text-xl font-medium">Información de compra</span>
       {/* FORM */}
       <form
         onSubmit={formik.handleSubmit}
         className="w-full grid place-items-center gap-8"
       >
-        <div className="w-full flex flex-row justify-around items-center">
+        <div className="w-full flex xs:flex-row max-xs:flex-col xs:justify-around max-xs:justify-center max-xs:space-y-2 items-center">
           <div className="max-w-72 w-full flex flex-col gap-5 xs:p-2 md:p-0">
             <div className="flex flex-row gap-2 justify-start items-center">
               <div className="border-2 border-[#FB8A00] px-2 rounded-full">
