@@ -20,7 +20,7 @@ const NavBar = () => {
   
   return (
     <nav className="w-full z-30 bg-transparent flex flex-row items-center justify-between p-[2%]">
-      <Link href={"/"} className="min-w-max ml-[5%] sm:ml-[2%] mt-[5%] sm:mt-[3%]">
+      <Link href={"/"} className="min-w-max md:ml-[1%] sm:ml-[2%] mt-[5%] sm:mt-[3%]">
         <Image src="/Logo.png" alt="Logo" width={161} height={66} priority />
       </Link>
 
