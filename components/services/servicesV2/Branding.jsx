@@ -46,7 +46,7 @@ const Branding = () => {
     >
           {/*Section 1*/}
           <section className="relative bg-[#0853FC] flex w-full py-3 md:pb-12 sm:pb-24 px-[1%] md:flex-row sm:flex-col xs:flex-col max-xs:flex-col">
-            <div className="container flex-col pb-2 gap-16 ml-1 pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center max-xs:text-center"
+            <div className="container flex-col pb-2 gap-16 md:ml-1 md:pl-[3%] pt-[55px] md:text-start sm:text-center xs:text-center max-xs:text-center max-xs:px-0 max-xs:mx-0"
                 style={{
                   maxWidth: "1600px",
                   paddingLeft: "2%",

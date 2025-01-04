@@ -343,7 +343,7 @@ const Contact = () => {
         height={180}
         className="rounded-full relative lg:w-full lg:h-full md:w-[80%] md:h-[65%] max-xs:w-[62%] max-xs:h-[45%]"
       />
-      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] xs:w-auto xs:h-auto max-xs:w-auto max-xs:h-auto lg:h-[34px] mt-4 xs:px-16 md:px-0 flex items-center justify-center xs:rounded-tl-full xs:rounded-br-full max-xs:rounded-tl-3xl max-xs:rounded-br-3xl max-xs:text-center max-xs:text-sm max-xs:py-[1.5vh] max-xs:px-[4vh]">
+      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] xs:w-auto xs:h-auto max-xs:w-auto max-xs:h-auto lg:h-[34px] mt-4 xs:px-16 md:px-0 flex items-center justify-center xs:rounded-tl-full xs:rounded-br-full max-xs:rounded-tl-3xl max-xs:rounded-br-3xl max-xs:text-center max-xs:text-sm max-xs:py-[1.2vh] max-xs:px-[2vh]">
         Media
       </div>
     </div>

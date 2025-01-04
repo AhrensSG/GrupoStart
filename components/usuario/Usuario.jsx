@@ -572,7 +572,7 @@ const Usuario = ({
       <div className="flex lg:flex-row md:flex-row sm:flex-row xs:flex-row max-xs:flex-col w-full min-h-screen">
         {/* Menú estático en la izquierda */}
         <aside className="xs:w-1/4 max-xs:w-full bg-white rounded-xl p-4 h-full xs:sticky top-0 z-20">
-        <ul className="space-y-2 max-xs:grid max-xs:grid-cols-4 xs:flex xs:space-x-4 xs:space-y-0">
+        <ul className="space-y-2 max-xs:grid max-xs:grid-cols-4 xs:flex-col sm:flex-col xs:space-x-4 xs:space-y-0">
               <li
                 className={`p-2 rounded cursor-pointer ${
                   selectedSection === "perfil"
@@ -642,7 +642,7 @@ const Usuario = ({
         </aside>
 
         {/* Sección dinámica */}
-        <section className="xs:w-3/4 max-xs:w-full p-6 space-y-2 z-20">
+        <section className="xs:w-3/4 max-xs:w-full sm:p-6 max-xs:p-2 space-y-2 z-20">
           {renderSectionContent()}
           {modalVisible && (
   <div className="fixed inset-0 bg-orange-200 bg-opacity-70 flex items-center justify-center z-50">
