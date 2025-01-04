@@ -329,7 +329,7 @@ const Contact = () => {
         height={180}
         className="rounded-full relative lg:w-full lg:h-full md:w-[85%] md:h-[65%] max-xs:w-[65%] max-xs:h-[45%] justify-center max-xs:items-center"
       />
-      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] xs:w-auto xs:h-auto mt-4 xs:px-4 md:px-0 flex items-center justify-center xs:rounded-tl-full xs:rounded-br-full max-xs:rounded-tl-3xl max-xs:rounded-br-3xl max-xs:text-center max-xs:text-sm max-xs:py-auto max-xs:px-auto">
+      <div className="bg-[#FB8A00] text-white font-bold lg:w-[320px] md:w-[245px] md:h-[22px] lg:h-[34px] xs:w-auto xs:h-auto mt-4 xs:px-4 md:px-0 flex items-center justify-center xs:rounded-tl-full xs:rounded-br-full max-xs:rounded-tl-3xl max-xs:rounded-br-3xl max-xs:text-center max-xs:text-sm max-xs:py-[2.5px] max-xs:px-[3.5px] max-xs:mt-3.5 max-xs:-ml-1 max-xs:top-2 max-xs:left-1">
         Gestión de Redes
       </div>
     </div>
