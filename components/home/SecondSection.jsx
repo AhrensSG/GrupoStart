@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 
 const SecondSection = () => {
   return (
-    <section id="services" className="w-full bg-[#0853FC] py-8 sm:px-6 sm:py-12 md:px-[5.5%] max-xs:relative">
+    <section id="services" className="w-full bg-[#0853FC] xs:py-8 sm:px-6 sm:py-12 md:px-[5.5%] max-xs:relative md:relative">
       <div className="xs:max-w-7xl mx-auto flex flex-col items-center md:gap-12 lg:gap-16 max-xs:w-full">
         <h2 className="text-2xl sm:text-3xl lg:text-3xl xl:text-5xl text-white font-bold text-center mb-8">
           CONOCÉ NUESTROS SERVICIOS

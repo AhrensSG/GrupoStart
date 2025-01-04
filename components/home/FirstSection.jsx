@@ -4,7 +4,7 @@ import NavBar from "../navbar/NavBar";
 
 const FirstSection = () => {
   return (
-    <section className="w-full lg:h-[100vh] xs:h-auto max-xs:h-auto md:max-h-screen relative flex flex-col justify-start items-center overflow-hidden 2xl:pb-20 3xl:pb-10">
+    <section className="w-full lg:h-[100vh] xs:h-auto max-xs:h-auto md:max-h-screen relative flex flex-col justify-start items-center overflow-hidden lg:pb-5 xl:pb-5 2xl:pb-20 3xl:pb-10 md:px-[4%]">
       <NavBar />
 
       {/* Blue Triangle */}
@@ -14,7 +14,7 @@ const FirstSection = () => {
       />
 
       {/* Main content */}
-      <div className="relative w-full max-xs:h-full xs:h-full md:min-h-screen xl:h-full md:relative lg:h-full flex md:flex-row xs:flex-col max-xs:flex-col justify-center items-center gap-5 md:pb-2 lg:pb-[15%] md:mx-0 lg:mr-[13%] lg:ml-[11%] lg:mt-[3%] md:mt-[5%]">
+      <div className="relative w-full max-xs:h-full xs:h-full md:min-h-screen xl:h-full md:relative lg:h-full flex md:flex-row xs:flex-col max-xs:flex-col justify-center items-center gap-5 md:pb-[15%] lg:pb-[20%] lg:mx-[2%] md:my-[2%] lg:my-[2%] lg:mr-[13%] lg:ml-[11%] lg:mt-[3%] md:mt-[5%] md:mx-[1%]">
         <div className="flex flex-col justify-center md:items-start xs:items-center max-xs:items-center md:min-h-screen lg:min-h-screen">
           <div className="md:max-w-[40vw] xs:w-auto max-xs:w-auto flex flex-col text-[#FB8A00] gap-[2%] justify-center max-xs:px-[2%] xs:px-[4%] md:px-0">
             <p className="md:mt-0 xs:mt-6 uppercase md:text-[3.5vw] xs:text-4xl sm:leading-tight md:leading-none font-semibold drop-shadow-[0_2vw_2vw_rgba(0,0,0,0.25)]">

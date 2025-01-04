@@ -15,7 +15,7 @@ const Contact = () => {
         <NavBarV2/>
         <Chat/>
 {/* Sección 1 Principal */}
-<section className="w-full bg-[#0853FC] text-white lg:pt-[5%] md:py-9 flex items-center justify-center px-[2%] md:flex-row xs:flex-col max-xs:flex-col max-xs:items-center">
+<section className="w-full bg-[#0853FC] text-white lg:pt-[5%] md:py-9 flex items-center justify-center px-[2%] md:flex-row xs:flex-col sm:flex-col max-xs:flex-col max-xs:items-center">
   <div className="relative md:flex-row justify-center w-full xs:flex-col max-xs:flex-col max-xs:items-center xs:items-center">
     <div className="w-full md:items-start xs:items-center max-xs:items-center justify-center md:pl-[2%]">
       <h1 className="lg:text-5xl xs:text-3xl max-xs:text-xl max-xs:text-center md:text-start xs:text-center font-extrabold text-[#FB8A00]">
@@ -23,7 +23,7 @@ const Contact = () => {
       </h1>
 
       {/* Mail */}
-      <div className="flex xs:flex-row max-xs:flex-col items-center mt-6">
+      <div className="flex xs:flex-row max-xs:flex-col items-center max-xs:justify-center xs:justify-center sm:justify-center md:justify-start mt-6">
         <Image
           src={"/MailIcon.svg"}
           width={30}
@@ -35,7 +35,7 @@ const Contact = () => {
       </div>
 
       {/* Teléfono */}
-      <div className="flex xs:flex-row max-xs:flex-col items-center mt-2">
+      <div className="flex xs:flex-row max-xs:flex-col items-center max-xs:justify-center xs:justify-center sm:justify-center md:justify-start mt-2">
         <Image
           src={"/PhoneIcon.svg"}
           width={30}
@@ -49,11 +49,11 @@ const Contact = () => {
       </div>
 
       {/* Texto de redes sociales */}
-      <div className="mt-6 xs:flex-row max-xs:flex-col max-xs:justify-items-center max-xs:pb-2 xs:pb-0">
-        <p className="text-lg mb-2 xs:text-start max-xs:text-center">Síguenos en:</p>
+      <div className="mt-6 flex max-xs:flex-col xs:flex-col max-xs:justify-items-center sm:justify-center max-xs:pb-2 xs:pb-0">
+        <p className="text-lg mb-2 sm:text-center xs:text-center max-xs:text-center md:text-start flex max-xs:justify-center xs:justify-center sm:justify-center md:justify-start">Síguenos en:</p>
 
         {/* Redes sociales en fila */}
-        <div className="flex xs:flex-row xs:gap-8 max-xs:gap-4 items-center">
+        <div className="flex xs:flex-row xs:gap-8 max-xs:gap-4 items-center justify-center">
           {/* Facebook */}
           <div className="flex items-center text-white">
             <Link
@@ -118,13 +118,13 @@ const Contact = () => {
     </div>
   </div>
    {/* Imagen de la Ciudad */}
-   <div className="w-full md:items-end xs:items-center max-xs:items-center justify-center relative md:flex-row xs:flex-col max-xs:flex-col max-xs:px-[2vh] xs:px-[5vh] md:px-0 xs:mt-[2vh] md:mt-0">
+   <div className="max-xs:w-auto md:w-full md:items-end xs:items-center max-xs:items-center sm:justify-items-center justify-center relative md:flex-row xs:flex-col max-xs:flex-col max-xs:px-[2vh] xs:px-[5vh] md:px-0 xs:mt-[2vh] md:mt-0">
       <Image
         src="/iconos/ciudadFormosa.png"
         alt="Ciudad de Formosa"
         width={654}
         height={489}
-        className="rounded-lg justify-items-center w-auto h-auto"
+        className="rounded-lg justify-center h-auto"
       />
     </div>
 </section>
