@@ -5,7 +5,7 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Carousel from "@/components/carrousel/Carousel";
-import DesktopWebDevelopmentSection from "@/components/services/auxiliarComponents/DesktopWebDevelopmentSection";
+import DesktopMediaSection from "@/components/services/auxiliarComponents/DesktopMediaSection";
 
 const Media = () => {
 
@@ -106,7 +106,7 @@ const Media = () => {
       width={270}
       height={300}
       quality={100}
-      className={`max-xs:w-[120px] max-xs:mt-[-16vw] max-xs:translate-y-[-18%] xs:w-[160px] xs:mt-[-20vw] sm:w-[200px] sm:mt-[-30vw] md:w-[250px] md:mt-[-30vw] lg:w-[300px] lg:mt-[-30vw] xl:w-[350px] xl:mt-[-35vw]`}
+      className={`max-xs:w-[120px] max-xs:mt-[-16vw] max-xs:translate-y-[-18%] xs:w-[160px] xs:mt-[-20vw] sm:w-[200px] sm:mt-[-30vw] md:w-[250px] md:mt-[-30vw] lg:w-[300px] lg:mt-[-20vw] xl:w-[350px] xl:mt-[-30vw]`}
     />
   </div>
   <div className="text-center mt-[-40px] xs:mt-[-10px] max-xs:mt-[-30px]">
@@ -216,7 +216,7 @@ const Media = () => {
       </section>
 
       {/* PlanCard */}
-      <DesktopWebDevelopmentSection />
+      <DesktopMediaSection />
 
       {/* Section 6 */}
       <section className="relative bg-[#FFFFFF] sm:flex-row max-xs:flex-col">

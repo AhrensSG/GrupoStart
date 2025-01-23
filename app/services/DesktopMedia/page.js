@@ -2,7 +2,7 @@ import DesktopTemplate from "@/components/services/DesktopTemplate";
 import React from "react";
 import Media from "@/components/services/servicesV2/Media";
 
-const DesktopWebDevelopment = () => {
+const DesktopMedia = () => {
   return (
     <DesktopTemplate
     style={{
@@ -17,4 +17,4 @@ const DesktopWebDevelopment = () => {
   );
 };
 
-export default DesktopWebDevelopment;
+export default DesktopMedia;

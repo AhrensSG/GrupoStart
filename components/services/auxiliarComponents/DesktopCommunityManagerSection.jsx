@@ -29,7 +29,7 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
         {features.map((feature, index) => (
           <li
             key={index}
-            className="flex items-center w-full lg:mb-[4.5%] md:mb-2"
+            className="flex items-center w-full lg:mb-[4.5%] md:mb-2 max-xs:pl-[10%] max-xs:py-[1%] xs:px-[2%]"
           >
             <div className="flex-shrink-0 w-[16px] h-[16px] mr-3">
               <Image
@@ -40,7 +40,7 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
                 className="w-full h-full"
               />
             </div>
-            <span className="text-left text-xs md:text-sm lg:text-base leading-tight">
+            <span className="text-left max-xs:text-xs md:text-sm lg:text-base leading-tight">
               {feature}
             </span>
           </li>
@@ -48,7 +48,7 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
       </ul>
 
       {/* Precios */}
-      <div className="flex justify-center items-center pb-[3px] relative w-full">
+      <div className="flex justify-center items-center pb-[3px] pt-[2px] relative w-full">
         <div className="text-center flex-col justify-center items-center gap-4 relative">
           <span className="text-black-900 line-through font-extrabold text-center justify-center text-[32px] w-[206px] h-[64px]">
             <s>${price.original.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</s>
@@ -109,8 +109,8 @@ const DesktopCommunityManagerSection = () => {
       }}
     >
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
-      <div className="items-center justify-center text-center py-[36px] relative px-[20px] md:px-[60px] sm:px-[40px] w-full">
-        <h2 className="xs:text-md sm:text-lg md:text-xl lg:text-3xl font-bold text-center items-center justify-center mb-8 rounded-full rounded-tr-xl rounded-bl-xl bg-[#FB8A00] text-white py-3 lg:max-w-[20%] sm:max-w-[30%] md:max-w-[70%] mx-auto">
+      <div className="items-center justify-center text-center max-xs:py-[2px] sm:py-[36px] relative max-xs:px-[20px] md:px-[60px] sm:px-[40px] w-full">
+        <h2 className="max-xs:text-lg sm:text-lg md:text-xl lg:text-3xl font-bold text-center items-center justify-center mb-8 rounded-full rounded-tr-xl rounded-bl-xl bg-[#FB8A00] text-white py-3 lg:max-w-[20%] sm:max-w-[30%] md:max-w-[70%] mx-auto max-xs:w-[40%]">
           Elegí tu plan
         </h2>
       </div>
@@ -151,7 +151,7 @@ const DesktopCommunityManagerSection = () => {
     <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-gray-300">
         <PlanCard
-          title="Plan Básico"
+          title="Conexion Inicial"
           features={[
             "2 Redes sociales Facebook + Instagram",
             "3 Publicaciones semanales 12 Mensuales",
@@ -160,15 +160,15 @@ const DesktopCommunityManagerSection = () => {
             "Puesta en marcha de campañas publicitarias",
           ]}
           price={{ original: 250000, discount: 199900 }}
-          onButtonClick={() => alert("Seleccionaste el Plan Básico")}
-          listClassName="px-[5%] py-4"
+          onButtonClick={() => alert("Seleccionaste el Plan Conexión Inicial")}
+          listClassName="px-[15%] py-4 text-center flex"
         />
       </div>
     </SwiperSlide>
     <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-gray-200">
         <PlanCard
-          title="Plan Avanzado"
+          title="Social Master"
           features={[
             "3 Redes sociales Facebook + Instagram + Tiktok",
             "5 Publicaciones semanales 20 Mensuales",
@@ -178,7 +178,7 @@ const DesktopCommunityManagerSection = () => {
             "1 video 30 seg. mensual",
           ]}
           price={{ original: 350000, discount: 299900 }}
-          onButtonClick={() => alert("Seleccionaste el Plan Avanzado")}
+          onButtonClick={() => alert("Seleccionaste el Plan social Master")}
           listClassName="px-[5%] py-4"
         />
       </div>
@@ -186,7 +186,7 @@ const DesktopCommunityManagerSection = () => {
     <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
         <PlanCard
-          title="Plan Pro"
+          title="Social Pro"
           features={[
             "3 Redes sociales Facebook + Instagram + Tiktok",
             "8 Publicaciones semanales 32 Mensuales",
@@ -196,7 +196,7 @@ const DesktopCommunityManagerSection = () => {
             "2 videos 30 seg. mensuales",
           ]}
           price={{ original: 450000, discount: 399900 }}
-          onButtonClick={() => alert("Seleccionaste el Plan Pro")}
+          onButtonClick={() => alert("Seleccionaste el Plan Social Pro")}
           listClassName="px-[5%] py-4"
         />
       </div>

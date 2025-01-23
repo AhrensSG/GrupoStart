@@ -132,14 +132,14 @@ const NavBarV2 = () => {
                     {isLoggedIn ? "Blue-600" : "Usuario"}
                   </button>
                 </Link>
-                <Link className="max-w-32 w-full" href={"/courses"}>
+                {/*<Link className="max-w-32 w-full" href={"/courses"}>
                     <button
                     onClick={() => setShowSideBar(false)}
                     className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
                     >
                     Cursos
                     </button>
-                </Link>
+                  </Link>*/}
 
                 <Link className="max-w-32 w-full" href={"/#services"}>
                     <button
@@ -159,14 +159,14 @@ const NavBarV2 = () => {
                   </button>
                 </Link>
 
-                <Link className="max-w-32 w-full" href={"/experiences"}>
+                {/*<Link className="max-w-32 w-full" href={"/experiences"}>
                   <button
                     onClick={() => setShowSideBar(false)}
                     className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300"
                   >
                     Experiencias
                   </button>
-                </Link>
+                </Link>*/}
 
                 <Link className="max-w-32 w-full" href={"/contact"}>
                   <button

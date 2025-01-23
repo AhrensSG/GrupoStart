@@ -154,8 +154,8 @@ const CommunityManager = () => {
   </div>
 
   {/* Sección de Texto */}
-  <div className="text-center mt-5 md:mt-10 lg:mt-14">
-    <span className="sm:text-2xl md:text-4xl lg:text-5xl font-bold text-[#0853FC]">
+  <div className="text-center max-xs:mb-2 mx-xs:mt-1 xs:mt-3 sm:mt-5 md:mt-10 lg:mt-14">
+    <span className="max-xs:text-xl xs:text-2xl sm:text-2xl md:text-4xl lg:text-5xl font-bold text-[#0853FC]">
       Ayudamos a que tus redes <span className="hidden md:inline"> <br /></span>
       alcancen su máximo potencial.
     </span>
@@ -167,22 +167,22 @@ const CommunityManager = () => {
 
 {/* Section 3 */}
 <section className="relative flex flex-wrap w-full h-auto justify-center items-center bg-white pb-[10px] px-[2%] bottom-[-160px] md:bottom-[-60px] sm:bottom-[-30px] xs:bottom-[-10px] max-xs:bottom-0 sm:flex-col max-xs:flex-col">
-  <div className="flex md:flex-row w-full sm:flex-col max-xs:flex-col sm:items-center max-xs:items-center">
+  <div className="flex md:flex-row w-full sm:flex-col xs:flex-col xs:items-center max-xs:flex-col sm:items-center max-xs:items-center">
     {/* Text */}
-    <div className="w-full relative flex flex-col md:items-start sm:items-center max-xs:items-center justify-center bg-grey-700 md:pl-[4%]">
-      <span className="max-xs:text-2xl sm:text-4xl md:text-3xl lg:text-5xl max-xs:text-center sm:text-center font-bold mb-[28px] text-[#FB8A00] md:text-start lg:text-start">
+    <div className="w-full relative flex flex-col md:items-start sm:items-center xs:items-center max-xs:items-center justify-center bg-grey-700 md:pl-[4%]">
+      <span className="max-xs:text-2xl xs:text-3xl sm:text-4xl md:text-3xl lg:text-5xl max-xs:text-center sm:text-center font-bold mb-[28px] text-[#FB8A00] md:text-start lg:text-start">
         Hacemos <span className="hidden md:inline"> <br /></span>
         crecer <span className="hidden md:inline"> <br /></span>
         tu negocio <span className="hidden md:inline"> <br /></span>
         en redes
       </span>
-      <span className="xs:text-lg md:text-xl sm:text-xl lg:text-3xl sm:text-center max-xs:text-center sm:mb-[40px] max-xs:mb-6 md:text-start leading-relaxed tracking-wide">
+      <span className="max-xs:text-lg xs:text-lg md:text-xl sm:text-xl lg:text-3xl sm:text-center max-xs:text-center sm:mb-[40px] xs:mb-4 max-xs:mb-6 md:text-start leading-relaxed tracking-wide">
         Llegá a nuevos <span className="hidden md:inline"> <br /></span>
         clientes en todas <span className="hidden md:inline"> <br /></span>
         las plataformas Meta
       </span>
       
-        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold md:py-2 max-xs:py-1 md:px-4 max-xs:px-2 rounded sm:text-2xl max-xs:text-lg hover:text-[#FFFFFF]  duration-300 shadow-md shadow-black border-orange-500 md:mb-[2%]" onClick={scrollToPlanCards}>
+        <button className="bg-[#0853FC] hover:bg-[#FB8A00] text-white font-bold md:py-2 sm:py-1 xs:py-1 max-xs:py-1 md:px-4 sm:px-2 xs:px-2 max-xs:px-2 rounded sm:text-2xl xs:text-xl max-xs:text-lg hover:text-[#FFFFFF]  duration-300 shadow-md shadow-black border-orange-500 md:mb-[2%]" onClick={scrollToPlanCards}>
           Empezar
         </button>
       
@@ -207,9 +207,9 @@ const CommunityManager = () => {
 
 {/* Section 4 */}
 <section className="relative bg-[#FFFFFF] max-xs:flex-col sm:flex-col md:flex-row md:mt-6 xs:my-8 max-xs:mt-2">
-  <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%] sm:flex-row xs:flex-grow max-xs:flex-col xs:py-2 max-xs:py-8">
+  <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%] sm:flex-col xs:flex-col max-xs:flex-col xs:py-2 max-xs:py-8">
     {/* Image */}
-    <div className="w-full flex justify-start pl-[4%] md:w-[50vw] md:mt-5 sm:w-[70vw] xs:w-[50vw] xs:margin-2 xs:justify-items-center max-xs:justify-items-center max-xs:w-auto max-xs:mt-12">
+    <div className="w-full flex justify-start pl-[4%] md:w-[50vw] md:mt-5 sm:w-[70vw] xs:w-auto xs:margin-2 xs:justify-items-center max-xs:justify-items-center max-xs:w-auto max-xs:mt-12">
       <Image
         src={"/services/ImgSct4GR.png"}
         alt="Imagen de la sección 4"
@@ -223,7 +223,7 @@ const CommunityManager = () => {
     </div>
     {/* Text */}
     <div className="flex justify-center items-center text-end pr-[4%]">
-      <span className="font-bold text-[#FB8A00] xs:text-end max-xs:text-center flex flex-col justify-end items-center max-xs:text-4xl md:text-5xl lg:text-7xl leading-snug">
+      <span className="font-bold text-[#FB8A00] xs:text-end max-xs:text-center flex flex-col justify-end items-center max-xs:text-4xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-7xl leading-snug">
         Un perfil <span className="hidden md:inline"> <br /></span>
         optimizado <span className="hidden md:inline"> <br /></span>
         al 100%
@@ -388,7 +388,7 @@ const CommunityManager = () => {
       <section className="w-full px-[2%] sm:flex-row max-xs:flex-col max-xs:pb-[3%]">
         <div className="flex xs:flex-row max-xs:flex-col md:w-full xs:w-auto bg-[#FFFFFF] px-[2%]">
           {/* Image */}
-          <div className="w-full xs:pl-[2%] max-xs:bottom-[15vh] max-xs:mb-[15vh]">
+          <div className="w-full xs:pl-[2%] max-xs:bottom-[15vh] max-xs:mb-[10vh]">
             <Image
               src={"/services/Mockupredes3.png"}
               alt="Imagen del FootSuperior"

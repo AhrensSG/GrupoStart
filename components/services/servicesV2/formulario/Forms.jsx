@@ -464,7 +464,7 @@ const generarPaquetePersonalizado = () => {
   const [error, setError] = useState(''); // Estado para el mensaje de error
 
   return (
-    <section className="py-6 sm:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[5%] max-xs:px-[2%]">
+    <section className="py-6 md:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[3%] max-xs:px-[2%] sm:px-[4%]">
       {showLogin === true && <Modal setShowLogin={setShowLogin} />}
       {/* Encabezado del formulario */}
       <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
@@ -500,7 +500,7 @@ const generarPaquetePersonalizado = () => {
 </div>
 
 {/* Encabezados de columnas */}
-<div className="grid grid-cols-3 mb-2">
+<div className="grid sm:grid-cols-3 max-xs:grid-cols-[3fr_1fr_1fr] xs:grid-cols-[2fr_1fr_1fr] mb-2">
   <h3 className="font-bold text-sm text-center">Detalle</h3>
   <h3 className="font-bold text-sm text-center">Cantidad</h3>
   <h3 className="font-bold text-sm text-center">Valor</h3>
@@ -512,9 +512,9 @@ const generarPaquetePersonalizado = () => {
 {/* Formulario con columnas y líneas continuas para cada ítem */}
 {items.map((item, index) => (
   <div key={index}>
-    <div className="grid xs:grid-cols-3 max-xs:grid-cols-[2fr_1fr_1fr] items-center mb-2">
+    <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
       <div
-        className="text-black-900 text-sm font-bold flex items-center justify-center"
+        className="text-black-900 text-sm font-bold max-xs:flex-grow flex xs:items-center max-xs:items-start text-start md:justify-center max-xs:justify-items-start xs:justify-items-start"
         onMouseOver={(e) => handleMouseOver(e, item.info)}
         onMouseOut={handleMouseOut}
       >
@@ -524,7 +524,7 @@ const generarPaquetePersonalizado = () => {
           width="16"
           height="16"
           fill="currentColor"
-          className="bi bi-info-circle-fill mr-2"
+          className="bi bi-info-circle-fill xs:mr-2 max-xs:mr-1 max-xs:items-start sm:items-center flex"
           viewBox="0 0 16 16"
         >
           <path
@@ -536,22 +536,23 @@ const generarPaquetePersonalizado = () => {
             d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
           />
         </svg>
-
+        <div className="text-black-900 text-sm max-xs:items-start max-xs:text-start">
         {item.detalle}
+      </div>
       </div>
 
       {/* Campo de entrada para los índices 0 a 5 */}
       {index < 5 ? (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
           <input
             type="text"
             value={item.cantidad}
             onChange={(e) => handleInputChange(index, e.target.value)}
             min="0"
             disabled={!isEditable} // Deshabilitar si no es editable
-            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-6 max-xs:mx-0 appearance-none"
+            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
           />
-          <div className="flex flex-col ml-2">
+          <div className="hidden md:flex flex-col ml-2">
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
@@ -593,17 +594,17 @@ const generarPaquetePersonalizado = () => {
         </label>
       ) : index === 6 ? (
         // Campo de entrada para el índice 6
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
           <input
             type="text"
             value={items[6].cantidad}
             onChange={(e) => handleInputChange(6, e.target.value)}
             min="0"
             disabled={!isEditable} // Deshabilitar si no es editable
-            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-6 max-xs:mx-0 appearance-none"
+            className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 max-xs:mx-0 appearance-none"
             style={{ MozAppearance: "textfield" }}
           />
-          <div className="flex flex-col ml-2">
+          <div className="hidden md:flex flex-col ml-2">
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
@@ -653,18 +654,18 @@ const generarPaquetePersonalizado = () => {
           <span className="bg-white text-black px-3 py-0.5 border-2 border-orange-500 rounded text-sm">
             {item.cantidad}
           </span>
-          <div className="flex flex-col ml-2">
+          <div className="hidden md:flex flex-col ml-2">
             <button
               onClick={() => handleIncrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 xs:py-0.1 max-xs:py-0.5 text-xs rounded-t"
+              className="bg-gray-300 text-black px-1 text-xs rounded-t"
             >
               +
             </button>
             <button
               onClick={() => handleDecrement(index)}
               disabled={!isEditable} // Deshabilitar si no es editable
-              className="bg-gray-300 text-black px-1 xs:py-0.1 max-xs:py-0.5 text-xs rounded-b"
+              className="bg-gray-300 text-black px-1 text-xs rounded-b"
             >
               -
             </button>
