@@ -11,6 +11,7 @@
   "dependencies": {
     "@icons-pack/react-simple-icons": "^10.0.0",
     "@mercadopago/sdk-react": "^0.0.19",
+    "@sendgrid/mail": "^8.1.4",
     "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "firebase": "^10.12.5",
@@ -25,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-player": "^2.16.0",
+    "sendgrid": "^5.2.3",
     "sequelize": "^6.37.3",
     "sonner": "^1.4.32",
     "styled-components": "^6.1.12",
