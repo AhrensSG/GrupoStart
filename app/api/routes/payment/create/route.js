@@ -14,7 +14,6 @@ export async function POST(req) {
                 unit_price: item.unit_price,
             };
         });
-        console.log(formattedItems);
 
         const response = await preference.create({
             body: {
@@ -68,8 +67,6 @@ export async function POST(req) {
         });
         return Response.json(response);
     } catch (error) {
-        console.log(error);
-
         return Response.json(error.message, { status: 500 });
     }
 }
