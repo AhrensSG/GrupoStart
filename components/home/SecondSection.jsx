@@ -130,7 +130,7 @@ const SecondSection = () => {
             description={
               "Permití que nuestro equipo creativo genere las piezas comunicativas de tu negocio. Lográ presentarte profesionalmente y atrévete a nuevas experiencias con nuestro acompañamiento y asesoramiento continuo en el proceso."
             }
-            link={"/services/DesktopWebDevelopment"}
+            link={"/services/DesktopMedia"}
             firstBullet={"Creamos tu logo"}
             secondtBullet={"Imágenes profesionales"}
             thirdtBullet={"Edición de videos"}

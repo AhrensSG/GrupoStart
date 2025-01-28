@@ -396,6 +396,7 @@ const [modalMessage, setModalMessage] = useState('');
 
 
 
+
 const handleCloseWarningModal = () => {
   setShowWarningModal(false);
 };
@@ -403,6 +404,7 @@ const handleCloseWarningModal = () => {
 const handleCloseSuccessModal = () => {
   setShowSuccessModal(false);
 };
+
 
 // Valida el formulario y recoge los datos
 const validarFormulario = () => {
@@ -750,6 +752,11 @@ const generarPaquetePersonalizado = () => {
           {tooltip.content}
         </div>
       )}
+
+      {/* Mensaje debajo del carrusel */}
+      <p className="mt-4 text-sm font-bold text-gray-600">
+          El plan personalizado es de suscripción mensual
+        </p>
     </section>
   );
 }
