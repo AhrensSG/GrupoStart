@@ -754,7 +754,7 @@ const generarPaquetePersonalizado = () => {
       )}
 
       {/* Mensaje debajo del carrusel */}
-      <p className="mt-4 text-sm font-bold text-gray-600">
+      <p className="mt-4 text-sm font-extrabold text-gray-600 text-center justify-center">
           El plan personalizado es de suscripción mensual
         </p>
     </section>
