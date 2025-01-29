@@ -112,7 +112,7 @@ const Footer = () => {
               />
             </Link>
             <p className="text-white text-sm lg:text-xl">
-              2024 GrupoStart - &copy; Todos los derechos reservados
+            {new Date().getFullYear()} GrupoStart - &copy; Todos los derechos reservados
             </p>
           </div>
         </div>
