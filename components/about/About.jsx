@@ -23,7 +23,7 @@ const About = () => {
       <NavBarV2/>
       <Chat />
       {/* Section 1 */}
-      <section className="relative bg-[#0853FC] flex w-full px-[5%] justify-items-center flex-col">
+      <section className="relative bg-[#0853FC] flex w-full px-[5%] justify-items-center flex-col md:leading-0 sm:leading-relaxed xs:leading-tigh max-xs:leading-tigh">
           {/* Sección de texto y botón */}
           <div className="w-full relative flex flex-col justify-center items-center text-center py-2">
             <span className="lg:text-5xl md:text-3xl xs:text-2xl font-bold text-[#FB8A00] text-center justify-center items-center relative leading-snug">
@@ -32,7 +32,7 @@ const About = () => {
               visión y proyectos futuros <span className="hidden md:inline"> <br /></span>
             </span>
             <br/>
-              <span className="lg:text-xl sm:text-lg xs:text-md text-white text-center flex flex-col justify-center items-center relative lg:w-auto lg:h-auto md:w-auto md:h-auto sm:px-[5%] leading-relaxed">
+              <span className="lg:text-xl sm:text-lg xs:text-md text-white text-center flex flex-col justify-center items-center relative lg:w-auto lg:h-auto md:w-auto md:h-auto sm:h-auto sm:px-[5%] md:leading-0 max-xs:leading-relaxed xs:leading-relaxed sm:leading-relaxed">
                 Somos una agencia de marketing completa de 360 grados, <span className="hidden md:inline"> <br /></span>
                 enfocada en conectar a los negocios al mundo digital y generar <span className="hidden md:inline"> <br /></span>
                 resultados positivos para nuestros clientes. <span className="hidden md:inline"> <br /></span>
