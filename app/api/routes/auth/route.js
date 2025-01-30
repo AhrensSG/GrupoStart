@@ -4,6 +4,7 @@ import { sendMail } from "../send_mail/sendMail";
 export async function PUT(req) {
     try {
         const { displayName, email, uid } = await req.json();
+        console.log(displayName, email, uid);
 
         if (!uid || !displayName || !email) {
             return Response.json("UID / DISPLAYNAME / EMAIL ARE required", {
@@ -57,6 +58,7 @@ export async function POST(req) {
         const name = _tokenResponse.firstName;
         const surname = _tokenResponse.lastName;
         const email = user.email;
+        console.log(id, name, surname, email);
 
         if (!id || !name || !surname || !email) {
             return Response.json("Missing Data / All fields are required", {
@@ -66,8 +68,10 @@ export async function POST(req) {
 
         const existingUser = await User.findOne({
             where: { id },
-            include: [{ model: Order }],
+            // include: [{ model: Order }],
         });
+        console.log(existingUser);
+
         if (existingUser) {
             return Response.json(existingUser);
         }
@@ -78,16 +82,18 @@ export async function POST(req) {
             surname,
             email,
         });
+        console.log(newUser);
 
         const updatedUser = await User.findOne({
             where: { id: newUser.id },
-            include: [{ model: Order }],
+            // include: [{ model: Order }],
         });
+        console.log(updatedUser);
 
         await sendMail({
             to: newUser.email,
             subject: "Bienvenido a Grupo Star",
-            text: `Bienvenido a Grupo Star, ${displayName}!`,
+            text: `Bienvenido a Grupo Star, ${newUser.name}!`,
         });
 
         // await sendMail({
