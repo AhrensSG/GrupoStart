@@ -571,7 +571,7 @@ const Usuario = ({
 
       <div className="flex lg:flex-row md:flex-row sm:flex-row xs:flex-col max-xs:flex-col w-full min-h-screen">
         {/* Menú estático en la izquierda */}
-        <aside className="sm:w-1/4 max-xs:w-full xs:w-full bg-white rounded-xl p-4 h-full xs:sticky top-0 z-20">
+        <aside className="sm:w-1/4 max-xs:w-full xs:w-full bg-white rounded-xl p-4 h-full sm:sticky top-0 z-20">
         <ul className="space-y-2 max-xs:grid max-xs:grid-cols-4 xs:grid xs:grid-cols-4 sm:flex-col sm:space-x-0 xs:space-x-0 xs:space-y-0">
               <li
                 className={`p-2 rounded cursor-pointer ${
