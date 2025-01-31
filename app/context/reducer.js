@@ -1,144 +1,142 @@
 import { version } from "react";
 
 export const reducer = (state, action) => {
-  switch (action.type) {
-    case "LOGGED_IN_USER":
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case "UPDATED_USER":
-      return {
-        ...state,
-        user: action.payload,
-      };
+    switch (action.type) {
+        case "LOGGED_IN_USER":
+            return {
+                ...state,
+                user: action.payload,
+            };
+        case "UPDATED_USER":
+            return {
+                ...state,
+                user: action.payload,
+            };
 
-    /////////////////////// CART //////////////////////////
+        /////////////////////// CART //////////////////////////
 
-    case "ADD_PRODUCT_TO_CART":
-      if (!state.cart) {
-        if (action.payload.productType !== "pack-envio") {
-          const total = action.payload.price * action.payload.items;
+        case "ADD_PRODUCT_TO_CART":
+            if (!state.cart) {
+                if (action.payload.productType !== "pack-envio") {
+                    console.log(action.payload);
 
-          return {
-            ...state,
-            cart: [action.payload],
-            cartPrice: total,
-            cartItems: action.payload.items,
-          };
-        }
-        const total = action.payload.price * action.payload.items;
-        const totalVolume = 8 * 10 * 8 * action.payload.items;
-        const totalWeight = 0.25;
-        return {
-          ...state,
-          cart: [action.payload],
-          cartPrice: total,
-          cartItems: action.payload.items,
-          payment: { totalVolume, totalWeight },
-        };
-      } else {
-        const products = state.cart;
-        const index = products.findIndex(
-          (product) => product.id === action.payload.id
-        );
-        if (index !== -1) {
-          products[index] = action.payload;
-        } else {
-          products.push(action.payload);
-        }
+                    const total = action.payload.price * action.payload.items;
 
-        let totalPrice = 0;
-        let totalItems = 0;
-        let totalVolume = 0;
-        let totalWeight = 0;
-        products.forEach((product) => {
-          const total = parseFloat(product.price) * product.items;
-          totalPrice += total;
-          totalItems += product.items;
-          if (product.productType !== "course") {
-            totalVolume += 8 * 10 * 8 * product.items;
-            totalWeight += 0.25;
-          }
-        });
+                    return {
+                        ...state,
+                        cart: [action.payload],
+                        cartPrice: total ? total : action.payload.price,
+                        cartItems: action.payload.items,
+                    };
+                }
+                const total = action.payload.price * action.payload.items;
+                const totalVolume = 8 * 10 * 8 * action.payload.items;
+                const totalWeight = 0.25;
+                return {
+                    ...state,
+                    cart: [action.payload],
+                    cartPrice: total,
+                    cartItems: action.payload.items,
+                    payment: { totalVolume, totalWeight },
+                };
+            } else {
+                const products = state.cart;
+                const index = products.findIndex((product) => product.id === action.payload.id);
+                if (index !== -1) {
+                    products[index] = action.payload;
+                } else {
+                    products.push(action.payload);
+                }
 
-        return {
-          ...state,
-          cart: products,
-          cartPrice: totalPrice,
-          cartItems: totalItems,
-          payment: { ...state.payment, totalVolume, totalWeight },
-        };
-      }
+                let totalPrice = 0;
+                let totalItems = 0;
+                let totalVolume = 0;
+                let totalWeight = 0;
+                products.forEach((product) => {
+                    const total = parseFloat(product.price) * product.items;
+                    totalPrice += total;
+                    totalItems += product.items;
+                    if (product.productType !== "course") {
+                        totalVolume += 8 * 10 * 8 * product.items;
+                        totalWeight += 0.25;
+                    }
+                });
 
-    case "REMOVE_PRODUCT_FROM_CART":
-      const products = state.cart;
-      const index = products.findIndex(
-        (product) => product.id === action.payload.id
-      );
-      if (index !== -1) {
-        products.splice(index, 1);
-      }
+                return {
+                    ...state,
+                    cart: products,
+                    cartPrice: totalPrice,
+                    cartItems: totalItems,
+                    payment: { ...state.payment, totalVolume, totalWeight },
+                };
+            }
 
-      let totalPrice = 0;
-      let totalItems = 0;
-      let totalVolume = 0;
-      let totalWeight = 0;
+        case "REMOVE_PRODUCT_FROM_CART":
+            const products = state.cart;
+            const index = products.findIndex((product) => product.id === action.payload.id);
+            if (index !== -1) {
+                products.splice(index, 1);
+            }
 
-      products.forEach((product) => {
-        const total = parseFloat(product.price) * product.items;
+            let totalPrice = 0;
+            let totalItems = 0;
+            let totalVolume = 0;
+            let totalWeight = 0;
 
-        totalPrice += total;
-        totalItems += product.items;
-        if (product.productType !== "course") {
-          totalVolume += 8 * 10 * 8 * product.items;
-          totalWeight += 0.25;
-        }
-      });
+            products.forEach((product) => {
+                const total = parseFloat(product.price) * product.items;
 
-      return {
-        ...state,
-        cart: products,
-        cartPrice: totalPrice,
-        cartItems: totalItems,
-        payment: { ...state.payment, totalVolume, totalWeight },
-      };
+                totalPrice += total;
+                totalItems += product.items;
+                if (product.productType !== "course") {
+                    totalVolume += 8 * 10 * 8 * product.items;
+                    totalWeight += 0.25;
+                }
+            });
 
-    case "EMPTY_CART":
-      return {
-        ...state,
-        cart: [],
-        cartPrice: 0,
-        cartItems: 0,
-      };
+            return {
+                ...state,
+                cart: products,
+                cartPrice: totalPrice,
+                cartItems: totalItems,
+                payment: { ...state.payment, totalVolume, totalWeight },
+            };
 
-    /////////////////////// PAYMENT //////////////////////////
+        case "EMPTY_CART":
+            return {
+                ...state,
+                cart: [],
+                cartPrice: 0,
+                cartItems: 0,
+            };
 
-    case "PAYMENT_INFORMATION":
-      const paymentInfo = action.payload;
-      return {
-        ...state,
-        payment: { ...state.payment, ...paymentInfo },
-      };
-    case "DELIVERY_COST":
-      const deliveryCost = action.payload;
-      return {
-        ...state,
-        payment: { ...state.payment, deliveryCost },
-      };
-    case "DELETE_DELIVERY_COST_INFORMATION":
-      state.payment?.deliveryCost ? (state.payment.deliveryCost = false) : null;
-      return {
-        ...state,
-      };
-    case "PREFERENCE_ID":
-      return {
-        ...state,
-        preference: action.payload,
-      };
-    default:
-      return {
-        ...state,
-      };
-  }
+        /////////////////////// PAYMENT //////////////////////////
+
+        case "PAYMENT_INFORMATION":
+            const paymentInfo = action.payload;
+            return {
+                ...state,
+                payment: { ...state.payment, ...paymentInfo },
+            };
+        case "DELIVERY_COST":
+            const deliveryCost = action.payload;
+            return {
+                ...state,
+                payment: { ...state.payment, deliveryCost },
+            };
+        case "DELETE_DELIVERY_COST_INFORMATION":
+            state.payment?.deliveryCost ? (state.payment.deliveryCost = false) : null;
+            return {
+                ...state,
+            };
+        case "PREFERENCE_ID":
+            return {
+                ...state,
+                preference: action.payload,
+            };
+        default:
+            return {
+                ...state,
+            };
+    }
 };
