@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 lg:h-[530px] lg:w-[307px] md:h-[455px] md:w-[275px] relative container flex flex-col pb-1">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 lg:h-[530px] lg:w-[307px] md:h-[455px] md:w-[275px] relative container flex flex-col pb-1 justify-center">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[8px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">

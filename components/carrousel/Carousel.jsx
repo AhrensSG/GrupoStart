@@ -54,7 +54,7 @@ const Carousel = () => {
     const itemsToShow = images.slice(startIndex, startIndex + visibleItemsCount);
 
     return (
-        <div className="relative w-full md:h-auto max-xs:h-full xs:h-full sm:h-full overflow-hidden max-xs:px-[2%] xs:px-[2%] sm:px-[2%] md:px-[2%] lg:px-[6%] xl:px-[4%]">
+        <div className="relative w-full md:h-auto max-xs:h-full xs:h-full sm:h-full overflow-hidden max-xs:px-[2%] xs:px-[2%] sm:px-[2%] md:px-[4%] lg:px-[6%] xl:px-[8%]">
             {/* Carrusel para pantallas sm y menores */}
             <div className="block md:hidden h-full">
                 <Swiper
@@ -88,51 +88,57 @@ const Carousel = () => {
             </div>
 
             {/* Carrusel con flechas para pantallas md y mayores */}
-            <div className="hidden md:block relative pt-4">
-                <div className="flex items-center justify-center md:gap-1 lg:gap-4 xl:gap-10 relative mx-3">
-                    {itemsToShow.map((image, index) => (
-                        <div
-                            key={index}
-                            className="flex-shrink-0 max-xs:w-[80px] xs:w-[100px] sm:w-[120px] md:w-[140px] lg:w-[155px] xl:w-[160px] h-[100px] sm:h-[120px] md:h-[140px] lg:h-[155px] xl:h-[160px]"
-                        >
-                            <Image
-                                src={image.src}
-                                alt={image.alt}
-                                width={160}
-                                height={160}
-                                className="w-full h-full object-contain rounded-md"
-                            />
-                        </div>
-                    ))}
-                </div>
-
-                {/* Botón Anterior */}
-                <button
-                    onClick={goPrevious}
-                    className="flex absolute top-1/2 sm:left-6 md:left-16 lg:-left-10 xl:left-14 transform -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 justif-yitems-center lg:pl-1">
-                    <Image
-                        src="/flechabotoncarousel.svg"
-                        alt="Anterior"
-                        width={28}
-                        height={28}
-                        className="rotate-0"
-                    />
-                </button>
-
-                {/* Botón Siguiente */}
-                <button
-                    onClick={goNext}
-                    className="flex absolute top-1/2 sm:right-6 md:right-18 lg:-right-12 xl:right-24 transform -translate-y-1/2 z-20 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 justify-items-center md:items-end lg:pr-1"
+            <div className="hidden md:block relative pt-4 md:mx-0 lg:mx-0 xl:mx-[2%]">
+    {/* Contenedor del carrusel con un wrapper para evitar desbordes */}
+    <div className="relative flex items-center justify-center overflow-hidden md:gap-1 lg:gap-4 xl:gap-10 md:px-2 lg:px-16 xl:px-0">
+        {itemsToShow.map((image, index) => (
+            <div
+                key={index}
+                className="flex-shrink-0 max-xs:w-[80px] xs:w-[100px] sm:w-[120px] md:w-[140px] lg:w-[155px] xl:w-[160px] 
+                h-[100px] sm:h-[120px] md:h-[140px] lg:h-[155px] xl:h-[160px]"
             >
-                    <Image
-                        src="/flechabotoncarousel.svg"
-                        alt="Siguiente"
-                        width={28}
-                        height={28}
-                        className="rotate-180 md:right-4 md:items-start"
-                    />
-                </button>
+                <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={160}
+                    height={160}
+                    className="w-full h-full object-contain rounded-md"
+                />
             </div>
+        ))}
+    </div>
+
+    {/* Botón Anterior */}
+    <button
+        onClick={goPrevious}
+        className="absolute top-1/2 md:left-0 lg:-left-12 xl:-left-12
+        transform -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full"
+    >
+        <Image
+            src="/flechabotoncarousel.svg"
+            alt="Anterior"
+            width={28}
+            height={28}
+        />
+    </button>
+
+    {/* Botón Siguiente */}
+    <button
+        onClick={goNext}
+        className="absolute top-1/2 md:right-0 lg:-right-12 xl:-right-12
+        transform -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full"
+    >
+        <Image
+            src="/flechabotoncarousel.svg"
+            alt="Siguiente"
+            width={28}
+            height={28}
+            className="rotate-180"
+        />
+    </button>
+</div>
+
+
         </div>
     );
 };

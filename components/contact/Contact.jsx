@@ -282,24 +282,43 @@ const Contact = () => {
     <h2 className="text-black lg:text-3xl xs:text-xl max-xs:text-md font-light text-center xs:w-[950px] max-xs:w-auto">
       Calle Hipólito Yrigoyen 342 entre Dean Funes y Moreno
       </h2>
+
     {/* Contenedor de la imagen */}
-    <div className="md:w-2/4 xs:w-full max-xs:w-full h-auto relative justify-items-center lg:mb-[-6%] xs:px-[4%] max-xs:px-[2%]">
-    <Link
-            href="https://www.google.com/maps/place/Hip%C3%B3lito+Yrigoyen+342,+P3600JGA+Formosa,+Argentina"
-            passHref
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-      <Image
-        src="/LocationContact.png"  // Asegúrate de que la ruta de la imagen sea correcta
-        alt="LOCATION"
-        className="rounded-lg object-cover items-center justify-center object-center cursor-pointer relative"
-        width={800}
-        height={300}
-        style={{ borderRadius: "20px", justifyContent: "center"}}
-      />
-      </Link>
+    <div className="relative lg:w-3/4 md:w-3/4 xs:w-full max-xs:w-full h-auto justify-items-center lg:mb-[-6%] xs:px-[4%] max-xs:px-[2%]">
+      {/* Contenedor del Mapa */}
+      <div className="relative overflow-hidden rounded-lg shadow-lg">
+        <iframe
+          className="w-full max-xs:h-[240px] xs:h-[250px] sm:h-[300px] md:h-[400px] lg:h-[450px] xl:h-[500px]"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d297.1321053462186!2d-58.16666915644871!3d-26.186531600124447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945ca59fad6f0755%3A0xcd334b7ea9655e5b!2sGrupo%20Start!5e0!3m2!1ses!2sar!4v1738105367568!5m2!1ses!2sar"
+          allowFullScreen=""
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          style={{ borderRadius: "20px" }}
+        ></iframe>
+        
+        {/* Botón Flotante para Abrir en Google Maps */}
+        <a
+          href="https://www.google.com/maps/place/Hip%C3%B3lito+Yrigoyen+342,+P3600JGA+Formosa,+Argentina"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="absolute top-4 right-4 bg-white text-gray-800 px-4 py-2 rounded-full shadow-md hover:bg-gray-200 transition-transform transform hover:scale-105 flex items-center gap-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" id="google-maps">
+            <path fill="#4285f4" d="M25.3959 8.8345l-.0039.0038c.0837.2319.1617.4667.2285.7062C25.5527 9.3047 25.48 9.067 25.3959 8.8345zM16 2.23L8.929 5.1593 12.9916 9.222A4.2486 4.2486 0 0 1 19.0208 15.21L25 9.23l.392-.392A9.9872 9.9872 0 0 0 16 2.23z"></path>
+            <path fill="#ffba00" d="M16,16.4733A4.25,4.25,0,0,1,12.9916,9.222L8.929,5.1593A9.9683,9.9683,0,0,0,6,12.23c0,4.4057,2.2651,7.1668,4.93,10,.1787.1828.3274.3852.4959.5746l7.5608-7.5609A4.2341,4.2341,0,0,1,16,16.4733Z"></path>
+            <path fill="#0066da" d="M16,2.23a10,10,0,0,0-10,10,11.0918,11.0918,0,0,0,.5454,3.4546l12.8505-12.85A9.9563,9.9563,0,0,0,16,2.23Z"></path>
+            <path fill="#00ac47" d="M16.9011,29.12a21.83,21.83,0,0,1,4.032-6.8966C23.7976,19.3129,26,16.636,26,12.23a9.9585,9.9585,0,0,0-.6041-3.3958l-13.97,13.97A18.0436,18.0436,0,0,1,15.0173,29.08.9975.9975,0,0,0,16.9011,29.12Z"></path>
+            <path fill="#0066da" d="M10.93 22.23c.1787.1828.3274.3852.4959.5746h0C11.257 22.6155 11.1083 22.4131 10.93 22.23zM7.207 7.4637A9.9357 9.9357 0 0 0 6.45 9.2566 9.9429 9.9429 0 0 1 7.207 7.4637zM6.45 9.2566a9.9522 9.9522 0 0 0-.398 1.9513A9.9537 9.9537 0 0 1 6.45 9.2566z" opacity=".5"></path>
+            <path fill="#fff" d="M15.1957 29.3989c.02.0248.0445.0422.0664.0644C15.24 29.4411 15.2156 29.4236 15.1957 29.3989zM15.7874 29.7429l.04.0066zM13.6216 25.9269c-.0371-.067-.0679-.1382-.1059-.2047C13.5533 25.789 13.5849 25.86 13.6216 25.9269zM15.0173 29.08q-.3069-.9036-.6906-1.7566C14.5793 27.8937 14.8127 28.4771 15.0173 29.08zM15.5269 29.6563c-.0229-.0112-.0463-.0207-.0684-.0338C15.4809 29.6356 15.5036 29.6452 15.5269 29.6563zM19.7117 23.7529c-.249.3474-.4679.7125-.6927 1.0741C19.2431 24.465 19.4633 24.1006 19.7117 23.7529z"></path>
+            <polygon fill="#fff" points="23.322 19.553 23.322 19.553 23.322 19.553 23.322 19.553"></polygon>
+            <path fill="#fff" d="M17.0468 28.774h0q.3516-.887.7561-1.7428C17.5316 27.6006 17.2812 28.1826 17.0468 28.774zM18.68 25.3584c-.2879.4957-.55 1.0068-.8 1.5242C18.13 26.3647 18.3931 25.8547 18.68 25.3584z"></path>
+            <path fill="#ea4435" d="M8.929,5.1593A9.9683,9.9683,0,0,0,6,12.23a11.0918,11.0918,0,0,0,.5454,3.4546L13,9.23Z"></path>
+          </svg>
+          <span>Ver en Google Maps</span>
+        </a>
+      </div>
     </div>
+
   </div>
         {/* Ola */}
         <div className="relative w-full justify-end bottom-0">
