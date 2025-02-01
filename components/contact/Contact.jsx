@@ -50,10 +50,10 @@ const Contact = () => {
 
       {/* Texto de redes sociales */}
       <div className="mt-6 flex max-xs:flex-col xs:flex-col max-xs:justify-items-center sm:justify-center max-xs:pb-2 xs:pb-0">
-        <p className="text-lg mb-2 sm:text-center xs:text-center max-xs:text-center md:text-start flex max-xs:justify-center xs:justify-center sm:justify-center md:justify-start">Síguenos en:</p>
+        <p className="text-lg mb-2 sm:text-center xs:text-center max-xs:text-center md:text-start flex max-xs:justify-center xs:justify-center sm:justify-center md:justify-start">Seguinos en:</p>
 
         {/* Redes sociales en fila */}
-        <div className="flex xs:flex-row xs:gap-8 max-xs:gap-4 items-center justify-center">
+        <div className="flex xs:flex-row xs:gap-8 max-xs:gap-4 items-center max-xs:justify-center xs:justify-center sm:justify-center md:justify-start lg:justify-start">
           {/* Facebook */}
           <div className="flex items-center text-white">
             <Link

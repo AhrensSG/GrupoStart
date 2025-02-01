@@ -209,7 +209,7 @@ const CommunityManager = () => {
 <section className="relative bg-[#FFFFFF] max-xs:flex-col sm:flex-col md:flex-row md:mt-6 xs:my-8 max-xs:mt-2">
   <div className="flex md:flex-row w-full bg-[#FFFFFF] px-[2%] sm:flex-col xs:flex-col max-xs:flex-col xs:py-2 max-xs:py-8">
     {/* Image */}
-    <div className="w-full flex justify-start pl-[4%] md:w-[50vw] md:mt-5 sm:w-[70vw] xs:w-auto xs:margin-2 xs:justify-items-center max-xs:justify-items-center max-xs:w-auto max-xs:mt-12">
+    <div className="w-full md:flex-row max-xs:flex-col xs:flex-col sm:flex-col md:justify-start sm:justify-center sm:items-center md:pl-[4%] lg:w-[60vw] md:w-[50vw] md:mt-5 sm:w-auto xs:w-auto xs:margin-2 xs:justify-items-center max-xs:justify-items-center max-xs:w-auto max-xs:mt-12">
       <Image
         src={"/services/ImgSct4GR.png"}
         alt="Imagen de la sección 4"
@@ -222,8 +222,8 @@ const CommunityManager = () => {
       />
     </div>
     {/* Text */}
-    <div className="flex justify-center items-center text-end pr-[4%]">
-      <span className="font-bold text-[#FB8A00] xs:text-end max-xs:text-center flex flex-col justify-end items-center max-xs:text-4xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-7xl leading-snug">
+    <div className="flex max-xs:justify-center xs:justify-center sm:justify-center md:justify-end max-xs:items-center xs:items-center md:items-center md:right-0 md:text-end xs:text-center max-xs:text-center md:pr-[4%] lg:pr-0 xl:pr-0 w-auto">
+      <span className="font-bold text-[#FB8A00] xl:text-end lg:text-end md:text-end sm:text-end xs:text-end max-xs:text-center flex-col justify-end items-center max-xs:text-4xl xs:text-4xl sm:text-4xl md:text-5xl lg:text-7xl leading-snug">
         Un perfil <span className="hidden md:inline"> <br /></span>
         optimizado <span className="hidden md:inline"> <br /></span>
         al 100%
@@ -237,7 +237,7 @@ const CommunityManager = () => {
 <section className="relative bg-[#FFFFFF] px-[2%] lg:flex-grow md:flex-grow sm:flex-col xs:flex-col max-xs:flex-col">
   <div className="flex md:flex-row w-full bg-[#FFFFFF] md:py-6 lg:py-1 xs:flex-col max-xs:flex-col sm:flex-col">
     {/* Image */}
-    <div className="flex xs:items-start max-xs:items-center justify-center md:pl-[4%] xl:w-full xl:h-full lg:w-[85vh] lg:h-[80vh] md:w-[40vh] md:h-[53vh] lg:pt-[6%] md:pt-[7%] xs:px-[2%]">
+    <div className="flex xs:items-start max-xs:items-center justify-center md:pl-[4%] xl:w-full xl:h-full lg:w-[85vh] lg:h-[80vh] md:w-[40vh] md:h-[53vh] lg:pt-[1%] md:pt-[4%] xs:px-[2%]">
       <Image
         src={"/services/ImgSct5GR.png"}
         alt="Imagen de la sección 5"
@@ -250,15 +250,18 @@ const CommunityManager = () => {
       />
     </div>
     {/* Text */}
-    <div className="lg:w-2/4 md:w-2/4 relative flex flex-col xs:items-end max-xs:justify-items-center max-xs:text-center justify-center xs:text-end mt-2 lg:pr-[4%] md:pr-[2%] max-xs:px-[2%]">
-      <span className="xs:text-2xl md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] xs:text-end max-xs:text-center">
+    <div className="lg:w-full md:w-2/4 relative flex-col xs:items-end max-xs:justify-items-center max-xs:text-center justify-center xs:text-end mt-2 sm:pb-6 xs:pb-8 max-xs:pb-4 lg:pr-[1%] md:pr-[1%] max-xs:px-[2%] md:space-y-2 lg:space-y-4">
+      <span className="max-xs:text-3xl xs:text-3xl md:text-3xl lg:text-5xl font-bold mb-[2px] text-[#0853FC] xs:text-end max-xs:text-center">
         Conocé a tu audiencia <span className="hidden md:inline"> <br /></span>
         es la clave del éxito
       </span>
+      <br/>
+      <span className="hidden md:inline md:py-2 md:my-2"> <br /></span>
       <span className="font-light mb-[40px] text-black xs:text-end max-xs:text-center md:text-md lg:text-xl xl:text-2xl leading-relaxed tracking-wide mt-4">
         Segmentar y entender a tu audiencia es fundamental <span className="hidden md:inline"> <br /></span>
         para crear campañas de marketing efectivas para <span className="hidden md:inline"> <br /></span>
         obtener éxito de tu negocio en redes sociales. <span className="hidden md:inline"> <br /></span>
+        <span className="hidden md:inline"> <br /></span>
         Conocer sus edades, intereses, comportamientos y <span className="hidden md:inline"> <br /></span>
         necesidades permite diseñar mensajes que realmente <span className="hidden md:inline"> <br /></span>
         resuenen e impacten en cada persona, maximizando el <span className="hidden md:inline"> <br /></span>
