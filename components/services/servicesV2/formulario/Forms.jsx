@@ -163,49 +163,57 @@ export default function Formulario() {
         });
     };
 
-    const handleToggleChange = (e) => {
+    const handleToggleChange = (e) => { 
         const { name, checked } = e.target;
-
+    
         setFormData((prevData) => {
             const updatedData = { ...prevData, [name]: checked };
-
+    
             // Verificar si al menos uno de los interruptores de redes sociales está activado
             const isAnySocialMediaActive = updatedData.facebook || updatedData.instagram || updatedData.tiktok;
-
+    
             setIsEditable(isAnySocialMediaActive); // Habilitar o deshabilitar la edición
-
+    
+            // Si ningún interruptor está activado, restablecer todos los valores a 0
             if (!isAnySocialMediaActive) {
-                // Si no hay redes sociales activas, restablecer cantidades y reiniciar todo
                 setItems((prevItems) =>
                     prevItems.map((item) => ({
                         ...item,
-                        cantidad: 0, // Cantidad a 0
-                        valor: 0, // Valor a 0 (reinicio completo)
+                        cantidad: 0, // Restablecer las cantidades a 0
+                        valor: 0, // Restablecer el valor también a 0
                     }))
                 );
-                setTotal(0); // Restablecer total a 0
-
-                // Reiniciar efemérides y otros valores en formData
-                return { ...updatedData, efemerides: false, otherField1: null, otherField2: null }; // Reinicia otras configuraciones si es necesario
+                setTotal(0); // Restablecer el total a 0
+                return { ...updatedData, efemerides: false, otherField1: null, otherField2: null }; // Resetear otros valores si es necesario
             }
-
-            // Manejar cantidades específicas según el interruptor activado
+    
+            // Lógica para actualizar los índices de los ítems (no cambia la cantidad aquí)
             setItems((prevItems) =>
                 prevItems.map((item) => {
-                    if (name === "tiktok" && item.nombre === "TikTok") {
-                        return {
-                            ...item,
-                            cantidad: checked ? 1 : 0, // Ajustar cantidad para TikTok
-                        };
+                    if (updatedData.tiktok) {
+                        // Si solo TikTok está activado, habilitar solo los ítems 5 y 6
+                        if (item.index === 4 || item.index === 5) {
+                            return { ...item, cantidad: item.cantidad }; // Dejar las cantidades intactas
+                        }
+                        return { ...item, cantidad: 0 }; // Deshabilitar los demás ítems
                     }
-                    return item; // Otros ítems no se modifican aquí
+    
+                    // Si Facebook o Instagram están activados, habilitar todos los ítems
+                    if (updatedData.facebook || updatedData.instagram) {
+                        return { ...item, cantidad: item.cantidad }; // Dejar las cantidades intactas
+                    }
+    
+                    return item; // Si no está activado nada, no modificar
                 })
             );
-
+    
             return updatedData;
         });
     };
-
+    
+    
+    
+    
     // Incrementar la cantidad del ítem en el índice dado
     const handleIncrement = (index) => {
         const newItems = [...items];
@@ -479,7 +487,13 @@ export default function Formulario() {
             <div className="flex xs:space-x-4 max-xs:space-x-2 mb-4 justify-center items-center border-t-2 border-t-blue-500 bg-[#0853FC] text-white p-2 rounded-t-full">
                 {["facebook", "instagram", "tiktok"].map((platform) => (
                     <label key={platform} className="flex items-center xs:space-x-2 max-xs:space-x-1">
-                        <input type="checkbox" name={platform} checked={formData[platform]} onChange={handleToggleChange} className="hidden" />
+                        <input
+                            type="checkbox"
+                            name={platform}
+                            checked={formData[platform]}
+                            onChange={handleToggleChange}
+                            className="hidden"
+                        />
                         <span
                             className={`xs:w-12 max-xs:w-6 xs:h-6 max-xs:h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors ${
                                 formData[platform] ? "bg-orange-500" : "bg-gray-300"
@@ -496,6 +510,9 @@ export default function Formulario() {
                 ))}
             </div>
 
+            <div className="transition duration-3600 ease-in-out rounded-b-3xl">
+            {isEditable ? ( 
+                <div className="transition duration-3600 ease-in-out rounded-b-3xl">
             {/* Encabezados de columnas */}
             <div className="grid sm:grid-cols-3 max-xs:grid-cols-[3fr_1fr_1fr] xs:grid-cols-[2fr_1fr_1fr] mb-2">
                 <h3 className="font-bold text-sm text-center">Detalle</h3>
@@ -506,7 +523,133 @@ export default function Formulario() {
             {/* Línea horizontal continua debajo de los encabezados */}
             <hr className="border-2 border-black mb-4" />
 
+                {/* Renderizar solo los ítems 5 y 6 si solo TikTok está activado */}
+                {formData.tiktok && !formData.facebook && !formData.instagram && (
+    <>
+        {/* Ítem 5 */}
+        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
+            {/* Contenedor de icono de información y detalle */}
+            <div 
+                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
+                onMouseOver={(e) => handleMouseOver(e, items[4].info)}
+                onMouseOut={handleMouseOut}
+            >
+                {/* Icono de información */}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-info-circle-fill"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="orange"
+                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                    />
+                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[4].detalle}</span>
+            </div>
+
+            {/* Input de cantidad */}
+            <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
+                <input
+                    type="text"
+                    value={items[4].cantidad}
+                    onChange={(e) => handleInputChange(4, e.target.value)}
+                    min="0"
+                    disabled={!formData.tiktok}
+                    className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
+                />
+                <div className="hidden md:flex flex-col ml-2">
+                    <button
+                        onClick={() => handleIncrement(4)}
+                        disabled={!formData.tiktok}
+                        className="bg-gray-300 text-black rounded-t xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold"
+                    >
+                        +
+                    </button>
+                    <button
+                        onClick={() => handleDecrement(4)}
+                        disabled={!formData.tiktok}
+                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
+                    >
+                        -
+                    </button>
+                </div>
+            </div>
+
+            {/* Columna de valor */}
+            <div className="text-sm text-center">
+                {`$${(items[4].cantidad * items[4].valor).toFixed(2)}`}
+            </div>
+        </div>
+
+        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
+
+        {/* Ítem 6 */}
+        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] justify-center items-center mb-2">
+            {/* Contenedor de icono de información y detalle */}
+            <div 
+                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
+                onMouseOver={(e) => handleMouseOver(e, items[5].info)}
+                onMouseOut={handleMouseOut}
+            >
+                {/* Icono de información */}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-info-circle-fill"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="orange"
+                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                    />
+                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[5].detalle}</span>
+            </div>
+
+            {/* Switch de efemérides */}
+            <label className="flex items-center justify-center space-x-2">
+                <input
+                    type="checkbox"
+                    name="efemerides"
+                    checked={formData.efemerides}
+                    onChange={(e) => handleEfemeridesToggle(e.target.checked)}
+                    className="hidden"
+                    disabled={!formData.tiktok}
+                />
+                <span
+                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${
+                        formData.efemerides ? "bg-orange-500" : "bg-gray-300"
+                    }`}
+                >
+                    <span
+                        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
+                            formData.efemerides ? "translate-x-6" : "translate-x-0"
+                        }`}
+                    ></span>
+                </span>
+            </label>
+
+            {/* Columna de valor */}
+            <div className="text-sm text-center">
+                {`$${items[5].valor.toFixed(2)}`}
+            </div>
+        </div>
+        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
+    </>
+)}
+
+
             {/* Formulario con columnas y líneas continuas para cada ítem */}
+            {(formData.facebook || formData.instagram) && (
+                <>
             {items.map((item, index) => (
                 <div key={index}>
                     <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
@@ -534,6 +677,7 @@ export default function Formulario() {
                         </div>
 
                         {/* Campo de entrada para los índices 0 a 5 */}
+                        
                         {index < 5 ? (
                             <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
                                 <input
@@ -541,7 +685,7 @@ export default function Formulario() {
                                     value={item.cantidad}
                                     onChange={(e) => handleInputChange(index, e.target.value)}
                                     min="0"
-                                    disabled={!isEditable} // Deshabilitar si no es editable
+                                    disabled={!(formData.facebook || formData.instagram || formData.tiktok)}  // Deshabilitar si no es editable
                                     className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
                                 />
                                 <div className="hidden md:flex flex-col ml-2">
@@ -684,6 +828,9 @@ export default function Formulario() {
                 </div>
             ))}
 
+            </>
+            )}
+            
             {/* Valor total y resultado */}
 
             <div className="flex items-center mt-4 xs:justify-end max-xs:justify-center">
@@ -700,6 +847,22 @@ export default function Formulario() {
                     CONTRATAR
                 </button>
             </div>
+
+            </div>
+            ) : (
+            
+                <div className="lg:p-12 md:p-6 sm:p-6 xs:p-6 max-xs:p-3 bg-blue-300 rounded-t-md md:rounded-b-[6vh] sm:rounded-b-[4vh] xs:rounded-b-[4vh] max-xs:rounded-b-[2vh] border-2 border-blue-400">
+                        <p className="lg:text-3xl md:text-xl text-white rounded-xl py-2 px-0 mx-auto bg-orange-500 font-extrabold justify-items-center text-center border-white border-2 ">
+                            Seleccioná una red social para armar tu plan personalizado
+                        </p>
+                </div>
+            )}
+            </div>
+
+                {/* Mensaje debajo del formulario */}
+            <p className="mt-4 text-md font-extrabold text-black justify-items-center text-center">
+                    Servicio de suscripción mensual
+                </p>
 
             {/* Modal de advertencia */}
             {showWarningModal && (
@@ -733,6 +896,7 @@ export default function Formulario() {
                     {tooltip.content}
                 </div>
             )}
+            
         </section>
     );
 }
