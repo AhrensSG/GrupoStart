@@ -14,6 +14,8 @@ export const isUserLogged = async (dispatch) => {
                     uid: user.uid,
                 };
                 const data = await axios.put(`${SERVER_URL_AUTH_ENDPOINT}`, info);
+                console.log(data);
+
                 dispatch({ type: "LOGGED_IN_USER", payload: data.data });
                 return true;
             } else {

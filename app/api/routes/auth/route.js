@@ -1,12 +1,12 @@
-import { Order, User } from "@/db/models/models";
+import { Company, Order, User } from "@/db/models/models";
 import { sendMail } from "../send_mail/sendMail";
 
 export async function PUT(req) {
     try {
         const { displayName, email, uid } = await req.json();
-        console.log(displayName, email, uid);
+        console.log(email, uid);
 
-        if (!uid || !displayName || !email) {
+        if (!uid || !email) {
             return Response.json("UID / DISPLAYNAME / EMAIL ARE required", {
                 status: 400,
             });
@@ -14,7 +14,7 @@ export async function PUT(req) {
 
         const user = await User.findOne({
             where: { id: uid },
-            include: [{ model: Order }],
+            include: [{ model: Order }, { model: Company }],
         });
 
         if (!user) {
@@ -53,11 +53,7 @@ export async function PUT(req) {
 
 export async function POST(req) {
     try {
-        const { user, _tokenResponse } = await req.json();
-        const id = user.uid;
-        const name = _tokenResponse.firstName;
-        const surname = _tokenResponse.lastName;
-        const email = user.email;
+        const { id, name, surname, email, password } = await req.json();
         console.log(id, name, surname, email);
 
         if (!id || !name || !surname || !email) {
@@ -75,14 +71,14 @@ export async function POST(req) {
         if (existingUser) {
             return Response.json(existingUser);
         }
-
+        const passwordEncrypted = crypto.createHash("sha256").update(password).digest("hex");
         const newUser = await User.create({
             id,
             name,
             surname,
             email,
+            password: passwordEncrypted,
         });
-        console.log(newUser);
 
         const updatedUser = await User.findOne({
             where: { id: newUser.id },
