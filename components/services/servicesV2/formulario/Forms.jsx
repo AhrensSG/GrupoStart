@@ -163,56 +163,46 @@ export default function Formulario() {
         });
     };
 
-    const handleToggleChange = (e) => { 
+    //Habilitacion del formulario mediante los interruptores de redes, efemerides y reinicio de cantidades
+    const handleToggleChange = (e) => {
         const { name, checked } = e.target;
     
         setFormData((prevData) => {
-            const updatedData = { ...prevData, [name]: checked };
+            const updatedData = { 
+                ...prevData, 
+                [name]: checked
+            };
     
             // Verificar si al menos uno de los interruptores de redes sociales está activado
             const isAnySocialMediaActive = updatedData.facebook || updatedData.instagram || updatedData.tiktok;
     
             setIsEditable(isAnySocialMediaActive); // Habilitar o deshabilitar la edición
     
-            // Si ningún interruptor está activado, restablecer todos los valores a 0
+            setItems((prevItems) => {
+                return prevItems.map((item, index) => {
+                    // Reiniciar cantidades solo si TODOS los interruptores están desactivados
+                    if (!isAnySocialMediaActive) {
+                        return { ...item, cantidad: 0 };
+                    }
+    
+                    // Si efemérides está desactivado, reiniciar su valor
+                    if (index === 5 && !updatedData.efemerides) {
+                        return { ...item, cantidad: 0, valor: 0 };
+                    }
+    
+                    return item; // Mantener otros valores sin cambios
+                });
+            });
+    
+            // Si no hay ningún interruptor de redes sociales activado, desactivar efemérides
             if (!isAnySocialMediaActive) {
-                setItems((prevItems) =>
-                    prevItems.map((item) => ({
-                        ...item,
-                        cantidad: 0, // Restablecer las cantidades a 0
-                        valor: 0, // Restablecer el valor también a 0
-                    }))
-                );
-                setTotal(0); // Restablecer el total a 0
-                return { ...updatedData, efemerides: false, otherField1: null, otherField2: null }; // Resetear otros valores si es necesario
+                updatedData.efemerides = false;
             }
     
-            // Lógica para actualizar los índices de los ítems (no cambia la cantidad aquí)
-            setItems((prevItems) =>
-                prevItems.map((item) => {
-                    if (updatedData.tiktok) {
-                        // Si solo TikTok está activado, habilitar solo los ítems 5 y 6
-                        if (item.index === 4 || item.index === 5) {
-                            return { ...item, cantidad: item.cantidad }; // Dejar las cantidades intactas
-                        }
-                        return { ...item, cantidad: 0 }; // Deshabilitar los demás ítems
-                    }
-    
-                    // Si Facebook o Instagram están activados, habilitar todos los ítems
-                    if (updatedData.facebook || updatedData.instagram) {
-                        return { ...item, cantidad: item.cantidad }; // Dejar las cantidades intactas
-                    }
-    
-                    return item; // Si no está activado nada, no modificar
-                })
-            );
-    
-            return updatedData;
+            return updatedData; // Retornar el nuevo estado
         });
     };
-    
-    
-    
+
     
     // Incrementar la cantidad del ítem en el índice dado
     const handleIncrement = (index) => {
@@ -309,9 +299,9 @@ export default function Formulario() {
         return subtotalTotal;
     };
 
-    const handleInputChange = (index, value) => {
+    const handleInputChange = (index, value) => { 
         const newItems = [...items];
-
+    
         // Para el índice 6 (validación de cantidad entre 0 y 365)
         if (index === 6) {
             const numericValue = Number(value);
@@ -319,34 +309,67 @@ export default function Formulario() {
                 newItems[6].cantidad = numericValue; // Actualiza el valor
                 setError(""); // Limpiar error si es válido
             }
-            // No se establece un mensaje de error para el índice 6
-        }
+        } 
+        
         // Para el índice 7 (validación de presupuesto)
         else if (index === 7) {
-            newItems[7].presupuesto = value; // Actualiza el valor como string
+            let formattedValue = value.replace(/^0+(?=\d)/, ''); // Elimina ceros iniciales inválidos
+            
+            // Si Facebook e Instagram están desactivados, forzar presupuesto a 0
+            if (!formData.facebook && !formData.instagram) {
+                formattedValue = "0";
+            }
+    
+            newItems[7].presupuesto = formattedValue;
             setError(""); // Limpiar error mientras se está escribiendo
-        }
+        } 
+        
         // Para otros índices
         else {
             const numericValue = Number(value);
             newItems[index].cantidad = numericValue; // Actualiza el valor
             setError(""); // Limpiar error si es válido
         }
-
+    
         setItems(newItems);
     };
-
+    
+    // Validación al perder el foco (onBlur)
     const handleBlur = (index) => {
         if (index === 7) {
-            const numericValue = Number(items[index].presupuesto);
-            if (numericValue < 4500 && items[index].presupuesto.length >= 4) {
+            const numericValue = Number(items[7].presupuesto);
+    
+            // Si Facebook e Instagram están desactivados, reiniciar presupuesto a 0
+            if (!formData.facebook && !formData.instagram) {
+                setItems((prevItems) => {
+                    const updatedItems = [...prevItems];
+                    updatedItems[7].presupuesto = "0"; // Reinicia a 0
+                    return updatedItems;
+                });
+            } 
+            
+            // Validación de presupuesto mínimo
+            else if (numericValue < 4500 && numericValue !== 0) {
                 setError("El presupuesto no puede ser menor a $4500");
             } else {
                 setError(""); // Limpiar error si es válido
             }
         }
     };
+    
+    // Efecto para reiniciar el presupuesto cuando se desactivan los interruptores
+    useEffect(() => {
+        if (!formData.facebook && !formData.instagram) {
+            setItems((prevItems) => {
+                const updatedItems = [...prevItems];
+                updatedItems[7].presupuesto = "0"; // Reiniciar a 0 si no hay redes activadas
+                return updatedItems;
+            });
+        }
+    }, [formData.facebook, formData.instagram]); // Se ejecuta cuando cambian los interruptores
+    
 
+    //Presupuesto Meta
     const calcularPresupuestoTotal = () => {
         const presupuestoPorDia = items[7].presupuesto || 0;
         const cantidadDeDias = items[6].cantidad || 0;
@@ -525,126 +548,126 @@ export default function Formulario() {
 
                 {/* Renderizar solo los ítems 5 y 6 si solo TikTok está activado */}
                 {formData.tiktok && !formData.facebook && !formData.instagram && (
-    <>
-        {/* Ítem 5 */}
-        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
-            {/* Contenedor de icono de información y detalle */}
-            <div 
-                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
-                onMouseOver={(e) => handleMouseOver(e, items[4].info)}
-                onMouseOut={handleMouseOut}
-            >
-                {/* Icono de información */}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-info-circle-fill"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        fill="orange"
-                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-                    />
-                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                </svg>
-                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[4].detalle}</span>
-            </div>
+                    <>
+                        {/* Ítem 5 */}
+                        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
+                            {/* Contenedor de icono de información y detalle */}
+                            <div 
+                                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
+                                onMouseOver={(e) => handleMouseOver(e, items[4].info)}
+                                onMouseOut={handleMouseOut}
+                            >
+                                {/* Icono de información */}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    className="bi bi-info-circle-fill"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path
+                                        fill="orange"
+                                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                                    />
+                                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                </svg>
+                                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[4].detalle}</span>
+                            </div>
 
-            {/* Input de cantidad */}
-            <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
-                <input
-                    type="text"
-                    value={items[4].cantidad}
-                    onChange={(e) => handleInputChange(4, e.target.value)}
-                    min="0"
-                    disabled={!formData.tiktok}
-                    className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
-                />
-                <div className="hidden md:flex flex-col ml-2">
-                    <button
-                        onClick={() => handleIncrement(4)}
-                        disabled={!formData.tiktok}
-                        className="bg-gray-300 text-black rounded-t xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold"
-                    >
-                        +
-                    </button>
-                    <button
-                        onClick={() => handleDecrement(4)}
-                        disabled={!formData.tiktok}
-                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
-                    >
-                        -
-                    </button>
-                </div>
-            </div>
+                            {/* Input de cantidad */}
+                            <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
+                                <input
+                                    type="text"
+                                    value={items[4].cantidad}
+                                    onChange={(e) => handleInputChange(4, e.target.value)}
+                                    min="0"
+                                    disabled={!formData.tiktok}
+                                    className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
+                                />
+                                <div className="hidden md:flex flex-col ml-2">
+                                    <button
+                                        onClick={() => handleIncrement(4)}
+                                        disabled={!formData.tiktok}
+                                        className="bg-gray-300 text-black rounded-t xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold"
+                                    >
+                                        +
+                                    </button>
+                                    <button
+                                        onClick={() => handleDecrement(4)}
+                                        disabled={!formData.tiktok}
+                                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
+                                    >
+                                        -
+                                    </button>
+                                </div>
+                            </div>
 
-            {/* Columna de valor */}
-            <div className="text-sm text-center">
-                {`$${(items[4].cantidad * items[4].valor).toFixed(2)}`}
-            </div>
-        </div>
+                            {/* Columna de valor */}
+                            <div className="text-sm text-center">
+                                {`$${(items[4].cantidad * items[4].valor).toFixed(2)}`}
+                            </div>
+                        </div>
 
-        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
+                        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
 
-        {/* Ítem 6 */}
-        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] justify-center items-center mb-2">
-            {/* Contenedor de icono de información y detalle */}
-            <div 
-                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
-                onMouseOver={(e) => handleMouseOver(e, items[5].info)}
-                onMouseOut={handleMouseOut}
-            >
-                {/* Icono de información */}
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-info-circle-fill"
-                    viewBox="0 0 16 16"
-                >
-                    <path
-                        fill="orange"
-                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-                    />
-                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                </svg>
-                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[5].detalle}</span>
-            </div>
+                        {/* Ítem 6 */}
+                        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] justify-center items-center mb-2">
+                            {/* Contenedor de icono de información y detalle */}
+                            <div 
+                                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
+                                onMouseOver={(e) => handleMouseOver(e, items[5].info)}
+                                onMouseOut={handleMouseOut}
+                            >
+                                {/* Icono de información */}
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="16"
+                                    height="16"
+                                    fill="currentColor"
+                                    className="bi bi-info-circle-fill"
+                                    viewBox="0 0 16 16"
+                                >
+                                    <path
+                                        fill="orange"
+                                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                                    />
+                                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                                </svg>
+                                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[5].detalle}</span>
+                            </div>
 
-            {/* Switch de efemérides */}
-            <label className="flex items-center justify-center space-x-2">
-                <input
-                    type="checkbox"
-                    name="efemerides"
-                    checked={formData.efemerides}
-                    onChange={(e) => handleEfemeridesToggle(e.target.checked)}
-                    className="hidden"
-                    disabled={!formData.tiktok}
-                />
-                <span
-                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${
-                        formData.efemerides ? "bg-orange-500" : "bg-gray-300"
-                    }`}
-                >
-                    <span
-                        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
-                            formData.efemerides ? "translate-x-6" : "translate-x-0"
-                        }`}
-                    ></span>
-                </span>
-            </label>
+                            {/* Switch de efemérides */}
+                            <label className="flex items-center justify-center space-x-2">
+                                <input
+                                    type="checkbox"
+                                    name="efemerides"
+                                    checked={formData.efemerides}
+                                    onChange={(e) => handleEfemeridesToggle(e.target.checked)}
+                                    className="hidden"
+                                    disabled={!formData.tiktok}
+                                />
+                                <span
+                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${
+                                        formData.efemerides ? "bg-orange-500" : "bg-gray-300"
+                                    }`}
+                                >
+                                    <span
+                                        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
+                                            formData.efemerides ? "translate-x-6" : "translate-x-0"
+                                        }`}
+                                    ></span>
+                                </span>
+                            </label>
 
-            {/* Columna de valor */}
-            <div className="text-sm text-center">
-                {`$${items[5].valor.toFixed(2)}`}
-            </div>
-        </div>
-        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
-    </>
-)}
+                            {/* Columna de valor */}
+                            <div className="text-sm text-center">
+                                {`$${items[5].valor.toFixed(2)}`}
+                            </div>
+                        </div>
+                        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
+                    </>
+                )}
 
 
             {/* Formulario con columnas y líneas continuas para cada ítem */}
