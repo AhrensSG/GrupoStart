@@ -8,6 +8,8 @@ import UserForm from "./UserForm";
 import ServicesSection from "./ServicesSection";
 import CoursesSection from "./CoursesSection";
 import MentorySection from "./MentorySection";
+import Modal from "./Modal";
+import axios from "axios";
 
 const Usuario = ({ data }) => {
     const [selectedSection, setSelectedSection] = useState("perfil");
@@ -22,34 +24,35 @@ const Usuario = ({ data }) => {
 
     // Estado inicial del usuario, incluye datos de contacto y empresa
     const [userData, setUserData] = useState({
+        id: data.id,
         nombres: data.name,
         apellido: data.surname,
         email: data.email,
-        fechaNacimiento: "",
-        pais: "",
+        fechaNacimiento: data.birthday || "",
+        pais: data.country || "",
         celular: data.phone || "",
-        nombreDeEmpresa: "",
-        rubro: "",
-        celularEmpresa: "",
-        direccionEmpresa: "",
-        alturaEmpresa: "",
-        deptoEmpresa: "",
-        facebookEmpresa: "",
-        instagramEmpresa: "",
-        tiktokEmpresa: "",
-        competidorEmpresa: "",
+        nombreDeEmpresa: data.Company.companyName || "",
+        rubro: data.Company.industry || "",
+        celularEmpresa: data.Company.phoneNumber || "",
+        direccionEmpresa: data.Company.address || "",
+        alturaEmpresa: data.Company.buildingNumber || "",
+        deptoEmpresa: data.Company.apartment || "",
+        facebookEmpresa: data.Company.facebookUser || "",
+        instagramEmpresa: data.Company.instagramUser || "",
+        tiktokEmpresa: data.Company.tiktokUser || "",
+        competidorEmpresa: data.Company.directCompetitor || "",
         edadesEmpresa: {
-            min: "",
-            max: "",
+            min: data.Company.customerAgeRangeMin || "",
+            max: data.Company.customerAgeRangeMax || "",
         },
         horarioAtencion: {
             manana: {
-                apertura: "",
-                cierre: "",
+                apertura: data.Company.morningOpeningTime || "",
+                cierre: data.Company.morningClosingTime || "",
             },
             tarde: {
-                apertura: "",
-                cierre: "",
+                apertura: data.Company.afternoonOpeningTime || "",
+                cierre: data.Company.afternoonClosingTime || "",
             },
         },
     });
@@ -98,23 +101,81 @@ const Usuario = ({ data }) => {
         return true;
     }, [userData, showAlert]);
 
-    // Guardar cambios de los datos y actualizar el estado original
-    const handleSaveChanges = useCallback(async () => {
-        if (validateForm()) {
+    const handleSaveChanges = useCallback(
+        async (type) => {
+            if (!validateForm()) return;
+
             setLoading(true);
             try {
-                // Simulación de llamada a la API
-                console.log("Datos guardados:", userData);
+                if (type === "user") {
+                    // Simulación de llamada a la API
+                    const response = await axios.put("/api/routes/users", {
+                        id: userData.id,
+                        name: userData.nombres,
+                        surname: userData.apellido,
+                        email: userData.email,
+                        birthday: userData.fechaNacimiento,
+                        country: userData.pais,
+                        phone: userData.celular,
+                    });
+                } else if (type === "company") {
+                    // Simulación de llamada a la API
+                    if (data.Company !== null) {
+                        const response = await axios.put("/api/routes/company", {
+                            UserId: userData.id,
+                            companyName: userData.nombreDeEmpresa,
+                            industry: userData.rubro,
+                            phoneNumber: userData.celularEmpresa,
+                            address: userData.direccionEmpresa,
+                            buildingNumber: userData.alturaEmpresa,
+                            apartment: userData.deptoEmpresa,
+                            facebookUser: userData.facebookEmpresa,
+                            instagramUser: userData.instagramEmpresa,
+                            tiktokUser: userData.tiktokEmpresa,
+                            directCompetitor: userData.competidorEmpresa,
+                            customerAgeRangeMin: userData.edadesEmpresa.min,
+                            customerAgeRangeMax: userData.edadesEmpresa.max,
+                            morningOpeningTime: userData.horarioAtencion.manana.apertura,
+                            morningClosingTime: userData.horarioAtencion.manana.cierre,
+                            afternoonOpeningTime: userData.horarioAtencion.tarde.apertura,
+                            afternoonClosingTime: userData.horarioAtencion.tarde.cierre,
+                            id: data.Company.id,
+                        });
+                    } else {
+                        const response = await axios.post("/api/routes/company", {
+                            UserId: userData.id,
+                            companyName: userData.nombreDeEmpresa,
+                            industry: userData.rubro,
+                            phoneNumber: userData.celularEmpresa,
+                            address: userData.direccionEmpresa,
+                            buildingNumber: userData.alturaEmpresa,
+                            apartment: userData.deptoEmpresa,
+                            facebookUser: userData.facebookEmpresa,
+                            instagramUser: userData.instagramEmpresa,
+                            tiktokUser: userData.tiktokEmpresa,
+                            directCompetitor: userData.competidorEmpresa,
+                            customerAgeRangeMin: userData.edadesEmpresa.min,
+                            customerAgeRangeMax: userData.edadesEmpresa.max,
+                            morningOpeningTime: userData.horarioAtencion.manana.apertura,
+                            morningClosingTime: userData.horarioAtencion.manana.cierre,
+                            afternoonOpeningTime: userData.horarioAtencion.tarde.apertura,
+                            afternoonClosingTime: userData.horarioAtencion.tarde.cierre,
+                        });
+                    }
+                }
                 setOriginalData({ ...userData });
-                setIsEditing(false);
                 showModal("Cambios guardados exitosamente.");
+                return true;
             } catch (error) {
+                console.log(error);
                 showModal("Error al guardar los cambios. Inténtalo de nuevo.");
+                return false;
             } finally {
                 setLoading(false);
             }
-        }
-    }, [userData, validateForm]);
+        },
+        [userData, validateForm]
+    );
 
     // Maneja el inicio de edición, restaurando datos originales si es necesario
     const handleEdit = useCallback(() => {
@@ -239,49 +300,24 @@ const Usuario = ({ data }) => {
                         <h2 className="text-2xl text-orange-500 font-bold">Mi Perfil</h2>
                         <div className="flex md:flex-row xs:flex-col max-xs:flex-col md:space-x-4">
                             {/* Tarjeta de Datos Personales */}
-                            <div className="bg-white rounded-xl md:w-1/3 xs:w-full max-xs:w-full max-xs:m-1 xs:m-2 md:0 md:min-h-screen xs:h-auto max-xs:h-auto border-black p-3 relative">
-                                <h3 className="text-xl font-bold text-orange-500">Datos Personales</h3>
-                                {isEditing ? (
-                                    <div className="xs:space-x-2  max-xs:space-x-0 mt-4">
-                                        <div className="flex justify-between mt-4">
-                                            <button className="bg-red-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleCancelEdit}>
-                                                Cancelar
-                                            </button>
-                                            <button className="bg-blue-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleSaveChanges}>
-                                                Guardar Cambios
-                                            </button>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <button className="absolute top-0 right-0 mt-2 mr-2">
-                                        <svg
-                                            viewBox="0 0 512 512"
-                                            id="pencil"
-                                            width={30}
-                                            height={30}
-                                            onClick={handleEdit}
-                                            className="flex flex-row justify-between"
-                                        >
-                                            <path
-                                                fill="#0853fc"
-                                                d="M64 368v80h80l235.727-235.729-79.999-79.998L64 368zm377.602-217.602c8.531-8.531 8.531-21.334 0-29.865l-50.135-50.135c-8.531-8.531-21.334-8.531-29.865 0l-39.468 39.469 79.999 79.998 39.469-39.467z"
-                                                class="color010101 svgShape"
-                                            ></path>
-                                        </svg>
-                                    </button>
-                                )}
-                                <UserForm isEditing={isEditing} userData={userData} handleInputChange={handleInputChange} />
-                            </div>
+
+                            <UserForm
+                                isEditing={isEditing}
+                                userData={userData}
+                                handleInputChange={handleInputChange}
+                                handleCancelEdit={handleCancelEdit}
+                                handleSaveChanges={handleSaveChanges}
+                            />
 
                             {/* Tarjeta de Datos de la Empresa */}
                             <CompanySection
                                 isEditing={isEditing}
                                 userData={userData}
-                                handleEdit={handleEdit}
-                                handleCancelEdit={handleCancelEdit}
-                                handleSaveChanges={handleSaveChanges}
+                                setIsEditing={setIsEditing}
                                 handleInputChange={handleInputChange}
                                 setUserData={setUserData}
+                                handleCancelEdit={handleCancelEdit}
+                                handleSaveChanges={handleSaveChanges}
                             />
                         </div>
                     </section>
@@ -441,7 +477,6 @@ const Usuario = ({ data }) => {
                         </button>
                     </div>
                 </aside>
-
                 {/* Sección dinámica */}
                 <section className="xs:w-3/4 max-xs:w-full sm:p-6 max-xs:p-2 space-y-2 z-20">
                     {renderSectionContent()}

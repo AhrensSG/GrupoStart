@@ -18,6 +18,8 @@ const userInit = (sequelize, DataTypes) => {
                 type: DataTypes.STRING,
                 allowNull: true,
             },
+            country: DataTypes.STRING,
+            birthday: DataTypes.STRING,
         },
         {
             sequelize,
