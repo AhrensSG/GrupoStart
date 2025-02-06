@@ -151,16 +151,17 @@ const DesktopCommunityManagerSection = () => {
     <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
       <div className="rounded-lg shadow-lg bg-white border border-gray-300">
         <PlanCard
-          title="Conexion Inicial"
+          title="START"
           features={[
             "2 Redes sociales Facebook + Instagram",
-            "3 Publicaciones semanales 12 Mensuales",
-            "3 Historias semanales 12 Mensuales",
-            "Diseño creativo con imágenes del cliente o de internet",
-            "Puesta en marcha de campañas publicitarias",
+            "3 Publicaciones semanales / 12 Mensuales",
+            "2 videos + 2 diseños de Stories",
+            "Diseño creativo Puesta en marcha de campañas publicitarias Básicas",
           ]}
-          price={{ original: 250000, discount: 199900 }}
-          onButtonClick={() => alert("Seleccionaste el Plan Conexión Inicial")}
+          price={{ original: 350000, discount: 299900 }}
+          onButtonClick={() => {
+            handleBuyNow(2, "Plan START", 299900);
+          }}
           listClassName="px-[15%] py-4 text-center flex"
         />
       </div>
@@ -171,14 +172,15 @@ const DesktopCommunityManagerSection = () => {
           title="Social Master"
           features={[
             "3 Redes sociales Facebook + Instagram + Tiktok",
-            "5 Publicaciones semanales 20 Mensuales",
-            "5 Historias semanales 20 Mensuales",
-            "Diseño creativo con imágenes del cliente o de internet",
-            "Puesta en marcha de campañas publicitarias",
-            "1 video 30 seg. mensual",
+            "5 Publicaciones + stories semanales / 20 Mensuales",
+            "4 videos + 4 diseños de Stories",
+            "Diseño creativo",
+            "Puesta en marcha de campañas publicitarias Medias",
           ]}
-          price={{ original: 350000, discount: 299900 }}
-          onButtonClick={() => alert("Seleccionaste el Plan social Master")}
+          price={{ original: 500000, discount: 449900 }}
+          onButtonClick={() => {
+            handleBuyNow(3, "Plan Social Master", 449900);
+          }}
           listClassName="px-[5%] py-4"
         />
       </div>
@@ -188,15 +190,16 @@ const DesktopCommunityManagerSection = () => {
         <PlanCard
           title="Social Pro"
           features={[
-            "3 Redes sociales Facebook + Instagram + Tiktok",
-            "8 Publicaciones semanales 32 Mensuales",
-            "8 Historias semanales 32 Mensuales",
-            "Diseño creativo con imágenes del cliente o de internet",
-            "Puesta en marcha de campañas publicitarias",
-            "2 videos 30 seg. mensuales",
+            "4 Redes sociales Facebook + Instagram + Tiktok + Threads",
+            "8 Publicaciones + stories semanales / 32 Mensuales",
+            "6 videos + 6 diseños de Stories",
+            "Diseño Creativo",
+            "Puesta en marcha de campañas publicitarias Pro",
           ]}
-          price={{ original: 450000, discount: 399900 }}
-          onButtonClick={() => alert("Seleccionaste el Plan Social Pro")}
+          price={{ original: 650000, discount: 599900 }}
+          onButtonClick={() => {
+            handleBuyNow(4, "Plan Social Pro", 599900);
+          }}
           listClassName="px-[5%] py-4"
         />
       </div>
@@ -211,40 +214,40 @@ const DesktopCommunityManagerSection = () => {
       {/* Grid en pantallas grandes */}
       <div className="hidden md:grid lg:grid xl:grid grid-cols-3 gap-4 justify-center items-center">
         <PlanCard
-          title="Conexion inicial"
+          title="START"
           features={[
             "2 Redes sociales Facebook + Instagram",
-            "3 Publicaciones semanales 12 Mensuales",
-            "3 Historias semanales 12 Mensuales",
-            "Diseño creativo con imágenes del cliente o de internet",
-            "Puesta en marcha de campañas publicitarias",
+            "3 Publicaciones semanales / 12 Mensuales",
+            "2 videos + 2 diseños de Stories",
+            "Diseño creativo",
+            "Puesta en marcha de campañas publicitarias Básicas",
           ]}
-          price={{ original: 250000, discount: 199900 }}
-          onButtonClick={() => handleBuyNow(2, "Plan Conexion Inicial", 199900)}
+          price={{ original: 350000, discount: 299900 }}
+          onButtonClick={() => handleBuyNow(2, "Plan START", 299900)}
         />
         <PlanCard
           title="Social Master"
           features={[
             "3 Redes sociales Facebook + Instagram + Tiktok",
-            "5 Publicaciones + historias semanales 20 Mensuales",
-            "Diseño creativo con imágenes del cliente o de internet",
-            "Puesta en marcha de campañas publicitarias",
-            "1 video 30 seg. mensual",
+            "5 Publicaciones + stories semanales / 20 Mensuales",
+            "4 videos + 4 diseños de Stories",
+            "Diseño creativo",
+            "Puesta en marcha de campañas publicitarias Medias",
           ]}
-          price={{ original: 350000, discount: 299900 }}
-          onButtonClick={() => handleBuyNow(3, "Plan Social Master", 299900)}
+          price={{ original: 500000, discount: 449900 }}
+          onButtonClick={() => handleBuyNow(3, "Plan Social Master", 449900)}
         />
         <PlanCard
           title="Social Pro"
           features={[
-            "3 Redes sociales Facebook + Instagram + Tiktok",
-            "8 Publicaciones + historias semanales 32 Mensuales",
-            "Diseño creativo con imágenes del cliente o de internet",
-            "Puesta en marcha de campañas publicitarias",
-            "2 videos 30 seg. mensual",
+            "4 Redes sociales Facebook + Instagram + Tiktok + Threads",
+            "8 Publicaciones + stories semanales / 32 Mensuales",
+            "6 videos + 6 diseños de Stories",
+            "Diseño Creativo",
+            "Puesta en marcha de campañas publicitarias Pro",
           ]}
-          price={{ original: 450000, discount: 399900 }}
-          onButtonClick={() => handleBuyNow(4, "Plan Social Pro", 399900)}
+          price={{ original: 650000, discount: 599900 }}
+          onButtonClick={() => handleBuyNow(4, "Plan Social Pro", 599900)}
         />
       </div>
     </div>
