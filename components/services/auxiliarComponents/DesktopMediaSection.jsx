@@ -154,7 +154,7 @@ const DesktopWebDevelopmentSection = () => {
                   'Modelado 3D de interiores'
                 ]}
                 price={119900}
-                onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 119900)}
+                onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 249900)}
                 crossedItems={[4, 5, 6]}
                 listClassName="px-[5%] py-4"
               />
@@ -169,13 +169,13 @@ const DesktopWebDevelopmentSection = () => {
                   'Creación de logo (icono, inicial o imagen)',
                   'Búsqueda y selección de tipografía',
                   'Elección de colores corporativos',
-                  'Manual básico de aprox. 8 páginas',
+                  'Manual básico de aprox. 15 páginas',
                   'Estudio de competencia',
                   'Diseño de mockups, perfil y portada de facebook',
                   'Modelado 3D de interiores'
                 ]}
                 price={179900}
-                onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 179900)}
+                onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 399900)}
                 crossedItems={[6]}
                 listClassName="px-[5%] py-4"
               />
@@ -189,7 +189,7 @@ const DesktopWebDevelopmentSection = () => {
                   'Creación de logo (icono, inicial o imagen)',
                   'Búsqueda y selección de tipografía',
                   'Elección de colores corporativos',
-                  'Manual básico de aprox. 8 páginas',
+                  'Manual básico de aprox. 25 páginas',
                   'Estudio de competencia',
                   'Diseño de mockups, perfil y portada de facebook',
                   'Modelado 3D de interiores'
@@ -222,7 +222,7 @@ const DesktopWebDevelopmentSection = () => {
             'Modelado 3D de interiores'
           ]}
           price={119900}
-          onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 119900)}
+          onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 249900)}
           crossedItems={[4, 5, 6]}
         />
         <PlanCard
@@ -232,13 +232,13 @@ const DesktopWebDevelopmentSection = () => {
             'Creación de logo (icono, inicial o imagen)',
             'Búsqueda y selección de tipografía',
             'Elección de colores corporativos',
-            'Manual básico de aprox. 8 páginas',
+            'Manual básico de aprox. 15 páginas',
             'Estudio de competencia',
             'Diseño de mockups, perfil y portada de facebook',
             'Modelado 3D de interiores'
           ]}
           price={179900}
-          onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 179900)}
+          onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 399900)}
           crossedItems={[6]}
         />
         <PlanCard
@@ -247,7 +247,7 @@ const DesktopWebDevelopmentSection = () => {
             'Creación de logo (icono, inicial o imagen)',
             'Búsqueda y selección de tipografía',
             'Elección de colores corporativos',
-            'Manual básico de aprox. 8 páginas',
+            'Manual básico de aprox. 25 páginas',
             'Estudio de competencia',
             'Diseño de mockups, perfil y portada de facebook',
             'Modelado 3D de interiores'
