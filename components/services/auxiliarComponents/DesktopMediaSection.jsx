@@ -221,7 +221,7 @@ const DesktopWebDevelopmentSection = () => {
             'Diseño de mockups, perfil y portada de facebook',
             'Modelado 3D de interiores'
           ]}
-          price={119900}
+          price={249900}
           onButtonClick={() => handleBuyNow(5, "Plan Identidad Simplificada", 249900)}
           crossedItems={[4, 5, 6]}
         />
@@ -237,7 +237,7 @@ const DesktopWebDevelopmentSection = () => {
             'Diseño de mockups, perfil y portada de facebook',
             'Modelado 3D de interiores'
           ]}
-          price={179900}
+          price={399900}
           onButtonClick={() => handleBuyNow(6, "Plan Identidad Standar", 399900)}
           crossedItems={[6]}
         />
