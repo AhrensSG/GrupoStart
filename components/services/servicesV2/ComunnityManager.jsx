@@ -358,14 +358,23 @@ const CommunityManager = () => {
             de <span className="text-[#FB8A00] font-semibold">trabajo profesional</span>
           </h2>
         </div>
-    <div clasName="flex-row justify-center items-center object-center px-[6%] py-6 w-[100%]">
+    <div clasName="relative flex-row justify-center items-center object-center px-[6%] my-6 w-full">
       <Image
       src="/services/img360Equipo.png"
       alt="Imagen360Equipo"
       width={814}
       height={556}
       quality={100}
-      className="object-cover relative justify-center items-center object-center w-[100%] lg:px-[10%] md:px-[9%] py-8"
+      className="hidden sm:block object-cover object-centerlg:px-[10%] md:px-[9%] py-8"
+      priority={true}
+      />
+      <Image
+      src="/services/img360EquipoMobile.png"
+      alt="Imagen360Equipo"
+      width={400}
+      height={400}
+      quality={100}
+      className="object-cover block sm:hidden py-8"
       priority={true}
       />
       </div>

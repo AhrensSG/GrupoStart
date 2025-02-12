@@ -26,7 +26,7 @@ const InfoViewMore = () => {
         </div>
 
         {/* Texto */}
-        <div className="w-full relative flex flex-col items-center justify-center order-1 md:order-2 text-center md:text-left md:px-4 xs:px-2 xs:pb-4 max-xs:pb-6">
+        <div className="px-4 w-full relative flex flex-col items-center justify-center order-1 md:order-2 text-center md:text-left md:px-4 xs:px-2 xs:pb-4 max-xs:pb-6">
           <h1 className="xl:text-4xl font-bold lg:mb-[28px] xs:mb-[14px] text-[#0853FC] max-xs:text-3xl xs:text-3xl md:text-2xl lg:text-4xl xs:pt-4">
             La Era de las Redes Sociales
           </h1>

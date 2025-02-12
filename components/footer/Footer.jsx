@@ -44,7 +44,7 @@ const Footer = () => {
               className="cursor-pointer xs:w-[45vw] sm:w-[45vw] md:w-full lg:w-full sm:justify-items-center xs:justify-center"
             />
           </Link>
-          <span className="text-white max-xs:text-center xs:text-left md:font-normal xs:font-semibold">
+          <span className="px-10 text-white max-xs:text-center xs:text-left md:font-normal xs:font-semibold">
             Hipólito Yrigoyen 342, <span className="hidden md:inline"> <br /></span>
             P3600JGA Formosa, <span className="hidden md:inline"> <br /></span>
             Argentina

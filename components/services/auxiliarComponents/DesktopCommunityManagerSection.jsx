@@ -156,7 +156,8 @@ const DesktopCommunityManagerSection = () => {
             "2 Redes sociales Facebook + Instagram",
             "3 Publicaciones semanales / 12 Mensuales",
             "2 videos + 2 diseños de Stories",
-            "Diseño creativo Puesta en marcha de campañas publicitarias Básicas",
+            "Diseño creativo",
+            "Puesta en marcha de campañas publicitarias Básicas"
           ]}
           price={{ original: 350000, discount: 299900 }}
           onButtonClick={() => {

@@ -38,7 +38,7 @@ export default function Formulario() {
             max: 20,
         },
         {
-            detalle: "Idea, guión y edición de videos",
+            detalle: "Cantidad de vídeos: Idea, Guión y edición de videos",
             cantidad: 0,
             valor: (precioBase * 2.68).toFixed(2),
             info: "Esta es sin duda la herramienta más poderosa del marketing de redes sociales en la actualidad. Esta opción está pensada para que te brindemos ideas disruptivas con grandes posibilidades de obtener gran alcance, además de brindarte el guión estructurado con estrategias únicas desarrolladas por nosotros, te vamos a asesorar además en las formas correctas en las que deberás brindarnos el material grabado y con él generamos el paso final para un video único “una edición verdaderamente profesional”",
@@ -605,7 +605,7 @@ export default function Formulario() {
 
                             {/* Columna de valor */}
                             <div className="text-sm text-center">
-                                {`$${(items[4].cantidad * items[4].valor).toFixed(2)}`}
+                                {`$${(items[4].cantidad * items[4].valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                             </div>
                         </div>
 
@@ -662,7 +662,7 @@ export default function Formulario() {
 
                             {/* Columna de valor */}
                             <div className="text-sm text-center">
-                                {`$${items[5].valor.toFixed(2)}`}
+                                {`$${items[5].valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                             </div>
                         </div>
                         <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
@@ -836,14 +836,14 @@ export default function Formulario() {
                             {index === 6
                                 ? ""
                                 : index === 5
-                                ? `$${items[5].valor.toFixed(2)}`
+                                ? `$${items[5].valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                                 : index === 2
                                 ? ""
                                 : index === 3
-                                ? `$${calcularSubtotalCarruseles().toFixed(2)}`
+                                ? `$${calcularSubtotalCarruseles().toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                                 : index === 7
-                                ? `$${(items[7].presupuesto * (items[6].cantidad || 0)).toFixed(2)}`
-                                : `$${(item.cantidad * item.valor).toFixed(2)}`}
+                                ? `$${(items[7].presupuesto * (items[6].cantidad || 0)).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+                                : `$${(item.cantidad * item.valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                         </div>
                     </div>
                     {/* Línea horizontal para separar los ítems */}
@@ -858,7 +858,7 @@ export default function Formulario() {
 
             <div className="flex items-center mt-4 xs:justify-end max-xs:justify-center">
                 <h3 className="font-extrabold text-lg uppercase mr-4">Valor Total:</h3>
-                <span className="font-extrabold text-lg border-2 border-orange-500 pr-2 py-1 rounded text-center">${calcularValorTotal()}</span>
+                <span className="font-extrabold text-lg border-2 border-orange-500 px-2 py-1 rounded text-center">${calcularValorTotal().toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
             </div>
 
             {/* Botón de enviar */}
@@ -883,9 +883,11 @@ export default function Formulario() {
             </div>
 
                 {/* Mensaje debajo del formulario */}
-            <p className="mt-4 text-md font-extrabold text-black justify-items-center text-center">
-                    Servicio de suscripción mensual
-                </p>
+                <div className="flex w-full justify-end">
+                    <p className="mt-4 text-md max-w-[282px] w-full font-extrabold text-white bg-[#FB8A00] rounded-tl-full rounded-br-full justify-items-center text-end px-5 py-2">
+                        Servicio de suscripción mensual
+                    </p>
+                </div>
 
             {/* Modal de advertencia */}
             {showWarningModal && (
@@ -915,7 +917,7 @@ export default function Formulario() {
 
             {/* Tooltip */}
             {tooltip.visible && (
-                <div className="absolute bg-gray-700 text-white text-sm px-2 py-1 rounded" style={{ top: tooltip.y, left: tooltip.x }}>
+                <div className="absolute bg-gray-700 text-white text-sm px-2 py-1 rounded max-w-2xl" style={{ top: tooltip.y, left: tooltip.x }}>
                     {tooltip.content}
                 </div>
             )}

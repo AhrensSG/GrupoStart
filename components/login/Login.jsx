@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { logInWithGoogle } from "@/firebase/logInWithGoogle";
 import { logInWithFacebook } from "@/firebase/logInWithFacebook";
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -28,13 +29,15 @@ const Login = () => {
     const [codeVerified, setCodeVerified] = useState(false);
     const router = useRouter();
 
+    const authUrl = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
+
     const handleEmailLogin = async () => {
         try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("Usuario creado:", user);
+            const user = await signInWithEmailAndPassword(auth, email, password);
+            console.log(user.user);
             false;
             toast.success("Inicio de sesión exitoso!");
+            router.push("/");
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -108,7 +111,15 @@ const Login = () => {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password, nombreUser, apellidoUser);
             const user = userCredential.user;
-            console.log(" Usuario creado:", user);
+
+            await axios.post(authUrl, {
+                id: user.uid,
+                name: nombreUser,
+                surname: apellidoUser,
+                email: email,
+                password: password,
+                phone: phone,
+            });
             false;
             toast.success("Registro exitoso!");
         } catch (error) {
