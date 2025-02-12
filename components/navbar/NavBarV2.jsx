@@ -20,9 +20,7 @@ const NavBarV2 = () => {
             window.location.href = "/user";
         }
     };
-    if (!state.user) {
-        return <Loading />;
-    }
+
     return (
         <nav className="w-full z-30 flex flex-row items-center justify-between px-14 gap-6 bg-[#0853FC]">
             <Link href={"/#home"} className="min-w-max">
@@ -60,7 +58,6 @@ const NavBarV2 = () => {
                     </button>
                 </Link>
                 <Link className="w-10" href={state?.user ? "/user" : "/login"}>
-                    {console.log(state)}
                     <button
                         onClick={() => {
                             if (!state?.user) {
