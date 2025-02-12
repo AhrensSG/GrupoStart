@@ -64,13 +64,13 @@ const About = () => {
         </div>
 
         {/* Overlap the wave with the image */}
-        <div className="relative justify-center items-start object-center place-items:center z-15">
+        <div className="relative justify-center items-start object-center place-items:center z-15 pt-5">
           <Image
             src={"/iconos/logoStartBlue.svg"}
             width={338}
             height={338}
             quality={100}
-            className="lg:w-[100%] lg:h-[100%] relative lg:-top-[2%] md:w-[12vh] md:h-[12vh] md:-pt-[3vh] md:bottom-0 md:-mt-[10vh] xs:w-[10vh] max-xs:w-[12vh] max-xs:-mt-[25%]"
+            className="lg:w-[100%] lg:h-[100%] relative  lg:-top-[2%] md:w-[12vh] md:h-[12vh] md:-pt-[3vh] md:bottom-0 md:-mt-[10vh] xs:w-[10vh] max-xs:w-[12vh] max-xs:-mt-[25%]"
             style={{
               zIndex: 15,
               position: "relative",

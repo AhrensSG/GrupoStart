@@ -1,12 +1,13 @@
-import { Order, User } from "@/db/models/models";
+import { Company, Order, User } from "@/db/models/models";
 import { sendMail } from "../send_mail/sendMail";
+import crypto from "crypto"
 
 export async function PUT(req) {
     try {
         const { displayName, email, uid } = await req.json();
-        console.log(displayName, email, uid);
+        console.log(email, uid);
 
-        if (!uid || !displayName || !email) {
+        if (!uid || !email) {
             return Response.json("UID / DISPLAYNAME / EMAIL ARE required", {
                 status: 400,
             });
@@ -14,7 +15,7 @@ export async function PUT(req) {
 
         const user = await User.findOne({
             where: { id: uid },
-            include: [{ model: Order }],
+            include: [{ model: Order }, { model: Company }],
         });
 
         if (!user) {
@@ -51,14 +52,11 @@ export async function PUT(req) {
     }
 }
 
+const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 export async function POST(req) {
     try {
-        const { user, _tokenResponse } = await req.json();
-        const id = user.uid;
-        const name = _tokenResponse.firstName;
-        const surname = _tokenResponse.lastName;
-        const email = user.email;
-        console.log(id, name, surname, email);
+        const { id, name, surname, email, password, phone } = await req.json();
 
         if (!id || !name || !surname || !email) {
             return Response.json("Missing Data / All fields are required", {
@@ -66,34 +64,40 @@ export async function POST(req) {
             });
         }
 
+        const passwordEncrypted = crypto.createHash("sha256").update(password).digest("hex");
+        await delay(3000)
         const existingUser = await User.findOne({
             where: { id },
             // include: [{ model: Order }],
         });
-        console.log(existingUser);
 
         if (existingUser) {
-            return Response.json(existingUser);
+            await existingUser.update({
+                name,
+                surname,
+                phone,
+                password: passwordEncrypted,
+            })
+        } else {
+            await User.create({
+                id,
+                name,
+                surname,
+                email,
+                phone,
+                password: passwordEncrypted,
+            });
         }
 
-        const newUser = await User.create({
-            id,
-            name,
-            surname,
-            email,
-        });
-        console.log(newUser);
-
         const updatedUser = await User.findOne({
-            where: { id: newUser.id },
+            where: { id },
             // include: [{ model: Order }],
         });
-        console.log(updatedUser);
 
         await sendMail({
-            to: newUser.email,
+            to: updatedUser.email,
             subject: "Bienvenido a Grupo Star",
-            text: `Bienvenido a Grupo Star, ${newUser.name}!`,
+            text: `Bienvenido a Grupo Star, ${updatedUser.name}!`,
         });
 
         // await sendMail({

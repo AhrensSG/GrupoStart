@@ -70,7 +70,7 @@ const Carousel = () => {
                 >
                     {images.map((image, index) => (
                         <SwiperSlide key={index} className="w-auto h-full flex justify-center items-center my-2">
-                        <div className="flex-shrink-0 flex justify-center items-center h-[140px] w-full">
+                        <div className="flex-shrink-0 flex justify-center items-center h-[140px] mb-10 w-full">
                             <Image
                                 src={image.src}
                                 alt={image.alt}
