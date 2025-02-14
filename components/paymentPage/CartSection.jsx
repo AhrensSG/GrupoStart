@@ -142,13 +142,12 @@ const CartSection = () => {
                 {/* TOP SECTION  */}
                 <div className="w-full flex flex-row justify-between mb-4">
                     <span className="text-2xl text-[#0853FC] font-medium">Productos</span>
-                    <span className="text-2xl text-[#0853FC] font-medium hidden xs:inline">Resumen</span>
                 </div>
 
                 {/* MAIN CONTAINER */}
-                <div className="max-w-screen-lg w-full flex xs:flex-row max-xs:flex-col xs:justify-between max-xs:justify-items-center max-xs:space-y-3">
+                <div className="max-w-screen-lg w-full flex xs:flex-col max-xs:flex-col xs:justify-items-center max-xs:justify-items-center max-xs:space-y-3 xs:space-y-4">
                     {/* Tarjeta de Productos */}
-                    <div className="w-full max-w-[800px] mr-4">
+                    <div className="w-full mr-4">
                         <div className="bg-white shadow-md shadow-[#0853FC]/40 p-4 border border-[#0853FC] rounded-md">
                             <div className="overflow-y-scroll scrollbar-thin max-h-74">
                                 {state.cart?.length > 0 ? (
@@ -177,8 +176,8 @@ const CartSection = () => {
                     </div>
 
                     {/* Tarjeta de Resumen (Sticky) */}
-                    <span className="text-2xl text-[#0853FC] font-medium hidden max-xs:inline">Resumen</span>
-                    <div className="max-xs:w-full xs:max-w-[290px] sticky top-10 w-[320px]">
+                    <span className="text-2xl text-[#0853FC] font-medium">Resumen</span>
+                    <div className="max-xs:w-full top-10 xs:w-full">
                         <div className="bg-white shadow-md shadow-[#0853FC]/40 p-4 border border-[#0853FC] rounded-md">
                             <div className="text-xl font-normal flex flex-row justify-between w-full">
                                 <span>SUBTOTAL:</span>
