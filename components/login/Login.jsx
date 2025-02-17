@@ -48,6 +48,7 @@ const Login = () => {
         try {
             await logInWithGoogle();
             toast.success("Inicio de sesión exitoso!");
+            router.push("/");
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -59,6 +60,7 @@ const Login = () => {
             await logInWithFacebook();
             false;
             toast.success("Inicio de sesión exitoso!");
+            router.push("/");
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -122,6 +124,7 @@ const Login = () => {
             });
             false;
             toast.success("Registro exitoso!");
+            router.push("/");
         } catch (error) {
             console.log(error);
             toast.error("Error al registrar usuario.");
