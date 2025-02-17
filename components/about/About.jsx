@@ -118,7 +118,7 @@ const About = () => {
           <div className="w-full flex justify-between items-center mb-16 xs:px-[4%] md:px-0">
             <div className="lg:w-1/2 md:w-1/3 xs:w-[18vh] flex flex-col items-center text-right lg:pr-10 md:pr-0 md:pl-16">
               <Image
-                src="/ivan.jpeg"
+                src="/partners/ivan.png"
                 alt="Ivan E. Ayala"
                 width={328}
                 height={328}
@@ -130,7 +130,7 @@ const About = () => {
 
             <div className="lg:w-1/2 md:w-1/3 xs:w-[18vh] flex flex-col items-center text-left lg:pl-10 md:pl-0 md:pr-14">
               <Image
-                src="/seba.jpeg"
+                src="/partners/seba.png"
                 alt="Sebastian D. Vera"
                 width={328}
                 height={328}
@@ -238,17 +238,11 @@ const About = () => {
       </div>
       {/* Texto descripción */}
       <div className="bg-white text-[#0853FC] font-light xs:text-xl p-8 mt-4 rounded-lg shadow-md w-full h-auto">
-        <p className="lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Estudié comercio exterior y emprendo desde los 18 años. Lideró con <span className="hidden md:inline"> <br /></span>
-          pasión el área de Community Managers y Social Media en Grupo Start, <span className="hidden md:inline"> <br /></span>
-          donde mi mayor talento radica en crear estructuras de trabajo funcionales <span className="hidden md:inline"> <br /></span>
-          que optimicen los procesos contemplando a las personas y sus talentos.
-        </p>
-        <p className="mt-6 lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Siempre impulso a mi equipo y a mis clientes a alcanzar nuevas alturas, <span className="hidden md:inline"> <br /></span>
-          integrando la tecnología y la innovación en cada estrategia. <span className="hidden md:inline"> <br /></span>
-          Creo firmemente que alinear nuestras pasiones con nuestras tareas diarias <span className="hidden md:inline"> <br /></span>
-          es el camino hacia el éxito y la libertad.
+        <p className="lg:text-[1.5rem] xs:text-xl font-light leading-relaxed text-start">
+        Estudié comercio exterior y emprendo desde los 18 años. Lidero con pasión el área de Community Managers en Grupo Start, donde mi mayor talento radica en crear estructuras de trabajo funcionales que optimicen los procesos contemplando a las personas y sus talentos.<br/>
+Siempre impulso a mi equipo y a mis clientes a alcanzar nuevas alturas, integrando la tecnología y la innovación en cada estrategia. <br/>
+Creo firmemente que alinear nuestras pasiones con nuestras tareas diarias es el camino hacia el éxito y la libertad
+
         </p>
       </div>
     </div>
@@ -266,17 +260,10 @@ const About = () => {
       </div>
       {/* Texto descripción */}
       <div className="bg-white text-[#0853FC] font-light xs:text-xl p-8 mt-4 rounded-lg shadow-md w-full h-auto">
-        <p className="lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Visionario emprendedor, diseñador gráfico y publicista con amplia <span className="hidden md:inline"> <br /></span>
-          trayectoria en la industria, lidero y coordino con éxito las áreas de diseño <span className="hidden md:inline"> <br /></span>
-          gráfico, marketing y ventas.
-        </p>
-        <p className="mt-6 lg:text-[1.5rem] xs:text-xl font-light leading-relaxed">
-          Apasionado por la innovación y el crecimiento, “hacer que suceda” es mi <span className="hidden md:inline"> <br /></span>
-          frase favorita. Colaboré con varias marcas en su identidad y expansión, <span className="hidden md:inline"> <br /></span>
-          también con autores en el lanzamiento de sus libros. Creo firmemente en <span className="hidden md:inline"> <br /></span>
-          el trabajo en equipo, y estoy activamente para brindar a los negocios <span className="hidden md:inline"> <br /></span>
-          un servicio de calidad que les permita alcanzar sus objetivos de desarrollo.
+        <p className="lg:text-[1.5rem] xs:text-xl font-light leading-relaxed text-start">
+        Visionario emprendedor, diseñador gráfico y publicista con amplia trayectoria en la industria, lidero y coordino con éxito las áreas de diseño gráfico, marketing y ventas.<br/>
+Apasionado por la innovación y el crecimiento, “hacer que suceda” es mi frase favorita, colaboré con marcas en su identidad y expansión, también con autores en el lanzamiento de sus libros, creo firmemente en el trabajo en equipo, estoy activamente para lograr brindar un servicio de calidad.
+
         </p>
       </div>
     </div>

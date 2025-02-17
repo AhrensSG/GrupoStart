@@ -1,11 +1,11 @@
 "use client";
 import { Context } from "@/app/context/GlobalContext";
-import { useRouter } from "next/navigation";
-import React, { useContext, useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import Carousel from "@/components/carrousel/Carousel";
 import DesktopMediaSection from "@/components/services/auxiliarComponents/DesktopMediaSection";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 
 const Media = () => {
 
@@ -69,7 +69,7 @@ const Media = () => {
             <iframe
               width="100%"
               height="100%"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/QIkXL1ATyAc"
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
