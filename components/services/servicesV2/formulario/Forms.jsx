@@ -883,8 +883,8 @@ export default function Formulario() {
             </div>
 
                 {/* Mensaje debajo del formulario */}
-                <div className="flex w-full justify-end">
-                    <p className="mt-4 text-md max-w-[282px] w-full font-extrabold text-white bg-[#FB8A00] rounded-tl-full rounded-br-full justify-items-center text-end px-5 py-2">
+                <div className="flex w-auto xs:justify-end max-xs:justify-center">
+                    <p className="mt-4 text-md w-auto font-extrabold text-white bg-[#FB8A00] rounded-tl-full rounded-br-full justify-items-center text-end px-5 py-2">
                         Servicio de suscripción mensual
                     </p>
                 </div>

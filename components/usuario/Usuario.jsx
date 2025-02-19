@@ -371,10 +371,10 @@ const Usuario = ({ data }) => {
                 </div>
             </section>
 
-            <div className="flex lg:flex-row md:flex-row sm:flex-row xs:flex-row max-xs:flex-col w-full min-h-screen">
+            <div className="flex lg:flex-row md:flex-row sm:flex-row xs:flex-col max-xs:flex-col w-full min-h-screen">
                 {/* Menú estático en la izquierda */}
-                <aside className="xs:w-1/4 max-xs:w-full bg-white rounded-xl p-4 h-full xs:sticky top-0 z-20">
-                    <ul className="space-y-2 max-xs:grid max-xs:grid-cols-4 xs:flex-col sm:flex-col xs:space-x-4 xs:space-y-0">
+                <aside className="sm:w-1/4 max-xs:w-full bg-white rounded-xl p-4 h-full sm:sticky top-0 z-20">
+                    <ul className="space-y-2 max-xs:grid max-xs:grid-cols-4 xs:grid xs:grid-cols-4 sm:flex-col xs:space-x-0 xs:space-y-0">
                         <li
                             className={`p-2 rounded cursor-pointer ${selectedSection === "perfil" ? "bg-blue-500 text-white" : "hover:bg-gray-300"}`}
                             onClick={() => setSelectedSection("perfil")}
@@ -478,7 +478,7 @@ const Usuario = ({ data }) => {
                     </div>
                 </aside>
                 {/* Sección dinámica */}
-                <section className="xs:w-3/4 max-xs:w-full sm:p-6 max-xs:p-2 space-y-2 z-20">
+                <section className="sm:w-3/4 xs:w-full xs:p-2 sm:p-6 max-xs:p-2 space-y-2 z-20">
                     {renderSectionContent()}
                     {modalVisible && (
                         <div className="fixed inset-0 bg-orange-200 bg-opacity-70 flex items-center justify-center z-50">
