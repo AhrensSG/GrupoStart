@@ -2,12 +2,14 @@
 import { Context } from "@/app/context/GlobalContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useContext } from "react";
 
 const PayNavBar = () => {
     const { state } = useContext(Context);
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);7
+    const router = useRouter();
 
     const handleLoginClick = () => {
         if (!isLoggedIn) {
@@ -72,9 +74,9 @@ const PayNavBar = () => {
 
                 {/* Enlace "Seguir Comprando" */}
                 <div>
-                    <Link href={"/courses"}>
+                    <button onClick={() => router.back()}>
                         <button className="text-lg underline mx-4">Seguir comprando</button>
-                    </Link>
+                    </button>
                 </div>
             </div>
 
