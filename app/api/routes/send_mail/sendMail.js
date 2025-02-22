@@ -5,29 +5,36 @@ import { NextResponse } from "next/server";
 sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export async function sendMail(data) {
-    const { to, subject, text, html } = data;
-    console.log(data);
+  const { to, subject, text, html } = data; // Añadimos `attachments` al destructuring
+  if (!to || !subject) {
+    console.error("Missing data (to / subject): ", data);
+    return;
+  }
 
-    try {
-        // Validar que los campos requeridos estén presentes
-        if (!to || !subject || !text) {
-            return NextResponse.json({ error: "Faltan campos obligatorios" }, { status: 400 });
-        }
+  let mailOptions = {
+    from: process.env.SENDGRID_FROM_EMAIL, // Debe ser un correo verificado en SendGrid
+    to: to,
+    subject: subject,
+  };
 
-        // Enviar el correo
-        await sendGrid.send({
-            to,
-            from: process.env.SENDGRID_FROM_EMAIL,
-            subject,
-            text,
-        });
+  if (text) {
+    mailOptions.text = text;
+  }
+  if (html) {
+    mailOptions.html = html;
+  }
 
-        // Respuesta de éxito
-        return NextResponse.json({ message: "Email sent successfully" }, { status: 200 });
-    } catch (error) {
-        // Capturar errores y devolver información
-        console.error(error);
-        console.log(error.message);
-        return NextResponse.json({ error: error.message }, { status: 500 });
-    }
+  try {
+    await sendGrid.send(mailOptions);
+
+    return NextResponse.json(
+      { message: "Email sent successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    // Capturar errores y devolver información
+    console.error(error);
+    console.log(error.message);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }

@@ -159,9 +159,9 @@ const DesktopCommunityManagerSection = () => {
             "Diseño creativo",
             "Puesta en marcha de campañas publicitarias Básicas"
           ]}
-          price={{ original: 350000, discount: 299900 }}
+          price={{ original: 350000, discount: 329900 }}
           onButtonClick={() => {
-            handleBuyNow(2, "Plan START", 299900);
+            handleBuyNow(2, "Plan START", 329900);
           }}
           listClassName="px-[15%] py-4 text-center flex"
         />

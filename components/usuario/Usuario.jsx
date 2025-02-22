@@ -10,9 +10,12 @@ import CoursesSection from "./CoursesSection";
 import MentorySection from "./MentorySection";
 import Modal from "./Modal";
 import axios from "axios";
+import { logOut } from "@/firebase/logOut";
+import { useRouter } from "next/navigation";
 
 const Usuario = ({ data }) => {
   const [selectedSection, setSelectedSection] = useState("perfil");
+  const router = useRouter()
 
   // Crear referencias para cada seccion
   const perfilRef = useRef(null);
@@ -193,9 +196,9 @@ const Usuario = ({ data }) => {
   }, [originalData]);
 
   const handleLogout = useCallback(() => {
-    showModal("¿Estás seguro de que deseas cerrar sesión?", () => {
-      localStorage.removeItem("authToken");
-      window.location.href = "/login";
+    showModal("¿Estás seguro de que deseas cerrar sesión?", async () => {
+      await logOut();
+      router.push('/login')
     });
   }, []);
 

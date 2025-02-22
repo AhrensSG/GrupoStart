@@ -70,8 +70,11 @@ const Login = () => {
     const handleForgotPassword = async () => {
         try {
             await sendPasswordResetEmail(auth, resetEmail);
-            toast.success("Correo de restablecimiento enviado!");
-            setCodeSent(true);
+            setIsForgotPassword(false);
+            setCodeSent(false);
+            setCodeVerified(false);
+            toast.success("Correo de restablecimiento enviado!", { description: "Sigue las instrucciónes enviadas por correo." });
+            // setCodeSent(true);
         } catch (error) {
             console.log(error);
             toast.error("Error al enviar correo de restablecimiento.");
@@ -89,20 +92,22 @@ const Login = () => {
     };
 
     const handleResetPassword = async () => {
-        if (newPassword !== confirmNewPassword) {
-            toast.error("Las contraseñas no coinciden.");
-            return;
-        }
+        // if (newPassword !== confirmNewPassword) {
+        //     toast.error("Las contraseñas no coinciden.");
+        //     return;
+        // }
         try {
-            await confirmPasswordReset(auth, verificationCode, newPassword);
-            toast.success("Contraseña restablecida exitosamente!");
+            // await confirmPasswordReset(auth, verificationCode, newPassword);
+            // toast.success("Contraseña restablecida exitosamente!");
             setIsForgotPassword(false);
-            setResetEmail("");
-            setVerificationCode("");
-            setNewPassword("");
-            setConfirmNewPassword("");
             setCodeSent(false);
             setCodeVerified(false);
+            // setResetEmail("");
+            // setVerificationCode("");
+            // setNewPassword("");
+            // setConfirmNewPassword("");
+            // setCodeSent(false);
+            // setCodeVerified(false);
         } catch (error) {
             console.log(error);
             toast.error("Error al restablecer la contraseña.");
@@ -244,64 +249,6 @@ const Login = () => {
                                     </div>
 
                                     {isForgotPassword ? (
-                                        codeSent ? (
-                                            <>
-                                                <div className="mb-4 w-full">
-                                                    <label className="block text-white text-sm font-semibold mb-2" htmlFor="verificationCode">
-                                                        Código de verificación
-                                                    </label>
-                                                    <input
-                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        id="verificationCode"
-                                                        type="text"
-                                                        placeholder="Código"
-                                                        value={verificationCode}
-                                                        onChange={(e) => setVerificationCode(e.target.value)}
-                                                    />
-                                                    <button
-                                                        className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mt-4"
-                                                        onClick={handleVerifyCode}
-                                                    >
-                                                        Verificar código
-                                                    </button>
-                                                </div>
-                                                {codeVerified && (
-                                                    <div className="mb-4 w-full">
-                                                        <label className="block text-white text-sm font-semibold mb-2" htmlFor="newPassword">
-                                                            Nueva contraseña
-                                                        </label>
-                                                        <input
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                            id="newPassword"
-                                                            type="password"
-                                                            placeholder="Nueva contraseña"
-                                                            value={newPassword}
-                                                            onChange={(e) => setNewPassword(e.target.value)}
-                                                        />
-                                                        <label
-                                                            className="block text-white text-sm font-semibold mb-2 mt-2"
-                                                            htmlFor="confirmNew Password"
-                                                        >
-                                                            Confirmar nueva contraseña
-                                                        </label>
-                                                        <input
-                                                            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                            id="confirmNewPassword"
-                                                            type="password"
-                                                            placeholder="Confirmar nueva contraseña"
-                                                            value={confirmNewPassword}
-                                                            onChange={(e) => setConfirmNewPassword(e.target.value)}
-                                                        />
-                                                        <button
-                                                            className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full mt-4"
-                                                            onClick={handleResetPassword}
-                                                        >
-                                                            Restablecer contraseña
-                                                        </button>
-                                                    </div>
-                                                )}
-                                            </>
-                                        ) : (
                                             <div className="mb-4 w-full">
                                                 <label className="block text-white text-sm font-semibold mb-2" htmlFor="resetEmail">
                                                     Correo electrónico
@@ -315,7 +262,6 @@ const Login = () => {
                                                     onChange={(e) => setResetEmail(e.target.value)}
                                                 />
                                             </div>
-                                        )
                                     ) : (
                                         <>
                                             <div className="mb-4 w-full">

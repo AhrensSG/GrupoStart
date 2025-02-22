@@ -52,11 +52,7 @@ const NavBar = () => {
                                 console.log("Redirigiendo a la página del usuario...");
                             }
                         }}
-                        className={`w-full h-10 px-2 border rounded-tl-xl rounded-br-xl text-center shadow-md border-orange-500 duration-300 ${
-                            state?.user
-                                ? "bg-green-400 text-white shadow-orange-500 hover:bg-white hover:text-[#0853FC]"
-                                : "bg-orange-500 text-white shadow-orange-500 hover:bg-white hover:text-orange-500"
-                        }`}
+                        className={`w-full h-10 px-2 border rounded-tl-xl rounded-br-xl text-center shadow-md border-orange-500 duration-300 bg-orange-500 text-white shadow-orange-500 hover:bg-white hover:text-orange-500`}
                     >
                         {/* Ícono de Usuario SVG */}
                         <svg
