@@ -25,7 +25,8 @@ const CartSection = () => {
     const [showLogin, setShowLogin] = useState(false);
 
     const initialValues = state.user || {
-        fullName: "",
+        name: "",
+        surname: "",
         email: "",
         phone: "",
         country: "Argentina",
@@ -44,7 +45,8 @@ const CartSection = () => {
             // }
 
             if (
-                values.fullName === "" ||
+                values.name === "" ||
+                values.surname === "" ||
                 values.email === "" ||
                 !values.email ||
                 values.phone === "" ||
@@ -59,12 +61,10 @@ const CartSection = () => {
                 return toast.info("Recuerda completar todos los campos!");
             }
             setLoader(true);
-            if (!state.user?.phone) {
-                await updateUser(values, dispatch);
-                toast.success("Solicitud realizada!", {
-                    description: "Pronto recibiras el documento",
-                });
-            }
+            await updateUser(values, dispatch);
+            toast.success("Solicitud realizada!", {
+                description: "Pronto recibiras el documento",
+            });
             try {
                 values.country = "Argentina";
                 await savePaymentInformation(values, dispatch);
@@ -235,8 +235,8 @@ const CartSection = () => {
                                             <label className="text-sm pl-1 text-gray-500">Nombre</label>
                                             <input
                                                 type="text"
-                                                name="fullName"
-                                                value={formik.values.fullName || ""}
+                                                name="name"
+                                                value={formik.values.name || ""}
                                                 onChange={formik.handleChange}
                                                 className="p-1.5 px-3 border-2 rounded-md outline-none w-full"
                                             />

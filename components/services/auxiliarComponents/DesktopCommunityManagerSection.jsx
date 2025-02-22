@@ -235,8 +235,8 @@ const DesktopCommunityManagerSection = () => {
             "Diseño creativo",
             "Puesta en marcha de campañas publicitarias Medias",
           ]}
-          price={{ original: 550000, discount: 499900 }}
-          onButtonClick={() => handleBuyNow(3, "Plan Social Master", 499900)}
+          price={{ original: 550000, discount: 0.01 }}
+          onButtonClick={() => handleBuyNow(3, "Plan Social Master", 0.01)}
         />
         <PlanCard
           title="Social Pro"

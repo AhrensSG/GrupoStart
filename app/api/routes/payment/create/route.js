@@ -5,16 +5,16 @@ const SERVER_URL_PAYMENT_NOTIFICATION = process.env.SERVER_ENDPOINT_PAYMENT_NOTI
 export async function POST(req) {
     try {
         const { items, payer, orderId, deliveryCost } = await req.json();
-
         const formattedItems = items.map((item) => {
             return {
                 id: item.id,
-                title: item.name,
+                title: item.name || item.title || "Plan GrupoStart",
                 quantity: Number(item.quantity) || item.quantity.length,
                 unit_price: item.unit_price,
+                description: item.description || "Servicio de GrupoStart",
+                category_id: "digital_service",
             };
         });
-
         const response = await preference.create({
             body: {
                 payment_methods: {
@@ -39,9 +39,9 @@ export async function POST(req) {
                     },
                 },
                 back_urls: {
-                    success: "https://grupo-start.vercel.app/",
-                    pending: "https://grupo-start.vercel.app/",
-                    failure: "https://grupo-start.vercel.app/",
+                    success: "https://grupostart.com.ar/",
+                    pending: "https://grupostart.com.ar/",
+                    failure: "https://grupostart.com.ar/",
                 },
                 auto_return: "approved",
                 external_reference: orderId,

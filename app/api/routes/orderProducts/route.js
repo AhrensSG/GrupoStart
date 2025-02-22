@@ -22,7 +22,6 @@ export async function POST(req) {
                     status: 400,
                 });
             }
-            console.log(productInfo);
 
             const product = await OrderProducts.create({
                 status: "Pending",
