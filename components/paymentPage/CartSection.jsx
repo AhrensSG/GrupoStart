@@ -181,14 +181,14 @@ const CartSection = () => {
                         <div className="bg-white shadow-md shadow-[#0853FC]/40 p-4 border border-[#0853FC] rounded-md">
                             <div className="text-xl font-normal flex flex-row justify-between w-full">
                                 <span>SUBTOTAL:</span>
-                                <span> $ {state?.cartPrice ? (state.cartPrice - (state.cartPrice * 0.21)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })  : state?.cart?.reduce((acc, curr) => acc + (curr.price - (curr.price * 0.21)), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}</span>
+                                <span> $ {state?.cartPrice ? (state.cartPrice - (state.cartPrice * 0.21))?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })  : state?.cart?.reduce((acc, curr) => acc + (curr.price - (curr.price * 0.21)), 0)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}</span>
                             </div>
                             <div className="text-xl font-normal uppercase flex flex-row justify-between w-full">
                                 <span>Impuestos, IVA y otros:</span>
                                 <span>
                                     {" "}
                                     ${" "}
-                                    {state?.cartPrice ? (state.cartPrice * 0.21).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (state?.cart?.reduce((acc, curr) => acc + curr.price, 0) * 0.21).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}
+                                    {state?.cartPrice ? (state.cartPrice * 0.21)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (state?.cart?.reduce((acc, curr) => acc + curr.price, 0) * 0.21)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}
                                 </span>
                             </div>
                             <div className="text-xl font-medium flex flex-row justify-between w-full">
@@ -197,8 +197,8 @@ const CartSection = () => {
                                     {" "}
                                     ${" "}
                                     {state?.cartPrice
-                                        ? (state.cartPrice).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                                        : (state?.cart?.reduce((acc, curr) => acc + curr.price, 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}
+                                        ? (state.cartPrice)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                                        : (state?.cart?.reduce((acc, curr) => acc + curr.price, 0))?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}
                                 </span>
                             </div>
                         </div>
@@ -211,8 +211,8 @@ const CartSection = () => {
                     <span className="text-xl font-medium">
                         ${" "}
                         {state?.cartPrice
-                            ? (state.cartPrice).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-                            : (state?.cart?.reduce((acc, curr) => acc + curr.price, 0)).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}
+                            ? (state.cartPrice)?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                            : (state?.cart?.reduce((acc, curr) => acc + curr.price, 0))?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || 0}
                     </span>
                 </div>
 
@@ -373,7 +373,7 @@ const PackCard = ({ id, name, price, dispatch }) => {
             <div className="p-4 flex flex-row justify-between items-center w-full">
                 <span className="text-xl font-medium">{name}</span>
                 <p className="text-xl font-medium">
-                    Precio: <span className="font-normal">$ {price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    Precio: <span className="font-normal">$ {price?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                 </p>
             </div>
         </div>
