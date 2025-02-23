@@ -9,11 +9,26 @@ export async function POST(req) {
             return {
                 id: item.id,
                 title: item.name || item.title || "Plan GrupoStart",
-                quantity: Number(item.quantity) || item.quantity.length,
+                quantity: 1,
                 unit_price: item.unit_price,
                 description: item.description || "Servicio de GrupoStart",
                 category_id: "digital_service",
             };
+        });
+        const bodyItems = items.map((item) => {
+            if (Array.isArray(item.quantity)) {
+                return {
+                    ...item,
+                    quantity: item.quantity?.map((q) => ({
+                        id: q.id,
+                        price: q.price,
+                        quantity: q.quantity,
+                        budget: q.budget
+                    }))
+                };
+            } else {
+                return item
+            }
         });
         const response = await preference.create({
             body: {
@@ -51,17 +66,8 @@ export async function POST(req) {
                     order: orderId,
                     payer: {
                         id: payer.id,
-                        email: payer.email,
-                        name: payer.name,
-                        surname: payer.surname,
-                        phone: {
-                            number: payer.phone,
-                        },
-                        address: {
-                            zip_code: payer.postalCode,
-                        },
                     },
-                    items: items,
+                    items: bodyItems,
                 },
             },
         });

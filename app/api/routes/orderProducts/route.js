@@ -27,8 +27,9 @@ export async function POST(req) {
                 status: "Pending",
                 name: productInfo.name,
                 price: productInfo.price,
-                items: productInfo?.items?.length,
+                items: Array.isArray(productInfo.items) ? productInfo.items.length : productInfo.items,
                 OrderId: orderId,
+                data: Array.isArray(productInfo.items) ? productInfo.items : productInfo.description
             });
         }
 

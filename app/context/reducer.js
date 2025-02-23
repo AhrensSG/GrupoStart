@@ -20,7 +20,7 @@ export const reducer = (state, action) => {
                 if (action.payload.productType !== "pack-envio") {
                     console.log(action.payload);
 
-                    const total = action.payload.price * action.payload.items;
+                    const total = action.payload.price * action.payload.items || action.payload.price * action.payload?.items?.length;
 
                     return {
                         ...state,

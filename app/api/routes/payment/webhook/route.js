@@ -11,7 +11,6 @@ export async function POST(req) {
 
         if (id && type && type === "payment") {
             const data = await payment.get({ id });
-            console.log(data);
             if (
                 !data ||
                 !data.metadata ||

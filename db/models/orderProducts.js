@@ -10,6 +10,7 @@ const orderProductsInit = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       price: DataTypes.DECIMAL(10, 2),
       items: DataTypes.INTEGER,
+      data: { type: DataTypes.JSON, allowNull: true },
     },
     {
       sequelize,

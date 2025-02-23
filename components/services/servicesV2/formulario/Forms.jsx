@@ -26,14 +26,14 @@ export default function Formulario() {
         {
             detalle: "Cantidad de carruseles",
             cantidad: 0,
-            precioA: (precioBase * 0.9).toFixed(2),
+            precioA: (precioBase).toFixed(2),
             info: "Estos son posteos con varias imágenes que forman parte del mismo contenido, este tipo de recursos junto con los reels, son las herramientas más poderosas del marketing actual. Con este recurso lograremos aparecer tantas veces como cantidad de imágenes añadidas al carrusel haya en el inicio de nuestros seguidores",
             max: 30,
         },
         {
             detalle: "Cantidad de imágenes para el carrusel",
             cantidad: 0,
-            precioB: (precioBase * 0.75).toFixed(2),
+            precioB: (precioBase).toFixed(2),
             info: "Aquí deberás determinar la cantidad de imágenes que te gustaría que tuvieran tus carruseles, con un mínimo de 1 y con un máximo de 20, cuantas más imágenes añadas al carrusel mayores son las posibilidades de crear posteos increíbles y mayor será el número de veces que aparecerás en el inicio de tus seguidores",
             max: 20,
         },
@@ -57,6 +57,7 @@ export default function Formulario() {
         },
         {
             detalle: "Presupuesto por día para publicidad Meta",
+            cantidad: 0,
             presupuesto: 0,
             presupuestoTotal: 0,
             info: "El presupuesto por dia determina el alcance que tendrá tu campaña publicitaria es por esto que es muy importante que se alinee con los objetivos de conquista de mercado de tu empresa, por ejemplo: Si buscas realizar campañas solamente en tu ciudad, el presupuesto mínimo puede brindarte resultados positivos, pero si deseas cubrir zonas demográficas más grandes deberás ampliar tu presupuesto tanto como mercados nuevos desees alcanzar. Además, grandes presupuestos publicitarios generan resultados positivos más rápidos, si buscas resultados rápidos deberás elegir un presupuesto acorde a lo que buscas. (Minimo $4500)",
@@ -80,10 +81,10 @@ export default function Formulario() {
                 id: item.detalle,
                 name: item.detalle,
                 description: item.info,
-                price: item.valor,
+                price: item.valor || item.precioA || item.precioB,
                 quantity: item.cantidad,
+                budget: item.presupuesto,
             }));
-        console.log(selectedItems);
 
         // Configura el paquete de productos a agregar al carrito
         const data = {
@@ -101,7 +102,6 @@ export default function Formulario() {
         } else {
             toast.success(`Añadiste el pack personalizado a tu carrito!`);
         }
-
         // Añade al carrito y redirige al pago
         await addProductToCart(data, dispatch);
         return router.push("/payment");
@@ -149,7 +149,7 @@ export default function Formulario() {
 
             // Suponiendo que el índice 5 corresponde a "Efemérides"
             newItems[5].cantidad = checked ? 1 : 0;
-            newItems[5].valor = checked ? (14900 - 14900 * 0.25) * 3 : 0;
+            newItems[5].valor = (checked ? (14900 - 14900 * 0.25) * 3 : 0).toString();
 
             // Reiniciar el valor de "Efemérides" si el interruptor está desactivado
             if (!checked) {
@@ -278,20 +278,20 @@ export default function Formulario() {
         let costoImagen; // Costo por imagen dependiendo de la cantidad de imágenes añadidas
 
         // Determinar el costo por imagen con descuentos según la cantidad de imágenes
-        if (cantidadImagenes < 5) {
-            costoImagen = (14900 * 0, 75);
-        } else if (cantidadImagenes < 10) {
-            costoImagen = 14900 * 0.65; // 15% de descuento
-        } else if (cantidadImagenes < 15) {
-            costoImagen = 14900 * 0.55; // 30% de descuento
-        } else if (cantidadImagenes <= 20) {
-            costoImagen = 14900 * 0.45; // 45% de descuento
+        if (cantidadImagenes >= 1 && cantidadImagenes < 5) {
+            costoImagen = 14900 * 0.75; // 25% de descuento
+        } else if (cantidadImagenes >= 5 && cantidadImagenes < 10) {
+            costoImagen = 14900 * 0.65; // 35% de descuento
+        } else if (cantidadImagenes >= 10 && cantidadImagenes < 15) {
+            costoImagen = 14900 * 0.55; // 45% de descuento
+        } else if (cantidadImagenes >= 15 && cantidadImagenes <= 20) {
+            costoImagen = 14900 * 0.45; // 55% de descuento
         } else {
             costoImagen = 0; // No se permite más de 20 imágenes
         }
 
         // Calcular el subtotal para un carrusel con la cantidad de imágenes seleccionada
-        const subtotalPorCarrusel = precioCarrusel + costoImagen * cantidadImagenes;
+        const subtotalPorCarrusel = precioCarrusel + (costoImagen * cantidadImagenes);
 
         // Calcular el total multiplicando el subtotal por la cantidad de carruseles
         const subtotalTotal = subtotalPorCarrusel * cantidadCarruseles;
@@ -314,13 +314,15 @@ export default function Formulario() {
         // Para el índice 7 (validación de presupuesto)
         else if (index === 7) {
             let formattedValue = value.replace(/^0+(?=\d)/, ''); // Elimina ceros iniciales inválidos
-            
+            let cantidad = 1
             // Si Facebook e Instagram están desactivados, forzar presupuesto a 0
             if (!formData.facebook && !formData.instagram) {
                 formattedValue = "0";
+                cantidad = 0;
             }
     
             newItems[7].presupuesto = formattedValue;
+            newItems[7].cantidad = cantidad;
             setError(""); // Limpiar error mientras se está escribiendo
         } 
         
@@ -430,67 +432,10 @@ export default function Formulario() {
         setShowSuccessModal(false);
     };
 
-    // Valida el formulario y recoge los datos
-    const validarFormulario = () => {
-        // Aquí puedes realizar validaciones si es necesario
-        const isValid = true; // Cambia esto según tus validaciones
-
-        if (isValid) {
-            // Crear un objeto para almacenar los datos del formulario
-            const formData = items.map((item) => ({
-                cantidad: item.cantidad,
-                presupuesto: item.presupuesto,
-            }));
-
-            console.log("Datos del formulario:", formData);
-
-            // envio formData a un servidor o lo que haga falta
-            // fetch('/api/endpoint', {
-            //   method: 'POST',
-            //   headers: {
-            //     'Content-Type': 'application/json',
-            //   },
-            //   body: JSON.stringify(formData),
-            // })
-            // .then(response => response.json())
-            // .then(data => console.log(data))
-            // .catch(error => console.error('Error:', error));
-
-            return true; // Retorna true si la validación es exitosa
-        } else {
-            // Manejar errores de validación
-            console.error("Formulario no válido");
-            return false; // Retorna false si hay errores
-        }
-    };
-
-    const generarPaquetePersonalizado = () => {
-        // Creamos un objeto llamado 'paquetePersonalizado' que contendrá los datos finales
-        const paquetePersonalizado = {
-            // 'items' será un arreglo con los ítems seleccionados (cantidad > 0)
-            items: items
-                .filter((item) => item.cantidad > 0) // Filtramos solo los ítems con cantidad mayor a 0
-                .map((item) => ({
-                    // Transformamos los ítems seleccionados para incluir solo los datos relevantes
-                    nombre: item.nombre, // Incluimos el nombre del ítem
-                    cantidad: item.cantidad, // Incluimos la cantidad seleccionada del ítem
-                    valor: item.valor, // Incluimos el valor total del ítem
-                })),
-            // Incluimos el valor total calculado de todos los ítems seleccionados
-            total,
-        };
-
-        // Retornamos el paquete personalizado, listo para ser enviado o utilizado
-        return paquetePersonalizado;
-    };
-
-    // Verifica si alguno de los interruptores de redes sociales está activo
-    const isMetaEnabled = formData.facebook || formData.instagram;
-
     const [error, setError] = useState(""); // Estado para el mensaje de error
 
     return (
-        <section className="py-6 md:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[3%] max-xs:px-[2%] sm:px-[4%]">
+        <div className="py-6 md:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[3%] max-xs:px-[2%] sm:px-[4%]">
             {showLogin === true && <Modal setShowLogin={setShowLogin} />}
             {/* Encabezado del formulario */}
             <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">
@@ -922,6 +867,6 @@ export default function Formulario() {
                 </div>
             )}
             
-        </section>
+        </div>
     );
 }
