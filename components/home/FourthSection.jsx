@@ -12,7 +12,7 @@ const FourthSection = () => {
     >
       <div className="w-full h-full flex flex-col xs:flex-col md:flex-row justify-center items-center md:gap-[4%] lg:gap-[8%] xs:gap-0 xl:gap-28 lg:pt-16 xl:pt-1 relative lg:px-0">
   <FounderCard
-    img={"/ivan.jpeg"}
+    img={"/partners/ivan.png"}
     name={"Ivan E. Ayala"}
     profession={"Comunnity Manager"}
     description={""}
@@ -34,7 +34,7 @@ const FourthSection = () => {
     </div>
   </div>
   <FounderCard
-    img={"/seba.jpeg"}
+    img={"/partners/seba.png"}
     name={"Sebastian D. Vera"}
     profession={"Diseñador Gráfico"}
     description={""}

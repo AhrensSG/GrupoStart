@@ -85,70 +85,61 @@ const NavBarV2 = () => {
             </div>
             <AnimatePresence>
                 {showSideBar && (
-                    <motion.div
-                        initial={{ right: -1000 }}
-                        animate={{ right: 0 }}
-                        exit={{ right: -1000 }}
-                        transition={{ duration: 0.5 }}
-                        className="w-2/3 xs:w-1/3 h-screen bg-gradient-to-b from-white via-white to-transparent fixed top-0 right-0 lg:hidden z-30">
-                        <div className="w-full h-full relative">
-                            <button
-                                className="absolute top-4 right-4"
-                                onClick={() => setShowSideBar(false)}>
-                                <Image
-                                    src={"/CloseSideBarIcon.svg"}
-                                    width={40}
-                                    height={40}
-                                    alt="CloseSideBarIcon"
-                                />
-                            </button>
-                            <div className="w-full h-full py-20 px-10 gap-4 flex flex-col justify-start items-start">
-                                <Link
-                                    className="max-w-32 w-full"
-                                    href={state?.user ? "/user" : "/login"}>
-                                    <button
-                                        onClick={() => setShowSideBar(false)}
-                                        className={`max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300 ${
-                                            state?.user
-                                                ? "text-blue-600"
-                                                : "text-black"
-                                        }`}>
-                                        {state?.user ? "Blue-600" : "Usuario"}
-                                    </button>
-                                </Link>
-
-                                <Link
-                                    className="max-w-32 w-full"
-                                    href={"/#services"}>
-                                    <button
-                                        onClick={() => setShowSideBar(false)}
-                                        className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
-                                        Servicios
-                                    </button>
-                                </Link>
-
-                                <Link
-                                    className="max-w-32 w-full"
-                                    href={"/about"}>
-                                    <button
-                                        onClick={() => setShowSideBar(false)}
-                                        className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
-                                        Nosotros
-                                    </button>
-                                </Link>
-
-                                <Link
-                                    className="max-w-32 w-full"
-                                    href={"/contact"}>
-                                    <button
-                                        onClick={() => setShowSideBar(false)}
-                                        className="max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300">
-                                        Contacto
-                                    </button>
-                                </Link>
+                    <div 
+                        className="fixed top-0 left-0 w-full h-full bg-black/50 z-30 lg:hidden"
+                        onClick={() => setShowSideBar(false)} // Cierra el menú al hacer clic en el fondo
+                    >
+                        <motion.div
+                            initial={{ right: "-100%" }}
+                            animate={{ right: "0%" }}
+                            exit={{ right: "-100%" }}
+                            transition={{ duration: 0.5 }}
+                            className="w-2/3 xs:w-1/3 h-full bg-gradient-to-b from-white via-white to-transparent fixed top-0 right-0 z-40"
+                            onClick={(e) => e.stopPropagation()} // Evita que el clic dentro del menú lo cierre
+                        >
+                            <div className="w-full h-full relative">
+                                <button className="absolute top-4 right-4" onClick={() => setShowSideBar(false)}>
+                                    <Image src={"/CloseSideBarIcon.svg"} width={40} height={40} alt="CloseSideBarIcon" />
+                                </button>
+                                <div className="w-full h-full py-[10%] px-[5%] gap-[5%] flex flex-col justify-start items-start">
+                                    <Link className="max-w-32 w-full" href={state?.user ? "/user" : "/login"}>
+                                        <button
+                                            onClick={() => setShowSideBar(false)}
+                                            className={`max-w-32 w-full h-10 px-2 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 text-xl font-medium duration-300 ${
+                                                state?.user ? "text-blue-600" : "text-black"
+                                            }`}
+                                        >
+                                            {state?.user ? "Login" : "Usuario"}
+                                        </button>
+                                    </Link>
+                                    <Link className="text-lg" href={"/#services"}>
+                                        <button
+                                            onClick={() => setShowSideBar(false)}
+                                            className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
+                                        >
+                                            Servicios
+                                        </button>
+                                    </Link>
+                                    <Link className="text-lg" href={"/about"}>
+                                        <button
+                                            onClick={() => setShowSideBar(false)}
+                                            className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
+                                        >
+                                            Nosotros
+                                        </button>
+                                    </Link>
+                                    <Link className="text-lg" href={"/contact"}>
+                                        <button
+                                            onClick={() => setShowSideBar(false)}
+                                            className="w-full h-10 text-start hover:underline underline-offset-2 decoration-[#0853FC] decoration-2 font-medium duration-300"
+                                        >
+                                            Contacto
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
-                        </div>
-                    </motion.div>
+                        </motion.div>
+                    </div>
                 )}
             </AnimatePresence>
         </nav>

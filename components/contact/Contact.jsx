@@ -9,6 +9,7 @@ import Chat from "@/components/chat/Chat";
 
 
 const Contact = () => {
+
   return (
 
     <aside className="w-full relative flex flex-col justify-start items-center overflow-hidden">
@@ -213,10 +214,13 @@ const Contact = () => {
 
       {/* Teléfono */}
       <input
-        type="text"
-        placeholder="Teléfono"
-        className="border border-gray-300 rounded-md p-2"
-      />
+      type="tel"
+      placeholder="Teléfono"
+      className="border border-gray-300 rounded-md p-2"
+      pattern="[0-9]*"
+      inputMode="numeric"
+    />
+
       {/* País */}
       <input
         type="text"
@@ -231,6 +235,7 @@ const Contact = () => {
           type="email"
           placeholder="Correo Electrónico"
           className="border border-gray-300 rounded-md p-2"
+        required
         />
 
         {/* Cómo nos conociste */}
@@ -262,7 +267,7 @@ const Contact = () => {
 
       {/* Botón Enviar */}
       <div className="col-span-2 flex justify-center">
-        <button className="bg-[#0853FC] text-white font-bold py-2 px-8 rounded-md hover:bg-[#0043D0]">
+        <button className="bg-[#0853FC] text-white font-bold py-2 px-10 rounded-md hover:bg-[#0043D0]">
           Enviálo
         </button>
       </div>
