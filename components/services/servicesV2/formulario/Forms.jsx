@@ -203,7 +203,15 @@ export default function Formulario() {
         });
     };
 
+    const handleInputNumeric = (index, value) => {
+        // Remueve cualquier carácter que no sea un número
+        const numericValue = value.replace(/\D/g, ""); 
     
+        // Copia el estado actual de items
+        const newItems = [...items];
+        newItems[index].cantidad = numericValue; // Asigna solo números enteros
+        setItems(newItems);
+    };
     // Incrementar la cantidad del ítem en el índice dado
     const handleIncrement = (index) => {
         const newItems = [...items];
@@ -223,8 +231,9 @@ export default function Formulario() {
         } else if (index === 6) {
             // Lógica para el índice 6
             if (newItems[6].cantidad < 365) {
+                // Si la cantidad es 0, establecer a 3 como mínimo
                 if (newItems[6].cantidad === 0) {
-                    newItems[6].cantidad = 5; // Establecer a 5 si estaba en 0
+                    newItems[6].cantidad = 3; // Establecer a 3 si estaba en 0
                 } else {
                     newItems[6].cantidad += 1; // Incrementar en 1
                 }
@@ -255,12 +264,12 @@ export default function Formulario() {
             }
         } else if (index === 6) {
             // Lógica para el índice 6
-            if (newItems[6].cantidad > 0) {
-                if (newItems[6].cantidad === 5) {
-                    newItems[6].cantidad = 0; // Permitir decrementar a 0 si está en 5
-                } else {
-                    newItems[6].cantidad -= 1; // Decrementar en 1
-                }
+            if (newItems[6].cantidad > 3) {
+                // Permitir decrementar solo si la cantidad es mayor a 3
+                newItems[6].cantidad -= 1; // Decrementar en 1
+            } else {
+                // Si está en 3, evitar que baje a 2 o menos
+                setError("El mínimo permitido es de 3 días");
             }
         } else {
             if (newItems[index].cantidad > 0) {
@@ -278,7 +287,7 @@ export default function Formulario() {
         let costoImagen; // Costo por imagen dependiendo de la cantidad de imágenes añadidas
 
         // Determinar el costo por imagen con descuentos según la cantidad de imágenes
-        if (cantidadImagenes >= 1 && cantidadImagenes < 5) {
+        if (cantidadImagenes >= 2 && cantidadImagenes < 5) {
             costoImagen = 14900 * 0.75; // 25% de descuento
         } else if (cantidadImagenes >= 5 && cantidadImagenes < 10) {
             costoImagen = 14900 * 0.65; // 35% de descuento
@@ -299,77 +308,100 @@ export default function Formulario() {
         return subtotalTotal;
     };
 
-    const handleInputChange = (index, value) => { 
-        const newItems = [...items];
+    const handleInputChange = (index, value) => {
+        let newItems = [...items]; // Crear una copia del estado actual
     
-        // Para el índice 6 (validación de cantidad entre 0 y 365)
+        // Permitir solo números enteros
+        let sanitizedValue = value.replace(/\D/g, ""); // Elimina cualquier caracter que no sea un número
+    
+        // Evita ceros al inicio, excepto cuando el valor es "0"
+        sanitizedValue = sanitizedValue.replace(/^0+/, "") || "0";
+    
+        const numericValue = Number(sanitizedValue); // Convertir a número
+    
+        // **Validación especial para índice 6 (cantidad entre 3 y 365 días)**
         if (index === 6) {
-            const numericValue = Number(value);
-            if (value === "" || (numericValue >= 0 && numericValue <= 365)) {
-                newItems[6].cantidad = numericValue; // Actualiza el valor
-                setError(""); // Limpiar error si es válido
+            if (sanitizedValue === "" || (numericValue >= 3 && numericValue <= 365)) {
+                newItems[6].cantidad = numericValue; // Actualiza el valor si es válido
+                setError(""); // Limpia errores
+            } else {
+                setError("El mínimo permitido es de 3 días"); // Mensaje de error
+                return; // Salir para evitar cambios inválidos
             }
-        } 
-        
-        // Para el índice 7 (validación de presupuesto)
+        }
+    
+        // **Validación especial para índice 7 (presupuesto entre 1 y 4500)**
         else if (index === 7) {
-            let formattedValue = value.replace(/^0+(?=\d)/, ''); // Elimina ceros iniciales inválidos
-            let cantidad = 1
-            // Si Facebook e Instagram están desactivados, forzar presupuesto a 0
-            if (!formData.facebook && !formData.instagram) {
-                formattedValue = "0";
-                cantidad = 0;
+            if (numericValue < 1 || numericValue > 4500) {
+                setError("El presupuesto mínimo debe ser $4500");
+            } else {
+                setError(""); // Limpiar error si el valor es válido
             }
     
-            newItems[7].presupuesto = formattedValue;
-            newItems[7].cantidad = cantidad;
-            setError(""); // Limpiar error mientras se está escribiendo
-        } 
-        
-        // Para otros índices
+            // Si todas las redes sociales están desactivadas, forzar presupuesto a 0
+            if (!formData.facebook && !formData.instagram && !formData.tiktok) {
+                newItems[7].presupuesto = "0";
+            } else {
+                newItems[7].presupuesto = sanitizedValue; // Mantiene el valor ingresado validado
+            }
+    
+            newItems[7].cantidad = numericValue; // Reflejar la cantidad como número
+        }
+    
+        // Para otros índices, simplemente actualiza cantidad
         else {
-            const numericValue = Number(value);
-            newItems[index].cantidad = numericValue; // Actualiza el valor
+            newItems[index].cantidad = numericValue;
+            setError(""); // Limpia errores
+        }
+    
+        setItems(newItems); // Actualiza el estado después de aplicar todas las reglas
+    };
+    
+    
+    const handleBlur = (index) => {
+    if (index === 6) {
+        const numericValue = Number(items[6].cantidad);
+        
+        // Validación de cantidad mínima (3 días)
+        if (numericValue < 3 && numericValue !== 0) {
+            setError("El mínimo permitido es de 3 días");
+        } else {
             setError(""); // Limpiar error si es válido
         }
+    }
+
+    // Validación para el índice 7 (presupuesto)
+    if (index === 7) {
+        const numericValue = Number(items[7].presupuesto);
     
-        setItems(newItems);
-    };
-    
-    // Validación al perder el foco (onBlur)
-    const handleBlur = (index) => {
-        if (index === 7) {
-            const numericValue = Number(items[7].presupuesto);
-    
-            // Si Facebook e Instagram están desactivados, reiniciar presupuesto a 0
-            if (!formData.facebook && !formData.instagram) {
-                setItems((prevItems) => {
-                    const updatedItems = [...prevItems];
-                    updatedItems[7].presupuesto = "0"; // Reinicia a 0
-                    return updatedItems;
-                });
-            } 
-            
-            // Validación de presupuesto mínimo
-            else if (numericValue < 4500 && numericValue !== 0) {
-                setError("El presupuesto no puede ser menor a $4500");
-            } else {
-                setError(""); // Limpiar error si es válido
-            }
+        // Si Facebook, Instagram y TikTok están desactivados, reiniciar presupuesto a 0
+        if (!formData.facebook && !formData.instagram && !formData.tiktok) {
+            setItems((prevItems) => {
+                const updatedItems = [...prevItems];
+                updatedItems[7].presupuesto = "0"; // Reinicia a 0 si no hay redes activadas
+                return updatedItems;
+            });
+        } 
+        
+        // Validación de presupuesto mínimo
+        else if (numericValue < 4500 && numericValue !== 0) {
+            setError("El presupuesto no puede ser menor a $4500");
+        } else {
+            setError(""); // Limpiar error si es válido
         }
-    };
+    }
+};
     
     // Efecto para reiniciar el presupuesto cuando se desactivan los interruptores
     useEffect(() => {
-        if (!formData.facebook && !formData.instagram) {
+        if (!formData.facebook && !formData.instagram && !formData.tiktok) {
             setItems((prevItems) => {
                 const updatedItems = [...prevItems];
                 updatedItems[7].presupuesto = "0"; // Reiniciar a 0 si no hay redes activadas
                 return updatedItems;
             });
         }
-    }, [formData.facebook, formData.instagram]); // Se ejecuta cuando cambian los interruptores
-    
+    }, [formData.facebook, formData.instagram, formData.tiktok]); // Se ejecuta cuando cambian los interruptores
 
     //Presupuesto Meta
     const calcularPresupuestoTotal = () => {
@@ -491,131 +523,202 @@ export default function Formulario() {
             {/* Línea horizontal continua debajo de los encabezados */}
             <hr className="border-2 border-black mb-4" />
 
-                {/* Renderizar solo los ítems 5 y 6 si solo TikTok está activado */}
+                {/* Renderizar solo los ítems 5 y 6 si solo TikTok está activado (formulario a adaptar) */}
                 {formData.tiktok && !formData.facebook && !formData.instagram && (
-                    <>
-                        {/* Ítem 5 */}
-                        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
-                            {/* Contenedor de icono de información y detalle */}
-                            <div 
-                                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
-                                onMouseOver={(e) => handleMouseOver(e, items[4].info)}
-                                onMouseOut={handleMouseOut}
-                            >
-                                {/* Icono de información */}
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    className="bi bi-info-circle-fill"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path
-                                        fill="orange"
-                                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-                                    />
-                                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                                </svg>
-                                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[4].detalle}</span>
-                            </div>
+    <>
+        {/* Ítem 5 */}
+        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
+            {/* Contenedor de icono de información y detalle */}
+            <div 
+                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
+                onMouseOver={(e) => handleMouseOver(e, items[4].info)}
+                onMouseOut={handleMouseOut}
+            >
+                {/* Icono de información */}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-info-circle-fill"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="orange"
+                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                    />
+                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[4].detalle}</span>
+            </div>
 
-                            {/* Input de cantidad */}
-                            <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
-                                <input
-                                    type="text"
-                                    value={items[4].cantidad}
-                                    onChange={(e) => handleInputChange(4, e.target.value)}
-                                    min="0"
-                                    disabled={!formData.tiktok}
-                                    className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
-                                />
-                                <div className="hidden md:flex flex-col ml-2">
-                                    <button
-                                        onClick={() => handleIncrement(4)}
-                                        disabled={!formData.tiktok}
-                                        className="bg-gray-300 text-black rounded-t xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold"
-                                    >
-                                        +
-                                    </button>
-                                    <button
-                                        onClick={() => handleDecrement(4)}
-                                        disabled={!formData.tiktok}
-                                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
-                                    >
-                                        -
-                                    </button>
-                                </div>
-                            </div>
+            {/* Input de cantidad */}
+            <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
+                <input
+                    type="text"
+                    value={items[4].cantidad}
 
-                            {/* Columna de valor */}
-                            <div className="text-sm text-center">
-                                {`$${(items[4].cantidad * items[4].valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-                            </div>
-                        </div>
+                    onChange={(e) => handleInputChange(4, e.target.value)}
+                    min="0"
+                    disabled={!formData.tiktok}
+                    className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
+                    onKeyPress={(e) => {
+                        // Permite solo números enteros
+                        if (!/^[0-9]$/.test(e.key)) {
+                            e.preventDefault(); // Bloquea cualquier otra tecla que no sea un número
+                        }
+                    }}// Asegura que solo se permitan números
+                />
+                <div className="hidden md:flex flex-col ml-2">
+                    <button
+                        onClick={() => handleIncrement(4)}
+                        disabled={!formData.tiktok}
+                        className="bg-gray-300 text-black rounded-t xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold"
+                    >
+                        +
+                    </button>
+                    <button
+                        onClick={() => handleDecrement(4)}
+                        disabled={!formData.tiktok}
+                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
+                    >
+                        -
+                    </button>
+                </div>
+            </div>
 
-                        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
+            {/* Columna de valor */}
+            <div className="text-sm text-center">
+                {`$${(items[4].cantidad * items[4].valor).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            </div>
+        </div>
 
-                        {/* Ítem 6 */}
-                        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] justify-center items-center mb-2">
-                            {/* Contenedor de icono de información y detalle */}
-                            <div 
-                                className="flex justify-center items-center space-x-2 text-black-900 text-sm font-bold text-center"
-                                onMouseOver={(e) => handleMouseOver(e, items[5].info)}
-                                onMouseOut={handleMouseOut}
-                            >
-                                {/* Icono de información */}
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    className="bi bi-info-circle-fill"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path
-                                        fill="orange"
-                                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
-                                    />
-                                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-                                </svg>
-                                <span className="md:text-center max-xs:text-start xs:text-start sm:text-start">{items[5].detalle}</span>
-                            </div>
+        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2" />
 
-                            {/* Switch de efemérides */}
-                            <label className="flex items-center justify-center space-x-2">
-                                <input
-                                    type="checkbox"
-                                    name="efemerides"
-                                    checked={formData.efemerides}
-                                    onChange={(e) => handleEfemeridesToggle(e.target.checked)}
-                                    className="hidden"
-                                    disabled={!formData.tiktok}
-                                />
-                                <span
-                                    className={`w-12 h-6 flex items-center rounded-full p-1 cursor-pointer transition-colors duration-300 ease-in-out ${
-                                        formData.efemerides ? "bg-orange-500" : "bg-gray-300"
-                                    }`}
-                                >
-                                    <span
-                                        className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ease-in-out ${
-                                            formData.efemerides ? "translate-x-6" : "translate-x-0"
-                                        }`}
-                                    ></span>
-                                </span>
-                            </label>
+        {/* Ítems 7 y 8 */}
+        {/* Ítem 7 (Cantidad) */}
+        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
+                <div
+                className="text-black-900 text-sm font-bold max-xs:flex-grow flex xs:items-center max-xs:items-start text-start md:justify-center max-xs:justify-items-start xs:justify-items-start"
+                onMouseOver={(e) => handleMouseOver(e, items[6].info)}
+                onMouseOut={handleMouseOut}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-info-circle-fill xs:mr-2 max-xs:mr-1 max-xs:items-start sm:items-center flex"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="orange"
+                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                    />
+                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <div className="text-black-900 text-sm max-xs:items-start max-xs:text-start">{items[6].detalle}</div>
+            </div>
 
-                            {/* Columna de valor */}
-                            <div className="text-sm text-center">
-                                {`$${items[5].valor.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
-                            </div>
-                        </div>
-                        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2 " />
-                    </>
-                )}
+            <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
+                <input
+                        type="text"
+                        value={items[6].cantidad}
+                        onChange={(e) => handleInputNumeric(6, e.target.value)} // Maneja la entrada
+                        onBlur={() => handleBlur(6)} // Valida cuando pierde el foco
+                        disabled={!isEditable} // Deshabilitar si no es editable
+                        className={`focus:outline-none focus:border-orange-500 text-center border-2 
+                            ${error && error.includes("días") ? "border-red-500" : "border-orange-500"} 
+                            bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 max-xs:mx-0 appearance-none`}
+                        style={{ MozAppearance: "textfield" }}
+                        inputMode="numeric" // Muestra teclado numérico en móviles
+                        pattern="[0-9]*" // Asegura que solo se permitan números
+                    />
+                <div className="hidden md:flex flex-col ml-2">
+                    <button
+                        onClick={() => handleIncrement(6)}
+                        disabled={!isEditable}
+                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-t"
+                    >
+                        +
+                    </button>
+                    <button
+                        onClick={() => handleDecrement(6)}
+                        disabled={!isEditable}
+                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
+                    >
+                        -
+                    </button>
+                </div>
+                {/* Error de validación para el campo de días */}
+                {error && error.includes("días") && <p className="text-red-500 text-sm">{error}</p>}
+            </div>
+
+            {/* Columna de valor */}
+            <div className="text-sm text-center">
+                {`$${(items[7].presupuesto * (items[6].cantidad || 0)).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
+            </div>
+        </div>
+
+        {/* Ítem 8 (Presupuesto) */}
+        <div className="grid sm:grid-cols-3 xs:grid-cols-[2fr_1fr_1fr] max-xs:grid-cols-[3fr_1fr_1fr] items-center mb-2">
+            <div
+                className="text-black-900 text-sm font-bold max-xs:flex-grow flex xs:items-center max-xs:items-start text-start md:justify-center max-xs:justify-items-start xs:justify-items-start"
+                onMouseOver={(e) => handleMouseOver(e, items[7].info)}
+                onMouseOut={handleMouseOut}
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-info-circle-fill xs:mr-2 max-xs:mr-1 max-xs:items-start sm:items-center flex"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill="orange"
+                        d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"
+                    />
+                    <path fill="white" d="M8 5.5 a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                </svg>
+                <div className="text-black-900 text-sm max-xs:items-start max-xs:text-start">{items[7].detalle}</div>
+            </div>
+
+            <div className="flex relative justify-center items-center">
+                <div className="flex items-center">
+                    <span className="text-black font-semibold mr-2">$</span>
+                    <input 
+                        type="text"
+                        value={items[7].presupuesto}
+                        onChange={(e) => handleInputChange(7, e.target.value)}
+                        onBlur={() => handleBlur(7)}
+                        disabled={!isEditable}
+                        maxLength={12}
+                        className={`focus:outline-none focus:border-orange-500 border-2 
+                                    ${error ? "border-red-500" : "border-orange-500"} 
+                                    bg-white text-black font-semibold rounded text-sm appearance-none`}
+                        style={{
+                            MozAppearance: "textfield",
+                            width: items[7].presupuesto && parseFloat(items[7].presupuesto) > 0
+                                ? `${Math.max(items[7].presupuesto.length * 0.7 + 4, 7)}ch`
+                                : "6ch",
+                            textAlign: "center",
+                            paddingX: "0.5vh",
+                        }}
+                    />
+                </div>
+                {error && error.includes("presupuesto") && <p className="text-red-500 text-sm">{error}</p>}
+            </div>
+        </div>
 
 
-            {/* Formulario con columnas y líneas continuas para cada ítem */}
+        <hr className="xs:border-2 max-xs:border-1 max-xs:border-gray-500 xs:border-black mb-2" />
+    </>
+)}
+
+
+
+            {/* Formulario con columnas y líneas continuas para cada ítem (formulario general del cual hay que copiar sus funciones para utilizar los index 6 y 7) */}
             {(formData.facebook || formData.instagram) && (
                 <>
             {items.map((item, index) => (
@@ -651,10 +754,16 @@ export default function Formulario() {
                                 <input
                                     type="text"
                                     value={item.cantidad}
-                                    onChange={(e) => handleInputChange(index, e.target.value)}
+                                    onChange={(e) => handleInputNumeric(index, e.target.value)} // Llama a la función handleInputNumeric
                                     min="0"
                                     disabled={!(formData.facebook || formData.instagram || formData.tiktok)}  // Deshabilitar si no es editable
                                     className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 appearance-none"
+                                    onKeyPress={(e) => {
+                                        // Permite solo números enteros
+                                        if (!/^[0-9]$/.test(e.key)) {
+                                            e.preventDefault(); // Bloquea cualquier otra tecla que no sea un número
+                                        }
+                                    }}
                                 />
                                 <div className="hidden md:flex flex-col ml-2">
                                     <button
@@ -697,61 +806,72 @@ export default function Formulario() {
                                 </span>
                             </label>
                         ) : index === 6 ? (
-                            // Campo de entrada para el índice 6
                             <div className="flex justify-center sm:items-center xs:items-end max-xs:items-end max-xs:mx-0">
-                                <input
-                                    type="text"
-                                    value={items[6].cantidad}
-                                    onChange={(e) => handleInputChange(6, e.target.value)}
-                                    min="0"
-                                    disabled={!isEditable} // Deshabilitar si no es editable
-                                    className="focus:outline-none focus:border-orange-500 text-center border-2 border-orange-500 bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 max-xs:mx-0 appearance-none"
-                                    style={{ MozAppearance: "textfield" }}
-                                />
-                                <div className="hidden md:flex flex-col ml-2">
-                                    <button
-                                        onClick={() => handleIncrement(index)}
-                                        disabled={!isEditable} // Deshabilitar si no es editable
-                                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-t"
-                                    >
-                                        +
-                                    </button>
-                                    <button
-                                        onClick={() => handleDecrement(index)}
-                                        disabled={!isEditable} // Deshabilitar si no es editable
-                                        className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
-                                    >
-                                        -
-                                    </button>
-                                </div>
+                            <input
+                                type="text"
+                                value={items[6].cantidad}
+                                onChange={(e) => handleInputChange(6, e.target.value)}
+                                onBlur={() => handleBlur(6)} // Validación cuando pierde el foco
+                                min="0"
+                                disabled={!isEditable} // Deshabilitar si no es editable
+                                className={`focus:outline-none focus:border-orange-500 text-center border-2 
+                                    ${error && error.includes("días") ? "border-red-500" : "border-orange-500"} 
+                                    bg-white text-black font-semibold rounded text-sm xs:w-8 max-xs:w-8 max-xs:mx-0 appearance-none`}
+                                style={{ MozAppearance: "textfield" }}
+                            />
+                            <div className="hidden md:flex flex-col ml-2">
+                                <button
+                                    onClick={() => handleIncrement(6)}
+                                    disabled={!isEditable}
+                                    className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-t"
+                                >
+                                    +
+                                </button>
+                                <button
+                                    onClick={() => handleDecrement(6)}
+                                    disabled={!isEditable}
+                                    className="bg-gray-300 text-black xs:px-1 max-xs:px-3 xs:py-0.1 max-xs:py-[3px] xs:text-xs max-xs:text-sm xs:font-md max-xs:font-extrabold rounded-b"
+                                >
+                                    -
+                                </button>
                             </div>
+                            {/* Error de validación para el campo de días */}
+                            {error && error.includes("días") && <p className="text-red-500 text-sm">{error}</p>}
+                        </div>
+
                         ) : index === 7 ? (
                             // Campo de entrada para el índice 7
                             <div className="flex relative justify-center items-center">
                                 <div className="flex items-center">
                                     <span className="text-black font-semibold mr-2">$</span> {/* Símbolo $ al lado izquierdo */}
                                     <input
-                                        type="text"
-                                        value={item.presupuesto}
-                                        onChange={(e) => handleInputChange(index, e.target.value)}
-                                        onBlur={() => handleBlur(index)} // Validar al perder el foco
-                                        disabled={!isEditable} // Deshabilitar si no es editable
-                                        maxLength={12}
-                                        className={`focus:outline-none focus:border-orange-500 border-2 
-                  ${error && index === 7 ? "border-red-500" : "border-orange-500"} 
-                  bg-white text-black font-semibold rounded text-sm appearance-none`}
-                                        style={{
-                                            MozAppearance: "textfield",
-                                            width:
-                                                item.presupuesto && !isNaN(item.presupuesto) && parseFloat(item.presupuesto) > 0
-                                                    ? `${Math.max(item.presupuesto.length * 0.7 + 4, 7)}ch` // Ancho dinámico
-                                                    : "6ch", // Ancho mínimo cuando vacío o 0
-                                            textAlign: "center",
-                                            paddingX: "0.5vh", // Alinear el texto a la derecha para mejor lectura
-                                        }}
-                                    />
+                                type="text"
+                                value={item.presupuesto}
+                                onChange={(e) => handleInputChange(index, e.target.value)}
+                                onBlur={() => handleBlur(index)} // Validar al perder el foco
+                                disabled={!isEditable} // Deshabilitar si no es editable
+                                maxLength={12}
+                                className={`focus:outline-none focus:border-orange-500 border-2 
+                                            ${error && index === 7 ? "border-red-500" : "border-orange-500"} 
+                                            bg-white text-black font-semibold rounded text-sm appearance-none`}
+                                style={{
+                                    MozAppearance: "textfield",
+                                    width:
+                                        item.presupuesto && !isNaN(item.presupuesto) && parseFloat(item.presupuesto) > 0
+                                            ? `${Math.max(item.presupuesto.length * 0.7 + 4, 7)}ch` // Ancho dinámico
+                                            : "6ch", // Ancho mínimo cuando vacío o 0
+                                    textAlign: "center",
+                                    paddingX: "0.5vh", // Alinear el texto a la derecha para mejor lectura
+                                }}
+                                onKeyPress={(e) => {
+                                    // Solo permite números y previene otros caracteres
+                                    if (!/^[0-9]$/.test(e.key)) {
+                                        e.preventDefault(); // Bloquea cualquier tecla que no sea un número
+                                    }
+                                }}
+                            />
                                 </div>
-                                {error && index === 7 && <p className="text-red-500 text-xs">{error}</p>}
+                                {error && error.includes("presupuesto") && <p className="text-red-500 text-sm">{error}</p>}
                             </div>
                         ) : (
                             // Renderizado para otros índices
@@ -808,12 +928,13 @@ export default function Formulario() {
 
             {/* Botón de enviar */}
             <div className="flex xs:justify-end max-xs:justify-center mt-4">
-                <button
-                    onClick={handleBuyNow}
-                    className="bg-blue-600 text-white text-1xl px-[95px] py-1 rounded-medium border rounded-tl-xl rounded-br-xl font-lg"
-                >
-                    CONTRATAR
-                </button>
+            <button
+                onClick={handleBuyNow}
+                className={`bg-blue-600 text-white text-1xl px-[95px] py-1 rounded-medium border rounded-tl-xl rounded-br-xl font-lg ${error ? "bg-red-600 cursor-not-allowed" : ""}`}
+                disabled={!!error}  // Deshabilitar el botón si hay error
+            >
+                CONTRATAR
+            </button>
             </div>
 
             </div>
@@ -821,7 +942,7 @@ export default function Formulario() {
             
                 <div className="lg:p-12 md:p-6 sm:p-6 xs:p-6 max-xs:p-3 bg-blue-300 rounded-t-md md:rounded-b-[6vh] sm:rounded-b-[4vh] xs:rounded-b-[4vh] max-xs:rounded-b-[2vh] border-2 border-blue-400">
                         <p className="lg:text-3xl md:text-xl text-white rounded-xl py-2 px-0 mx-auto bg-orange-500 font-extrabold justify-items-center text-center border-white border-2 ">
-                            Seleccioná una red social para armar tu plan personalizado
+                        Seleccioná una o más redes sociales para armar tu plan ideal
                         </p>
                 </div>
             )}
