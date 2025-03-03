@@ -26,7 +26,7 @@ const FounderCard = ({ img, name, profession, description }) => {
             </span>
           </div>
           <span>{description}</span>
-          <div className="flex flex-row justify-between items-center gap-[14px] pt-[24px]">
+          {/*<div className="flex flex-row justify-between items-center gap-[14px] pt-[24px]">
             <Image
               src={"/WspIcon.svg"}
               width={45}
@@ -48,7 +48,7 @@ const FounderCard = ({ img, name, profession, description }) => {
               alt="FacebookIcon"
               className="cursor-pointer"
             />
-          </div>
+  </div>*/}
         </div>
       </div>
     </div>
