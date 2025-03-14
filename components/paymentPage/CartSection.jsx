@@ -25,8 +25,6 @@ const CartSection = () => {
     // const [showLogin, setShowLogin] = useState(false);
     const totalCartPrice = state?.cart?.reduce((acc, curr) => acc + curr.price, 0) || 0;
 
-    console.log(state)
-
     const initialValues = state.user || {
         name: "",
         surname: "",
