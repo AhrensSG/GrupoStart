@@ -74,9 +74,7 @@ const PayNavBar = () => {
 
                 {/* Enlace "Seguir Comprando" */}
                 <div>
-                    <button onClick={() => router.back()}>
-                        <button className="text-lg underline mx-4">Seguir comprando</button>
-                    </button>
+                    <button onClick={() => router.back()} className="text-lg underline mx-4">Seguir comprando</button>
                 </div>
             </div>
 

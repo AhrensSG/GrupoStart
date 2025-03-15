@@ -63,37 +63,41 @@ export async function POST(req) {
             const itemsHTML = data.metadata.items
                 .map((item) => {
                     if (Array.isArray(item.quantity)) {
-                        // Caso: `quantity` es un array de objetos (con id, price y quantity)
                         const detailsHTML = item.quantity
                             .map(
-                                (detail) => `
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">${
-                        detail.id
-                    }</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">${
-                        detail.quantity
-                    }</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">$${detail.price.toFixed(
-                        2
-                    )}</td>
-                </tr>`
+                                (detail, index) => `
+                    <tr>
+                        ${
+                            index === 0
+                                ? `<td style="border: 1px solid #ddd; padding: 8px;" rowspan="${item.quantity.length}">${item.title}</td>`
+                                : ""
+                        }
+                        <td style="border: 1px solid #ddd; padding: 8px;">${
+                            detail.id
+                        }</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${
+                            detail.budget ? " " : detail.quantity
+                        }</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">${
+                            detail.budget
+                                ? `$${parseFloat(detail.budget).toFixed(2)}`
+                                : detail.price
+                                ? `$${parseFloat(detail.price).toFixed(2)}`
+                                : " "
+                        }</td>
+                    </tr>`
                             )
                             .join("");
 
-                        return `
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;" rowspan="${
-                        item.quantity.length + 1
-                    }">${item.title}</td>
-                </tr>
-                ${detailsHTML}`;
+                        return detailsHTML;
                     } else {
-                        // Caso: `quantity` es un número normal
                         return `
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">${
                         item.title
+                    }</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${
+                        item.description
                     }</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">${
                         item.quantity
@@ -106,19 +110,8 @@ export async function POST(req) {
                 })
                 .join("");
 
-            // Calcular el total del pedido
             const totalAmount = data.metadata.items.reduce((sum, item) => {
-                if (Array.isArray(item.quantity)) {
-                    return (
-                        sum +
-                        item.quantity.reduce(
-                            (subSum, detail) => subSum + detail.price,
-                            0
-                        )
-                    );
-                } else {
-                    return sum + item.unit_price * item.quantity;
-                }
+                return sum + item.unit_price;
             }, 0);
 
             await sendMail({
@@ -147,7 +140,7 @@ export async function POST(req) {
                         <th style="border: 1px solid #ddd; padding: 8px;">Producto</th>
                         <th style="border: 1px solid #ddd; padding: 8px;">Detalle</th>
                         <th style="border: 1px solid #ddd; padding: 8px;">Cantidad</th>
-                        <th style="border: 1px solid #ddd; padding: 8px;">Precio</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Precio / Presupuesto</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -160,12 +153,6 @@ export async function POST(req) {
                     </tr>
                 </tbody>
             </table>
-
-            <a href="https://grupostart.com.ar/user" 
-                style="display: inline-block; padding: 12px 24px; margin-top: 20px; font-size: 16px;
-                    background-color: #ff6600; color: white; text-decoration: none; border-radius: 5px;">
-                Ver mi pedido
-            </a>
 
             <p style="font-size: 14px; color: #777; margin-top: 20px;">
                 Gracias por confiar en nosotros.
