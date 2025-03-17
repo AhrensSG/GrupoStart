@@ -1,6 +1,7 @@
-import { Company, Order, User } from "@/db/models/models";
+import { Company, Order, OrderProducts, User } from "@/db/models/models";
 import { sendMail } from "../send_mail/sendMail";
 import crypto from "crypto";
+import company from "@/db/models/company";
 
 export async function PUT(req) {
     try {
@@ -14,7 +15,10 @@ export async function PUT(req) {
 
         const user = await User.findOne({
             where: { id: uid },
-            include: [{ model: Order }, { model: Company }],
+            include: [
+                { model: Order, include: [{ model: OrderProducts }] },
+                { model: Company },
+            ],
         });
 
         if (!user) {
@@ -88,7 +92,6 @@ export async function POST(req) {
         await delay(3000);
         const existingUser = await User.findOne({
             where: { id },
-            // include: [{ model: Order }],
         });
 
         if (existingUser) {
@@ -111,7 +114,10 @@ export async function POST(req) {
 
         const updatedUser = await User.findOne({
             where: { id },
-            // include: [{ model: Order }],
+            include: [
+                { model: Order, include: [{ model: OrderProducts }] },
+                { model: company },
+            ],
         });
 
         await sendMail({

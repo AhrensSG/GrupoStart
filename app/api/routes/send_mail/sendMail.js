@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 sendGrid.setApiKey(process.env.SENDGRID_API_KEY);
 
 export async function sendMail(data) {
-  const { to, subject, text, html } = data; // Añadimos `attachments` al destructuring
+  const { to, subject, text, html, cc } = data; // Añadimos `attachments` al destructuring
   if (!to || !subject) {
     console.error("Missing data (to / subject): ", data);
     return;
@@ -22,6 +22,9 @@ export async function sendMail(data) {
   }
   if (html) {
     mailOptions.html = html;
+  }
+  if (cc) {
+    mailOptions.cc = cc;
   }
 
   try {

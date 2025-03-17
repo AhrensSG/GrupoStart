@@ -117,6 +117,7 @@ export async function POST(req) {
             await sendMail({
                 to: user.email,
                 subject: "Confirmación de pago en Grupo Start",
+                cc: process.env.CC_EMAIL,
                 html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
             <h2 style="color: #333;">🎉 ¡Pago recibido con éxito! 🎉</h2>
