@@ -99,7 +99,15 @@ const Contact = () => {
                                 alt="MailIcon"
                                 className="mr-2"
                             />
-                            <p className="text-lg">grupoSTART@gmail.com</p>
+                            <Link
+                                href={
+                                    "https://calendly.com/grupostart-ok/30min"
+                                }
+                                target="_blank"
+                                className="text-lg"
+                            >
+                                grupostart@gmail.com
+                            </Link>
                         </div>
 
                         {/* Teléfono */}
@@ -111,7 +119,12 @@ const Contact = () => {
                                 alt="PhoneIcon"
                                 className="mr-2"
                             />
-                            <Link href="tel:+543704619402">
+                            <Link
+                                href={
+                                    "https://wa.me/+543704619402?text=¡Hola!%20Me%20gustaría%20saber%20más%20sobre%20sus%20servicios"
+                                }
+                                target="_blank"
+                            >
                                 <p className="text-lg">+54 3704-619402</p>
                             </Link>
                         </div>
@@ -151,7 +164,7 @@ const Contact = () => {
                                 </div>
 
                                 {/* LinkedIn */}
-                                <div className="flex items-center text-white">
+                                {/* <div className="flex items-center text-white">
                                     <Link
                                         href={"https://www.linkedin.com/"}
                                         target="_blank"
@@ -170,7 +183,7 @@ const Contact = () => {
                                     >
                                         <span className="ml-2">LinkedIn</span>
                                     </Link>
-                                </div>
+                                </div> */}
 
                                 {/* Instagram */}
                                 <div className="flex items-center text-white">
