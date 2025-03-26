@@ -54,7 +54,7 @@ export async function POST(req) {
                     },
                 },
                 back_urls: {
-                    success: "https://grupostart.com.ar/",
+                    success: "https://grupostart.com.ar/user",
                     pending: "https://grupostart.com.ar/",
                     failure: "https://grupostart.com.ar/",
                 },
