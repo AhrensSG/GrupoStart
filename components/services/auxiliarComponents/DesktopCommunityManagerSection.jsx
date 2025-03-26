@@ -159,7 +159,7 @@ const DesktopCommunityManagerSection = () => {
             "Diseño creativo",
             "Puesta en marcha de campañas publicitarias Básicas"
           ]}
-          price={{ original: 350000, discount: 329900 }}
+          price={{ original: 380000, discount: 329900 }}
           onButtonClick={() => {
             handleBuyNow(2, "Plan START", 329900);
           }}
@@ -178,9 +178,9 @@ const DesktopCommunityManagerSection = () => {
             "Diseño creativo",
             "Puesta en marcha de campañas publicitarias Medias",
           ]}
-          price={{ original: 500000, discount: 449900 }}
+          price={{ original: 550000, discount: 0.01 }}
           onButtonClick={() => {
-            handleBuyNow(3, "Plan Social Master", 449900);
+            handleBuyNow(3, "Plan Social Master", 0.01);
           }}
           listClassName="px-[5%] py-4"
         />
@@ -197,9 +197,9 @@ const DesktopCommunityManagerSection = () => {
             "Diseño Creativo",
             "Puesta en marcha de campañas publicitarias Pro",
           ]}
-          price={{ original: 650000, discount: 599900 }}
+          price={{ original: 700000, discount: 649900 }}
           onButtonClick={() => {
-            handleBuyNow(4, "Plan Social Pro", 599900);
+            handleBuyNow(4, "Plan Social Pro", 649900);
           }}
           listClassName="px-[5%] py-4"
         />
