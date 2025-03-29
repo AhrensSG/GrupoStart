@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { logInWithGoogle } from "@/firebase/logInWithGoogle";
 import { logInWithFacebook } from "@/firebase/logInWithFacebook";
-import { createUserWithEmailAndPassword, sendPasswordResetEmail, confirmPasswordReset, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 
 const Login = () => {
@@ -22,12 +22,12 @@ const Login = () => {
     const [phone, setPhone] = useState("");
     const [acceptTerms, setAcceptTerms] = useState(false);
     const [resetEmail, setResetEmail] = useState("");
-    const [verificationCode, setVerificationCode] = useState("");
-    const [newPassword, setNewPassword] = useState("");
-    const [confirmNewPassword, setConfirmNewPassword] = useState("");
     const [codeSent, setCodeSent] = useState(false);
     const [codeVerified, setCodeVerified] = useState(false);
     const router = useRouter();
+
+    const searchParams = useSearchParams();
+    const redirect = searchParams.get('redirect') || '/';
 
     const authUrl = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
 
@@ -37,7 +37,7 @@ const Login = () => {
             console.log(user.user);
             false;
             toast.success("Inicio de sesión exitoso!");
-            router.push("/");
+            router.push(redirect);
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -48,7 +48,7 @@ const Login = () => {
         try {
             await logInWithGoogle();
             toast.success("Inicio de sesión exitoso!");
-            router.push("/");
+            router.push(redirect);
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -60,7 +60,7 @@ const Login = () => {
             await logInWithFacebook();
             false;
             toast.success("Inicio de sesión exitoso!");
-            router.push("/");
+            router.push(redirect);
         } catch (error) {
             console.log(error);
             toast.error("Error al iniciar sesión.");
@@ -129,7 +129,7 @@ const Login = () => {
             });
             false;
             toast.success("Registro exitoso!");
-            router.push("/");
+            router.push(redirect);
         } catch (error) {
             console.log(error);
             toast.error("Error al registrar usuario.");

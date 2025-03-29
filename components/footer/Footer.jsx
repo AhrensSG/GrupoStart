@@ -104,7 +104,7 @@ const Footer = () => {
                             href={"https://calendly.com/grupostart-ok/30min"}
                             target="_blank"
                         >
-                            grupostart@gmail.com
+                            grupostart.ok@gmail.com
                         </Link>
                     </div>
                     <div className="flex gap-2 text-white">

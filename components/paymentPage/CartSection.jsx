@@ -87,7 +87,8 @@ const CartSection = () => {
             }
 
             try {
-                const deli = delivery ? Number(delivery.tarifaConIva.total) : 0;
+                // const deli = delivery ? Number(delivery.tarifaConIva.total) : 0;
+                const deli = 0;
                 state.payment = { ...state.payment, ...values };
                 const orderData = {
                     ...state,

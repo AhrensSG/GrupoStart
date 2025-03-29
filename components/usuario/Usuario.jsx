@@ -10,13 +10,15 @@ import CoursesSection from "./CoursesSection";
 import MentorySection from "./MentorySection";
 import axios from "axios";
 import { logOut } from "@/firebase/logOut";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 const Usuario = ({ data }) => {
-    const [selectedSection, setSelectedSection] = useState("perfil");
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const section = searchParams.get("section") || "perfil";
+    const [selectedSection, setSelectedSection] = useState(section);
 
     // Crear referencias para cada seccion
     const perfilRef = useRef(null);

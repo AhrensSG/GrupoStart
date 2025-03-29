@@ -79,10 +79,6 @@ const DesktopCommunityManagerSection = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   const handleBuyNow = async (id, name, price) => {
-    if (!state.user) {
-      setShowLogin(true);
-      return toast.info("¡Inicia sesión y continúa!");
-    }
     const data = {
       id,
       name,
@@ -91,12 +87,16 @@ const DesktopCommunityManagerSection = () => {
       items: 1,
       productType: "pack",
     };
+    await addProductToCart(data, dispatch);
     if (state.cart?.some((prod) => prod.id === id)) {
       toast.info(`Se actualizó el producto en tu carrito!`);
     } else {
       toast.success(`Añadiste ${name} a tu carrito!`);
     }
-    await addProductToCart(data, dispatch);
+    if (!state.user) {
+      setShowLogin(true);
+      return toast.warning("¡Inicia sesión y continúa!");
+    }
     return router.push("/payment");
   };
 

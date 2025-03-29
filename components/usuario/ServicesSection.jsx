@@ -39,7 +39,7 @@ export default function ServicesSection({ user }) {
                 <h2 className="text-lg font-bold text-orange-500 justify-start ml-2 my-1">
                     Órdenes
                 </h2>
-                {user?.Orders && user.Orders.length > 0 ? (
+                {user && user?.Orders?.length > 0 ? (
                     <div className="flex flex-col space-y-4">
                         {user.Orders.map((order) => (
                             <div
@@ -60,7 +60,7 @@ export default function ServicesSection({ user }) {
                                     Productos
                                 </h3>
                                 <ul className="list-disc pl-5">
-                                    {order.OrderProducts.map((product) => (
+                                    {order.OrderProducts?.length > 0 && order.OrderProducts?.map((product) => (
                                         <li
                                             key={product.id}
                                             className="border-b py-2"
@@ -77,7 +77,7 @@ export default function ServicesSection({ user }) {
                                                 <p className="text-gray-500 italic">
                                                     Descripción: {product.data}
                                                 </p>
-                                            ) : Array.isArray(product.data) ? (
+                                            ) : Array.isArray(product.data) && product.data?.length > 0 ? (
                                                 <ul className="list-disc pl-5 mt-2">
                                                     {product.data.map(
                                                         (item, index) => (
