@@ -15,10 +15,10 @@ export const isUserLogged = async (dispatch) => {
                 };
                 const data = await axios.put(`${SERVER_URL_AUTH_ENDPOINT}`, info);
 
-                dispatch({ type: "LOGGED_IN_USER", payload: data.data });
+                dispatch({ type: "LOGGED_IN_USER", payload: {info : data.data, isLoading: false} });
                 return true;
             } else {
-                dispatch({ type: "LOGGED_IN_USER", payload: false });
+                dispatch({ type: "LOGGED_IN_USER", payload: {info : null, isLoading: false } });
                 return false;
             }
         } catch (error) {

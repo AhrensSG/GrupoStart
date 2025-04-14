@@ -4,7 +4,9 @@ import { isUserLogged } from "./actions/isUserLogged";
 
 export const Context = createContext();
 
-const initialState = {};
+const initialState = {
+  isLoading: true
+};
 
 const GlobalContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);

@@ -5,7 +5,8 @@ export const reducer = (state, action) => {
         case "LOGGED_IN_USER":
             return {
                 ...state,
-                user: action.payload,
+                user: action.payload.info,
+                isLoading: action.payload.isLoading
             };
         case "UPDATED_USER":
             return {
