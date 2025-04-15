@@ -80,7 +80,7 @@ export const createPayment = async (user, productsCart, deliveryCost, orderId) =
                 description: p.description,
                 title: p.name,
                 quantity: p.items,
-                unit_price: parseFloat(0.01),
+                unit_price: parseFloat(p.price),
                 currency_id: "ARS",
             };
         });
