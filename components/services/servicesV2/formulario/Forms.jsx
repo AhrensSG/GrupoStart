@@ -68,12 +68,6 @@ export default function Formulario() {
     const router = useRouter();
     const [showLogin, setShowLogin] = useState(false);
     const handleBuyNow = async () => {
-        // Verifica si el usuario está autenticado
-        if (!state.user) {
-            setShowLogin(true);
-            return toast.info("¡Inicia sesión y continúa!");
-        }
-
         // Filtra los ítems seleccionados
         const selectedItems = items
             .filter((item) => item.cantidad > 0)
@@ -102,8 +96,15 @@ export default function Formulario() {
         } else {
             toast.success(`Añadiste el pack personalizado a tu carrito!`);
         }
+
         // Añade al carrito y redirige al pago
         await addProductToCart(data, dispatch);
+        
+        // Verifica si el usuario está autenticado
+        if (!state.user) {
+          setShowLogin(true);
+          return toast.info("¡Inicia sesión y continúa!");
+        }
         return router.push("/payment");
     };
 
