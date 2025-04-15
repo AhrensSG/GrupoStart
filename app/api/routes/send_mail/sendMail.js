@@ -12,7 +12,10 @@ export async function sendMail(data) {
   }
 
   let mailOptions = {
-    from: process.env.SENDGRID_FROM_EMAIL, // Debe ser un correo verificado en SendGrid
+    from: {
+      name: "Grupo Start",
+      email: process.env.SENDGRID_FROM_EMAIL
+    },
     to: to,
     subject: subject,
   };
@@ -35,7 +38,6 @@ export async function sendMail(data) {
       { status: 200 }
     );
   } catch (error) {
-    // Capturar errores y devolver información
     console.error(error);
     console.log(error.message);
     return NextResponse.json({ error: error.message }, { status: 500 });

@@ -106,7 +106,7 @@ const Contact = () => {
                                 target="_blank"
                                 className="text-lg"
                             >
-                                grupostart@gmail.com
+                                support@grupostart.com.ar
                             </Link>
                         </div>
 
