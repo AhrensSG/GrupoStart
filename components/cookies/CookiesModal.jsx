@@ -25,8 +25,8 @@ const CookiesModal = () => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: "100%", opacity: 0 }}
           transition={{ duration: 0.5 }}
-          className="fixed bottom-0 left-0 w-full h-1/4 bg-white text-[#0853FC] flex flex-col items-center justify-center p-6 shadow-xl z-50">
-          <div className="text-center mb-4 px-4">
+          className="fixed bottom-0 left-0 w-full h-1/3 sm:h-1/4 bg-white text-[#0853FC] flex flex-col items-center justify-center p-6 shadow-xl z-50">
+          <div className="text-xs sm:text-base text-center mb-4 px-4">
             <p className="mb-2">
               Utilizamos cookies para mejorar su experiencia en nuestro sitio
               web y ofrecerle contenido personalizado.
