@@ -4,6 +4,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import GlobalContext from "./context/GlobalContext";
 import { Toaster } from "sonner";
+import CookiesModal from "@/components/cookies/CookiesModal";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({ children }) {
                         expand={false}
                     />
                     {children}
+                    <CookiesModal/>
                 </GlobalContext>
             </body>
         </html>

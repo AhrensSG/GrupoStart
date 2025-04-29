@@ -14,33 +14,33 @@ export default function Formulario() {
         {
             detalle: "Cantidad de posteos e historias básicas",
             cantidad: 0,
-            valor: precioBase.toFixed(2),
+            valor: (21900).toFixed(2),
             info: "Son posteos de una sola imagen, normalmente se suele utilizar este tipo de recursos para dar avisos en general a la comunidad, estos mismos posteos se publicarán también en las historias, es por esto que llamamos a esta categoría “posteo e historias básicas”",
         },
         {
             detalle: "Cantidad de historias tamaño completo",
             cantidad: 0,
-            valor: (precioBase * 0.85).toFixed(2),
+            valor: (17900).toFixed(2),
             info: "Estas son imagenes exclusivas para las historias, normalmente tienen por objetivo de interactuar con la comunidad, conocerlos o realizar promociones por tiempo limitado",
         },
         {
             detalle: "Cantidad de carruseles",
             cantidad: 0,
-            precioA: (precioBase).toFixed(2),
+            precioA: (21900).toFixed(2),
             info: "Estos son posteos con varias imágenes que forman parte del mismo contenido, este tipo de recursos junto con los reels, son las herramientas más poderosas del marketing actual. Con este recurso lograremos aparecer tantas veces como cantidad de imágenes añadidas al carrusel haya en el inicio de nuestros seguidores",
             max: 30,
         },
         {
             detalle: "Cantidad de imágenes para el carrusel",
             cantidad: 0,
-            precioB: (precioBase).toFixed(2),
+            precioB: (10950).toFixed(2),
             info: "Aquí deberás determinar la cantidad de imágenes que te gustaría que tuvieran tus carruseles, con un mínimo de 1 y con un máximo de 20, cuantas más imágenes añadas al carrusel mayores son las posibilidades de crear posteos increíbles y mayor será el número de veces que aparecerás en el inicio de tus seguidores",
             max: 20,
         },
         {
             detalle: "Cantidad de vídeos: Idea, Guión y edición de videos",
             cantidad: 0,
-            valor: (precioBase * 2.68).toFixed(2),
+            valor: (49900).toFixed(2),
             info: "Esta es sin duda la herramienta más poderosa del marketing de redes sociales en la actualidad. Esta opción está pensada para que te brindemos ideas disruptivas con grandes posibilidades de obtener gran alcance, además de brindarte el guión estructurado con estrategias únicas desarrolladas por nosotros, te vamos a asesorar además en las formas correctas en las que deberás brindarnos el material grabado y con él generamos el paso final para un video único “una edición verdaderamente profesional”",
         },
         {
@@ -150,7 +150,7 @@ export default function Formulario() {
 
             // Suponiendo que el índice 5 corresponde a "Efemérides"
             newItems[5].cantidad = checked ? 1 : 0;
-            newItems[5].valor = (checked ? (14900 - 14900 * 0.25) * 3 : 0).toString();
+            newItems[5].valor = (checked ? 65700 : 0);
 
             // Reiniciar el valor de "Efemérides" si el interruptor está desactivado
             if (!checked) {
@@ -283,29 +283,26 @@ export default function Formulario() {
 
     const calcularSubtotalCarruseles = () => {
         const cantidadCarruseles = items[2].cantidad; // Cantidad de carruseles
-        const cantidadImagenes = items[3].cantidad; // Cantidad de imágenes
-        const precioCarrusel = 14900; // Precio por un carrusel
-        let costoImagen; // Costo por imagen dependiendo de la cantidad de imágenes añadidas
-
-        // Determinar el costo por imagen con descuentos según la cantidad de imágenes
-        if (cantidadImagenes >= 2 && cantidadImagenes < 5) {
-            costoImagen = 14900 * 0.75; // 25% de descuento
-        } else if (cantidadImagenes >= 5 && cantidadImagenes < 10) {
-            costoImagen = 14900 * 0.65; // 35% de descuento
-        } else if (cantidadImagenes >= 10 && cantidadImagenes < 15) {
-            costoImagen = 14900 * 0.55; // 45% de descuento
-        } else if (cantidadImagenes >= 15 && cantidadImagenes <= 20) {
-            costoImagen = 14900 * 0.45; // 55% de descuento
-        } else {
-            costoImagen = 0; // No se permite más de 20 imágenes
+        const cantidadImagenes = items[3].cantidad; // Cantidad total de imágenes
+        const precioCarrusel = 21900; // Precio por un carrusel
+        const precioBaseImagen = 10950; // Precio base por imagen
+        let costoImagen = precioBaseImagen;
+    
+        // Aplicar descuento según cantidad de imágenes
+        if (cantidadImagenes >= 6 && cantidadImagenes <= 10) {
+            costoImagen = precioBaseImagen * 0.85; // 15% descuento
+        } else if (cantidadImagenes >= 11 && cantidadImagenes <= 15) {
+            costoImagen = precioBaseImagen * 0.70; // 30% descuento
+        } else if (cantidadImagenes >= 16 && cantidadImagenes <= 20) {
+            costoImagen = precioBaseImagen * 0.55; // 45% descuento
         }
-
-        // Calcular el subtotal para un carrusel con la cantidad de imágenes seleccionada
+    
+        // Calcular subtotal de un carrusel + imágenes añadidas
         const subtotalPorCarrusel = precioCarrusel + (costoImagen * cantidadImagenes);
-
-        // Calcular el total multiplicando el subtotal por la cantidad de carruseles
+    
+        // Total por todos los carruseles
         const subtotalTotal = subtotalPorCarrusel * cantidadCarruseles;
-
+    
         return subtotalTotal;
     };
 

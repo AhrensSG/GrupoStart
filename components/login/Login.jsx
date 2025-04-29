@@ -365,25 +365,33 @@ const Login = () => {
                         </>
                       )}
                       {isRegistering && (
-                        <div className="flex items-center justify-center mb-4">
-                          <div className="flex items-center border border-gray-300 rounded-lg p-1 bg-white">
-                            <input
-                              type="checkbox"
-                              checked={acceptTerms}
-                              onChange={() => setAcceptTerms(!acceptTerms)}
-                              className="appearance-none w-6 h-6 rounded-full border-2 border-orange-500 checked:bg-orange-500 mr-2"
-                            />
-                            <label
-                              className="text-black font-bold text-sm"
-                              onClick={handleTermsClick}>
-                              Acepto los términos y condiciones
-                            </label>
-                          </div>
+                        <div className="flex justify-center mb-4 text-center">
+                          <p className="text-orange-500 text-sm font-semibold">
+                            Al registrarte estas aceptando nuestros <br />{" "}
+                            <Link
+                              href={"/terminos-y-condiciones"}
+                              target="_blank"
+                              className="text-cyan-300 hover:text-cyan-200 duration-300">
+                              Terminos y Condiciones
+                            </Link>
+                          </p>
                         </div>
                       )}
                     </>
                   )}
-
+                  {!isForgotPassword && !isRegistering && (
+                    <div className="flex justify-center mb-4 text-center">
+                      <p className="text-orange-500 text-sm font-semibold">
+                        Al iniciar sesión estas aceptando nuestros <br />{" "}
+                        <Link
+                          href={"/terminos-y-condiciones"}
+                          target="_blank"
+                          className="text-cyan-300 hover:text-cyan-200 duration-300">
+                          Terminos y Condiciones
+                        </Link>
+                      </p>
+                    </div>
+                  )}
                   {!isForgotPassword && !isRegistering && (
                     <div className="flex justify-center mb-4">
                       <p
