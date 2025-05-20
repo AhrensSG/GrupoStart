@@ -217,7 +217,7 @@ const Contact = () => {
                 {/* Imagen de la Ciudad */}
                 <div className="max-xs:w-auto md:w-full md:items-end xs:items-center max-xs:items-center sm:justify-items-center justify-center relative md:flex-row xs:flex-col max-xs:flex-col max-xs:px-[2vh] xs:px-[5vh] md:px-0 xs:mt-[2vh] md:mt-0">
                     <Image
-                        src="/iconos/ciudadFormosa.png"
+                        src="/iconos/formosa.png"
                         alt="Ciudad de Formosa"
                         width={654}
                         height={489}
