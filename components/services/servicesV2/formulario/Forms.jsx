@@ -465,7 +465,7 @@ export default function Formulario() {
     const [error, setError] = useState(""); // Estado para el mensaje de error
 
     return (
-        <div className="py-6 md:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[3%] max-xs:px-[2%] sm:px-[4%]">
+        <div id="estrategia" className="py-6 md:px-[10%] bg-[#FFFFFF] relative md:flex-wrap sm:w-auto xs:w-full max-xs:w-full xs:px-[3%] max-xs:px-[2%] sm:px-[4%]">
             {showLogin === true && <Modal setShowLogin={setShowLogin} />}
             {/* Encabezado del formulario */}
             <div className="text-center mb-8 mt-0 sm:w-full sm:mx-auto relative">

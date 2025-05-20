@@ -511,7 +511,7 @@ const CommunityManager = () => {
             </section>
 
             {/*PlanCards*/}
-            <div ref={planCardsRef} id="estrategia">
+            <div ref={planCardsRef} >
                 <DesktopCommunityManagerSection
                     style={{
                         width: "full",
