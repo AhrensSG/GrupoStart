@@ -5,7 +5,7 @@ import Link from "next/link";
 const InfoViewMore = () => {
   return (
     <section className="relative w-full justify-center items-center bg-white h-full md:mt-1">
-      <div className="flex max-xs:flex-col xs:flex-col md:flex-row w-full lg:pb-[10%] md:pb-[12%] xs:pb-[15%] max-xs:pb-[16%] lg:px-0 md:px-0 h-full items-center">
+      <div className="z-10 flex max-xs:flex-col xs:flex-col md:flex-row w-full lg:pb-[10%] md:pb-[12%] xs:pb-[15%] max-xs:pb-[16%] lg:px-0 md:px-0 h-full items-center">
         {/* Imagen */}
         <div className="flex xs:justify-items-center md:items-start md:justify-start lg:w-full md:w-[75%] xs:w-[40vh] max-xs:w-[25vh] order-2 md:order-1 xs:px-[6%] md:px-0">
           <Image
@@ -37,9 +37,12 @@ const InfoViewMore = () => {
             No te quedes debajo de ella, puede ser peligroso, <span className="hidden md:inline"> <br /></span>
             además surfearla es mucho más divertido.
           </span>
-          <button className="bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 flex items-center justify-center text-lg sm:text-xl md:text-2xl hover:text-[#FB8A00] duration-300 shadow-sm shadow-black border-orange-500 rounded-md">
-            <Link href="/services/DesktopCommunityManager">Más Info</Link>
-          </button>
+          <Link
+            href="/services/DesktopCommunityManager"
+            className="z-50 bg-[#FB8A00] hover:bg-[#0853FC] text-white font-bold py-2 px-4 flex items-center justify-center text-lg sm:text-xl md:text-2xl hover:text-[#FB8A00] duration-300 shadow-sm shadow-black border-orange-500 rounded-md"
+          >
+            Más Info
+          </Link>
         </div>
       </div>
 
