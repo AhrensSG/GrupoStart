@@ -20,7 +20,47 @@ const Contact = () => {
             email: "",
             conociste: "",
             soluciones: "",
+            codigoPais: "+54",
             mensaje: "",
+        },
+        validate: (values) => {
+            const errors = {};
+
+            if (!values.nombre || !values.nombre.trim()) {
+                errors.nombre = "El nombre y apellido son obligatorios.";
+            }
+
+            if (!values.telefono) {
+                errors.telefono = "El número de teléfono es obligatorio.";
+            } else if (values.telefono.length !== 10) {
+                errors.telefono = "Por favor, ingresa un número de teléfono válido de 10 dígitos.";
+            }
+
+            if (!values.pais) {
+                errors.pais = "Debes seleccionar un país de la lista.";
+            }
+
+            if (!values.email) {
+                errors.email = "El correo electrónico es obligatorio.";
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
+                errors.email = "Ingresa un correo electrónico válido.";
+            }
+
+            if (!values.conociste) {
+                errors.conociste = "Indícanos cómo nos conociste.";
+            }
+
+            if (!values.soluciones) {
+                errors.soluciones = "Selecciona un servicio de interés.";
+            }
+
+            if (!values.mensaje || !values.mensaje.trim()) {
+                errors.mensaje = "El mensaje es obligatorio.";
+            } else if (values.mensaje.length < 10) {
+                errors.mensaje = "El mensaje debe tener al menos 10 caracteres.";
+            }
+
+            return errors;
         },
         onSubmit: async (values) => {
             try {
@@ -31,28 +71,18 @@ const Contact = () => {
                     html: `
                             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
                                 <h2 style="color: #333;">🙌 ¡Hemos recibido tu consulta! 🙌</h2>
-                                <p style="font-size: 16px; color: #555;">Hola <strong>${
-                                    values.nombre
-                                }</strong>,</p>
+                                <p style="font-size: 16px; color: #555;">Hola <strong>${values.nombre}</strong>,</p>
                                 <p style="font-size: 16px; color: #555;">
                                 Gracias por ponerte en contacto con nosotros. Hemos recibido tu consulta y un miembro de nuestro equipo se comunicará contigo pronto.
                                 </p>
                                 <h3 style="color: #333; margin-top: 20px;">📌 Detalles de tu consulta:</h3>
                                 <ul style="list-style: none; padding: 0;">
-                                <li><strong>Empresa:</strong> ${
-                                    values.empresa || "No especificado"
-                                }</li>
-                                <li><strong>Teléfono:</strong> ${
-                                    values.telefono
-                                }</li>
+                                <li><strong>Empresa:</strong> ${values.empresa || "No especificada"}</li>
+                                <li><strong>Teléfono:</strong> ${values.codigoPais} ${values.telefono}</li>
                                 <li><strong>País:</strong> ${values.pais}</li>
                                 <li><strong>Email:</strong> ${values.email}</li>
-                                <li><strong>¿Cómo nos conociste?:</strong> ${
-                                    values.conociste
-                                }</li>
-                                <li><strong>Interés:</strong> ${
-                                    values.soluciones
-                                }</li>
+                                <li><strong>¿Cómo nos conociste?:</strong> ${values.conociste}</li>
+                                <li><strong>Interés:</strong> ${values.soluciones}</li>
                                 </ul>
                                 <h3 style="color: #333; margin-top: 20px;">📨 Tu mensaje:</h3>
                                 <p style="font-size: 14px; color: #777; background: #f4f4f4; padding: 10px; border-radius: 5px;">
@@ -66,12 +96,11 @@ const Contact = () => {
                 await axios.post("/api/routes/send_mail", emailData);
 
                 toast.success("¡Su consulta fue recibida!", {
-                    description:
-                        "Un representante se contactará a la brevedad.",
+                    description: "Un representante se contactará a la brevedad.",
                 });
             } catch (error) {
                 console.error("Error al enviar formulario:", error);
-                toast.info("Hubo un error al enviar el formulario");
+                toast.error("Hubo un error al enviar el formulario. Inténtalo de nuevo.");
             }
         },
     });
@@ -321,88 +350,159 @@ const Contact = () => {
                         onSubmit={formik.handleSubmit}
                         className="md:w-1/2 xs:w-full grid grid-cols-2 gap-4 md:pr-[50px]"
                     >
-                        <input
-                            type="text"
-                            name="nombre"
-                            placeholder="Nombre y Apellido"
-                            className="border border-gray-300 rounded-md p-2"
-                            onChange={formik.handleChange}
-                            value={formik.values.nombre}
-                        />
-                        <input
-                            type="text"
-                            name="empresa"
-                            placeholder="Empresa"
-                            className="border border-gray-300 rounded-md p-2"
-                            onChange={formik.handleChange}
-                            value={formik.values.empresa}
-                        />
-                        <input
-                            type="tel"
-                            name="telefono"
-                            placeholder="Teléfono"
-                            className="border border-gray-300 rounded-md p-2"
-                            pattern="[0-9]*"
-                            inputMode="numeric"
-                            onChange={formik.handleChange}
-                            value={formik.values.telefono}
-                        />
-                        <input
-                            type="text"
-                            name="pais"
-                            placeholder="País"
-                            className="border border-gray-300 rounded-md p-2"
-                            onChange={formik.handleChange}
-                            value={formik.values.pais}
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Correo Electrónico"
-                            className="border border-gray-300 rounded-md p-2"
-                            required
-                            onChange={formik.handleChange}
-                            value={formik.values.email}
-                        />
-                        <select
-                            name="conociste"
-                            className="border border-gray-300 rounded-md p-2"
-                            onChange={formik.handleChange}
-                            value={formik.values.conociste}
-                        >
-                            <option value="">¿Cómo nos conociste?</option>
-                            <option value="Redes Sociales">
-                                Redes Sociales
-                            </option>
-                            <option value="Google">Google</option>
-                            <option value="Recomendaciones">
-                                Recomendaciones
-                            </option>
-                            <option value="Otro">Otro</option>
-                        </select>
-                        <select
-                            name="soluciones"
-                            className="border border-gray-300 rounded-md p-2"
-                            onChange={formik.handleChange}
-                            value={formik.values.soluciones}
-                        >
-                            <option value="">Soluciones</option>
-                            <option value="Gestión de Redes">
-                                Gestión de Redes
-                            </option>
-                            <option value="Media">Media</option>
-                            <option value="Herramientas Útiles (Tarjetería)">
-                                Herramientas Útiles (Tarjetería)
-                            </option>
-                            <option value="Consultoría">Consultoría</option>
-                        </select>
-                        <textarea
-                            name="mensaje"
-                            placeholder="Mensaje"
-                            className="col-span-2 w-full border border-gray-300 rounded-md p-2 h-40"
-                            onChange={formik.handleChange}
-                            value={formik.values.mensaje}
-                        ></textarea>
+                        <div className="flex flex-col">
+                            <input
+                                type="text"
+                                name="nombre"
+                                placeholder="Nombre y Apellido"
+                                className={`border rounded-md p-2 text-black ${formik.errors.nombre && formik.touched.nombre ? "border-red-500" : "border-gray-300"}`}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.nombre}
+                            />
+                            {formik.errors.nombre && formik.touched.nombre && <span className="text-red-500 text-[10px] mt-1">{formik.errors.nombre}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <input
+                                type="text"
+                                name="empresa"
+                                placeholder="Empresa (Opcional)"
+                                className="border border-gray-300 rounded-md p-2 text-black"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.empresa}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <div className="flex gap-2">
+                                <select
+                                    name="codigoPais"
+                                    className="border border-gray-300 rounded-md p-2 w-24 bg-white text-black"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.codigoPais}
+                                >
+                                    <option value="+54">🇦🇷 +54</option>
+                                    <option value="+591">🇧🇴 +591</option>
+                                    <option value="+56">🇨🇱 +56</option>
+                                    <option value="+57">🇨🇴 +57</option>
+                                    <option value="+34">🇪🇸 +34</option>
+                                    <option value="+52">🇲🇽 +52</option>
+                                    <option value="+595">🇵🇾 +595</option>
+                                    <option value="+51">🇵🇪 +51</option>
+                                    <option value="+598">🇺🇾 +598</option>
+                                    <option value="+1">🇺🇸 +1</option>
+                                </select>
+                                <input
+                                    type="tel"
+                                    name="telefono"
+                                    placeholder="Teléfono (solo números)"
+                                    className={`flex-1 border rounded-md p-2 text-black ${formik.errors.telefono && formik.touched.telefono ? "border-red-500" : "border-gray-300"}`}
+                                    inputMode="numeric"
+                                    onChange={(e) => {
+                                        // Filtro absoluto: solo dígitos y máximo 10 caracteres
+                                        const cleanValue = e.target.value.replace(/\D/g, "").slice(0, 10);
+                                        formik.setFieldValue("telefono", cleanValue);
+                                    }}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.telefono}
+                                />
+                            </div>
+                            {formik.errors.telefono && formik.touched.telefono && <span className="text-red-500 text-[10px] mt-1">{formik.errors.telefono}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <select
+                                name="pais"
+                                className={`border rounded-md p-2 bg-white text-black ${formik.errors.pais && formik.touched.pais ? "border-red-500" : "border-gray-300"}`}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.pais}
+                            >
+                                <option value="">Selecciona tu país</option>
+                                <option value="Argentina">Argentina</option>
+                                <option value="Bolivia">Bolivia</option>
+                                <option value="Chile">Chile</option>
+                                <option value="Colombia">Colombia</option>
+                                <option value="España">España</option>
+                                <option value="México">México</option>
+                                <option value="Paraguay">Paraguay</option>
+                                <option value="Perú">Perú</option>
+                                <option value="Uruguay">Uruguay</option>
+                                <option value="EEUU">EEUU</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            {formik.errors.pais && formik.touched.pais && <span className="text-red-500 text-[10px] mt-1">{formik.errors.pais}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Correo Electrónico"
+                                className={`border rounded-md p-2 text-black ${formik.errors.email && formik.touched.email
+                                    ? "border-red-500"
+                                    : "border-gray-300"
+                                    }`}
+                                required
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.email}
+                            />
+                            {formik.errors.email && formik.touched.email && (
+                                <span className="text-red-500 text-[10px] mt-1">
+                                    {formik.errors.email}
+                                </span>
+                            )}
+                        </div>
+                        <div className="flex flex-col">
+                            <select
+                                name="conociste"
+                                className={`border rounded-md p-2 bg-white text-black ${formik.errors.conociste && formik.touched.conociste ? "border-red-500" : "border-gray-300"}`}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.conociste}
+                            >
+                                <option value="">¿Cómo nos conociste?</option>
+                                <option value="Redes Sociales">
+                                    Redes Sociales
+                                </option>
+                                <option value="Google">Google</option>
+                                <option value="Recomendaciones">
+                                    Recomendaciones
+                                </option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                            {formik.errors.conociste && formik.touched.conociste && <span className="text-red-500 text-[10px] mt-1">{formik.errors.conociste}</span>}
+                        </div>
+                        <div className="flex flex-col">
+                            <select
+                                name="soluciones"
+                                className={`border rounded-md p-2 bg-white text-black ${formik.errors.soluciones && formik.touched.soluciones ? "border-red-500" : "border-gray-300"}`}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.soluciones}
+                            >
+                                <option value="">Soluciones</option>
+                                <option value="Gestión de Redes">
+                                    Gestión de Redes
+                                </option>
+                                <option value="Media">Media</option>
+                                <option value="Herramientas Útiles (Tarjetería)">
+                                    Herramientas Útiles (Tarjetería)
+                                </option>
+                                <option value="Consultoría">Consultoría</option>
+                            </select>
+                            {formik.errors.soluciones && formik.touched.soluciones && <span className="text-red-500 text-[10px] mt-1">{formik.errors.soluciones}</span>}
+                        </div>
+                        <div className="flex flex-col col-span-2">
+                            <textarea
+                                name="mensaje"
+                                placeholder="Mensaje"
+                                className={`w-full border rounded-md p-2 h-40 text-black ${formik.errors.mensaje && formik.touched.mensaje ? "border-red-500" : "border-gray-300"}`}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.mensaje}
+                            ></textarea>
+                            {formik.errors.mensaje && formik.touched.mensaje && <span className="text-red-500 text-[10px] mt-1">{formik.errors.mensaje}</span>}
+                        </div>
                         <div className="col-span-2 flex justify-center">
                             <button
                                 type="submit"

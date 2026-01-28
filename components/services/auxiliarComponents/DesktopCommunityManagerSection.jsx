@@ -16,7 +16,7 @@ import "swiper/css/pagination";
 
 const PlanCard = ({ title, features, price, onButtonClick }) => {
   return (
-    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 lg:h-[530px] lg:w-[307px] md:h-[455px] md:w-[275px] relative container flex flex-col pb-1 justify-center">
+    <div className="bg-[#FFFFFF] shadow-md rounded-lg border border-gray-300 leading-8 h-auto lg:w-[307px] md:w-[275px] relative container flex flex-col py-6 justify-center">
       {/* Título del plan */}
       <div className="items-center justify-center text-center pt-[29px] pb-[8px]">
         <span className="text-[18px] font-bold items-center justify-center text-center rounded-sm border rounded-tl-xl rounded-br-xl bg-[#FB8A00] text-white p-2 h-[43px] w-[183px]">
@@ -47,26 +47,13 @@ const PlanCard = ({ title, features, price, onButtonClick }) => {
         ))}
       </ul>
 
-      {/* Precios */}
-      <div className="flex justify-center items-center pb-[3px] pt-[2px] relative w-full">
-        <div className="text-center flex-col justify-center items-center gap-4 relative">
-          <span className="text-black-900 line-through font-extrabold text-center justify-center text-[32px] w-[206px] h-[64px]">
-            <s>${price.original.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</s>
-          </span>
-          <br />
-          <span className="font-bold text-[#FB8A00] text-center justify-center text-ligth text-[26px] w-[202px] h-[39px]">
-            ahora ${price.discount.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-          </span>
-        </div>
-      </div>
-
       {/* Botón de contratación */}
       <div className="flex items-end justify-center text-center">
         <button
           onClick={onButtonClick}
           className="bg-[#0853FC] hover:bg-blue-700 text-white font-light py-[8px] px-2 rounded-medium border rounded-tl-xl rounded-br-xl text-center items-center justify-center text-xl h-[43px] w-[132]"
         >
-          Contratar
+          Cotizar
         </button>
       </div>
     </div>
@@ -79,25 +66,12 @@ const DesktopCommunityManagerSection = () => {
   const [showLogin, setShowLogin] = useState(false);
 
   const handleBuyNow = async (id, name, price) => {
-    const data = {
-      id,
-      name,
-      description: "Servicio gestion de redes",
-      price,
-      items: 1,
-      productType: "pack",
-    };
-    await addProductToCart(data, dispatch);
-    if (state.cart?.some((prod) => prod.id === id)) {
-      toast.info(`Se actualizó el producto en tu carrito!`);
-    } else {
-      toast.success(`Añadiste ${name} a tu carrito!`);
-    }
-    if (!state.user) {
-      setShowLogin(true);
-      return toast.warning("¡Inicia sesión y continúa!");
-    }
-    return router.push("/payment");
+    const mensajeBase = "¡Hola GrupoStart! Me interesa contratar el plan: ";
+    const mensajeFinal = `${mensajeBase}*${name}*.\n\nQuedo a la espera de más información. ¡Gracias!`;
+    const encodedMessage = encodeURIComponent(mensajeFinal);
+    const whatsappUrl = `https://wa.me/+543704619402?text=${encodedMessage}`;
+
+    window.open(whatsappUrl, "_blank");
   };
 
   return (
@@ -114,22 +88,22 @@ const DesktopCommunityManagerSection = () => {
           Elegí tu plan
         </h2>
       </div>
-       {/* Carrusel en pantallas pequeñas */}
-       <div className="block sm:block md:hidden justify-center text-center">
-    <Swiper
-    grabCursor={true}
-    centeredSlides={true}
-    slidesPerView="auto" // Auto para ajuste flexible, pero se puede poner un valor fijo si es necesario
-    spaceBetween={15} // Espaciado entre tarjetas
-    className="w-full max-w-md overflow-hidden relative pb-12"
-    pagination={{
-      clickable: true,
-      dynamicBullets: true,
-    }}
-    modules={[Pagination]}
-  >
-    {/* Estilos globales para personalizar los puntos */}
-  <style jsx global>{`
+      {/* Carrusel en pantallas pequeñas */}
+      <div className="block sm:block md:hidden justify-center text-center">
+        <Swiper
+          grabCursor={true}
+          centeredSlides={true}
+          slidesPerView="auto" // Auto para ajuste flexible, pero se puede poner un valor fijo si es necesario
+          spaceBetween={15} // Espaciado entre tarjetas
+          className="w-full max-w-md overflow-hidden relative pb-12"
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          modules={[Pagination]}
+        >
+          {/* Estilos globales para personalizar los puntos */}
+          <style jsx global>{`
     .swiper-pagination-bullet {
       background-color: #ffa500; /* Naranja */
       opacity: 0.5; /* Transparencia */
@@ -148,69 +122,69 @@ const DesktopCommunityManagerSection = () => {
       position: relative;
     }
   `}</style>
-    <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
-      <div className="rounded-lg shadow-lg bg-white border border-gray-300">
-        <PlanCard
-          title="START"
-          features={[
-            "2 Redes sociales Facebook + Instagram",
-            "3 Publicaciones semanales / 12 Mensuales",
-            "2 videos + 2 diseños de Stories",
-            "Diseño creativo",
-            "Puesta en marcha de campañas publicitarias Básicas"
-          ]}
-          price={{ original: 600000, discount: 549900 }}
-          onButtonClick={() => {
-            handleBuyNow(2, "Plan START", 549900);
-          }}
-          listClassName="px-[15%] py-4 text-center flex"
-        />
+          <SwiperSlide className=" sm:w-full p-4 flex-shrink-0">
+            <div className="rounded-lg shadow-lg bg-white border border-gray-300">
+              <PlanCard
+                title="START"
+                features={[
+                  "2 Redes sociales Facebook + Instagram",
+                  "3 Publicaciones semanales / 12 Mensuales",
+                  "2 videos + 2 diseños de Stories",
+                  "Diseño creativo",
+                  "Puesta en marcha de campañas publicitarias Básicas"
+                ]}
+                price={{ original: 600000, discount: 549900 }}
+                onButtonClick={() => {
+                  handleBuyNow(2, "Plan START", 549900);
+                }}
+                listClassName="px-[15%] py-4 text-center flex"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
+            <div className="rounded-lg shadow-lg bg-white border border-gray-200">
+              <PlanCard
+                title="Social Master"
+                features={[
+                  "3 Redes sociales Facebook + Instagram + Tiktok",
+                  "5 Publicaciones + stories semanales / 20 Mensuales",
+                  "4 videos + 4 diseños de Stories",
+                  "Diseño creativo",
+                  "Puesta en marcha de campañas publicitarias Medias",
+                ]}
+                price={{ original: 750000, discount: 699900 }}
+                onButtonClick={() => {
+                  handleBuyNow(3, "Plan Social Master", 699900);
+                }}
+                listClassName="px-[5%] py-4"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
+            <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
+              <PlanCard
+                title="Social Pro"
+                features={[
+                  "4 Redes sociales Facebook + Instagram + Tiktok + Threads",
+                  "8 Publicaciones + stories semanales / 32 Mensuales",
+                  "6 videos + 6 diseños de Stories",
+                  "Diseño Creativo",
+                  "Puesta en marcha de campañas publicitarias Pro",
+                ]}
+                price={{ original: 900000, discount: 849900 }}
+                onButtonClick={() => {
+                  handleBuyNow(4, "Plan Social Pro", 849900);
+                }}
+                listClassName="px-[5%] py-4"
+              />
+            </div>
+          </SwiperSlide>
+        </Swiper>
+        {/* Mensaje debajo del carrusel */}
+        <p className="mt-4 text-sm font-bold text-gray-600">
+          Deslizá para visualizar un plan
+        </p>
       </div>
-    </SwiperSlide>
-    <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
-      <div className="rounded-lg shadow-lg bg-white border border-gray-200">
-        <PlanCard
-          title="Social Master"
-          features={[
-            "3 Redes sociales Facebook + Instagram + Tiktok",
-            "5 Publicaciones + stories semanales / 20 Mensuales",
-            "4 videos + 4 diseños de Stories",
-            "Diseño creativo",
-            "Puesta en marcha de campañas publicitarias Medias",
-          ]}
-          price={{ original: 750000, discount: 699900 }}
-          onButtonClick={() => {
-            handleBuyNow(3, "Plan Social Master", 699900);
-          }}
-          listClassName="px-[5%] py-4"
-        />
-      </div>
-    </SwiperSlide>
-    <SwiperSlide className="sm:w-full p-4 flex-shrink-0">
-      <div className="rounded-lg shadow-lg bg-white border border-yellow-400">
-        <PlanCard
-          title="Social Pro"
-          features={[
-            "4 Redes sociales Facebook + Instagram + Tiktok + Threads",
-            "8 Publicaciones + stories semanales / 32 Mensuales",
-            "6 videos + 6 diseños de Stories",
-            "Diseño Creativo",
-            "Puesta en marcha de campañas publicitarias Pro",
-          ]}
-          price={{ original: 900000, discount: 849900 }}
-          onButtonClick={() => {
-            handleBuyNow(4, "Plan Social Pro", 849900);
-          }}
-          listClassName="px-[5%] py-4"
-        />
-      </div>
-    </SwiperSlide>
-  </Swiper>
-  {/* Mensaje debajo del carrusel */}
-  <p className="mt-4 text-sm font-bold text-gray-600">
-    Deslizá para visualizar un plan
-  </p>
-</div>
 
       {/* Grid en pantallas grandes */}
       <div className="hidden md:grid lg:grid xl:grid grid-cols-3 gap-4 justify-center items-center">

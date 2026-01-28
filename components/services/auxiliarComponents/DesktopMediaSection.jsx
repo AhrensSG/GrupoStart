@@ -46,7 +46,7 @@ const PlanCard = ({ title, features, price, onButtonClick, buttonLabel = "Contra
       <div className="flex justify-center items-center pb-[3px] relative w-full">
         <div className="text-center flex-col justify-center items-center gap-4 relative">
           <span className="text-orange-500 font-bold text-center justify-center text-[32px] w-[128px] h-[40px]">
-          {typeof price === 'number' ? `$${price.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : price}
+            {typeof price === 'number' ? `$${price.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}` : price}
           </span>
         </div>
       </div>
@@ -121,7 +121,7 @@ const DesktopWebDevelopmentSection = () => {
           modules={[Pagination]}
         >
           {/* Estilos globales para personalizar los puntos */}
-        <style jsx global>{`
+          <style jsx global>{`
           .swiper-pagination-bullet {
             background-color: #ffa500; /* Naranja */
             opacity: 0.5; /* Transparencia */
