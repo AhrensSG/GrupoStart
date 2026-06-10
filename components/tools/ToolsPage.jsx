@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo, useContext } from "react"
 import { useRouter } from "next/navigation"
+import Link from "next/link"
 import { Context } from "@/app/context/GlobalContext"
 import UploadZone from "./UploadZone"
 import ContactTable from "./ContactTable"
@@ -346,6 +347,14 @@ export default function ToolsPage() {
               {contacts && (
                 <span className="hidden sm:inline text-xs text-gray-400 ml-2">· {fileName}</span>
               )}
+              <div className="hidden sm:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
+                <Link href="/" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Inicio
+                </Link>
+                <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Perfil
+                </Link>
+              </div>
             </div>
             <div className="flex items-center gap-2">
               {contacts && (
