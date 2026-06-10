@@ -1,11 +1,11 @@
 "use client"
 
-import { useEffect, useState, useContext } from "react"
+import { Suspense, useEffect, useState, useContext } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Context } from "@/app/context/GlobalContext"
 import Link from "next/link"
 
-export default function PaymentSuccess() {
+function PaymentSuccessContent() {
   const { state } = useContext(Context)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -116,5 +116,13 @@ export default function PaymentSuccess() {
         </Link>
       </div>
     </div>
+  )
+}
+
+export default function PaymentSuccess() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 flex items-center justify-center"><div className="animate-spin w-10 h-10 border-4 border-[#0051FF] border-t-transparent rounded-full" /></div>}>
+      <PaymentSuccessContent />
+    </Suspense>
   )
 }
