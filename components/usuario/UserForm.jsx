@@ -1,113 +1,78 @@
+"use client"
 import { useState } from "react";
 import Modal from "./Modal";
 
-export default function UserForm({ userData, handleInputChange, handleCancelEdit, handleSaveChanges }) {
-    const [isEditing, setIsEditing] = useState(false);
-    const [nombre, setNombre] = useState(userData.nombres || "");
-    const [apellido, setApellido] = useState(userData.apellido || "");
-    const [email, setEmail] = useState(userData.email || "");
-    const [fechaNacimiento, setFechaNacimiento] = useState(userData.fechaNacimiento || "");
-    const [pais, setPais] = useState(userData.pais || "");
-    const [celular, setCelular] = useState(userData.celular || "");
-    return (
-        <div className="bg-white rounded-xl md:w-1/3 xs:w-full max-xs:w-full max-xs:m-1 xs:m-2 md:0 xs:h-fit max-xs:h-auto border-black p-3 relative">
-            <h3 className="text-xl font-bold text-orange-500">Datos Personales</h3>
-            <button className="absolute top-0 right-0 mt-2 mr-2">
-                <svg
-                    viewBox="0 0 512 512"
-                    id="pencil"
-                    width={30}
-                    height={30}
-                    onClick={() => setIsEditing(!isEditing)}
-                    className="flex flex-row justify-between"
-                >
-                    <path
-                        fill="#0853fc"
-                        d="M64 368v80h80l235.727-235.729-79.999-79.998L64 368zm377.602-217.602c8.531-8.531 8.531-21.334 0-29.865l-50.135-50.135c-8.531-8.531-21.334-8.531-29.865 0l-39.468 39.469 79.999 79.998 39.469-39.467z"
-                        class="color010101 svgShape"
-                    ></path>
-                </svg>
-            </button>
-            <form className="space-y-3">
-                <label className="block">
-                    Nombres:
-                    <input
-                        type="text"
-                        name="nombres"
-                        className="mt-1 p-2 border border-gray-300 rounded w-full"
-                        value={userData.nombres}
-                        onChange={handleInputChange}
-                        readOnly={!isEditing}
-                    />
-                </label>
-                <label className="block">
-                    Apellido:
-                    <input
-                        type="text"
-                        name="apellido"
-                        className="mt-1 p-2 border border-gray-300 rounded w-full"
-                        value={userData.apellido}
-                        onChange={handleInputChange}
-                        readOnly={!isEditing}
-                    />
-                </label>
-                <label className="block">
-                    Correo Electrónico Personal:
-                    <input
-                        type="email"
-                        name="email"
-                        className="mt-1 p-2 border border-gray-300 rounded w-full"
-                        value={userData.email}
-                        onChange={handleInputChange}
-                        readOnly={!isEditing}
-                    />
-                </label>
-                <label className="block">
-                    Fecha de Nacimiento:
-                    <input
-                        type="date"
-                        name="fechaNacimiento"
-                        className="mt-1 p-2 border border-gray-300 rounded w-full"
-                        value={userData.fechaNacimiento}
-                        onChange={handleInputChange}
-                        readOnly={!isEditing}
-                    />
-                </label>
-                <label className="block">
-                    País:
-                    <input
-                        type="text"
-                        name="pais"
-                        className="mt-1 p-2 border border-gray-300 rounded w-full"
-                        value={userData.pais}
-                        onChange={handleInputChange}
-                        readOnly={!isEditing}
-                    />
-                </label>
-                <label className="block">
-                    Número de Celular:
-                    <input
-                        type="tel"
-                        name="celular"
-                        className="mt-1 p-2 border border-gray-300 rounded w-full"
-                        value={userData.celular}
-                        onChange={handleInputChange}
-                        readOnly={!isEditing}
-                    />
-                </label>
-            </form>
+const FIELDS = [
+  { name: "nombres", label: "Nombre", type: "text" },
+  { name: "apellido", label: "Apellido", type: "text" },
+  { name: "email", label: "Correo electrónico", type: "email" },
+  { name: "fechaNacimiento", label: "Fecha de nacimiento", type: "date" },
+  { name: "pais", label: "País", type: "text" },
+  { name: "celular", label: "Celular", type: "tel" },
+];
 
-            {isEditing && (
-                <Modal
-                    handleCancelEdit={handleCancelEdit}
-                    handleSaveChanges={async () => {
-                        let isTrue = await handleSaveChanges("user");
-                        if (isTrue) {
-                            setIsEditing(false);
-                        }
-                    }}
-                />
-            )}
+export default function UserForm({ userData, handleInputChange, handleCancelEdit, handleSaveChanges }) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  return (
+    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <div className="flex items-center justify-between mb-5">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+            <svg className="w-4 h-4 text-[#0051FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold text-gray-900">Datos personales</h3>
+            <p className="text-xs text-gray-400">Tu información de contacto</p>
+          </div>
         </div>
-    );
+        <button
+          onClick={() => setIsEditing(!isEditing)}
+          className={`p-2 rounded-lg transition-colors ${isEditing ? "bg-[#0051FF] text-white" : "text-gray-400 hover:text-[#0051FF] hover:bg-blue-50"}`}
+          title={isEditing ? "Cancelar edición" : "Editar"}
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+          </svg>
+        </button>
+      </div>
+
+      <div className="space-y-4">
+        {FIELDS.map((field) => (
+          <div key={field.name}>
+            <label className="block text-xs font-semibold text-gray-600 mb-1">{field.label}</label>
+            <input
+              type={field.type}
+              name={field.name}
+              value={userData[field.name] || ""}
+              onChange={handleInputChange}
+              readOnly={!isEditing}
+              className={`w-full px-3 py-2 border rounded-lg text-sm transition-colors ${
+                isEditing
+                  ? "border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]"
+                  : "border-transparent bg-gray-50 text-gray-600 cursor-default"
+              }`}
+            />
+          </div>
+        ))}
+      </div>
+
+      {isEditing && (
+        <div className="mt-6 pt-4 border-t border-gray-100">
+          <Modal
+            handleCancelEdit={() => {
+              setIsEditing(false);
+              handleCancelEdit();
+            }}
+            handleSaveChanges={async () => {
+              const ok = await handleSaveChanges("user");
+              if (ok) setIsEditing(false);
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
 }

@@ -20,6 +20,7 @@
     "firebase": "^10.12.5",
     "formik": "^2.4.5",
     "framer-motion": "^11.0.18",
+    "lucide-react": "^1.17.0",
     "mercadopago": "^2.0.9",
     "next": "^14.2.35",
     "nodemailer": "^6.9.13",
@@ -32,6 +33,7 @@
     "sendgrid": "^5.2.3",
     "sequelize": "^6.37.3",
     "sonner": "^1.4.32",
+    "xlsx": "^0.18.5",
     "styled-components": "^6.1.12",
     "swiper": "^11.1.15"
   },

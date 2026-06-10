@@ -31,7 +31,7 @@ const Login = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/";
+  const redirect = searchParams.get("redirect") || "/user";
 
   const authUrl = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
 

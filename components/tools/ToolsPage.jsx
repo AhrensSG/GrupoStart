@@ -1,0 +1,592 @@
+"use client"
+
+import { useState, useEffect, useMemo, useContext } from "react"
+import { useRouter } from "next/navigation"
+import { Context } from "@/app/context/GlobalContext"
+import UploadZone from "./UploadZone"
+import ContactTable from "./ContactTable"
+import StatsCards from "./StatsCards"
+import AddContactModal from "./AddContactModal"
+import UploadModal from "./UploadModal"
+import ProfileModal from "./ProfileModal"
+import { parseSheet } from "@/lib/tools/parser"
+
+function parseFecha(ddmm) {
+  if (!ddmm) return null
+  const parts = ddmm.split("/")
+  if (parts.length !== 3) return null
+  const d = parseInt(parts[0], 10)
+  const m = parseInt(parts[1], 10) - 1
+  const y = parseInt(parts[2], 10)
+  if (isNaN(d) || isNaN(m) || isNaN(y)) return null
+  return new Date(y, m, d)
+}
+
+function daysAgo(n) {
+  const d = new Date()
+  d.setDate(d.getDate() - n)
+  d.setHours(0, 0, 0, 0)
+  return d
+}
+
+export default function ToolsPage() {
+  const { state } = useContext(Context)
+  const router = useRouter()
+
+  const [contacts, setContacts] = useState(null)
+  const [fileName, setFileName] = useState("")
+  const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [pageLoading, setPageLoading] = useState(true)
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [showUploadModal, setShowUploadModal] = useState(false)
+  const [showProfileModal, setShowProfileModal] = useState(false)
+  const [subscribed, setSubscribed] = useState(null)
+  const [subLoading, setSubLoading] = useState(true)
+
+  const [searchText, setSearchText] = useState("")
+  const [clasifFilter, setClasifFilter] = useState("")
+  const [periodFilter, setPeriodFilter] = useState("")
+  const [minRoundsFilter, setMinRoundsFilter] = useState(0)
+  const [sortProxima, setSortProxima] = useState(false)
+
+  const user = state?.user
+
+  useEffect(() => {
+    if (!state?.isLoading && !user) {
+      router.push("/login?redirect=/tools")
+    }
+  }, [state?.isLoading, user, router])
+
+  useEffect(() => {
+    if (!user) return
+    fetch(`/api/tools/subscription?uid=${user.id}`)
+      .then((r) => r.json())
+      .then((data) => {
+        setSubscribed(data.subscribed)
+        setSubLoading(false)
+      })
+      .catch(() => {
+        setSubscribed(false)
+        setSubLoading(false)
+      })
+  }, [user])
+
+  function getNextProximaFecha(contactos) {
+    for (let j = contactos.length - 1; j >= 0; j--) {
+      const r = contactos[j]
+      if (!r.clasificacion || r.clasificacion === "Pendiente") continue
+      if (r.proxima_fecha) return r.proxima_fecha
+    }
+    return ""
+  }
+
+  const fetchContacts = async () => {
+    try {
+      const res = await fetch("/api/tools/contacts")
+      if (!res.ok) throw new Error()
+      const data = await res.json()
+      if (data.length > 0) {
+        setContacts(data)
+        setFileName("Base de datos local")
+      }
+    } catch {
+    } finally {
+      setPageLoading(false)
+    }
+  }
+
+  useEffect(() => { if (subscribed) fetchContacts() }, [subscribed])
+
+  const handleFile = async (file) => {
+    setError("")
+    setFileName(file.name)
+
+    const reader = new FileReader()
+    return new Promise((resolve, reject) => {
+      reader.onload = async (e) => {
+        try {
+          const data = e.target?.result
+          if (!(data instanceof ArrayBuffer)) { reject(new Error()); return }
+          const result = parseSheet(data)
+          if (result.length === 0) {
+            setError("No se encontraron contactos en el archivo.")
+            reject(new Error())
+            return
+          }
+
+          for (const contact of result) {
+            await fetch("/api/tools/contacts", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(contact),
+            })
+          }
+
+          await fetchContacts()
+          resolve()
+        } catch {
+          setError("Error al procesar el archivo.")
+          reject(new Error())
+        }
+      }
+      reader.readAsArrayBuffer(file)
+    })
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      await fetch(`/api/tools/contacts/${id}`, { method: "DELETE" })
+      if (contacts) {
+        setContacts(contacts.filter((c) => c.id !== id))
+      }
+    } catch {
+      setError("Error al eliminar contacto")
+    }
+  }
+
+  const handleRefresh = () => {
+    setError("")
+    fetchContacts()
+  }
+
+  const handleSubscribe = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch("/api/routes/preapproval/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: user.id, email: user.email }),
+      })
+      const data = await res.json()
+      if (data.init_point) {
+        window.location.href = data.init_point
+      } else {
+        alert("Error al generar la suscripción. Intentalo de nuevo.")
+      }
+    } catch {
+      alert("Error al conectar con el sistema de pagos.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const clasificaciones = new Map()
+  const noInteresadoStats = new Map()
+  if (contacts) {
+    for (const c of contacts) {
+      for (const r of c.contactos) {
+        if (r.clasificacion) {
+          clasificaciones.set(r.clasificacion, (clasificaciones.get(r.clasificacion) || 0) + 1)
+          if (r.clasificacion.startsWith("No interesado")) {
+            noInteresadoStats.set(r.clasificacion, (noInteresadoStats.get(r.clasificacion) || 0) + 1)
+          }
+        }
+      }
+    }
+  }
+  const stats = contacts ? [
+    { label: "Total", value: contacts.length, color: "text-[#0051FF]" },
+    { label: "Compradores", value: clasificaciones.get("Comprador") || 0, color: "text-[#FB8A00]" },
+    { label: "Interesados", value: clasificaciones.get("Interesado") || 0, color: "text-green-600" },
+    { label: "Pendientes", value: clasificaciones.get("Pendiente") || 0, color: "text-gray-400" },
+    { label: "Sin respuesta", value: clasificaciones.get("No hubo respuesta") || 0, color: "text-purple-500" },
+  ] : []
+  const noInteresados = Array.from(noInteresadoStats.entries()).sort((a, b) => b[1] - a[1])
+
+  const filteredContacts = useMemo(() => {
+    if (!contacts) return null
+    let result = contacts
+
+    if (searchText.trim()) {
+      const q = searchText.trim().toLowerCase()
+      result = result.filter(
+        (c) =>
+          c.nombre.toLowerCase().includes(q) ||
+          c.celular.toLowerCase().includes(q) ||
+          c.email.toLowerCase().includes(q)
+      )
+    }
+
+    if (clasifFilter) {
+      if (clasifFilter === "No interesado") {
+        result = result.filter((c) =>
+          c.contactos.some((r) => r.clasificacion.startsWith("No interesado"))
+        )
+      } else {
+        result = result.filter((c) =>
+          c.contactos.some((r) => r.clasificacion === clasifFilter)
+        )
+      }
+    }
+
+    if (periodFilter) {
+      const cutoff = (() => {
+        switch (periodFilter) {
+          case "week": return daysAgo(7)
+          case "month": return daysAgo(30)
+          case "quarter": return daysAgo(90)
+          default: return null
+        }
+      })()
+      if (cutoff) {
+        result = result.filter((c) =>
+          c.contactos.some((r) => {
+            const d = parseFecha(r.fecha)
+            return d && d >= cutoff
+          })
+        )
+      }
+    }
+
+    if (minRoundsFilter > 0) {
+      result = result.filter((c) => {
+        const filled = c.contactos.filter((r) => r.clasificacion && r.clasificacion !== "Pendiente").length
+        return filled >= minRoundsFilter
+      })
+    }
+
+    if (sortProxima) {
+      result = [...result].sort((a, b) => {
+        const fechaA = getNextProximaFecha(a.contactos)
+        const fechaB = getNextProximaFecha(b.contactos)
+        if (!fechaA && !fechaB) return 0
+        if (!fechaA) return 1
+        if (!fechaB) return -1
+        const [dA, mA, yA] = fechaA.split("/").map(Number)
+        const [dB, mB, yB] = fechaB.split("/").map(Number)
+        return (yA - yB) || (mA - mB) || (dA - dB)
+      })
+    }
+
+    return result
+  }, [contacts, searchText, clasifFilter, periodFilter, minRoundsFilter, sortProxima])
+
+  const activeFilters = [searchText, clasifFilter, periodFilter, minRoundsFilter, sortProxima].some(
+    (f) => f !== "" && f !== 0 && f !== false
+  )
+
+  if (state?.isLoading || subLoading) {
+    return (
+      <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin w-8 h-8 border-4 border-[#0051FF] border-t-transparent rounded-full mx-auto mb-4" />
+          <p className="text-sm text-gray-500">Cargando...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!user) return null
+
+  if (!subscribed) {
+    return (
+      <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center">
+        <div className="max-w-md mx-auto px-6 text-center">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0051FF]/10 to-[#FB8A00]/10 flex items-center justify-center mx-auto mb-5">
+            <svg className="w-8 h-8 text-[#0051FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Suscripción requerida</h1>
+          <p className="text-sm text-gray-500 mb-6">
+            Necesitás una suscripción activa para usar el Sistema de Seguimiento de Leads.
+            Son solo <strong>$2.500 ARS/mes</strong>.
+          </p>
+          <button
+            onClick={handleSubscribe}
+            disabled={loading}
+            className="w-full py-4 px-4 bg-green-500 hover:bg-green-600 disabled:bg-green-400 text-white font-bold text-lg rounded-xl transition-colors shadow-lg shadow-green-500/30"
+          >
+            {loading ? "PROCESANDO..." : "SUSCRIBIRME AHORA"}
+          </button>
+          <p className="text-xs text-gray-400 mt-4">
+            Podés dar de baja cuando quieras. Pago procesado por Mercado Pago.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f8f8f8]">
+      <header className="sticky top-0 z-30 bg-white shadow-sm">
+        {contacts && (
+          <div className="border-b border-gray-100 bg-gradient-to-r from-[#0051FF]/5 to-transparent">
+            <div className="max-w-7xl mx-auto px-6 py-2 flex items-center gap-6">
+              {stats.map((s) => (
+                <div key={s.label} className="flex items-center gap-1.5">
+                  <span className={`text-sm font-bold ${s.color}`}>{s.value}</span>
+                  <span className="text-xs text-gray-400">{s.label}</span>
+                </div>
+              ))}
+              {noInteresados.length > 0 && (
+                <div className="flex items-center gap-1.5 pl-4 border-l border-gray-200">
+                  {noInteresados.slice(0, 2).map(([razon, count]) => (
+                    <span key={razon} className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs">
+                      <span className="font-medium">{count}</span>
+                      {razon.replace("No interesado: ", "")}
+                    </span>
+                  ))}
+                  {noInteresados.length > 2 && (
+                    <span className="text-xs text-gray-400">+{noInteresados.length - 2} más</span>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+        <div className="border-b border-gray-200">
+          <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-[#0051FF] flex items-center justify-center">
+                <span className="text-white font-bold text-sm">GS</span>
+              </div>
+              <span className="font-semibold text-gray-900">GrupoStart Tools</span>
+              {contacts && (
+                <span className="hidden sm:inline text-xs text-gray-400 ml-2">· {fileName}</span>
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {contacts && (
+                <>
+                  <button
+                    onClick={() => setShowAddModal(true)}
+                    className="flex items-center gap-2 px-4 py-2 bg-[#FB8A00] text-white text-sm font-medium rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    Agregar
+                  </button>
+                  <button
+                    onClick={() => setShowUploadModal(true)}
+                    className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:border-[#0051FF] hover:text-[#0051FF] transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Importar archivo
+                  </button>
+                  <button
+                    onClick={() => setShowProfileModal(true)}
+                    className="flex items-center gap-2 px-3 py-2 text-sm text-gray-400 hover:text-[#0051FF] transition-colors"
+                    title="Configuración de perfil"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={handleRefresh}
+                    className="px-3 py-2 text-sm text-gray-400 hover:text-[#0051FF] transition-colors"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-7xl mx-auto px-6 py-6">
+        {pageLoading && !contacts ? (
+          <div className="max-w-xl mx-auto pt-16">
+            <div className="text-center mb-8">
+              <div className="animate-spin w-8 h-8 border-4 border-[#0051FF] border-t-transparent rounded-full mx-auto mb-4" />
+              <p className="text-sm text-gray-500">Cargando contactos...</p>
+            </div>
+          </div>
+        ) : !contacts ? (
+          <div className="max-w-xl mx-auto pt-12">
+            <div className="text-center mb-8">
+              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0051FF]/10 to-[#FB8A00]/10 flex items-center justify-center mx-auto mb-5">
+                <svg className="w-8 h-8 text-[#0051FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h1 className="text-2xl font-bold text-gray-900">Cargá tus contactos</h1>
+              <p className="text-sm text-gray-500 mt-2 max-w-md mx-auto">
+                Subí un archivo <strong>CSV</strong> o <strong>Excel</strong> con tus contactos, o agregalos manualmente uno por uno.
+              </p>
+            </div>
+            <UploadZone onFile={handleFile} />
+            <div className="mt-6 text-center">
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#FB8A00] text-white text-sm font-semibold rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Agregar manualmente
+              </button>
+            </div>
+            {error && (
+              <div className="mt-4 p-4 bg-red-50 border border-red-100 rounded-xl text-sm text-red-700 flex items-center gap-2">
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                {error}
+              </div>
+            )}
+            {loading && (
+              <div className="mt-4 p-4 bg-blue-50 border border-blue-100 rounded-xl text-sm text-blue-700 flex items-center gap-2">
+                Procesando <strong>{fileName}</strong>…
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="bg-white rounded-2xl border border-gray-100 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+                </svg>
+                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Filtros</span>
+              </div>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="relative flex-1 min-w-[200px]">
+                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <input
+                    type="text"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                    placeholder="Buscar por nombre, teléfono o email…"
+                    className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"
+                  />
+                </div>
+
+                <div className="relative">
+                  <select
+                    value={clasifFilter}
+                    onChange={(e) => setClasifFilter(e.target.value)}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                  >
+                    <option value="">Todas las clasificaciones</option>
+                    <option value="Interesado">Interesados</option>
+                    <option value="Potencial cliente">Potenciales clientes</option>
+                    <option value="Comprador">Compradores</option>
+                    <option value="Pendiente">Pendientes</option>
+                    <option value="No interesado">No interesados</option>
+                    <option value="No hubo respuesta">Sin respuesta</option>
+                    <option value="No interesado: por razones económicas">No interesado: económico</option>
+                    <option value="No interesado: tiene una mejor oferta">No interesado: mejor oferta</option>
+                    <option value="No interesado: demora al responder">No interesado: demora</option>
+                    <option value="No interesado: La oferta no es lo que buscaba">No interesado: no buscaba</option>
+                    <option value="No interesado: Mala atención">No interesado: mala atención</option>
+                    <option value="No interesado: Otras razones">No interesado: otras razones</option>
+                  </select>
+                </div>
+
+                <div className="relative">
+                  <select
+                    value={periodFilter}
+                    onChange={(e) => setPeriodFilter(e.target.value)}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                  >
+                    <option value="">Cualquier fecha</option>
+                    <option value="week">Última semana</option>
+                    <option value="month">Último mes</option>
+                    <option value="quarter">Últimos 3 meses</option>
+                  </select>
+                </div>
+
+                <div className="relative">
+                  <select
+                    value={minRoundsFilter}
+                    onChange={(e) => setMinRoundsFilter(Number(e.target.value))}
+                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                  >
+                    <option value={0}>Cualquier gestión</option>
+                    <option value={1}>1+ gestiones</option>
+                    <option value={2}>2+ gestiones</option>
+                    <option value={3}>3+ gestiones</option>
+                    <option value={4}>4+ gestiones</option>
+                    <option value={5}>5 gestiones</option>
+                  </select>
+                </div>
+
+                <button
+                  onClick={() => setSortProxima(!sortProxima)}
+                  className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
+                    sortProxima
+                      ? "bg-orange-50 border-orange-200 text-orange-700 font-medium"
+                      : "border-gray-200 text-gray-500 hover:border-orange-200 hover:text-orange-600"
+                  }`}
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  Próx. contacto
+                  {sortProxima && (
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                    </svg>
+                  )}
+                </button>
+
+                {activeFilters && (
+                  <button
+                    onClick={() => { setSearchText(""); setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortProxima(false) }}
+                    className="px-3 py-2 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1"
+                  >
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    Limpiar
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <p className="text-sm text-gray-500">
+                {filteredContacts && filteredContacts.length < contacts.length
+                  ? `${filteredContacts.length} de ${contacts.length} contactos`
+                  : `${contacts.length} contactos`}
+              </p>
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] text-gray-300">Hacé clic en un contacto para ver sus rondas de seguimiento</span>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+              <ContactTable contacts={filteredContacts || contacts} onDelete={handleDelete} onUpdate={fetchContacts} />
+            </div>
+          </div>
+        )}
+      </main>
+
+      {showAddModal && (
+        <AddContactModal
+          onClose={() => setShowAddModal(false)}
+          onCreated={() => {
+            setShowAddModal(false)
+            fetchContacts()
+          }}
+        />
+      )}
+
+      {showUploadModal && (
+        <UploadModal
+          onClose={() => setShowUploadModal(false)}
+          onFile={handleFile}
+        />
+      )}
+
+      {showProfileModal && (
+        <ProfileModal
+          onClose={() => setShowProfileModal(false)}
+          onSaved={() => setShowProfileModal(false)}
+        />
+      )}
+    </div>
+  )
+}

@@ -1,14 +1,18 @@
 export default function Modal({ handleCancelEdit, handleSaveChanges }) {
-    return (
-        <div className="xs:space-x-2  max-xs:space-x-0 mt-4 ">
-            <div className="flex justify-between mt-4">
-                <button className="bg-red-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleCancelEdit}>
-                    Cancelar
-                </button>
-                <button className="bg-blue-500 text-white xs:p-2 max-xs:p-1 rounded" onClick={handleSaveChanges}>
-                    Guardar Cambios
-                </button>
-            </div>
-        </div>
-    );
+  return (
+    <div className="flex items-center gap-3">
+      <button
+        onClick={handleCancelEdit}
+        className="flex-1 px-4 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+      >
+        Cancelar
+      </button>
+      <button
+        onClick={handleSaveChanges}
+        className="flex-1 px-4 py-2.5 text-sm font-medium text-white bg-[#0051FF] rounded-lg hover:bg-[#0040cc] transition-colors shadow-sm"
+      >
+        Guardar cambios
+      </button>
+    </div>
+  );
 }
