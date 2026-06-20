@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { parseSheet } from "@/lib/tools/parser"
-import { clearAll, createContact } from "@/lib/tools/db"
+import { replaceAllContacts } from "@/lib/tools/db"
 
 export async function POST(req) {
   try {
@@ -23,11 +23,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "No se encontraron contactos en el sheet" }, { status: 400 })
     }
 
-    await clearAll()
-
-    for (const contact of contacts) {
-      await createContact(contact)
-    }
+    await replaceAllContacts(contacts)
 
     return NextResponse.json({ imported: contacts.length })
   } catch (err) {

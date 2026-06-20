@@ -19,6 +19,8 @@ export async function PUT(req) {
       hora_salida: body.hora_salida,
       whatsapp_api_url: body.whatsapp_api_url,
       whatsapp_api_token: body.whatsapp_api_token,
+      company_name: body.company_name,
+      company_logo: body.company_logo,
     })
     return NextResponse.json({ success: true })
   } catch (err) {

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useMemo, useContext } from "react"
+import { useState, useEffect, useMemo, useContext, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Context } from "@/app/context/GlobalContext"
@@ -10,6 +10,7 @@ import StatsCards from "./StatsCards"
 import AddContactModal from "./AddContactModal"
 import UploadModal from "./UploadModal"
 import ProfileModal from "./ProfileModal"
+import SuggestModal from "./SuggestModal"
 import { parseSheet } from "@/lib/tools/parser"
 
 function parseFecha(ddmm) {
@@ -42,6 +43,7 @@ export default function ToolsPage() {
   const [showAddModal, setShowAddModal] = useState(false)
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [showProfileModal, setShowProfileModal] = useState(false)
+  const [showSuggestModal, setShowSuggestModal] = useState(false)
   const [subscribed, setSubscribed] = useState(null)
   const [subLoading, setSubLoading] = useState(true)
 
@@ -50,6 +52,36 @@ export default function ToolsPage() {
   const [periodFilter, setPeriodFilter] = useState("")
   const [minRoundsFilter, setMinRoundsFilter] = useState(0)
   const [sortProxima, setSortProxima] = useState(false)
+  const [showFilters, setShowFilters] = useState(false)
+  const [showScrollBtn, setShowScrollBtn] = useState(false)
+  const [profile, setProfile] = useState(null)
+  const filterRef = useRef(null)
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (filterRef.current && !filterRef.current.contains(e.target)) {
+        setShowFilters(false)
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => document.removeEventListener("mousedown", handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    fetch("/api/tools/profile")
+      .then((r) => r.json())
+      .then((data) => setProfile(data))
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    function handleScroll() {
+      setShowScrollBtn(window.scrollY > 100)
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    handleScroll()
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const user = state?.user
 
@@ -116,13 +148,12 @@ export default function ToolsPage() {
             return
           }
 
-          for (const contact of result) {
-            await fetch("/api/tools/contacts", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(contact),
-            })
-          }
+          const res = await fetch("/api/tools/contacts/batch", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(result),
+          })
+          if (!res.ok) { const data = await res.json(); throw new Error(data.error || "Error al importar contactos") }
 
           await fetchContacts()
           resolve()
@@ -172,9 +203,10 @@ export default function ToolsPage() {
     }
   }
 
-  const clasificaciones = new Map()
-  const noInteresadoStats = new Map()
-  if (contacts) {
+  const { stats, noInteresados } = useMemo(() => {
+    if (!contacts) return { stats: [], noInteresados: [] }
+    const clasificaciones = new Map()
+    const noInteresadoStats = new Map()
     for (const c of contacts) {
       for (const r of c.contactos) {
         if (r.clasificacion) {
@@ -185,15 +217,17 @@ export default function ToolsPage() {
         }
       }
     }
-  }
-  const stats = contacts ? [
-    { label: "Total", value: contacts.length, color: "text-[#0051FF]" },
-    { label: "Compradores", value: clasificaciones.get("Comprador") || 0, color: "text-[#FB8A00]" },
-    { label: "Interesados", value: clasificaciones.get("Interesado") || 0, color: "text-green-600" },
-    { label: "Pendientes", value: clasificaciones.get("Pendiente") || 0, color: "text-gray-400" },
-    { label: "Sin respuesta", value: clasificaciones.get("No hubo respuesta") || 0, color: "text-purple-500" },
-  ] : []
-  const noInteresados = Array.from(noInteresadoStats.entries()).sort((a, b) => b[1] - a[1])
+    return {
+      stats: [
+        { label: "Total", value: contacts.length, color: "text-[#0051FF]" },
+        { label: "Compradores", value: clasificaciones.get("Comprador") || 0, color: "text-[#FB8A00]" },
+        { label: "Interesados", value: clasificaciones.get("Interesado") || 0, color: "text-green-600" },
+        { label: "Pendientes", value: clasificaciones.get("Pendiente") || 0, color: "text-gray-400" },
+        { label: "Sin respuesta", value: clasificaciones.get("No hubo respuesta") || 0, color: "text-purple-500" },
+      ],
+      noInteresados: Array.from(noInteresadoStats.entries()).sort((a, b) => b[1] - a[1]),
+    }
+  }, [contacts])
 
   const filteredContacts = useMemo(() => {
     if (!contacts) return null
@@ -310,8 +344,19 @@ export default function ToolsPage() {
   }
 
   return (
+    <>
     <div className="min-h-screen bg-[#f8f8f8]">
       <header className="sticky top-0 z-30 bg-white shadow-sm">
+        {/* Top bar */}
+          <div className="border-b border-gray-100 bg-gradient-to-r from-[#0051FF]/5 to-transparent">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center relative">
+            <Link href="/" className="flex items-center gap-3">
+              <img src="/iconos/logoStartBlue.svg" alt="GrupoStart" className="w-10 h-10" />
+              <span className="text-lg font-bold text-gray-900">Grupo Start</span>
+            </Link>
+            <span className="absolute left-1/2 -translate-x-1/2 text-base font-semibold text-gray-700">Seguimiento de leads</span>
+          </div>
+        </div>
         {contacts && (
           <div className="border-b border-gray-100 bg-gradient-to-r from-[#0051FF]/5 to-transparent">
             <div className="max-w-7xl mx-auto px-6 py-2 flex items-center gap-6">
@@ -339,11 +384,9 @@ export default function ToolsPage() {
         )}
         <div className="border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#0051FF] flex items-center justify-center">
-                <span className="text-white font-bold text-sm">GS</span>
-              </div>
-              <span className="font-semibold text-gray-900">GrupoStart Tools</span>
+            <div className="flex items-center gap-2">
+              <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-7 h-7 object-contain rounded" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
+              <span className="font-semibold text-gray-900">{profile?.company_name || "GrupoStart Tools"}</span>
               {contacts && (
                 <span className="hidden sm:inline text-xs text-gray-400 ml-2">· {fileName}</span>
               )}
@@ -402,7 +445,7 @@ export default function ToolsPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-6">
+      <main className="max-w-7xl mx-auto px-6 py-6 pb-28">
         {pageLoading && !contacts ? (
           <div className="max-w-xl mx-auto pt-16">
             <div className="text-center mb-8">
@@ -452,12 +495,6 @@ export default function ToolsPage() {
         ) : (
           <div className="space-y-4">
             <div className="bg-white rounded-2xl border border-gray-100 p-4">
-              <div className="flex items-center gap-2 mb-3">
-                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                </svg>
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Filtros</span>
-              </div>
               <div className="flex flex-wrap items-center gap-3">
                 <div className="relative flex-1 min-w-[200px]">
                   <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -472,86 +509,121 @@ export default function ToolsPage() {
                   />
                 </div>
 
-                <div className="relative">
-                  <select
-                    value={clasifFilter}
-                    onChange={(e) => setClasifFilter(e.target.value)}
-                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                  >
-                    <option value="">Todas las clasificaciones</option>
-                    <option value="Interesado">Interesados</option>
-                    <option value="Potencial cliente">Potenciales clientes</option>
-                    <option value="Comprador">Compradores</option>
-                    <option value="Pendiente">Pendientes</option>
-                    <option value="No interesado">No interesados</option>
-                    <option value="No hubo respuesta">Sin respuesta</option>
-                    <option value="No interesado: por razones económicas">No interesado: económico</option>
-                    <option value="No interesado: tiene una mejor oferta">No interesado: mejor oferta</option>
-                    <option value="No interesado: demora al responder">No interesado: demora</option>
-                    <option value="No interesado: La oferta no es lo que buscaba">No interesado: no buscaba</option>
-                    <option value="No interesado: Mala atención">No interesado: mala atención</option>
-                    <option value="No interesado: Otras razones">No interesado: otras razones</option>
-                  </select>
-                </div>
-
-                <div className="relative">
-                  <select
-                    value={periodFilter}
-                    onChange={(e) => setPeriodFilter(e.target.value)}
-                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                  >
-                    <option value="">Cualquier fecha</option>
-                    <option value="week">Última semana</option>
-                    <option value="month">Último mes</option>
-                    <option value="quarter">Últimos 3 meses</option>
-                  </select>
-                </div>
-
-                <div className="relative">
-                  <select
-                    value={minRoundsFilter}
-                    onChange={(e) => setMinRoundsFilter(Number(e.target.value))}
-                    className="px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                  >
-                    <option value={0}>Cualquier gestión</option>
-                    <option value={1}>1+ gestiones</option>
-                    <option value={2}>2+ gestiones</option>
-                    <option value={3}>3+ gestiones</option>
-                    <option value={4}>4+ gestiones</option>
-                    <option value={5}>5 gestiones</option>
-                  </select>
-                </div>
-
-                <button
-                  onClick={() => setSortProxima(!sortProxima)}
-                  className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
-                    sortProxima
-                      ? "bg-orange-50 border-orange-200 text-orange-700 font-medium"
-                      : "border-gray-200 text-gray-500 hover:border-orange-200 hover:text-orange-600"
-                  }`}
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  Próx. contacto
-                  {sortProxima && (
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                    </svg>
-                  )}
-                </button>
-
-                {activeFilters && (
+                <div className="relative" ref={filterRef}>
                   <button
-                    onClick={() => { setSearchText(""); setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortProxima(false) }}
-                    className="px-3 py-2 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
+                      activeFilters
+                        ? "bg-[#0051FF] border-[#0051FF] text-white shadow-sm"
+                        : "border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    }`}
                   >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="4" y1="6" x2="20" y2="6" />
+                      <circle cx="10" cy="6" r="1.5" fill="currentColor" stroke="none" />
+                      <line x1="4" y1="12" x2="20" y2="12" />
+                      <circle cx="16" cy="12" r="1.5" fill="currentColor" stroke="none" />
+                      <line x1="4" y1="18" x2="20" y2="18" />
+                      <circle cx="8" cy="18" r="1.5" fill="currentColor" stroke="none" />
                     </svg>
-                    Limpiar
+                    Filtros
+                    {activeFilters && (
+                      <span className="w-2 h-2 rounded-full bg-white inline-block" />
+                    )}
                   </button>
-                )}
+
+                  {showFilters && (
+                    <div className="absolute right-0 top-full mt-2 z-50 w-72 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 space-y-4">
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Clasificación</label>
+                        <select
+                          value={clasifFilter}
+                          onChange={(e) => setClasifFilter(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                        >
+                          <option value="">Todas las clasificaciones</option>
+                          <option value="Interesado">Interesados</option>
+                          <option value="Potencial cliente">Potenciales clientes</option>
+                          <option value="Comprador">Compradores</option>
+                          <option value="Pendiente">Pendientes</option>
+                          <option value="No interesado">No interesados</option>
+                          <option value="No hubo respuesta">Sin respuesta</option>
+                          <option value="No interesado: por razones económicas">No interesado: económico</option>
+                          <option value="No interesado: tiene una mejor oferta">No interesado: mejor oferta</option>
+                          <option value="No interesado: demora al responder">No interesado: demora</option>
+                          <option value="No interesado: La oferta no es lo que buscaba">No interesado: no buscaba</option>
+                          <option value="No interesado: Mala atención">No interesado: mala atención</option>
+                          <option value="No interesado: Otras razones">No interesado: otras razones</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Fecha</label>
+                        <select
+                          value={periodFilter}
+                          onChange={(e) => setPeriodFilter(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                        >
+                          <option value="">Cualquier fecha</option>
+                          <option value="week">Última semana</option>
+                          <option value="month">Último mes</option>
+                          <option value="quarter">Últimos 3 meses</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Gestión</label>
+                        <select
+                          value={minRoundsFilter}
+                          onChange={(e) => setMinRoundsFilter(Number(e.target.value))}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                        >
+                          <option value={0}>Cualquier gestión</option>
+                          <option value={1}>1+ gestiones</option>
+                          <option value={2}>2+ gestiones</option>
+                          <option value={3}>3+ gestiones</option>
+                          <option value={4}>4+ gestiones</option>
+                          <option value={5}>5 gestiones</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <button
+                          onClick={() => setSortProxima(!sortProxima)}
+                          className={`w-full flex items-center justify-between gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
+                            sortProxima
+                              ? "bg-orange-50 border-orange-200 text-orange-700 font-medium"
+                              : "border-gray-200 text-gray-500 hover:border-orange-200 hover:text-orange-600"
+                          }`}
+                        >
+                          <span className="flex items-center gap-1.5">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Próx. contacto
+                          </span>
+                          {sortProxima && (
+                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                            </svg>
+                          )}
+                        </button>
+                      </div>
+
+                      {activeFilters && (
+                        <button
+                          onClick={() => { setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortProxima(false); setShowFilters(false) }}
+                          className="w-full px-3 py-2 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center gap-1 border-t border-gray-100 pt-3"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          Limpiar filtros
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -593,9 +665,50 @@ export default function ToolsPage() {
       {showProfileModal && (
         <ProfileModal
           onClose={() => setShowProfileModal(false)}
-          onSaved={() => setShowProfileModal(false)}
+          onSaved={() => {
+            setShowProfileModal(false)
+            fetch("/api/tools/profile").then((r) => r.json()).then((data) => setProfile(data)).catch(() => {})
+          }}
         />
       )}
+
+      {showSuggestModal && (
+        <SuggestModal onClose={() => setShowSuggestModal(false)} />
+      )}
     </div>
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        style={{ position: "fixed", bottom: "80px", right: "24px", zIndex: 9999 }}
+        className={`flex items-center gap-2 px-5 py-3 text-sm font-medium text-white bg-[#0051FF] rounded-xl shadow-lg hover:bg-[#0040CC] hover:shadow-xl transition-all duration-300 ease-out transform ${
+          showScrollBtn ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-3 pointer-events-none"
+        }`}
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M18 15l-6-6-6 6" />
+        </svg>
+        Subir ↑
+      </button>
+
+      <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <span className="text-xs text-gray-400">© {new Date().getFullYear()} GrupoStart Tools</span>
+            <span className="text-xs text-gray-300">·</span>
+            <a href="mailto:grupostart.seguimiento@gmail.com" className="text-xs text-gray-400 hover:text-[#0051FF] transition-colors">
+              grupostart.seguimiento@gmail.com
+            </a>
+          </div>
+          <button
+            onClick={() => setShowSuggestModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+          >
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            Realizar sugerencia
+          </button>
+        </div>
+      </footer>
+    </>
   )
 }

@@ -1,4 +1,4 @@
-import { Roboto } from "next/font/google";
+import { Roboto, Nunito } from "next/font/google";
 import "./globals.css";
 import Wrapper from "@/components/wrapper/Wrapper";
 import Script from "next/script";
@@ -6,6 +6,13 @@ import Script from "next/script";
 const roboto = Roboto({
   subsets: ["latin"],
   weight: ["100", "300", "400", "500", "700", "900"],
+  variable: "--font-roboto",
+});
+
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-nunito",
 });
 
 export const metadata = {
@@ -20,7 +27,7 @@ export default function RootLayout({ children }) {
         <title>GrupoStart</title>
         <meta name="description" content="GrupoStart Solutions" />
       </head>
-      <body className={roboto.className}>
+      <body className={`${roboto.className} ${nunito.variable}`}>
         <Wrapper>{children}</Wrapper>
 
         {/* ✅ Meta Pixel Facebook sin <noscript> para evitar errores SSR */}

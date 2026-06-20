@@ -70,7 +70,7 @@ export default function UploadModal({ onClose, onFile }) {
               El archivo debe ser <strong>.csv</strong>, <strong>.xlsx</strong> o <strong>.xls</strong>.
               El sistema detecta automáticamente el formato según la columna E.
             </p>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setFormato("nuevo")}
                 className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${formato === "nuevo" ? "bg-amber-200 text-amber-900 shadow-sm" : "bg-white text-amber-600 hover:bg-amber-100"}`}
@@ -82,6 +82,42 @@ export default function UploadModal({ onClose, onFile }) {
                 className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${formato === "anterior" ? "bg-amber-200 text-amber-900 shadow-sm" : "bg-white text-amber-600 hover:bg-amber-100"}`}
               >
                 Formato sin red social
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-amber-200/60">
+              <button
+                onClick={() => {
+                  const header = ",Nombre,Celular,Email,Red social,Nombre de usuario,1er Contacto · Clasificación,1er Contacto · Fecha,1er Contacto · Estado,1er Contacto · Hora,2do Contacto · Clasificación,2do Contacto · Fecha,2do Contacto · Estado,2do Contacto · Hora,3er Contacto · Clasificación,3er Contacto · Fecha,3er Contacto · Estado,3er Contacto · Hora,4to Contacto · Clasificación,4to Contacto · Fecha,4to Contacto · Estado,4to Contacto · Hora,5to Contacto · Clasificación,5to Contacto · Fecha,5to Contacto · Estado,5to Contacto · Hora"
+                  const row = ",Juan Pérez,11 2345-6789,juan@email.com,Instagram,@juanperez,Interesado,15/01/2026,Pidió información,10:30,,,,,,,,,,,,,,,,,,,"
+                  const blob = new Blob(["\uFEFF" + header + "\n" + row + "\n"], { type: "text/csv;charset=utf-8" })
+                  const url = URL.createObjectURL(blob)
+                  const a = document.createElement("a")
+                  a.href = url; a.download = "plantilla_con_red_social.csv"; a.click()
+                  URL.revokeObjectURL(url)
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Descargar plantilla con red social
+              </button>
+              <button
+                onClick={() => {
+                  const header = ",Nombre,Celular,Email,1er Contacto · Clasificación,1er Contacto · Fecha,1er Contacto · Estado,2do Contacto · Clasificación,2do Contacto · Fecha,2do Contacto · Estado,3er Contacto · Clasificación,3er Contacto · Fecha,3er Contacto · Estado,4to Contacto · Clasificación,4to Contacto · Fecha,4to Contacto · Estado,5to Contacto · Clasificación,5to Contacto · Fecha,5to Contacto · Estado"
+                  const row = ",Juan Pérez,11 2345-6789,juan@email.com,Interesado,15/01/2026,Pidió información,,,,,,,,,,,,,,,"
+                  const blob = new Blob(["\uFEFF" + header + "\n" + row + "\n"], { type: "text/csv;charset=utf-8" })
+                  const url = URL.createObjectURL(blob)
+                  const a = document.createElement("a")
+                  a.href = url; a.download = "plantilla_sin_red_social.csv"; a.click()
+                  URL.revokeObjectURL(url)
+                }}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 transition-colors"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Descargar plantilla sin red social
               </button>
             </div>
           </div>

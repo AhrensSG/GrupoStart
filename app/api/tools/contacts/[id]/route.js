@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { getContact, updateContact, updateContactRound, deleteContact } from "@/lib/tools/db"
+import { getContact, deleteContact, updateContactWithRounds } from "@/lib/tools/db"
 
 export async function GET(_req, { params }) {
   try {
@@ -25,28 +25,14 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ error: "El nombre no puede estar vacío" }, { status: 400 })
     }
 
-    await updateContact(contactId, {
+    await updateContactWithRounds(contactId, {
       nombre: body.nombre?.trim(),
       celular: body.celular,
       email: body.email,
       red_social: body.red_social,
       nombre_usuario: body.nombre_usuario,
-    })
-
-    if (body.contactos && Array.isArray(body.contactos)) {
-      for (let i = 0; i < body.contactos.length; i++) {
-        const r = body.contactos[i]
-        if (r.clasificacion !== undefined || r.fecha !== undefined || r.estado !== undefined || r.hora_proximo_contacto !== undefined || r.proxima_fecha !== undefined) {
-          await updateContactRound(contactId, i, {
-            clasificacion: r.clasificacion,
-            fecha: r.fecha,
-            estado: r.estado,
-            hora_proximo_contacto: r.hora_proximo_contacto,
-            proxima_fecha: r.proxima_fecha,
-          })
-        }
-      }
-    }
+      pinned: body.pinned,
+    }, body.contactos)
 
     return NextResponse.json({ success: true })
   } catch (err) {
