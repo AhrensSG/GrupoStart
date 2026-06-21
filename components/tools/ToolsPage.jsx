@@ -349,27 +349,27 @@ export default function ToolsPage() {
       <header className="sticky top-0 z-30 bg-white shadow-sm">
         {/* Top bar */}
           <div className="border-b border-gray-100 bg-gradient-to-r from-[#0051FF]/5 to-transparent">
-          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center relative">
-            <Link href="/" className="flex items-center gap-3">
-              <img src="/iconos/logoStartBlue.svg" alt="GrupoStart" className="w-10 h-10" />
-              <span className="text-lg font-bold text-gray-900">Grupo Start</span>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between sm:justify-start sm:relative">
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <img src="/iconos/logoStartBlue.svg" alt="GrupoStart" className="w-8 h-8 sm:w-10 sm:h-10" />
+              <span className="text-sm sm:text-lg font-bold text-gray-900">Grupo Start</span>
             </Link>
-            <span className="absolute left-1/2 -translate-x-1/2 text-base font-semibold text-gray-700">Seguimiento de leads</span>
+            <span className="text-xs sm:text-base font-semibold text-gray-700 sm:absolute sm:left-1/2 sm:-translate-x-1/2 truncate ml-2 sm:ml-0">Seguimiento de leads</span>
           </div>
         </div>
         {contacts && (
           <div className="border-b border-gray-100 bg-gradient-to-r from-[#0051FF]/5 to-transparent">
-            <div className="max-w-7xl mx-auto px-6 py-2 flex items-center gap-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex items-center gap-3 sm:gap-6 overflow-x-auto scrollbar-none">
               {stats.map((s) => (
-                <div key={s.label} className="flex items-center gap-1.5">
+                <div key={s.label} className="flex items-center gap-1 sm:gap-1.5 shrink-0">
                   <span className={`text-sm font-bold ${s.color}`}>{s.value}</span>
-                  <span className="text-xs text-gray-400">{s.label}</span>
+                  <span className="text-xs text-gray-400 whitespace-nowrap">{s.label}</span>
                 </div>
               ))}
               {noInteresados.length > 0 && (
-                <div className="flex items-center gap-1.5 pl-4 border-l border-gray-200">
+                <div className="hidden sm:flex items-center gap-1.5 pl-4 border-l border-gray-200 shrink-0">
                   {noInteresados.slice(0, 2).map(([razon, count]) => (
-                    <span key={razon} className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs">
+                    <span key={razon} className="inline-flex items-center gap-1 px-2 py-0.5 bg-red-50 text-red-600 rounded text-xs whitespace-nowrap">
                       <span className="font-medium">{count}</span>
                       {razon.replace("No interesado: ", "")}
                     </span>
@@ -383,14 +383,14 @@ export default function ToolsPage() {
           </div>
         )}
         <div className="border-b border-gray-200">
-          <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-7 h-7 object-contain rounded" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
-              <span className="font-semibold text-gray-900">{profile?.company_name || "GrupoStart Tools"}</span>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 sm:h-14 flex items-center justify-between">
+            <div className="flex items-center gap-1 sm:gap-2 min-w-0">
+              <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain rounded shrink-0" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
+              <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">{profile?.company_name || "GrupoStart Tools"}</span>
               {contacts && (
-                <span className="hidden sm:inline text-xs text-gray-400 ml-2">· {fileName}</span>
+                <span className="hidden sm:inline text-xs text-gray-400 ml-2 shrink-0">· {fileName}</span>
               )}
-              <div className="hidden sm:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
+              <div className="hidden md:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
                 <Link href="/" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Inicio
                 </Link>
@@ -399,30 +399,31 @@ export default function ToolsPage() {
                 </Link>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2">
               {contacts && (
                 <>
                   <button
                     onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-2 px-4 py-2 bg-[#FB8A00] text-white text-sm font-medium rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
+                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-[#FB8A00] text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
-                    Agregar
+                    <span className="hidden sm:inline">Agregar</span>
                   </button>
                   <button
                     onClick={() => setShowUploadModal(true)}
-                    className="flex items-center gap-2 px-4 py-2 border border-gray-200 text-gray-600 text-sm font-medium rounded-lg hover:border-[#0051FF] hover:text-[#0051FF] transition-colors"
+                    className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-3 sm:py-2 border border-gray-200 text-gray-500 sm:text-gray-600 text-sm rounded-lg hover:border-[#0051FF] hover:text-[#0051FF] transition-colors"
+                    title="Importar archivo"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                     </svg>
-                    Importar archivo
+                    <span className="hidden sm:inline ml-1.5">Importar</span>
                   </button>
                   <button
                     onClick={() => setShowProfileModal(true)}
-                    className="flex items-center gap-2 px-3 py-2 text-sm text-gray-400 hover:text-[#0051FF] transition-colors"
+                    className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-2 text-gray-400 hover:text-[#0051FF] transition-colors"
                     title="Configuración de perfil"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -432,7 +433,8 @@ export default function ToolsPage() {
                   </button>
                   <button
                     onClick={handleRefresh}
-                    className="px-3 py-2 text-sm text-gray-400 hover:text-[#0051FF] transition-colors"
+                    className="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-[#0051FF] transition-colors"
+                    title="Actualizar"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -445,7 +447,7 @@ export default function ToolsPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-6 py-6 pb-28">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-28">
         {pageLoading && !contacts ? (
           <div className="max-w-xl mx-auto pt-16">
             <div className="text-center mb-8">
@@ -494,8 +496,8 @@ export default function ToolsPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="bg-white rounded-2xl border border-gray-100 p-4">
-              <div className="flex flex-wrap items-center gap-3">
+            <div className="bg-white rounded-2xl border border-gray-100 p-3 sm:p-4">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <div className="relative flex-1 min-w-[200px]">
                   <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -512,7 +514,7 @@ export default function ToolsPage() {
                 <div className="relative" ref={filterRef}>
                   <button
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
+                    className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-colors ${
                       activeFilters
                         ? "bg-[#0051FF] border-[#0051FF] text-white shadow-sm"
                         : "border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700"
@@ -526,14 +528,14 @@ export default function ToolsPage() {
                       <line x1="4" y1="18" x2="20" y2="18" />
                       <circle cx="8" cy="18" r="1.5" fill="currentColor" stroke="none" />
                     </svg>
-                    Filtros
+                    <span className="hidden sm:inline">Filtros</span>
                     {activeFilters && (
                       <span className="w-2 h-2 rounded-full bg-white inline-block" />
                     )}
                   </button>
 
                   {showFilters && (
-                    <div className="absolute right-0 top-full mt-2 z-50 w-72 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 space-y-4">
+                    <div className="fixed sm:absolute left-4 sm:left-auto right-4 sm:right-auto top-auto sm:top-full mt-2 z-50 sm:w-72 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 space-y-4">
                       <div>
                         <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Clasificación</label>
                         <select
@@ -628,13 +630,13 @@ export default function ToolsPage() {
             </div>
 
             <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-gray-500">
                 {filteredContacts && filteredContacts.length < contacts.length
                   ? `${filteredContacts.length} de ${contacts.length} contactos`
                   : `${contacts.length} contactos`}
               </p>
               <div className="flex items-center gap-2">
-                <span className="text-[10px] text-gray-300">Hacé clic en un contacto para ver sus rondas de seguimiento</span>
+                <span className="hidden sm:inline text-[10px] text-gray-300">Hacé clic en un contacto para ver sus rondas de seguimiento</span>
               </div>
             </div>
 
@@ -690,22 +692,22 @@ export default function ToolsPage() {
       </button>
 
       <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-xs text-gray-400">© {new Date().getFullYear()} GrupoStart Tools</span>
-            <span className="text-xs text-gray-300">·</span>
-            <a href="mailto:grupostart.seguimiento@gmail.com" className="text-xs text-gray-400 hover:text-[#0051FF] transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+            <span className="text-[10px] sm:text-xs text-gray-400 whitespace-nowrap">© {new Date().getFullYear()}</span>
+            <span className="text-[10px] sm:text-xs text-gray-300 hidden xs:inline">·</span>
+            <a href="mailto:grupostart.seguimiento@gmail.com" className="text-[10px] sm:text-xs text-gray-400 hover:text-[#0051FF] transition-colors truncate">
               grupostart.seguimiento@gmail.com
             </a>
           </div>
           <button
             onClick={() => setShowSuggestModal(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+            className="flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors shrink-0"
           >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
-            Realizar sugerencia
+            <span className="hidden sm:inline">Realizar sugerencia</span>
           </button>
         </div>
       </footer>
