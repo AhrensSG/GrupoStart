@@ -233,9 +233,10 @@ export default function ContactTable({ contacts, onDelete, onUpdate }) {
         const isExpanded = expanded === i
         const hasData = hasAnyRoundData(c)
 
-        const statusBadge = (() => {
+        const renderStatusBadge = (mobile) => {
+          const cls = mobile ? "sm:hidden" : "hidden sm:flex"
           if (hasComprador(c.contactos)) {
-            return <div className="flex items-center gap-1 text-green-600"><svg className="w-4 h-4 shrink-0 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span className="text-[10px] sm:text-xs font-semibold leading-tight">¡Venta realizada!</span></div>
+            return <div className={`${cls} items-center gap-1 text-green-600`}><svg className="w-4 h-4 shrink-0 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span className="text-[10px] font-semibold leading-tight">¡Venta realizada!</span></div>
           }
           const info = getNextContactInfo(c.contactos)
           if (!info) return null
@@ -243,7 +244,7 @@ export default function ContactTable({ contacts, onDelete, onUpdate }) {
           const dateParts = info.date.split("/")
           const dateValue = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
           return (
-            <div className={`flex items-center gap-1 ${contactNotDone ? "text-red-400" : "text-orange-600"}`}>
+            <div className={`${cls} items-center gap-1 ${contactNotDone ? "text-red-400" : "text-orange-600"}`}>
               <svg className={`w-4 h-4 shrink-0 ${contactNotDone ? "text-red-400" : "text-orange-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               {editingDateId === id ? (
                 <input type="date" value={dateValue} onChange={(e) => { if (!e.target.value) return; const p = e.target.value.split("-"); const fechaStr = `${p[2]}/${p[1]}/${p[0]}`; saveRound(id, info.roundIndex, "proxima_fecha", fechaStr); setEditingDateId(null) }} onBlur={() => setEditingDateId(null)} className="w-24 px-1 py-0.5 rounded text-[10px] border border-orange-300 bg-white focus:outline-none focus:ring-1 focus:ring-orange-400" autoFocus />
@@ -252,15 +253,17 @@ export default function ContactTable({ contacts, onDelete, onUpdate }) {
               )}
             </div>
           )
-        })()
+        }
+
+        const desktopBadge = hasData ? renderStatusBadge(false) : null
 
         return (
-          <div key={id} className="group">
-            <div className="flex items-start sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors cursor-pointer gap-2" onClick={() => toggleExpand(i)}>
-              <div className="flex items-start sm:items-center gap-2 sm:gap-4 min-w-0 flex-1">
+          <div key={id} className="group relative">
+            <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => toggleExpand(i)}>
+              <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
                 <button
                   onClick={(e) => { e.stopPropagation(); saveContactField(id, "pinned", !c.pinned) }}
-                  className={`shrink-0 mt-0.5 sm:mt-0 p-0.5 transition-colors ${c.pinned ? "text-[#0051FF]" : "text-gray-200 hover:text-gray-400"}`}
+                  className={`shrink-0 p-0.5 transition-colors ${c.pinned ? "text-[#0051FF]" : "text-gray-200 hover:text-gray-400"}`}
                   title={c.pinned ? "Desfijar" : "Fijar"}
                 >
                   <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill={c.pinned ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
@@ -268,33 +271,33 @@ export default function ContactTable({ contacts, onDelete, onUpdate }) {
                   </svg>
                 </button>
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{c.nombre}</p>
-                    {statusBadge && <span className="hidden sm:inline">{statusBadge}</span>}
-                  </div>
-                  <div className="flex items-center gap-2 sm:gap-3 mt-0.5 flex-wrap">
-                    {c.celular && <span className="text-[11px] sm:text-xs text-gray-400">{c.celular}</span>}
-                    {c.email && (<><span className="text-[11px] sm:text-xs text-gray-300 hidden sm:inline">·</span><span className="text-[11px] sm:text-xs text-gray-400 truncate hidden sm:inline">{c.email}</span></>)}
-                    {contact.red_social && (<><span className="text-[11px] sm:text-xs text-gray-300">·</span><span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-bold ${contact.red_social === "WhatsApp" ? "bg-green-50 text-green-700" : contact.red_social === "Instagram" ? "bg-pink-50 text-pink-700" : contact.red_social === "Facebook" ? "bg-blue-50 text-blue-700" : "bg-gray-100 text-gray-600"}`}>{getSocialIcon(contact.red_social)}</span></>)}
-                    {contact.nombre_usuario && <span className="text-[11px] sm:text-xs text-gray-400 truncate">@{contact.nombre_usuario}</span>}
-                  </div>
+                  <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{c.nombre}</p>
                   <div className="flex items-center gap-2 mt-1.5 sm:hidden">
                     {hasData && (<div className="flex items-center gap-1">{c.contactos.map((r, j) => { const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={j} className={`w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[j]}: ${st.label || r.clasificacion || "—"}`}>{j + 1}</span>) })}</div>)}
-                    {statusBadge}
+                    {renderStatusBadge(true)}
                   </div>
                 </div>
-                {hasData && (<div className="hidden sm:flex items-center gap-1.5 flex-shrink-0">{c.contactos.map((r, j) => { const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={j} className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[j]}: ${st.label || r.clasificacion || "—"}`}>{j + 1}</span>) })}</div>)}
               </div>
-              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-2">
+                {hasData && (
+                  <div className="hidden sm:flex items-center gap-1 mr-1">
+                    {c.contactos.map((r, j) => { const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={j} className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[j]}: ${st.label || r.clasificacion || "—"}`}>{j + 1}</span>) })}
+                  </div>
+                )}
                 {hasData && <span className="text-[10px] text-gray-300 hidden sm:inline">{isExpanded ? "ocultar" : "detalle"}</span>}
                 <button onClick={(e) => { e.stopPropagation(); toggleExpand(i) }} className={`p-1 text-gray-300 hover:text-gray-500 transition-transform ${isExpanded ? "rotate-180" : ""}`}><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg></button>
                 {id && onDelete && (<div className="relative"><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(confirmDelete === id ? null : id) }} className="text-gray-300 hover:text-red-500 transition-all p-1"><svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>{confirmDelete === id && (<div className="absolute right-0 top-8 z-10 bg-white border border-gray-200 rounded-lg shadow-lg p-2 min-w-[120px]"><p className="text-xs text-gray-500 mb-2 px-1">¿Eliminar?</p><div className="flex gap-1"><button onClick={(e) => { e.stopPropagation(); onDelete(id); setConfirmDelete(null) }} className="px-3 py-1 bg-red-500 text-white text-xs rounded-md hover:bg-red-600">Sí</button><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(null) }} className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-md hover:bg-gray-200">No</button></div></div>)}</div>)}
+              </div>
             </div>
-            </div>
+            {desktopBadge && (
+              <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex-col items-center pointer-events-none">
+                <div className="pointer-events-auto">{desktopBadge}</div>
+              </div>
+            )}
 
             {isExpanded && (
               <div className="px-4 sm:px-6 pb-4 sm:pb-5">
-                {id && (<div className="mb-3 p-2 sm:p-3 bg-gray-50 rounded-xl"><div className="flex items-center gap-2 mb-2"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg><span className="text-xs font-semibold text-gray-500">Datos de contacto</span></div><div className="flex flex-col sm:flex-row gap-2 sm:gap-3"><select value={contact.red_social || ""} onChange={(e) => { const val = e.target.value; setContactEdits((prev) => ({ ...prev, [`red_social-${id}`]: val })); saveContactField(id, "red_social", val) }} className="w-full sm:flex-1 px-2.5 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]">{REDES_SOCIALES.map((opt) => (<option key={opt} value={opt}>{opt || "Sin red social"}</option>))}</select><input type="text" value={(contactEdits[`nombre_usuario-${id}`] ?? contact.nombre_usuario) || ""} onChange={(e) => { const val = e.target.value; setContactEdits((prev) => ({ ...prev, [`nombre_usuario-${id}`]: val })) }} onBlur={(e) => saveContactField(id, "nombre_usuario", e.target.value)} placeholder="Nombre de usuario" disabled={!contact.red_social || contact.red_social === "WhatsApp"} className={`w-full sm:flex-1 px-2.5 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300 ${!contact.red_social || contact.red_social === "WhatsApp" ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}`}/></div></div>)}
+                {id && (<div className="mb-3 p-2 sm:p-3 bg-gray-50 rounded-xl"><div className="flex items-center gap-2 mb-2"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg><span className="text-xs font-semibold text-gray-500">Datos de contacto</span></div><div className="flex flex-col sm:flex-row gap-2 sm:gap-3">{(c.celular || c.email) && <div className="flex flex-wrap items-center gap-x-2 gap-y-1 px-2.5 py-1.5 rounded-lg bg-white border border-gray-200 text-xs text-gray-600 sm:flex-1">{c.celular && <span>{c.celular}</span>}{c.celular && c.email && <span className="text-gray-300">·</span>}{c.email && <span className="truncate">{c.email}</span>}</div>}<select value={contact.red_social || ""} onChange={(e) => { const val = e.target.value; setContactEdits((prev) => ({ ...prev, [`red_social-${id}`]: val })); saveContactField(id, "red_social", val) }} className="w-full sm:flex-1 px-2.5 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]">{REDES_SOCIALES.map((opt) => (<option key={opt} value={opt}>{opt || "Sin red social"}</option>))}</select><input type="text" value={(contactEdits[`nombre_usuario-${id}`] ?? contact.nombre_usuario) || ""} onChange={(e) => { const val = e.target.value; setContactEdits((prev) => ({ ...prev, [`nombre_usuario-${id}`]: val })) }} onBlur={(e) => saveContactField(id, "nombre_usuario", e.target.value)} placeholder="Nombre de usuario" disabled={!contact.red_social || contact.red_social === "WhatsApp"} className={`w-full sm:flex-1 px-2.5 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300 ${!contact.red_social || contact.red_social === "WhatsApp" ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}`}/></div></div>)}
 
                 <div className="hidden lg:grid grid-cols-[16px_32px_2fr_140px_1fr_150px_100px_16px] gap-2 px-3 py-2 mb-1">
                   <div></div>
