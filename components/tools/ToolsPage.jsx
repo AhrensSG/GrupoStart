@@ -93,7 +93,7 @@ export default function ToolsPage() {
 
   useEffect(() => {
     if (!user) return
-    fetch(`/api/tools/subscription?uid=${user.id}`)
+    fetch(`/api/tools/subscription?uid=${user.id}&email=${encodeURIComponent(user.email || "")}`)
       .then((r) => r.json())
       .then((data) => {
         setSubscribed(data.subscribed)
