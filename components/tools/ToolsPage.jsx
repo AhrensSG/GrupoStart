@@ -67,12 +67,15 @@ export default function ToolsPage() {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
 
+  const user = state?.user
+
   useEffect(() => {
-    fetch("/api/tools/profile")
+    if (!user) return
+    fetch(`/api/tools/profile?uid=${user.id}`)
       .then((r) => r.json())
       .then((data) => setProfile(data))
       .catch(() => {})
-  }, [])
+  }, [user])
 
   useEffect(() => {
     function handleScroll() {
@@ -82,8 +85,6 @@ export default function ToolsPage() {
     handleScroll()
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
-
-  const user = state?.user
 
   useEffect(() => {
     if (!state?.isLoading && !user) {
@@ -667,10 +668,11 @@ export default function ToolsPage() {
 
       {showProfileModal && (
         <ProfileModal
+          userId={user.id}
           onClose={() => setShowProfileModal(false)}
           onSaved={() => {
             setShowProfileModal(false)
-            fetch("/api/tools/profile").then((r) => r.json()).then((data) => setProfile(data)).catch(() => {})
+            fetch(`/api/tools/profile?uid=${user.id}`).then((r) => r.json()).then((data) => setProfile(data)).catch(() => {})
           }}
         />
       )}

@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server"
 import { getUserProfile, updateUserProfile } from "@/lib/tools/db"
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const profile = await getUserProfile()
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid")
+    if (!uid) {
+      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    }
+    const profile = await getUserProfile(uid)
     return NextResponse.json(profile || { hora_ingreso: "09:00", hora_salida: "18:00" })
   } catch (err) {
     console.error(err)
@@ -14,6 +19,10 @@ export async function GET() {
 export async function PUT(req) {
   try {
     const body = await req.json()
+    const uid = body.uid
+    if (!uid) {
+      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    }
     await updateUserProfile({
       hora_ingreso: body.hora_ingreso,
       hora_salida: body.hora_salida,
@@ -21,7 +30,7 @@ export async function PUT(req) {
       whatsapp_api_token: body.whatsapp_api_token,
       company_name: body.company_name,
       company_logo: body.company_logo,
-    })
+    }, uid)
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error(err)

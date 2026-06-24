@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 
-export default function ProfileModal({ onClose, onSaved }) {
+export default function ProfileModal({ onClose, onSaved, userId }) {
   const [horaIngreso, setHoraIngreso] = useState("09:00")
   const [horaSalida, setHoraSalida] = useState("18:00")
   const [whatsappUrl, setWhatsappUrl] = useState("")
@@ -13,7 +13,8 @@ export default function ProfileModal({ onClose, onSaved }) {
   const [error, setError] = useState("")
 
   useEffect(() => {
-    fetch("/api/tools/profile")
+    if (!userId) return
+    fetch(`/api/tools/profile?uid=${userId}`)
       .then((r) => r.json())
       .then((data) => {
         if (data.hora_ingreso) setHoraIngreso(data.hora_ingreso)
@@ -35,6 +36,7 @@ export default function ProfileModal({ onClose, onSaved }) {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          uid: userId,
           hora_ingreso: horaIngreso,
           hora_salida: horaSalida,
           whatsapp_api_url: whatsappUrl,
