@@ -8,7 +8,10 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url)
     const uid = searchParams.get("uid") || ""
     const today = formatFecha(new Date())
-    const profile = await getUserProfile()
+    if (!uid) {
+      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    }
+    const profile = await getUserProfile(uid)
     const pending = await getContactsPendingReminder(uid)
 
     const reminders = pending.map((c) => {
@@ -39,7 +42,10 @@ export async function POST(req) {
   try {
     const { searchParams } = new URL(req.url)
     const uid = searchParams.get("uid") || ""
-    const profile = await getUserProfile()
+    if (!uid) {
+      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    }
+    const profile = await getUserProfile(uid)
     if (!profile?.whatsapp_api_url || !profile?.whatsapp_api_token) {
       return NextResponse.json({ error: "WhatsApp API no configurada" }, { status: 400 })
     }
