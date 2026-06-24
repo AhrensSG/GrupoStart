@@ -43,7 +43,7 @@ function isNoSalvable(clasificacion, estado) {
   return clasificacion === "No interesado" && NO_SALVABLE_REASONS.has(estado)
 }
 
-export default function AddContactModal({ onClose, onCreated }) {
+export default function AddContactModal({ userId, onClose, onCreated }) {
   const [nombre, setNombre] = useState("")
   const [celular, setCelular] = useState("")
   const [email, setEmail] = useState("")
@@ -82,7 +82,7 @@ export default function AddContactModal({ onClose, onCreated }) {
       const res = await fetch("/api/tools/contacts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre: nombre.trim(), celular, email, red_social: redSocial, nombre_usuario: nombreUsuario, contactos: rounds }),
+        body: JSON.stringify({ uid: userId, nombre: nombre.trim(), celular, email, red_social: redSocial, nombre_usuario: nombreUsuario, contactos: rounds }),
       })
       if (!res.ok) { const data = await res.json(); throw new Error(data.error || "Error al guardar") }
       onCreated()

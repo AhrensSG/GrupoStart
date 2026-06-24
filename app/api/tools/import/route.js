@@ -5,7 +5,11 @@ import { replaceAllContacts } from "@/lib/tools/db"
 export async function POST(req) {
   try {
     const body = await req.json()
-    const { url } = body
+    const { url, uid } = body
+
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    }
 
     const sheetUrl = url || "https://docs.google.com/spreadsheets/d/1GGX_VNpL7XIDDxqI0Cx1YE0eaVXrCXbxsncWqOpr-2A/export?format=csv&gid=1574587249"
 
@@ -23,7 +27,7 @@ export async function POST(req) {
       return NextResponse.json({ error: "No se encontraron contactos en el sheet" }, { status: 400 })
     }
 
-    await replaceAllContacts(contacts)
+    await replaceAllContacts(contacts, uid)
 
     return NextResponse.json({ imported: contacts.length })
   } catch (err) {

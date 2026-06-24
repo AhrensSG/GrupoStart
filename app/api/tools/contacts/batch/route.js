@@ -4,12 +4,16 @@ import { createContact } from "@/lib/tools/db"
 export async function POST(req) {
   try {
     const body = await req.json()
-    if (!Array.isArray(body)) {
-      return NextResponse.json({ error: "Se esperaba un array de contactos" }, { status: 400 })
+    if (!body.contacts || !Array.isArray(body.contacts)) {
+      return NextResponse.json({ error: "Se esperaba un objeto con un array 'contacts'" }, { status: 400 })
+    }
+    const { uid, contacts } = body
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
     }
 
     const results = []
-    for (const contact of body) {
+    for (const contact of contacts) {
       const { nombre, celular, email, red_social, nombre_usuario, contactos } = contact
       if (!nombre || typeof nombre !== "string" || !nombre.trim()) {
         results.push({ error: "El nombre es requerido", contact })
@@ -22,11 +26,11 @@ export async function POST(req) {
         red_social: red_social || "",
         nombre_usuario: nombre_usuario || "",
         contactos: Array.isArray(contactos) ? contactos : [],
-      })
+      }, uid)
       results.push({ id })
     }
 
-    return NextResponse.json({ imported: results.filter((r) => r.id).length, total: body.length }, { status: 201 })
+    return NextResponse.json({ imported: results.filter((r) => r.id).length, total: body.contacts.length }, { status: 201 })
   } catch (err) {
     console.error(err)
     return NextResponse.json({ error: "Error al importar contactos" }, { status: 500 })

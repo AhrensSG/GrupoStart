@@ -3,11 +3,13 @@ import { getContactsPendingReminder, getUserProfile } from "@/lib/tools/db"
 import { sendWhatsAppReminder } from "@/lib/tools/whatsapp"
 import { formatFecha, getDefaultReminderTime, parseTime } from "@/lib/tools/business-days"
 
-export async function GET() {
+export async function GET(req) {
   try {
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid") || ""
     const today = formatFecha(new Date())
     const profile = await getUserProfile()
-    const pending = await getContactsPendingReminder()
+    const pending = await getContactsPendingReminder(uid)
 
     const reminders = pending.map((c) => {
       const lastRound = [...c.contactos].reverse().find((r) => r.clasificacion === "Pendiente" && r.proxima_fecha === today)
@@ -33,8 +35,10 @@ export async function GET() {
   }
 }
 
-export async function POST() {
+export async function POST(req) {
   try {
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid") || ""
     const profile = await getUserProfile()
     if (!profile?.whatsapp_api_url || !profile?.whatsapp_api_token) {
       return NextResponse.json({ error: "WhatsApp API no configurada" }, { status: 400 })
@@ -45,7 +49,7 @@ export async function POST() {
     const currentHour = now.getHours()
     const currentMin = now.getMinutes()
 
-    const pending = await getContactsPendingReminder()
+    const pending = await getContactsPendingReminder(uid)
     let sent = 0
     const errors = []
 

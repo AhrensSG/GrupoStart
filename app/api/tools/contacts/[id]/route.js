@@ -1,10 +1,15 @@
 import { NextResponse } from "next/server"
 import { getContact, deleteContact, updateContactWithRounds } from "@/lib/tools/db"
 
-export async function GET(_req, { params }) {
+export async function GET(req, { params }) {
   try {
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid")
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    }
     const { id } = await params
-    const contact = await getContact(Number(id))
+    const contact = await getContact(Number(id), uid)
     if (!contact) {
       return NextResponse.json({ error: "Contacto no encontrado" }, { status: 404 })
     }
@@ -17,6 +22,11 @@ export async function GET(_req, { params }) {
 
 export async function PUT(req, { params }) {
   try {
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid")
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    }
     const { id } = await params
     const body = await req.json()
     const contactId = Number(id)
@@ -32,7 +42,7 @@ export async function PUT(req, { params }) {
       red_social: body.red_social,
       nombre_usuario: body.nombre_usuario,
       pinned: body.pinned,
-    }, body.contactos)
+    }, body.contactos, uid)
 
     return NextResponse.json({ success: true })
   } catch (err) {
@@ -41,10 +51,15 @@ export async function PUT(req, { params }) {
   }
 }
 
-export async function DELETE(_req, { params }) {
+export async function DELETE(req, { params }) {
   try {
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid")
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    }
     const { id } = await params
-    await deleteContact(Number(id))
+    await deleteContact(Number(id), uid)
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error(err)

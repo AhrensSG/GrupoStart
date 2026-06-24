@@ -116,7 +116,7 @@ export default function ToolsPage() {
 
   const fetchContacts = async () => {
     try {
-      const res = await fetch("/api/tools/contacts")
+      const res = await fetch(`/api/tools/contacts?uid=${user.id}`)
       if (!res.ok) throw new Error()
       const data = await res.json()
       if (data.length > 0) {
@@ -151,7 +151,7 @@ export default function ToolsPage() {
           const res = await fetch("/api/tools/contacts/batch", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(result),
+            body: JSON.stringify({ uid: user.id, contacts: result }),
           })
           if (!res.ok) { const data = await res.json(); throw new Error(data.error || "Error al importar contactos") }
 
@@ -168,7 +168,7 @@ export default function ToolsPage() {
 
   const handleDelete = async (id) => {
     try {
-      await fetch(`/api/tools/contacts/${id}`, { method: "DELETE" })
+      await fetch(`/api/tools/contacts/${id}?uid=${user.id}`, { method: "DELETE" })
       if (contacts) {
         setContacts(contacts.filter((c) => c.id !== id))
       }
@@ -641,7 +641,7 @@ export default function ToolsPage() {
             </div>
 
             <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-              <ContactTable contacts={filteredContacts || contacts} onDelete={handleDelete} onUpdate={fetchContacts} />
+              <ContactTable contacts={filteredContacts || contacts} userId={user.id} onDelete={handleDelete} onUpdate={fetchContacts} />
             </div>
           </div>
         )}
@@ -649,6 +649,7 @@ export default function ToolsPage() {
 
       {showAddModal && (
         <AddContactModal
+          userId={user.id}
           onClose={() => setShowAddModal(false)}
           onCreated={() => {
             setShowAddModal(false)

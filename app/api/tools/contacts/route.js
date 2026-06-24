@@ -1,9 +1,14 @@
 import { NextResponse } from "next/server"
 import { getAllContacts, createContact } from "@/lib/tools/db"
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const contacts = await getAllContacts()
+    const { searchParams } = new URL(req.url)
+    const uid = searchParams.get("uid")
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    }
+    const contacts = await getAllContacts(uid)
     return NextResponse.json(contacts)
   } catch (err) {
     console.error(err)
@@ -14,8 +19,11 @@ export async function GET() {
 export async function POST(req) {
   try {
     const body = await req.json()
-    const { nombre, celular, email, red_social, nombre_usuario, contactos } = body
+    const { uid, nombre, celular, email, red_social, nombre_usuario, contactos } = body
 
+    if (!uid) {
+      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    }
     if (!nombre || typeof nombre !== "string" || !nombre.trim()) {
       return NextResponse.json({ error: "El nombre es requerido" }, { status: 400 })
     }
@@ -27,7 +35,7 @@ export async function POST(req) {
       red_social: red_social || "",
       nombre_usuario: nombre_usuario || "",
       contactos: Array.isArray(contactos) ? contactos : [],
-    })
+    }, uid)
 
     return NextResponse.json({ id }, { status: 201 })
   } catch (err) {

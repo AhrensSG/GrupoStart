@@ -8,9 +8,12 @@ CREATE TABLE IF NOT EXISTS contacts (
   email VARCHAR(255) DEFAULT '',
   red_social VARCHAR(50) DEFAULT '',
   nombre_usuario VARCHAR(255) DEFAULT '',
+  user_id VARCHAR(255) NOT NULL DEFAULT '',
   created_at TIMESTAMP DEFAULT NOW(),
   updated_at TIMESTAMP DEFAULT NOW()
 );
+
+CREATE INDEX IF NOT EXISTS idx_contacts_user_id ON contacts(user_id);
 
 CREATE TABLE IF NOT EXISTS contact_rounds (
   id SERIAL PRIMARY KEY,

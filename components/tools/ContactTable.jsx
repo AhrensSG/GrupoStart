@@ -119,7 +119,7 @@ function hasComprador(contactos) {
   return contactos.some((r) => r.clasificacion === "Comprador")
 }
 
-export default function ContactTable({ contacts, onDelete, onUpdate }) {
+export default function ContactTable({ contacts, userId, onDelete, onUpdate }) {
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [expanded, setExpanded] = useState(null)
   const [saving, setSaving] = useState({})
@@ -162,7 +162,7 @@ export default function ContactTable({ contacts, onDelete, onUpdate }) {
         if (field === "clasificacion") base.fecha = updatedFecha
         return base
       })
-      const res = await fetch(`/api/tools/contacts/${contactId}`, {
+      const res = await fetch(`/api/tools/contacts/${contactId}?uid=${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contactos: updatedContactos }),
@@ -187,7 +187,7 @@ export default function ContactTable({ contacts, onDelete, onUpdate }) {
     const key = `save-contact-${contactId}-${field}`
     setSaving((prev) => ({ ...prev, [key]: true }))
     try {
-      const res = await fetch(`/api/tools/contacts/${contactId}`, {
+      const res = await fetch(`/api/tools/contacts/${contactId}?uid=${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ [field]: value }),
