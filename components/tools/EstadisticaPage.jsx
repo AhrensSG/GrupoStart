@@ -595,7 +595,7 @@ function NavBar() {
             <Link href="/tools/estadistica" className="px-2.5 py-1.5 text-xs text-white bg-[#0051FF] rounded-lg font-medium">
               Estadística
             </Link>
-            <Link href="/tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+            <Link href="/tools/tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
               Tutoriales
             </Link>
             <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">

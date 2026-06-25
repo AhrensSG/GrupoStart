@@ -11,6 +11,7 @@ import AddContactModal from "./AddContactModal"
 import UploadModal from "./UploadModal"
 import ProfileModal from "./ProfileModal"
 import SuggestModal from "./SuggestModal"
+import GuidedTutorial from "./GuidedTutorial"
 import { parseSheet } from "@/lib/tools/parser"
 
 function parseFecha(ddmm) {
@@ -55,6 +56,7 @@ export default function ToolsPage() {
   const [showFilters, setShowFilters] = useState(false)
   const [showScrollBtn, setShowScrollBtn] = useState(false)
   const [profile, setProfile] = useState(null)
+  const [showTutorial, setShowTutorial] = useState(false)
   const filterRef = useRef(null)
 
   useEffect(() => {
@@ -66,6 +68,15 @@ export default function ToolsPage() {
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [])
+
+  useEffect(() => {
+    if (!contacts || contacts.length === 0) return
+    const status = localStorage.getItem("guidedTutorial")
+    if (status === null || status === "pending") {
+      const timer = setTimeout(() => setShowTutorial(true), 500)
+      return () => clearTimeout(timer)
+    }
+  }, [contacts])
 
   const user = state?.user
 
@@ -403,10 +414,10 @@ export default function ToolsPage() {
                 <Link href="/tools" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Contactos
                 </Link>
-                <Link href="/tools/estadistica" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                <Link href="/tools/estadistica" id="link-estadistica" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Estadística
                 </Link>
-                <Link href="/tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                <Link href="/tools/tutoriales" data-tut="link-tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Tutoriales
                 </Link>
                 <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
@@ -418,6 +429,7 @@ export default function ToolsPage() {
               {contacts && (
                 <>
                   <button
+                    id="btn-add-contact"
                     onClick={() => setShowAddModal(true)}
                     className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-[#FB8A00] text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
                   >
@@ -427,6 +439,7 @@ export default function ToolsPage() {
                     <span className="hidden sm:inline">Agregar</span>
                   </button>
                   <button
+                    id="btn-upload"
                     onClick={() => setShowUploadModal(true)}
                     className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-3 sm:py-2 border border-gray-200 text-gray-500 sm:text-gray-600 text-sm rounded-lg hover:border-[#0051FF] hover:text-[#0051FF] transition-colors"
                     title="Importar archivo"
@@ -486,6 +499,7 @@ export default function ToolsPage() {
             <UploadZone onFile={handleFile} />
             <div className="mt-6 text-center">
               <button
+                id="btn-add-contact"
                 onClick={() => setShowAddModal(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-[#FB8A00] text-white text-sm font-semibold rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
               >
@@ -518,6 +532,7 @@ export default function ToolsPage() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                   <input
+                    id="search-input"
                     type="text"
                     value={searchText}
                     onChange={(e) => setSearchText(e.target.value)}
@@ -528,6 +543,7 @@ export default function ToolsPage() {
 
                 <div className="relative" ref={filterRef}>
                   <button
+                    id="btn-filters"
                     onClick={() => setShowFilters(!showFilters)}
                     className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-colors ${
                       activeFilters
@@ -696,6 +712,10 @@ export default function ToolsPage() {
 
       {showSuggestModal && (
         <SuggestModal onClose={() => setShowSuggestModal(false)} />
+      )}
+
+      {showTutorial && (
+        <GuidedTutorial onComplete={() => setShowTutorial(false)} />
       )}
     </div>
       <button
