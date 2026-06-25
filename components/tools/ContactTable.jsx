@@ -124,6 +124,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate }) {
   const [expanded, setExpanded] = useState(null)
   const [saving, setSaving] = useState({})
   const [localEdits, setLocalEdits] = useState({})
+  const [proxEdits, setProxEdits] = useState({})
   const [contactEdits, setContactEdits] = useState({})
   const [editingDateId, setEditingDateId] = useState(null)
   const debounceRef = useRef({})
@@ -214,6 +215,24 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate }) {
     saveRound(contactId, roundIndex, "estado", value)
   }
 
+  const handleProxFechaChange = (contactId, roundIndex, value) => {
+    const key = `prox-${contactId}-${roundIndex}`
+    setProxEdits((prev) => ({ ...prev, [key]: value }))
+    if (debounceRef.current[key]) clearTimeout(debounceRef.current[key])
+    debounceRef.current[key] = setTimeout(() => saveRound(contactId, roundIndex, "proxima_fecha", value), 600)
+  }
+
+  const handleProxFechaBlur = (contactId, roundIndex, value) => {
+    const key = `prox-${contactId}-${roundIndex}`
+    if (debounceRef.current[key]) clearTimeout(debounceRef.current[key])
+    saveRound(contactId, roundIndex, "proxima_fecha", value)
+    setProxEdits((prev) => {
+      const next = { ...prev }
+      delete next[key]
+      return next
+    })
+  }
+
   const hasAnyRoundData = (c) => c.contactos.some((r) => r.clasificacion || r.fecha || r.estado)
 
   const getSocialIcon = (red) => {
@@ -267,7 +286,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate }) {
                   title={c.pinned ? "Desfijar" : "Fijar"}
                 >
                   <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill={c.pinned ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 4v12l-4 2-4-2V4M6 4h12" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z" />
                   </svg>
                 </button>
                 <div className="min-w-0 flex-1">
@@ -299,11 +318,10 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate }) {
               <div className="px-4 sm:px-6 pb-4 sm:pb-5">
                 {id && (<div className="mb-3 p-2 sm:p-3 bg-gray-50 rounded-xl"><div className="flex items-center gap-2 mb-2"><svg className="w-3.5 h-3.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg><span className="text-xs font-semibold text-gray-500">Datos de contacto</span></div><div className="flex flex-col sm:flex-row gap-2 sm:gap-3">{(c.celular || c.email) && <div className="flex flex-wrap items-center gap-x-2 gap-y-1 px-2.5 py-1.5 rounded-lg bg-white border border-gray-200 text-xs text-gray-600 sm:flex-1">{c.celular && <span>{c.celular}</span>}{c.celular && c.email && <span className="text-gray-300">·</span>}{c.email && <span className="truncate">{c.email}</span>}</div>}<select value={contact.red_social || ""} onChange={(e) => { const val = e.target.value; setContactEdits((prev) => ({ ...prev, [`red_social-${id}`]: val })); saveContactField(id, "red_social", val) }} className="w-full sm:flex-1 px-2.5 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]">{REDES_SOCIALES.map((opt) => (<option key={opt} value={opt}>{opt || "Sin red social"}</option>))}</select><input type="text" value={(contactEdits[`nombre_usuario-${id}`] ?? contact.nombre_usuario) || ""} onChange={(e) => { const val = e.target.value; setContactEdits((prev) => ({ ...prev, [`nombre_usuario-${id}`]: val })) }} onBlur={(e) => saveContactField(id, "nombre_usuario", e.target.value)} placeholder="Nombre de usuario" disabled={!contact.red_social || contact.red_social === "WhatsApp"} className={`w-full sm:flex-1 px-2.5 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300 ${!contact.red_social || contact.red_social === "WhatsApp" ? "bg-gray-100 text-gray-400 cursor-not-allowed" : ""}`}/></div></div>)}
 
-                <div className="hidden lg:grid grid-cols-[16px_32px_2fr_140px_1fr_150px_100px_16px] gap-2 px-3 py-2 mb-1">
+                <div className="hidden lg:grid grid-cols-[16px_32px_2fr_1fr_150px_100px_16px] gap-2 px-3 py-2 mb-1">
                   <div></div>
                   <div className="text-[10px] font-semibold text-gray-400 uppercase">Ronda</div>
                   <div className="text-[10px] font-semibold text-gray-400 uppercase">Clasificación</div>
-                  <div className="text-[10px] font-semibold text-gray-400 uppercase">Fecha</div>
                   <div className="text-[10px] font-semibold text-gray-400 uppercase">Notas</div>
                   <div className="text-[10px] font-semibold text-gray-400 uppercase">Próx. contacto</div>
                   <div className="text-[10px] font-semibold text-gray-400 uppercase">Hora</div>
@@ -316,19 +334,20 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate }) {
                     const editKey = id ? `edit-${id}-${j}` : `edit-${i}-${j}`
                     const isSaving = saving[saveKey]
                     const estadoValue = localEdits[editKey] ?? r.estado
+                    const proxEditKey = id ? `prox-${id}-${j}` : `prox-${i}-${j}`
                     const fechaBase = c.contactos[0]?.fecha || ""
-                    const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase)
+                    const proxFechaRaw = proxEdits[proxEditKey] ?? r.proxima_fecha
+                    const proxFecha = proxFechaRaw || calcProximaFechaLocal(r.clasificacion, fechaBase)
                     const status = getRoundStatus(r.clasificacion, r.fecha, proxFecha)
                     const noSalvable = NO_SALVABLE.has(r.clasificacion)
 
                     return (
-                      <div key={j} className="grid grid-cols-1 md:grid-cols-[16px_32px_2fr_140px_1fr_150px_100px_16px] gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 sm:py-2.5 bg-gray-50 rounded-xl items-start md:items-center">
+                      <div key={j} className="grid grid-cols-1 md:grid-cols-[16px_32px_2fr_1fr_150px_100px_16px] gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 sm:py-2.5 bg-gray-50 rounded-xl items-start md:items-center">
                         <div className="flex items-center gap-2 md:block"><div className={`w-2 h-2 rounded-full shrink-0 ${getStatusDotColor(status.type, r.clasificacion)}`} title={status.label} /><span className="md:hidden text-[11px] text-gray-500">{status.label}</span></div>
                         <span className="text-[11px] sm:text-xs font-semibold text-gray-400">{ROUND_LABELS[j]}</span>
                         <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Clasificación</label>{id ? (<div className="flex gap-1"><select value={r.clasificacion} onChange={(e) => saveRound(id, j, "clasificacion", e.target.value)} className="flex-1 min-w-0 px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]">{CLASIFICACIONES.map((opt) => (<option key={opt} value={opt}>{opt || "Sin clasificación"}</option>))}</select>{r.clasificacion === "No interesado" && (<select value={r.estado} onChange={(e) => saveRound(id, j, "estado", e.target.value)} className="flex-1 min-w-0 px-2 py-1.5 rounded-lg text-xs border border-red-200 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-400"><option value="">Motivo</option>{NO_INTERESADO_REASONS.map((motivo) => (<option key={motivo} value={motivo}>{motivo.replace("No interesado: ", "")}</option>))}</select>)}</div>) : (r.clasificacion && <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getClasificacionColor(r.clasificacion)}`}>{r.clasificacion}</span>)}</div>
-                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Fecha</label>{id ? (<input type="date" value={r.fecha ? r.fecha.split("/").reverse().join("-") : ""} onChange={(e) => { if (!e.target.value) return; const p = e.target.value.split("-"); saveRound(id, j, "fecha", `${p[2]}/${p[1]}/${p[0]}`) }} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />) : (r.fecha ? <span className="text-xs text-gray-500">{r.fecha}</span> : <span className="text-xs text-gray-300">—</span>)}</div>
                         <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Notas</label>{id ? (<input type="text" value={r.clasificacion === "No interesado" ? "" : estadoValue} onChange={(e) => { if (r.clasificacion !== "No interesado") handleEstadoChange(id, j, e.target.value) }} onBlur={(e) => { if (r.clasificacion !== "No interesado") handleEstadoBlur(id, j, e.target.value) }} placeholder={r.clasificacion === "No hubo respuesta" ? "Sin respuesta" : r.clasificacion === "No interesado" ? "" : "Agregar nota..."} className={`w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300 ${r.clasificacion === "No interesado" ? "bg-gray-100 text-gray-300 cursor-not-allowed" : "bg-white"} ${r.clasificacion ? getEstadoStyle(r.clasificacion) : ""}`} readOnly={r.clasificacion === "No interesado"} />) : (r.estado && <span className={`inline-block px-2 py-1 rounded-md text-xs border ${getEstadoStyle(r.clasificacion)}`}>{r.estado.length > 30 ? r.estado.slice(0, 30) + "…" : r.estado}</span>)}</div>
-                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Próx. contacto</label>{id ? (<input type="date" value={(() => { const fechaBase = c.contactos[0]?.fecha || ""; return (r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase)).split("/").reverse().join("-") })()} onChange={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; saveRound(id, j, "proxima_fecha", fechaStr) }} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" title="Próximo contacto (manual)"/>) : (r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "")) ? (<span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-semibold bg-orange-50 text-orange-700 border border-orange-200"><span className="text-orange-400 font-normal">Próx.:</span> {r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "")}</span>) : (<span className="text-xs text-gray-300">—</span>)}</div>
+                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Próx. contacto</label>{id ? (<input type="date" value={proxFecha ? proxFecha.split("/").reverse().join("-") : ""} onChange={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; handleProxFechaChange(id, j, fechaStr) }} onBlur={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; handleProxFechaBlur(id, j, fechaStr) }} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" title="Próximo contacto (manual)"/>) : (r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "")) ? (<span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-semibold bg-orange-50 text-orange-700 border border-orange-200"><span className="text-orange-400 font-normal">Próx.:</span> {r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "")}</span>) : (<span className="text-xs text-gray-300">—</span>)}</div>
                         <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Hora</label>{j > 0 && id ? (<input type="time" value={r.hora_proximo_contacto || ""} onChange={(e) => saveRound(id, j, "hora_proximo_contacto", e.target.value)} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />) : (<span className="text-xs text-gray-300">—</span>)}</div>
                         <div className="flex items-center gap-1">{noSalvable && <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-50 text-red-700 border border-red-200">No salvable</span>}{isSaving && <svg className="w-3 h-3 animate-spin text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>}</div>
                       </div>

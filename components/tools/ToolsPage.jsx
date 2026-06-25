@@ -230,6 +230,11 @@ export default function ToolsPage() {
     }
   }, [contacts])
 
+  const compradoresCount = useMemo(() => {
+    if (!contacts) return 0
+    return contacts.filter((c) => c.contactos.some((r) => r.clasificacion === "Comprador")).length
+  }, [contacts])
+
   const filteredContacts = useMemo(() => {
     if (!contacts) return null
     let result = contacts
@@ -241,6 +246,12 @@ export default function ToolsPage() {
           c.nombre.toLowerCase().includes(q) ||
           c.celular.toLowerCase().includes(q) ||
           c.email.toLowerCase().includes(q)
+      )
+    }
+
+    if (!clasifFilter) {
+      result = result.filter((c) =>
+        !c.contactos.some((r) => r.clasificacion === "Comprador")
       )
     }
 
@@ -388,12 +399,15 @@ export default function ToolsPage() {
             <div className="flex items-center gap-1 sm:gap-2 min-w-0">
               <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain rounded shrink-0" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
               <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">{profile?.company_name || "GrupoStart Tools"}</span>
-              {contacts && (
-                <span className="hidden sm:inline text-xs text-gray-400 ml-2 shrink-0">· {fileName}</span>
-              )}
               <div className="hidden md:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
-                <Link href="/" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
-                  Inicio
+                <Link href="/tools" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Contactos
+                </Link>
+                <Link href="/tools/estadistica" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Estadística
+                </Link>
+                <Link href="/tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Tutoriales
                 </Link>
                 <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Perfil
@@ -635,6 +649,9 @@ export default function ToolsPage() {
                 {filteredContacts && filteredContacts.length < contacts.length
                   ? `${filteredContacts.length} de ${contacts.length} contactos`
                   : `${contacts.length} contactos`}
+                {!clasifFilter && compradoresCount > 0 && (
+                  <span className="text-xs text-gray-300"> · <span className="text-green-500 font-medium">{compradoresCount}</span> ventas ocultas — <button onClick={() => setClasifFilter("Comprador")} className="text-[#0051FF] hover:underline">ver</button></span>
+                )}
               </p>
               <div className="flex items-center gap-2">
                 <span className="hidden sm:inline text-[10px] text-gray-300">Hacé clic en un contacto para ver sus rondas de seguimiento</span>
@@ -695,23 +712,22 @@ export default function ToolsPage() {
       </button>
 
       <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-3 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 sm:gap-4 min-w-0">
-            <span className="text-[10px] sm:text-xs text-gray-400 whitespace-nowrap">© {new Date().getFullYear()}</span>
-            <span className="text-[10px] sm:text-xs text-gray-300 hidden xs:inline">·</span>
-            <a href="mailto:grupostart.seguimiento@gmail.com" className="text-[10px] sm:text-xs text-gray-400 hover:text-[#0051FF] transition-colors truncate">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
+          <span className="text-xs sm:text-sm text-gray-400 whitespace-nowrap">© {new Date().getFullYear()}</span>
+          <div className="flex items-center gap-3 sm:gap-5">
+            <a href="mailto:grupostart.seguimiento@gmail.com" className="text-xs sm:text-sm text-gray-400 hover:text-[#0051FF] transition-colors truncate">
               grupostart.seguimiento@gmail.com
             </a>
-          </div>
-          <button
+            <button
             onClick={() => setShowSuggestModal(true)}
-            className="flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors shrink-0"
+            className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-[#0051FF] bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors shrink-0"
           >
-            <svg className="w-3 h-3 sm:w-3.5 sm:h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
             </svg>
             <span className="hidden sm:inline">Realizar sugerencia</span>
           </button>
+          </div>
         </div>
       </footer>
     </>
