@@ -197,3 +197,48 @@ section {
     padding: 40px;
   }
 }
+
+/* ===== LANDING2 NEON THEME ===== */
+
+/* Botones CTA con borde neón */
+.btn-neon {
+  border: 2px solid #00F74C;
+  background: rgba(0, 247, 76, 0.1);
+  color: #FFFFFF;
+  font-weight: 800;
+  border-radius: 100px;
+  padding: 12px 28px;
+  font-family: 'Schibsted Grotesk', sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-neon:hover {
+  background: rgba(0, 247, 76, 0.2);
+  box-shadow: 0 0 30px rgba(0, 247, 76, 0.6), inset 0 0 20px rgba(0, 247, 76, 0.1);
+  transform: translateY(-2px);
+}
+
+.btn-neon:active {
+  background: rgba(0, 247, 76, 0.15);
+  transform: translateY(0);
+  box-shadow: 0 0 20px rgba(0, 247, 76, 0.4);
+}
+
+/* Secciones con fondo oscuro */
+.section-dark {
+  background: #050807;
+  color: #FFFFFF;
+}
+
+.section-dark-card {
+  background: #0F1512;
+  border: 1px solid #2A3035;
+}
