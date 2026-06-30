@@ -5,8 +5,9 @@ export async function POST(req) {
         const body = await req.json()
         const { uid, email } = body
         const host = req.headers.get("host") || ""
+        const protocol = req.headers.get("x-forwarded-proto") || "https"
         const isLocal = host.includes("localhost") || host.includes("127.0.0.1")
-        const backUrl = `https://${isLocal ? "grupo-start.vercel.app" : host}/payment/success`
+        const backUrl = `${protocol}://${isLocal ? "grupo-start.vercel.app" : host}/payment/success`
 
         const preapprovalBody = {
             reason: "Sistema de Seguimiento de Leads - GrupoStart",
@@ -24,7 +25,8 @@ export async function POST(req) {
         const response = await preApproval.create({ body: preapprovalBody })
         return Response.json(response)
     } catch (error) {
-        console.error("PreApproval error:", error)
-        return Response.json({ error: error.message || "Error desconocido" }, { status: 500 })
+        console.error("PreApproval error:", JSON.stringify(error, null, 2))
+        const errorMsg = error?.message || error?.error || JSON.stringify(error) || "Error desconocido"
+        return Response.json({ error: errorMsg }, { status: 500 })
     }
 }

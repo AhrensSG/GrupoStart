@@ -18,7 +18,6 @@ export function Sidebar({
             ${price}
             <span className="text-lg text-gray-600">/mes</span>
           </div>
-          <p className="text-sm text-gray-600">Acceso de por vida</p>
         </div>
 
         <CTAButton variant="primary" size="lg" className="w-full mb-4" onClick={onSubscribe}>

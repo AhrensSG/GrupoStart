@@ -36,7 +36,7 @@ export default function LandingPage() {
       if (data.init_point) {
         window.location.href = data.init_point;
       } else {
-        alert("Error al generar la suscripción. Intentalo de nuevo.");
+        alert(data.error ? `Error: ${data.error}` : "Error al generar la suscripción. Intentalo de nuevo.");
       }
     } catch {
       alert("Error al conectar con el sistema de pagos.");
