@@ -10,7 +10,7 @@ export async function POST(req) {
         const backUrl = `${protocol}://${isLocal ? "grupo-start.vercel.app" : host}/payment/success`
 
         const preapprovalBody = {
-            reason: "Sistema de Seguimiento de Leads - GrupoStart",
+            reason: "Seguimiento Leads - GrupoStart",
             external_reference: uid || "plan-seguimiento-leads",
             back_url: backUrl,
             auto_recurring: {
