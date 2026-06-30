@@ -14,7 +14,7 @@ export default function SolutionSection({ onSubscribe }) {
     {
       number: "02",
       title: "Fechas en piloto automático",
-      description: "El sistema calcula automáticamente la próxima fecha de contacto según la clasificación del lead.",
+      description: "El sistema calcula automáticamente la próxima fecha de contacto según la clasificación del lead, personalizable si lo necesitas.",
       icon: "🤖",
     },
     {
@@ -26,13 +26,13 @@ export default function SolutionSection({ onSubscribe }) {
     {
       number: "04",
       title: "Estadísticas en tiempo real",
-      description: "Ventas por mes, tasa de conversión, pipeline de ventas y motivos de pérdida. Todo medido.",
+      description: "Ventas por mes, tasa de conversión. Todo medido para que tomes decisiones con datos reales.",
       icon: "📈",
     },
     {
       number: "05",
       title: "Recordatorios automáticos",
-      description: "Alarmas visuales que te avisan cuándo es momento de contactar a cada lead. Nunca más se te pasa uno.",
+      description: "Alarmas visuales y en tu teléfono para que sepas cuándo volver a contactar a cada lead.",
       icon: "⏰",
     },
   ]
@@ -81,7 +81,7 @@ export default function SolutionSection({ onSubscribe }) {
           </div>
 
           <div className="text-center mt-16">
-            <CTAButtonNeon text="Suscribirme Ahora" size="lg" icon={<Zap className="w-5 h-5" />} onClick={onSubscribe} />
+            <CTAButtonNeon text="Suscribirme Ahora" size="lg" icon={<Zap className="w-6 h-6" />} onClick={onSubscribe} className="!text-2xl !px-12 !py-6 !rounded-full" />
           </div>
         </div>
       </div>

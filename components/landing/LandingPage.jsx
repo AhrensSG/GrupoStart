@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useContext } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useContext, useEffect, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Context } from "@/app/context/GlobalContext";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
@@ -18,10 +18,12 @@ export default function LandingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const user = state?.user;
+  const searchParams = useSearchParams();
+  const subRef = useRef(false);
 
   const handleSubscribe = async () => {
     if (!user) {
-      router.push("/login?redirect=/landing");
+      router.push("/login?redirect=" + encodeURIComponent("/landing?subscribe=1"));
       return;
     }
 
@@ -44,6 +46,15 @@ export default function LandingPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (searchParams.get("subscribe") === "1" && user && !subRef.current) {
+      subRef.current = true;
+      window.history.replaceState({}, "", window.location.pathname);
+      handleSubscribe();
+    }
+  }, [searchParams, user]);
+
   const detailsContent = (
     <div className="space-y-8">
       <div>

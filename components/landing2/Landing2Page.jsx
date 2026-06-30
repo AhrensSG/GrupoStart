@@ -46,7 +46,7 @@ export default function Landing2Page() {
     <div className="min-h-screen bg-[#050807]">
       <Header onSubscribe={handleSubscribe} />
       <HeroSection onSubscribe={handleSubscribe} />
-      <ProblemSection />
+      <ProblemSection onSubscribe={handleSubscribe} />
       <SolutionSection onSubscribe={handleSubscribe} />
       <CTASection onSubscribe={handleSubscribe} />
       <Footer />

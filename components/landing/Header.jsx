@@ -31,12 +31,6 @@ export function Header() {
             </a>
           </nav>
 
-          <div className="hidden md:flex items-center gap-4">
-            <a href="#comprar" className="px-6 py-2 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue-dark transition-colors">
-              Comprar Ahora
-            </a>
-          </div>
-
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="md:hidden p-2 hover:bg-gray-100 rounded-lg"
@@ -71,9 +65,6 @@ export function Header() {
               onClick={() => setMobileMenuOpen(false)}
             >
               Preguntas
-            </a>
-            <a href="#comprar" className="w-full block px-4 py-2 bg-brand-blue text-white font-semibold rounded-lg hover:bg-brand-blue-dark transition-colors text-center">
-              Comprar Ahora
             </a>
           </nav>
         )}
