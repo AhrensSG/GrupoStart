@@ -1,5 +1,8 @@
 "use client";
 
+import { useState, useContext } from "react";
+import { useRouter } from "next/navigation";
+import { Context } from "@/app/context/GlobalContext";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { Sidebar } from "./Sidebar";
@@ -11,6 +14,36 @@ import { MobileBottomBar } from "./MobileBottomBar";
 import { productData } from "./productData";
 
 export default function LandingPage() {
+  const { state } = useContext(Context);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const user = state?.user;
+
+  const handleSubscribe = async () => {
+    if (!user) {
+      router.push("/login?redirect=/landing");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const res = await fetch("/api/routes/preapproval/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: user.id, email: user.email }),
+      });
+      const data = await res.json();
+      if (data.init_point) {
+        window.location.href = data.init_point;
+      } else {
+        alert("Error al generar la suscripción. Intentalo de nuevo.");
+      }
+    } catch {
+      alert("Error al conectar con el sistema de pagos.");
+    } finally {
+      setLoading(false);
+    }
+  };
   const detailsContent = (
     <div className="space-y-8">
       <div>
@@ -73,6 +106,7 @@ export default function LandingPage() {
               rating={productData.rating}
               totalReviews={productData.totalReviews}
               isBestRated={productData.isBestRated}
+              onSubscribe={handleSubscribe}
             />
 
             <ContentSection
@@ -90,10 +124,9 @@ export default function LandingPage() {
               price={productData.price}
               rating={productData.rating}
               totalReviews={productData.totalReviews}
-              studentCount={productData.studentCount}
-              category={productData.category}
               guarantee={productData.guarantee}
               features={productData.detailsContent.whatYouGet}
+              onSubscribe={handleSubscribe}
             />
           </div>
         </div>
@@ -103,12 +136,19 @@ export default function LandingPage() {
         price={productData.price}
         currency={productData.currency}
         billingPeriod={productData.billingPeriod}
-        onCtaClick={() => {
-          document.getElementById("comprar")?.scrollIntoView({ behavior: "smooth" });
-        }}
+        onSubscribe={handleSubscribe}
       />
 
       <Footer />
+      {loading && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4 shadow-2xl">
+            <div className="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+            <p className="text-gray-900 font-semibold">Procesando suscripción...</p>
+            <p className="text-gray-600 text-sm mt-2">Redirigiendo a Mercado Pago</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Check, Users, Zap } from "lucide-react";
+import { Check } from "lucide-react";
 import { RatingBadge } from "./RatingBadge";
 import { CTAButton } from "./CTAButton";
 
@@ -6,10 +6,9 @@ export function Sidebar({
   price,
   rating,
   totalReviews,
-  studentCount,
-  category,
   guarantee = "7 días de garantía",
   features = [],
+  onSubscribe,
 }) {
   return (
     <div id="comprar" className="sticky top-20 space-y-6" data-section="comprar">
@@ -22,8 +21,8 @@ export function Sidebar({
           <p className="text-sm text-gray-600">Acceso de por vida</p>
         </div>
 
-        <CTAButton variant="primary" size="lg" className="w-full mb-4">
-          Ir al carrito
+        <CTAButton variant="primary" size="lg" className="w-full mb-4" onClick={onSubscribe}>
+          Adquiere ahora
         </CTAButton>
 
         <div className="mb-6 pb-6 border-b border-gray-200">
@@ -39,16 +38,6 @@ export function Sidebar({
             <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
             <span className="text-sm text-gray-700">{guarantee}</span>
           </div>
-          <div className="flex items-center gap-3">
-            <Users className="w-5 h-5 text-brand-blue flex-shrink-0" />
-            <span className="text-sm text-gray-700">
-              +{studentCount} estudiantes
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <Zap className="w-5 h-5 text-orange-500 flex-shrink-0" />
-            <span className="text-sm text-gray-700">{category}</span>
-          </div>
 
           {features.map((feature, index) => (
             <div key={index} className="flex items-center gap-3">
@@ -58,10 +47,6 @@ export function Sidebar({
           ))}
         </div>
       </div>
-
-      <CTAButton variant="outline" size="lg" className="w-full">
-        Más información
-      </CTAButton>
     </div>
   );
 }

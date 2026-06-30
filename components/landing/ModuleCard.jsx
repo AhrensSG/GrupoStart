@@ -7,20 +7,14 @@ export function ModuleCard({
   moduleNumber,
   title,
   description,
-  isExpanded = false,
-  onToggle,
+  fullDescription,
 }) {
-  const [expanded, setExpanded] = useState(isExpanded);
-
-  const handleToggle = () => {
-    setExpanded(!expanded);
-    onToggle?.();
-  };
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
       <button
-        onClick={handleToggle}
+        onClick={() => setExpanded(!expanded)}
         className="w-full flex items-center justify-between p-4 bg-white hover:bg-gray-50 transition-colors"
       >
         <div className="flex items-center gap-4 text-left">
@@ -41,9 +35,9 @@ export function ModuleCard({
         />
       </button>
 
-      {expanded && description && (
+      {expanded && (fullDescription || description) && (
         <div className="px-4 pb-4 bg-gray-50 border-t border-gray-200">
-          <p className="text-gray-700 text-sm leading-relaxed">{description}</p>
+          <p className="text-gray-700 text-sm leading-relaxed">{fullDescription || description}</p>
         </div>
       )}
     </div>

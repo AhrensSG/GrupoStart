@@ -6,7 +6,7 @@ export function MobileBottomBar({
   price,
   currency = "ARS",
   billingPeriod = "mes",
-  onCtaClick,
+  onSubscribe,
 }) {
   return (
     <>
@@ -20,11 +20,11 @@ export function MobileBottomBar({
             </div>
           </div>
           <button
-            onClick={onCtaClick}
+            onClick={onSubscribe}
             className="flex-1 bg-brand-blue hover:bg-brand-blue-dark text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <ShoppingCart className="w-5 h-5" />
-            Ir al carrito
+            Adquiere ahora
           </button>
         </div>
       </div>
