@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import LandingPage from "@/components/landing/LandingPage";
 
 export const metadata = {
@@ -6,5 +7,9 @@ export const metadata = {
 };
 
 export default function Landing() {
-  return <LandingPage />;
+  return (
+    <Suspense fallback={<div />}>
+      <LandingPage />
+    </Suspense>
+  );
 }
