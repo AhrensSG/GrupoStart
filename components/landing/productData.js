@@ -164,8 +164,8 @@ export const productData = {
     howItWorks: [
       "Agrega tus contactos al dashboard",
       "Clasifica el nivel de interés (Interesado, Potencial cliente, No interesado)",
-      "3 - El sistema genera fechas automáticas de seguimiento, personalizables si lo necesitas.",
-      "4 - Recibe alarmas visuales y en tu teléfono cuando llega el momento de contactar",
+      "El sistema genera fechas automáticas de seguimiento, personalizables si lo necesitas.",
+      "Recibe alarmas visuales y en tu teléfono cuando llega el momento de contactar",
       "Utiliza los copys sugeridos para cada etapa",
       "Toma decisiones basadas en estadísticas en tiempo real",
     ],
