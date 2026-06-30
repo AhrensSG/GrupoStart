@@ -25,11 +25,6 @@ export function Footer() {
                   Precios
                 </a>
               </li>
-              <li>
-                <a href="#testimonios" className="hover:text-white transition-colors">
-                  Garantía
-                </a>
-              </li>
             </ul>
           </div>
 
