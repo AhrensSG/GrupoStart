@@ -337,9 +337,9 @@ export default function EstadisticaPage() {
             </ChartCard>
           </div>
 
-          <ChartCard title="Pipeline" subtitle="Estado actual de contactos">
+          <ChartCard title="Estado actual de contactos">
             {stats.pipelineData.length > 0 ? (
-              <div className="flex flex-col items-center">
+              <div className="flex flex-col items-center justify-center min-h-[220px]">
                 <ResponsiveContainer width="100%" height={200}>
                   <PieChart>
                     <Pie
