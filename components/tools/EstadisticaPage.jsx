@@ -11,6 +11,8 @@ import {
 const MONTHS = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
 const DAYS = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
 
+const CLASIFICACIONES = ["Pendiente", "Interesado", "Potencial cliente", "Comprador", "No interesado", "No hubo respuesta"]
+
 const PIE_COLORS = {
   "Comprador": "#22c55e",
   "Interesado": "#3b82f6",
@@ -62,6 +64,7 @@ export default function EstadisticaPage() {
 
   const [contacts, setContacts] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [selectedClasif, setSelectedClasif] = useState("Interesado")
 
   useEffect(() => {
     if (!user?.id) return
@@ -225,6 +228,20 @@ export default function EstadisticaPage() {
       tasa: roundConversion[i] > 0 ? ((roundSuccess[i] / roundConversion[i]) * 100).toFixed(1) : "0.0",
     }))
 
+    const roundByClasif = {}
+    for (const cls of CLASIFICACIONES) {
+      roundByClasif[cls] = [0, 0, 0, 0, 0]
+    }
+    for (const c of contacts) {
+      if (!c.contactos) continue
+      for (let j = 0; j < c.contactos.length && j < 5; j++) {
+        const r = c.contactos[j]
+        if (r.clasificacion && roundByClasif[r.clasificacion]) {
+          roundByClasif[r.clasificacion][j]++
+        }
+      }
+    }
+
     return {
       total,
       compradores,
@@ -244,6 +261,7 @@ export default function EstadisticaPage() {
       pipelineData,
       noInteresadoData,
       roundData,
+      roundByClasif,
     }
   }, [contacts])
 
@@ -461,6 +479,25 @@ export default function EstadisticaPage() {
             </div>
           </ChartCard>
         </div>
+
+        <ChartCard title="Clasificación por ronda">
+          <div className="mb-4">
+            <select value={selectedClasif} onChange={(e) => setSelectedClasif(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] bg-white">
+              {CLASIFICACIONES.map((cls) => (
+                <option key={cls} value={cls}>{cls}</option>
+              ))}
+            </select>
+          </div>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={roundLabels.map((name, i) => ({ name, cantidad: stats.roundByClasif[selectedClasif]?.[i] || 0 }))}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 11, fill: "#9ca3af" }} axisLine={false} tickLine={false} allowDecimals={false} />
+              <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #e5e7eb", boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }} />
+              <Bar dataKey="cantidad" name="Contactos" radius={[6, 6, 0, 0]} maxBarSize={48} fill={PIE_COLORS[selectedClasif] || "#6b7280"} />
+            </BarChart>
+          </ResponsiveContainer>
+        </ChartCard>
 
         {stats.noInteresadoData.length > 0 && (
           <ChartCard title="Motivos de No interesado" subtitle="Análisis de pérdidas">
