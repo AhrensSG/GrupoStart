@@ -395,13 +395,13 @@ export default function ToolsPage() {
           action: () => setShowProfileModal(true),
         })
       }
-      if (!profile.whatsapp_api_url || !profile.whatsapp_api_token) {
+      if (!user?.phone) {
         items.push({
           id: "whatsapp",
           type: "warning",
-          title: "WhatsApp API pendiente",
-          message: "Configurá la integración de WhatsApp para recibir notificaciones en tu teléfono.",
-          action: () => setShowProfileModal(true),
+          title: "Teléfono no configurado",
+          message: "Completá tu número de teléfono para recibir notificaciones y recordatorios automáticos.",
+          action: () => router.push("/user"),
         })
       }
     }
