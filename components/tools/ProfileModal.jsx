@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 
-export default function ProfileModal({ onClose, onSaved, userId }) {
+export default function ProfileModal({ onClose, onSaved, userId, userPhone }) {
   const [horarioRanges, setHorarioRanges] = useState([{ ingreso: "09:00", salida: "18:00" }])
-  const [telefono, setTelefono] = useState("")
+  const [telefono, setTelefono] = useState(userPhone || "")
   const [companyName, setCompanyName] = useState("")
   const [companyLogo, setCompanyLogo] = useState("")
   const [saving, setSaving] = useState(false)
@@ -28,6 +28,7 @@ export default function ProfileModal({ onClose, onSaved, userId }) {
         if (data.company_name) setCompanyName(data.company_name)
         if (data.company_logo) setCompanyLogo(data.company_logo)
         if (data.telefono) setTelefono(data.telefono)
+        else if (userPhone) setTelefono(userPhone)
       })
       .catch(() => {})
   }, [])

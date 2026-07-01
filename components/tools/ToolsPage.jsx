@@ -947,6 +947,7 @@ export default function ToolsPage() {
       {showProfileModal && (
         <ProfileModal
           userId={user.id}
+          userPhone={user?.phone}
           onClose={() => setShowProfileModal(false)}
           onSaved={() => {
             setShowProfileModal(false)
