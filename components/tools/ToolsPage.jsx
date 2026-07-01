@@ -45,6 +45,8 @@ export default function ToolsPage() {
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [showProfileModal, setShowProfileModal] = useState(false)
   const [showSuggestModal, setShowSuggestModal] = useState(false)
+  const [viewMode, setViewMode] = useState("active")
+  const [trashContacts, setTrashContacts] = useState(null)
   const [subscribed, setSubscribed] = useState(null)
   const [subLoading, setSubLoading] = useState(true)
 
@@ -52,7 +54,7 @@ export default function ToolsPage() {
   const [clasifFilter, setClasifFilter] = useState("")
   const [periodFilter, setPeriodFilter] = useState("")
   const [minRoundsFilter, setMinRoundsFilter] = useState(0)
-  const [sortProxima, setSortProxima] = useState(false)
+  const [sortOrder, setSortOrder] = useState("")
   const [showFilters, setShowFilters] = useState(false)
   const [showScrollBtn, setShowScrollBtn] = useState(false)
   const [profile, setProfile] = useState(null)
@@ -122,6 +124,14 @@ export default function ToolsPage() {
       })
   }, [user])
 
+  function getLastClasificacion(contactos) {
+    for (let j = contactos.length - 1; j >= 0; j--) {
+      const r = contactos[j]
+      if (r.clasificacion && r.clasificacion !== "Pendiente") return r.clasificacion
+    }
+    return null
+  }
+
   function getNextProximaFecha(contactos) {
     for (let j = contactos.length - 1; j >= 0; j--) {
       const r = contactos[j]
@@ -143,6 +153,17 @@ export default function ToolsPage() {
     } catch {
     } finally {
       setPageLoading(false)
+    }
+  }
+
+  const fetchTrash = async () => {
+    try {
+      const res = await fetch(`/api/tools/contacts/trash?uid=${user.id}`)
+      if (!res.ok) throw new Error()
+      const data = await res.json()
+      setTrashContacts(data)
+    } catch {
+      setTrashContacts([])
     }
   }
 
@@ -181,6 +202,32 @@ export default function ToolsPage() {
       }
       reader.readAsArrayBuffer(file)
     })
+  }
+
+  const handlePin = async (id) => {
+    if (!contacts) return
+    const contact = contacts.find((c) => c.id === id)
+    if (!contact) return
+    const newPinned = !contact.pinned
+
+    setContacts((prev) => {
+      if (!prev) return prev
+      return prev.map((c) =>
+        c.id === id ? { ...c, pinned: newPinned } : c
+      )
+    })
+
+    try {
+      const res = await fetch(`/api/tools/contacts/${id}?uid=${user.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pinned: newPinned }),
+      })
+      if (!res.ok) throw new Error()
+      fetchContacts()
+    } catch {
+      fetchContacts()
+    }
   }
 
   const handleDelete = async (id) => {
@@ -225,12 +272,11 @@ export default function ToolsPage() {
     const clasificaciones = new Map()
     const noInteresadoStats = new Map()
     for (const c of contacts) {
-      for (const r of c.contactos) {
-        if (r.clasificacion) {
-          clasificaciones.set(r.clasificacion, (clasificaciones.get(r.clasificacion) || 0) + 1)
-          if (r.clasificacion.startsWith("No interesado")) {
-            noInteresadoStats.set(r.clasificacion, (noInteresadoStats.get(r.clasificacion) || 0) + 1)
-          }
+      const last = getLastClasificacion(c.contactos)
+      if (last) {
+        clasificaciones.set(last, (clasificaciones.get(last) || 0) + 1)
+        if (last.startsWith("No interesado")) {
+          noInteresadoStats.set(last, (noInteresadoStats.get(last) || 0) + 1)
         }
       }
     }
@@ -248,7 +294,7 @@ export default function ToolsPage() {
 
   const compradoresCount = useMemo(() => {
     if (!contacts) return 0
-    return contacts.filter((c) => c.contactos.some((r) => r.clasificacion === "Comprador")).length
+    return contacts.filter((c) => getLastClasificacion(c.contactos) === "Comprador").length
   }, [contacts])
 
   const filteredContacts = useMemo(() => {
@@ -309,8 +355,12 @@ export default function ToolsPage() {
       })
     }
 
-    if (sortProxima) {
-      result = [...result].sort((a, b) => {
+    result = [...result].sort((a, b) => {
+      if (a.pinned && !b.pinned) return -1
+      if (!a.pinned && b.pinned) return 1
+      if (!sortOrder) return 0
+      if (sortOrder === "az") return a.nombre.localeCompare(b.nombre)
+      if (sortOrder === "proxima") {
         const fechaA = getNextProximaFecha(a.contactos)
         const fechaB = getNextProximaFecha(b.contactos)
         if (!fechaA && !fechaB) return 0
@@ -319,17 +369,24 @@ export default function ToolsPage() {
         const [dA, mA, yA] = fechaA.split("/").map(Number)
         const [dB, mB, yB] = fechaB.split("/").map(Number)
         return (yA - yB) || (mA - mB) || (dA - dB)
-      })
-    }
+      }
+      if (sortOrder === "carga") {
+        const dateA = a.created_at ? new Date(a.created_at) : new Date(0)
+        const dateB = b.created_at ? new Date(b.created_at) : new Date(0)
+        return dateA - dateB
+      }
+      return 0
+    })
 
     return result
-  }, [contacts, searchText, clasifFilter, periodFilter, minRoundsFilter, sortProxima])
+  }, [contacts, searchText, clasifFilter, periodFilter, minRoundsFilter, sortOrder])
 
   const notifications = useMemo(() => {
     const items = []
 
     if (profile) {
-      if (!profile.hora_ingreso || !profile.hora_salida) {
+      const hasHorario = profile.horario_ranges ? (() => { try { return JSON.parse(profile.horario_ranges).length > 0 } catch { return false } })() : (profile.hora_ingreso && profile.hora_salida)
+      if (!hasHorario) {
         items.push({
           id: "horario",
           type: "warning",
@@ -392,7 +449,7 @@ export default function ToolsPage() {
     return items
   }, [contacts, profile])
 
-  const activeFilters = [searchText, clasifFilter, periodFilter, minRoundsFilter, sortProxima].some(
+  const activeFilters = [searchText, clasifFilter, periodFilter, minRoundsFilter, sortOrder].some(
     (f) => f !== "" && f !== 0 && f !== false
   )
 
@@ -481,11 +538,11 @@ export default function ToolsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 sm:h-14 flex items-center justify-between">
             <div className="flex items-center gap-1 sm:gap-2 min-w-0">
               <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain rounded shrink-0" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
-              <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">{profile?.company_name || "GrupoStart Tools"}</span>
+              <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">{profile?.company_name || (!profile?.company_logo ? user?.email : "GrupoStart Tools")}</span>
               <div className="hidden md:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
-                <Link href="/tools" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                <button onClick={() => setViewMode("active")} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "active" ? "text-[#0051FF] bg-blue-50 font-semibold" : "text-gray-400 hover:text-[#0051FF] hover:bg-blue-50"}`}>
                   Contactos
-                </Link>
+                </button>
                 <Link href="/tools/estadistica" id="link-estadistica" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Estadística
                 </Link>
@@ -495,6 +552,9 @@ export default function ToolsPage() {
                 <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Perfil
                 </Link>
+                <button onClick={() => { setViewMode("trash"); fetchTrash() }} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "trash" ? "text-red-500 bg-red-50 font-semibold" : "text-gray-400 hover:text-red-500 hover:bg-red-50"}`}>
+                  Papelera
+                </button>
               </div>
             </div>
             <div className="flex items-center gap-1 sm:gap-2">
@@ -654,6 +714,7 @@ export default function ToolsPage() {
           </div>
         ) : (
           <div className="space-y-4">
+            {viewMode === "active" && (
             <div className="bg-white rounded-2xl border border-gray-100 p-3 sm:p-4">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="relative flex-1 min-w-[200px]">
@@ -674,10 +735,8 @@ export default function ToolsPage() {
                   <button
                     id="btn-filters"
                     onClick={() => setShowFilters(!showFilters)}
-                    className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-colors ${
-                      activeFilters
-                        ? "bg-[#0051FF] border-[#0051FF] text-white shadow-sm"
-                        : "border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                    className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-colors bg-[#0051FF] border-[#0051FF] text-white shadow-sm ${
+                      activeFilters ? "" : "opacity-80 hover:opacity-100"
                     }`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -750,31 +809,22 @@ export default function ToolsPage() {
                       </div>
 
                       <div>
-                        <button
-                          onClick={() => setSortProxima(!sortProxima)}
-                          className={`w-full flex items-center justify-between gap-1.5 px-3 py-2 text-sm rounded-lg border transition-colors ${
-                            sortProxima
-                              ? "bg-orange-50 border-orange-200 text-orange-700 font-medium"
-                              : "border-gray-200 text-gray-500 hover:border-orange-200 hover:text-orange-600"
-                          }`}
+                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Ordenar</label>
+                        <select
+                          value={sortOrder}
+                          onChange={(e) => setSortOrder(e.target.value)}
+                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
                         >
-                          <span className="flex items-center gap-1.5">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            Próx. contacto
-                          </span>
-                          {sortProxima && (
-                            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                            </svg>
-                          )}
-                        </button>
+                          <option value="">Sin orden</option>
+                          <option value="az">A → Z</option>
+                          <option value="proxima">Próx. contacto</option>
+                          <option value="carga">Fecha de carga</option>
+                        </select>
                       </div>
 
                       {activeFilters && (
                         <button
-                          onClick={() => { setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortProxima(false); setShowFilters(false) }}
+                          onClick={() => { setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortOrder(""); setShowFilters(false) }}
                           className="w-full px-3 py-2 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center gap-1 border-t border-gray-100 pt-3"
                         >
                           <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -788,24 +838,85 @@ export default function ToolsPage() {
                 </div>
               </div>
             </div>
+            )}
 
-            <div className="flex items-center justify-between">
-              <p className="text-xs sm:text-sm text-gray-500">
-                {filteredContacts && filteredContacts.length < contacts.length
-                  ? `${filteredContacts.length} de ${contacts.length} contactos`
-                  : `${contacts.length} contactos`}
-                {!clasifFilter && compradoresCount > 0 && (
-                  <span className="text-xs text-gray-300"> · <span className="text-green-500 font-medium">{compradoresCount}</span> ventas ocultas — <button onClick={() => setClasifFilter("Comprador")} className="text-[#0051FF] hover:underline">ver</button></span>
-                )}
-              </p>
-              <div className="flex items-center gap-2">
-                <span className="hidden sm:inline text-[10px] text-gray-300">Hacé clic en un contacto para ver sus rondas de seguimiento</span>
-              </div>
-            </div>
+            {viewMode === "trash" ? (
+              <>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    {trashContacts ? `${trashContacts.length} contacto${trashContacts.length !== 1 ? "s" : ""} eliminado${trashContacts.length !== 1 ? "s" : ""}` : "Cargando..."}
+                  </p>
+                  {trashContacts && trashContacts.length > 0 && (
+                    <button onClick={async () => { if (!confirm("¿Vaciar papelera? No se podrá recuperar.")) return; await fetch(`/api/tools/contacts/trash?uid=${user.id}`, { method: "DELETE" }); setTrashContacts([]); fetchContacts() }} className="text-xs text-red-500 hover:text-red-600 font-medium transition-colors">
+                      Vaciar papelera
+                    </button>
+                  )}
+                </div>
+                <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm divide-y divide-gray-100">
+                  {!trashContacts ? (
+                    <div className="flex items-center justify-center py-12">
+                      <div className="animate-spin w-6 h-6 border-4 border-[#0051FF] border-t-transparent rounded-full" />
+                    </div>
+                  ) : trashContacts.length === 0 ? (
+                    <div className="text-center py-12">
+                      <svg className="w-12 h-12 text-gray-200 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                      <p className="text-sm text-gray-400">La papelera está vacía</p>
+                    </div>
+                  ) : (
+                    trashContacts.map((c) => (
+                      <div key={c.id} className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors">
+                        <div className="min-w-0 flex-1">
+                          <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{c.nombre}</p>
+                          <p className="text-xs text-gray-400 truncate">{c.celular || c.email || "Sin datos"}</p>
+                        </div>
+                        <div className="flex items-center gap-2 shrink-0 ml-3">
+                          <button
+                            onClick={async () => { await fetch(`/api/tools/contacts/trash?uid=${user.id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "restore", id: c.id }) }); setTrashContacts((prev) => prev.filter((t) => t.id !== c.id)); fetchContacts() }}
+                            className="px-3 py-1.5 text-xs font-medium text-[#0051FF] bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors flex items-center gap-1"
+                          >
+                            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                            Restaurar
+                          </button>
+                          <button
+                            onClick={async () => { if (!confirm("¿Eliminar permanentemente?")) return; await fetch(`/api/tools/contacts/trash?uid=${user.id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "permanent-delete", id: c.id }) }); setTrashContacts((prev) => prev.filter((t) => t.id !== c.id)) }}
+                            className="p-1.5 text-gray-300 hover:text-red-500 transition-colors"
+                            title="Eliminar permanentemente"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between">
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    {filteredContacts && filteredContacts.length < contacts.length
+                      ? `${filteredContacts.length} de ${contacts.length} contactos`
+                      : `${contacts.length} contactos`}
+                    {!clasifFilter && compradoresCount > 0 && (
+                      <span className="text-xs text-gray-300"> · <span className="text-green-500 font-medium">{compradoresCount}</span> ventas ocultas — <button onClick={() => setClasifFilter("Comprador")} className="text-[#0051FF] hover:underline">ver</button></span>
+                    )}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <span className="hidden sm:inline text-[10px] text-gray-300">Hacé clic en un contacto para ver sus rondas de seguimiento</span>
+                  </div>
+                </div>
 
-            <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
-              <ContactTable contacts={filteredContacts || contacts} userId={user.id} onDelete={handleDelete} onUpdate={fetchContacts} />
-            </div>
+                <div className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm">
+                  <ContactTable contacts={filteredContacts || contacts} userId={user.id} onDelete={handleDelete} onUpdate={fetchContacts} onPin={handlePin} />
+                </div>
+              </>
+            )}
           </div>
         )}
       </main>
@@ -864,8 +975,8 @@ export default function ToolsPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
           <span className="text-xs sm:text-sm text-gray-400 whitespace-nowrap">© {new Date().getFullYear()}</span>
           <div className="flex items-center gap-3 sm:gap-5">
-            <a href="mailto:grupostart.seguimiento@gmail.com" className="text-xs sm:text-sm text-gray-400 hover:text-[#0051FF] transition-colors truncate">
-              grupostart.seguimiento@gmail.com
+            <a href="mailto:support@grupostart.com.ar" className="text-xs sm:text-sm text-gray-400 hover:text-[#0051FF] transition-colors truncate">
+              support@grupostart.com.ar
             </a>
             <button
             onClick={() => setShowSuggestModal(true)}

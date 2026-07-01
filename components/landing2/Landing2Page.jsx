@@ -8,6 +8,7 @@ import HeroSection from "./HeroSection"
 import ProblemSection from "./ProblemSection"
 import SolutionSection from "./SolutionSection"
 import CTASection from "./CTASection"
+import MobileBottomBar from "./MobileBottomBar"
 import Footer from "./Footer"
 
 export default function Landing2Page() {
@@ -49,6 +50,7 @@ export default function Landing2Page() {
       <ProblemSection onSubscribe={handleSubscribe} />
       <SolutionSection onSubscribe={handleSubscribe} />
       <CTASection onSubscribe={handleSubscribe} />
+      <MobileBottomBar onSubscribe={handleSubscribe} />
       <Footer />
       {loading && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">

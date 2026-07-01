@@ -3,10 +3,7 @@
 import { useState, useEffect } from "react"
 
 export default function ProfileModal({ onClose, onSaved, userId }) {
-  const [horaIngreso, setHoraIngreso] = useState("09:00")
-  const [horaSalida, setHoraSalida] = useState("18:00")
-  const [whatsappUrl, setWhatsappUrl] = useState("")
-  const [whatsappToken, setWhatsappToken] = useState("")
+  const [horarioRanges, setHorarioRanges] = useState([{ ingreso: "09:00", salida: "18:00" }])
   const [companyName, setCompanyName] = useState("")
   const [companyLogo, setCompanyLogo] = useState("")
   const [saving, setSaving] = useState(false)
@@ -17,30 +14,51 @@ export default function ProfileModal({ onClose, onSaved, userId }) {
     fetch(`/api/tools/profile?uid=${userId}`)
       .then((r) => r.json())
       .then((data) => {
-        if (data.hora_ingreso) setHoraIngreso(data.hora_ingreso)
-        if (data.hora_salida) setHoraSalida(data.hora_salida)
-        if (data.whatsapp_api_url) setWhatsappUrl(data.whatsapp_api_url)
-        if (data.whatsapp_api_token) setWhatsappToken(data.whatsapp_api_token)
+        if (data.horario_ranges) {
+          try {
+            const parsed = JSON.parse(data.horario_ranges)
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              setHorarioRanges(parsed)
+            }
+          } catch {}
+        } else if (data.hora_ingreso && data.hora_salida) {
+          setHorarioRanges([{ ingreso: data.hora_ingreso, salida: data.hora_salida }])
+        }
         if (data.company_name) setCompanyName(data.company_name)
         if (data.company_logo) setCompanyLogo(data.company_logo)
       })
       .catch(() => {})
   }, [])
 
+  const updateRange = (index, field, value) => {
+    setHorarioRanges((prev) =>
+      prev.map((r, i) => (i === index ? { ...r, [field]: value } : r))
+    )
+  }
+
+  const addRange = () => {
+    setHorarioRanges((prev) => [...prev, { ingreso: "09:00", salida: "18:00" }])
+  }
+
+  const removeRange = (index) => {
+    setHorarioRanges((prev) => prev.filter((_, i) => i !== index))
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError("")
     setSaving(true)
+    const first = horarioRanges[0] || {}
+    const last = horarioRanges[horarioRanges.length - 1] || {}
     try {
       const res = await fetch("/api/tools/profile", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           uid: userId,
-          hora_ingreso: horaIngreso,
-          hora_salida: horaSalida,
-          whatsapp_api_url: whatsappUrl,
-          whatsapp_api_token: whatsappToken,
+          hora_ingreso: first.ingreso || "09:00",
+          hora_salida: last.salida || "18:00",
+          horario_ranges: JSON.stringify(horarioRanges),
           company_name: companyName,
           company_logo: companyLogo,
         }),
@@ -61,7 +79,7 @@ export default function ProfileModal({ onClose, onSaved, userId }) {
         <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
           <div>
             <h2 className="text-lg font-bold text-gray-900">Configuración de perfil</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Personalizá tu jornada laboral y la integración con WhatsApp</p>
+            <p className="text-xs text-gray-400 mt-0.5">Personalizá tu jornada laboral</p>
           </div>
           <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -131,50 +149,34 @@ export default function ProfileModal({ onClose, onSaved, userId }) {
                 <p className="text-xs text-gray-400">Definí tu horario para calcular días hábiles y recordatorios</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">Hora de ingreso</label>
-                <input type="time" value={horaIngreso} onChange={(e) => setHoraIngreso(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />
-                <p className="text-[10px] text-gray-400 mt-1">Hora a la que comenzás tu jornada</p>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">Hora de salida</label>
-                <input type="time" value={horaSalida} onChange={(e) => setHoraSalida(e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />
-                <p className="text-[10px] text-gray-400 mt-1">Hora a la que finalizás tu jornada</p>
-              </div>
+            <div className="space-y-3">
+              {horarioRanges.map((range, index) => (
+                <div key={index} className="flex items-end gap-3">
+                  <div className="flex-1">
+                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">Ingreso</label>
+                    <input type="time" value={range.ingreso} onChange={(e) => updateRange(index, "ingreso", e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />
+                  </div>
+                  <span className="text-sm text-gray-400 pb-2">a</span>
+                  <div className="flex-1">
+                    <label className="block text-xs font-semibold text-gray-600 mb-1.5">Salida</label>
+                    <input type="time" value={range.salida} onChange={(e) => updateRange(index, "salida", e.target.value)} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />
+                  </div>
+                  {horarioRanges.length > 1 && (
+                    <button type="button" onClick={() => removeRange(index)} className="pb-2 text-gray-400 hover:text-red-500 transition-colors">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-6 h-6 rounded-lg bg-green-50 flex items-center justify-center">
-                <svg className="w-3.5 h-3.5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-              </div>
-              <div>
-                <p className="text-sm font-semibold text-gray-900">WhatsApp API (recordatorios)</p>
-                <p className="text-xs text-gray-400">Configuración para enviar recordatorios automáticos de seguimiento</p>
-              </div>
-            </div>
-            <div className="bg-gray-50 rounded-xl p-4 space-y-3">
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">URL de la API</label>
-                <input type="text" value={whatsappUrl} onChange={(e) => setWhatsappUrl(e.target.value)} placeholder="https://api.whatsapp.com/send..." className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300" />
-                <p className="text-[10px] text-gray-400 mt-1">URL del endpoint de tu proveedor de WhatsApp API</p>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1.5">Token de la API</label>
-                <input type="password" value={whatsappToken} onChange={(e) => setWhatsappToken(e.target.value)} placeholder="Ingrese el token de autenticación" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300" />
-                <p className="text-[10px] text-gray-400 mt-1">Token de acceso para autenticar las solicitudes</p>
-              </div>
-            </div>
-            <p className="text-[10px] text-gray-400 mt-2 flex items-center gap-1">
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <button type="button" onClick={addRange} className="mt-3 flex items-center gap-1.5 text-xs font-medium text-[#0051FF] hover:text-[#0040cc] transition-colors">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
               </svg>
-              Si no configurás esto, los recordatorios se mostrarán solo en pantalla
-            </p>
+              Agregar rango horario
+            </button>
           </div>
 
           {error && (

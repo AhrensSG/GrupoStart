@@ -9,7 +9,7 @@ export async function GET(req) {
       return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
     }
     const profile = await getUserProfile(uid)
-    return NextResponse.json(profile || { hora_ingreso: "09:00", hora_salida: "18:00" })
+    return NextResponse.json(profile || { hora_ingreso: "09:00", hora_salida: "18:00", horario_ranges: "" })
   } catch (err) {
     console.error(err)
     return NextResponse.json({ error: "Error al obtener perfil" }, { status: 500 })
@@ -26,6 +26,7 @@ export async function PUT(req) {
     await updateUserProfile({
       hora_ingreso: body.hora_ingreso,
       hora_salida: body.hora_salida,
+      horario_ranges: body.horario_ranges,
       whatsapp_api_url: body.whatsapp_api_url,
       whatsapp_api_token: body.whatsapp_api_token,
       company_name: body.company_name,

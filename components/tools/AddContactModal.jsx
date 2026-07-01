@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { addBusinessDays, formatFecha, parseFecha } from "@/lib/tools/business-days"
 
 const CLASIFICACIONES = ["Pendiente", "Interesado", "Potencial cliente", "Comprador", "No interesado", "No hubo respuesta"]
@@ -43,15 +43,20 @@ function isNoSalvable(clasificacion, estado) {
   return clasificacion === "No interesado" && NO_SALVABLE_REASONS.has(estado)
 }
 
+const ROUND_NAMES = ["primer contacto", "segundo contacto", "tercer contacto", "cuarto contacto", "quinto contacto"]
+
 export default function AddContactModal({ userId, onClose, onCreated }) {
   const [nombre, setNombre] = useState("")
   const [celular, setCelular] = useState("")
   const [email, setEmail] = useState("")
-  const [redSocial, setRedSocial] = useState("")
+  const [redSocial, setRedSocial] = useState("WhatsApp")
   const [nombreUsuario, setNombreUsuario] = useState("")
   const [rounds, setRounds] = useState(Array.from({ length: 5 }, () => ({ clasificacion: "", fecha: "", estado: "", hora_proximo_contacto: "" })))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
+  const [roundDropdownOpen, setRoundDropdownOpen] = useState(false)
+  const [selectedRound, setSelectedRound] = useState(0)
+  const roundRefs = useRef([])
 
   const updateRound = (i, field, value) => {
     setRounds((prev) => {
@@ -77,8 +82,17 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
     e.preventDefault()
     setError("")
     if (!nombre.trim()) { setError("El nombre es obligatorio"); return }
+    if (!celular && !email) { setError("Debe ingresar al menos un celular o email"); return }
+    if (celular && celular.length !== 10) { setError("El celular debe tener exactamente 10 números"); return }
     setSaving(true)
     try {
+      const checkRes = await fetch(`/api/tools/contacts/check?uid=${userId}&celular=${encodeURIComponent(celular)}&email=${encodeURIComponent(email)}`)
+      const checkData = await checkRes.json()
+      if (checkData.exists) {
+        setError("El número o correo ya existe en la base de datos")
+        setSaving(false)
+        return
+      }
       const res = await fetch("/api/tools/contacts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -93,7 +107,7 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
     }
   }
 
-  const fechaBase = rounds[0]?.fecha || ""
+  const fechaBase = rounds[selectedRound]?.fecha || ""
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-8 pb-8">
@@ -101,7 +115,22 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
       <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-5xl max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
           <div><h2 className="text-lg font-bold text-gray-900">Nuevo contacto</h2><p className="text-xs text-gray-400 mt-0.5">Completá los datos del contacto y las rondas de seguimiento</p></div>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg></button>
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <button type="button" onClick={() => setRoundDropdownOpen((prev) => !prev)} className="flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-medium text-white bg-[#0051FF] hover:bg-[#0040cc] transition-colors shadow-sm">
+                {ROUND_NAMES[selectedRound]}
+                <svg className={`w-3.5 h-3.5 text-gray-400 transition-transform ${roundDropdownOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              {roundDropdownOpen && (
+                <div className="absolute right-0 top-full mt-1 w-44 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-20">
+                  {ROUND_NAMES.map((name, idx) => (
+                    <button key={idx} type="button" onClick={() => { setSelectedRound(idx); setRoundDropdownOpen(false); roundRefs.current[idx]?.scrollIntoView({ behavior: "smooth", block: "center" }) }} className={`w-full text-left px-3 py-2 text-sm transition-colors ${idx === selectedRound ? "text-white bg-[#0051FF] font-medium" : "text-gray-600 hover:bg-gray-50"}`}>{name}</button>
+                  ))}
+                </div>
+              )}
+            </div>
+            <button onClick={onClose} className="text-gray-400 hover:text-gray-600 transition-colors"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/></svg></button>
+          </div>
         </div>
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
           <div>
@@ -111,7 +140,7 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
             </div>
             <div className={`grid grid-cols-2 gap-4 ${redSocial && redSocial !== "WhatsApp" ? "md:grid-cols-5" : "md:grid-cols-4"}`}>
               <div className="md:col-span-1"><label className="block text-xs font-semibold text-gray-600 mb-1.5">Nombre completo <span className="text-red-400">*</span></label><input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Ej: Juan Pérez" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/><p className="text-[10px] text-gray-400 mt-1">Nombre y apellido del contacto</p></div>
-              <div><label className="block text-xs font-semibold text-gray-600 mb-1.5">Celular</label><input type="text" value={celular} onChange={(e) => setCelular(e.target.value)} placeholder="Ej: 11 2345-6789" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/><p className="text-[10px] text-gray-400 mt-1">WhatsApp o teléfono de contacto</p></div>
+              <div><label className="block text-xs font-semibold text-gray-600 mb-1.5">Celular <span className="text-gray-300 font-normal">(10 dígitos)</span></label><input type="text" inputMode="numeric" value={celular} onChange={(e) => setCelular(e.target.value.replace(/\D/g, "").slice(0, 10))} placeholder="Ej: 1123456789" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/><p className="text-[10px] text-gray-400 mt-1">WhatsApp o teléfono de contacto</p></div>
               <div><label className="block text-xs font-semibold text-gray-600 mb-1.5">Email</label><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Ej: correo@ejemplo.com" className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/><p className="text-[10px] text-gray-400 mt-1">Dirección de correo electrónico</p></div>
               <div><label className="block text-xs font-semibold text-gray-600 mb-1.5">Red social</label><select value={redSocial} onChange={(e) => { setRedSocial(e.target.value); if (e.target.value === "WhatsApp") setNombreUsuario("") }} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]"><option value="">Seleccionar red social</option>{REDES_SOCIALES.map((r) => (<option key={r} value={r}>{r}</option>))}</select><p className="text-[10px] text-gray-400 mt-1">Red por la que se contactó</p></div>
               {redSocial && redSocial !== "WhatsApp" && (<div><label className="block text-xs font-semibold text-gray-600 mb-1.5">Usuario en {redSocial}</label><input type="text" value={nombreUsuario} onChange={(e) => setNombreUsuario(e.target.value)} placeholder={`@usuario de ${redSocial}`} className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/><p className="text-[10px] text-gray-400 mt-1">Nombre de usuario en {redSocial}</p></div>)}
@@ -130,11 +159,12 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
               <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Hora</div>
             </div>
             <div className="space-y-1.5">
-              {rounds.map((r, i) => {
+              {[rounds[selectedRound]].map((r, idx) => {
+                const i = selectedRound
                 const prox = calcProximaFecha(r.clasificacion, r.estado, fechaBase)
                 const noSalvable = isNoSalvable(r.clasificacion, r.estado)
                 return (
-                  <div key={i} className="grid grid-cols-1 md:grid-cols-[80px_3fr_1fr_120px_85px] gap-2 p-3 bg-gray-50 rounded-xl items-start">
+                  <div key={i} ref={(el) => { roundRefs.current[i] = el }} className="grid grid-cols-1 md:grid-cols-[80px_3fr_1fr_120px_85px] gap-2 p-3 bg-gray-50 rounded-xl items-start">
                     <div className="flex items-center gap-2 md:block"><span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold text-white shrink-0 ${r.clasificacion ? "bg-[#0051FF]" : "bg-gray-300"}`}>{i + 1}</span><span className="text-xs font-semibold text-gray-500 md:hidden">{ROUND_LABELS[i]}</span></div>
                     <div className="flex gap-1.5"><select value={r.clasificacion} onChange={(e) => updateRound(i, "clasificacion", e.target.value)} className="flex-1 px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]"><option value="">Clasificación</option>{CLASIFICACIONES.map((c) => (<option key={c} value={c}>{c}</option>))}</select><select value={r.estado} onChange={(e) => updateRound(i, "estado", e.target.value)} className={`flex-1 px-2.5 py-2 border border-red-200 rounded-lg text-sm bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-400 ${r.clasificacion !== "No interesado" ? "hidden" : ""}`} style={{ display: r.clasificacion === "No interesado" ? "block" : "none" }}><option value="">Motivo</option>{NO_INTERESADO_REASONS.map((motivo) => (<option key={motivo} value={motivo}>{motivo.replace("No interesado: ", "")}</option>))}</select></div>
                     <div><input type="text" value={r.clasificacion === "No interesado" ? "" : r.estado} onChange={(e) => { if (r.clasificacion !== "No interesado") updateRound(i, "estado", e.target.value) }} placeholder={r.clasificacion === "No hubo respuesta" ? "Sin respuesta" : r.clasificacion === "No interesado" ? "" : "Notas del contacto"} className="w-full px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/></div>

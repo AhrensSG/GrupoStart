@@ -44,9 +44,7 @@ export default function CTASection({ onSubscribe }) {
             </div>
           </div>
 
-          <p className="text-sm text-[#4A5157] pt-8" style={{ fontFamily: "'Lato', sans-serif" }}>
-            *Pago procesado por Mercado Pago. Podés cancelar cuando quieras.
-          </p>
+
         </div>
       </div>
     </section>

@@ -1,4 +1,5 @@
 import { Globe, Share2 } from "lucide-react"
+import Image from "next/image"
 
 export default function Footer() {
   return (
@@ -8,10 +9,8 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-[#00F74C] to-[#05D766] rounded-lg flex items-center justify-center shadow-lg shadow-[#00F74C]/50">
-                  <span className="text-[#050807] font-bold text-sm" style={{ fontFamily: "'Schibsted Grotesk', sans-serif" }}>
-                    GS
-                  </span>
+                <div className="w-10 h-10 flex items-center justify-center">
+                  <Image src="/logoverde.png" alt="GrupoStart" width={40} height={40} className="object-contain" />
                 </div>
                 <span className="font-bold text-lg text-[#00F74C]" style={{ fontFamily: "'Schibsted Grotesk', sans-serif", fontWeight: 800 }}>
                   Grupo Start

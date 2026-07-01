@@ -6,7 +6,6 @@ export default function UploadModal({ onClose, onFile }) {
   const [dragging, setDragging] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-  const [formato, setFormato] = useState("nuevo")
   const inputRef = useRef(null)
 
   const handleFile = async (file) => {
@@ -28,19 +27,6 @@ export default function UploadModal({ onClose, onFile }) {
     const file = e.dataTransfer.files[0]
     if (file) handleFile(file)
   }
-
-  const FORMATO_NUEVO = [
-    { col: "A", nombre: "(sin usar)", desc: "Columna ignorada", ejemplo: "" },
-    { col: "B", nombre: "Nombre", desc: "Nombre completo del contacto", ejemplo: "Juan Pérez", req: true },
-    { col: "C", nombre: "Celular", desc: "WhatsApp o teléfono", ejemplo: "11 2345-6789" },
-    { col: "D", nombre: "Email", desc: "Correo electrónico", ejemplo: "juan@email.com" },
-    { col: "E", nombre: "Red social", desc: "Por dónde se contactó", ejemplo: "WhatsApp / Instagram / Facebook / Otro" },
-    { col: "F", nombre: "Nombre de usuario", desc: "Usuario en esa red", ejemplo: "@usuario" },
-    { col: "G", nombre: "1er Contacto · Clasificación", desc: "Estado comercial", ejemplo: "Interesado" },
-    { col: "H", nombre: "1er Contacto · Fecha", desc: "Fecha del contacto (dd/mm/aaaa)", ejemplo: "15/01/2026" },
-    { col: "I", nombre: "1er Contacto · Estado", desc: "Notas / resultado", ejemplo: "Pidió información" },
-    { col: "J", nombre: "1er Contacto · Hora", desc: "Hora del próximo contacto", ejemplo: "10:30" },
-  ]
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-8 pb-8">
@@ -68,23 +54,9 @@ export default function UploadModal({ onClose, onFile }) {
             </div>
             <p className="text-xs text-amber-700 mb-3">
               El archivo debe ser <strong>.csv</strong>, <strong>.xlsx</strong> o <strong>.xls</strong>.
-              El sistema detecta automáticamente el formato según la columna E.
+              El sistema detecta automáticamente el formato.
             </p>
             <div className="flex flex-wrap gap-2">
-              <button
-                onClick={() => setFormato("nuevo")}
-                className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${formato === "nuevo" ? "bg-amber-200 text-amber-900 shadow-sm" : "bg-white text-amber-600 hover:bg-amber-100"}`}
-              >
-                Formato con red social
-              </button>
-              <button
-                onClick={() => setFormato("anterior")}
-                className={`px-4 py-1.5 rounded-lg text-xs font-semibold transition-all ${formato === "anterior" ? "bg-amber-200 text-amber-900 shadow-sm" : "bg-white text-amber-600 hover:bg-amber-100"}`}
-              >
-                Formato sin red social
-              </button>
-            </div>
-            <div className="flex flex-wrap gap-2 mt-3 pt-3 border-t border-amber-200/60">
               <button
                 onClick={() => {
                   const header = ",Nombre,Celular,Email,Red social,Nombre de usuario,1er Contacto · Clasificación,1er Contacto · Fecha,1er Contacto · Estado,1er Contacto · Hora,2do Contacto · Clasificación,2do Contacto · Fecha,2do Contacto · Estado,2do Contacto · Hora,3er Contacto · Clasificación,3er Contacto · Fecha,3er Contacto · Estado,3er Contacto · Hora,4to Contacto · Clasificación,4to Contacto · Fecha,4to Contacto · Estado,4to Contacto · Hora,5to Contacto · Clasificación,5to Contacto · Fecha,5to Contacto · Estado,5to Contacto · Hora"
@@ -119,52 +91,6 @@ export default function UploadModal({ onClose, onFile }) {
                 </svg>
                 Descargar plantilla sin red social
               </button>
-            </div>
-          </div>
-
-          <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
-            <div className="bg-gradient-to-r from-gray-50 to-white px-4 py-3 border-b border-gray-200">
-              <p className="text-sm font-semibold text-gray-700">
-                {formato === "nuevo" ? "Formato con red social (columnas G en adelante)" : "Formato sin red social (columnas E en adelante)"}
-              </p>
-              <p className="text-xs text-gray-400 mt-0.5">
-                {formato === "nuevo"
-                  ? "Columnas A a F para datos, luego 4 columnas por cada ronda de contacto (G a Z)"
-                  : "Columnas A a D para datos, luego 3 columnas por cada ronda de contacto (E en adelante)"}
-              </p>
-            </div>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="bg-gray-50 border-b border-gray-200">
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Col</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Campo</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">¿Qué va acá?</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Ejemplo</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-gray-500 uppercase tracking-wider">Obligatorio</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {FORMATO_NUEVO.map((f, i) => (
-                    <tr key={i} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="px-4 py-2.5 text-xs font-mono font-semibold text-[#0051FF]">{f.col}</td>
-                      <td className="px-4 py-2.5 text-xs font-medium text-gray-700">{f.nombre}</td>
-                      <td className="px-4 py-2.5 text-xs text-gray-400">{f.desc}</td>
-                      <td className="px-4 py-2.5 text-xs text-gray-500 font-mono">{f.ejemplo || "—"}</td>
-                      <td className="px-4 py-2.5">
-                        {f.req ? (
-                          <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-50 text-red-600">Sí</span>
-                        ) : (
-                          <span className="text-[10px] text-gray-300">No</span>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <div className="bg-gray-50 px-4 py-2.5 border-t border-gray-200 text-xs text-gray-400">
-              Las rondas 2 a 5 siguen el mismo patrón (4 columnas cada una): Clasificación, Fecha, Estado, Hora.
             </div>
           </div>
 
