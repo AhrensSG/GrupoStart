@@ -7,13 +7,15 @@ import CTAButtonNeon from "./CTAButtonNeon"
 
 export default function Header({ onSubscribe }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(1800)
+  const [timeLeft, setTimeLeft] = useState(600)
+  const [showExpired, setShowExpired] = useState(false)
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer)
+          setShowExpired(true)
           return 0
         }
         return prev - 1
@@ -35,6 +37,40 @@ export default function Header({ onSubscribe }) {
 
   return (
     <div className="sticky top-0 z-50">
+      {showExpired && (
+        <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4">
+          <style>{`
+            @keyframes heartBeat {
+              0%, 100% { transform: scale(1); }
+              15% { transform: scale(1.08); }
+              30% { transform: scale(1); }
+              45% { transform: scale(1.06); }
+              60% { transform: scale(1); }
+            }
+            .btn-heartbeat {
+              animation: heartBeat 2.5s ease-in-out infinite;
+            }
+          `}</style>
+          <div className="bg-[#0F1512] border-2 border-[#00F74C] rounded-2xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl shadow-[#00F74C]/20">
+            <div className="text-5xl">⏰</div>
+            <p className="text-white text-base sm:text-lg font-semibold leading-relaxed" style={{ fontFamily: "'Schibsted Grotesk', sans-serif" }}>
+              Adquirí tu sistema de seguimiento de leads por solo <span className="text-[#00F74C] font-black">$15.000 <span className="text-sm line-through text-[#B0B5BB]">$2.500/mes</span></span> ahora antes de que la oferta caduque
+            </p>
+            <button
+              onClick={() => { setShowExpired(false); onSubscribe() }}
+              className="btn-neon btn-heartbeat px-10 py-4 text-lg w-full"
+              style={{
+                fontFamily: "'Schibsted Grotesk', sans-serif",
+                fontWeight: 800,
+                letterSpacing: "0.05em",
+                textTransform: "uppercase",
+              }}
+            >
+              Comenzar ahora
+            </button>
+          </div>
+        </div>
+      )}
       <div className="bg-gradient-to-r from-[#0F1512] via-[#0a1a0e] to-[#0F1512] border-b-2 border-[#00F74C]/30 px-4 py-2.5">
         <div className="container mx-auto flex items-center justify-center gap-3">
           <Timer className="w-5 h-5 text-[#00F74C] animate-pulse drop-shadow-[0_0_4px_#00F74C]" />
