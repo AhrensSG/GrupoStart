@@ -744,7 +744,7 @@ export default function ToolsPage() {
                       activeFilters ? "" : "opacity-80 hover:opacity-100"
                     }`}
                   >
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
                       <line x1="3" y1="6" x2="21" y2="6" />
                       <circle cx="9" cy="6" r="2" fill="currentColor" stroke="none" />
                       <line x1="3" y1="12" x2="21" y2="12" />
