@@ -27,7 +27,6 @@ export async function PUT(req) {
       hora_ingreso: body.hora_ingreso,
       hora_salida: body.hora_salida,
       horario_ranges: body.horario_ranges,
-      telefono: body.telefono,
       whatsapp_api_url: body.whatsapp_api_url,
       whatsapp_api_token: body.whatsapp_api_token,
       company_name: body.company_name,

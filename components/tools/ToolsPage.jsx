@@ -400,13 +400,13 @@ export default function ToolsPage() {
           action: () => setShowProfileModal(true),
         })
       }
-      if (!profile?.telefono) {
+      if (!user?.phone) {
         items.push({
           id: "whatsapp",
           type: "warning",
           title: "Teléfono no configurado",
           message: "Completá tu número de teléfono para recibir notificaciones y recordatorios automáticos.",
-          action: () => setShowProfileModal(true),
+          action: () => router.push("/user"),
         })
       }
     }
@@ -947,7 +947,6 @@ export default function ToolsPage() {
       {showProfileModal && (
         <ProfileModal
           userId={user.id}
-          userPhone={user?.phone}
           onClose={() => setShowProfileModal(false)}
           onSaved={() => {
             setShowProfileModal(false)
