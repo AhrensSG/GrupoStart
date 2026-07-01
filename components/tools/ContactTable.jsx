@@ -264,7 +264,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
         const renderStatusBadge = (mobile) => {
           const cls = mobile ? "sm:hidden" : "hidden sm:flex"
           if (hasComprador(c.contactos)) {
-            return <div className={`${cls} items-center gap-1 text-green-600`}><svg className="w-4 h-4 shrink-0 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span className="text-[10px] font-semibold leading-tight">¡Venta realizada!</span></div>
+            return <div className={`${cls} items-center gap-1 text-green-600`}><svg className="w-5 h-5 shrink-0 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span className="text-xs font-semibold leading-tight">¡Venta realizada!</span></div>
           }
           const info = getNextContactInfo(c.contactos)
           if (!info) return null
@@ -273,11 +273,11 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
           const dateValue = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
           return (
             <div className={`${cls} items-center gap-1 ${contactNotDone ? "text-red-400" : "text-orange-600"}`}>
-              <svg className={`w-4 h-4 shrink-0 ${contactNotDone ? "text-red-400" : "text-orange-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              <svg className={`w-5 h-5 shrink-0 ${contactNotDone ? "text-red-400" : "text-orange-500"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
               {editingDateId === id ? (
-                <input type="date" value={dateValue} onChange={(e) => { if (!e.target.value) return; const p = e.target.value.split("-"); const fechaStr = `${p[2]}/${p[1]}/${p[0]}`; saveRound(id, info.roundIndex, "proxima_fecha", fechaStr); setEditingDateId(null) }} onBlur={() => setEditingDateId(null)} className="w-24 px-1 py-0.5 rounded text-[10px] border border-orange-300 bg-white focus:outline-none focus:ring-1 focus:ring-orange-400" autoFocus />
+                <input type="date" value={dateValue} onChange={(e) => { if (!e.target.value) return; const p = e.target.value.split("-"); const fechaStr = `${p[2]}/${p[1]}/${p[0]}`; saveRound(id, info.roundIndex, "proxima_fecha", fechaStr); setEditingDateId(null) }} onBlur={() => setEditingDateId(null)} className="w-28 px-1.5 py-1 rounded text-xs border border-orange-300 bg-white focus:outline-none focus:ring-1 focus:ring-orange-400" autoFocus />
               ) : (
-                <button onClick={(e) => { e.stopPropagation(); setEditingDateId(id) }} className="text-[10px] sm:text-xs font-semibold leading-tight hover:underline text-left">{contactNotDone ? "Contacto no realizado" : info.date}</button>
+                  <button onClick={(e) => { e.stopPropagation(); setEditingDateId(id) }} className="text-xs sm:text-sm font-semibold leading-tight hover:underline text-left">{contactNotDone ? "Contacto no realizado" : info.date}</button>
               )}
             </div>
           )
@@ -294,7 +294,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
                   className={`shrink-0 p-0.5 transition-colors ${c.pinned ? "text-[#0051FF]" : "text-gray-200 hover:text-gray-400"}`}
                   title={c.pinned ? "Desfijar" : "Fijar"}
                 >
-                  <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill={c.pinned ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5" fill={c.pinned ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z" />
                   </svg>
                 </button>
@@ -302,7 +302,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
                   <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{c.nombre}</p>
                   {c.celular && <p className="text-xs text-gray-400 truncate leading-tight">{c.celular}</p>}
                   <div className="flex items-center gap-2 mt-1.5 sm:hidden">
-                    {hasData && (<div className="flex items-center gap-1">{(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-4 h-4 rounded-full flex items-center justify-center text-[7px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}</div>)}
+                    {hasData && (<div className="flex items-center gap-1.5">{(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}</div>)}
                     {!isExpanded && renderStatusBadge(true)}
                   </div>
                 </div>
@@ -310,12 +310,12 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
               <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-2">
                 {hasData && (
                   <div className="hidden sm:flex items-center gap-1 mr-1">
-                    {(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}
+                    {(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}
                   </div>
                 )}
-                {hasData && <span className="text-[10px] text-gray-300 hidden sm:inline">{isExpanded ? "ocultar" : "detalle"}</span>}
-                <button onClick={(e) => { e.stopPropagation(); toggleExpand(i) }} className={`p-1 text-gray-300 hover:text-gray-500 transition-transform ${isExpanded ? "rotate-180" : ""}`}><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg></button>
-                {id && onDelete && (<div className="relative"><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(confirmDelete === id ? null : id) }} className="text-gray-300 hover:text-red-500 transition-all p-1"><svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>{confirmDelete === id && (<div className="absolute right-0 top-8 z-10 bg-white border border-gray-200 rounded-lg shadow-lg p-2 min-w-[120px]"><p className="text-xs text-gray-500 mb-2 px-1">¿Eliminar?</p><div className="flex gap-1"><button onClick={(e) => { e.stopPropagation(); onDelete(id); setConfirmDelete(null) }} className="px-3 py-1 bg-red-500 text-white text-xs rounded-md hover:bg-red-600">Sí</button><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(null) }} className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-md hover:bg-gray-200">No</button></div></div>)}</div>)}
+                {hasData && <span className="text-xs text-gray-300 hidden sm:inline">{isExpanded ? "ocultar" : "detalle"}</span>}
+                <button onClick={(e) => { e.stopPropagation(); toggleExpand(i) }} className={`p-1 text-gray-300 hover:text-gray-500 transition-transform ${isExpanded ? "rotate-180" : ""}`}><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg></button>
+                {id && onDelete && (<div className="relative"><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(confirmDelete === id ? null : id) }} className="text-gray-400 hover:text-red-500 transition-all p-1"><svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>{confirmDelete === id && (<div className="absolute right-0 top-8 z-10 bg-white border border-gray-200 rounded-lg shadow-lg p-2 min-w-[120px]"><p className="text-xs text-gray-500 mb-2 px-1">¿Eliminar?</p><div className="flex gap-1"><button onClick={(e) => { e.stopPropagation(); onDelete(id); setConfirmDelete(null) }} className="px-3 py-1 bg-red-500 text-white text-xs rounded-md hover:bg-red-600">Sí</button><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(null) }} className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-md hover:bg-gray-200">No</button></div></div>)}</div>)}
               </div>
             </div>
             {!isExpanded && desktopBadge && (

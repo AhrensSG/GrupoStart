@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { addBusinessDays, formatFecha, parseFecha } from "@/lib/tools/business-days"
 
 const CLASIFICACIONES = ["Pendiente", "Interesado", "Potencial cliente", "Comprador", "No interesado", "No hubo respuesta"]
@@ -51,12 +51,17 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
   const [email, setEmail] = useState("")
   const [redSocial, setRedSocial] = useState("WhatsApp")
   const [nombreUsuario, setNombreUsuario] = useState("")
-  const [rounds, setRounds] = useState(Array.from({ length: 5 }, () => ({ clasificacion: "", fecha: "", estado: "", hora_proximo_contacto: "" })))
+  const EMPTY_ROUND = { clasificacion: "", fecha: "", estado: "", hora_proximo_contacto: "" }
+  const [rounds, setRounds] = useState(Array.from({ length: 5 }, () => ({ ...EMPTY_ROUND })))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
   const [roundDropdownOpen, setRoundDropdownOpen] = useState(false)
   const [selectedRound, setSelectedRound] = useState(0)
   const roundRefs = useRef([])
+
+  useEffect(() => {
+    setRounds(Array.from({ length: 5 }, () => ({ ...EMPTY_ROUND })))
+  }, [selectedRound])
 
   const updateRound = (i, field, value) => {
     setRounds((prev) => {

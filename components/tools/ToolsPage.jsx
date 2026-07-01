@@ -210,6 +210,11 @@ export default function ToolsPage() {
     if (!contact) return
     const newPinned = !contact.pinned
 
+    if (newPinned && contacts.filter((c) => c.pinned).length >= 3) {
+      alert("Solo podés fijar hasta 3 contactos. Desfijá uno antes de fijar otro.")
+      return
+    }
+
     setContacts((prev) => {
       if (!prev) return prev
       return prev.map((c) =>
@@ -391,17 +396,17 @@ export default function ToolsPage() {
           id: "horario",
           type: "warning",
           title: "Jornada laboral pendiente",
-          message: "Configurá tu horario de trabajo para recibir alertas en tu teléfono.",
+          message: "Configurá tu horario de trabajo para recibir alertas en tu jornada laboral.",
           action: () => setShowProfileModal(true),
         })
       }
-      if (!user?.phone) {
+      if (!profile?.telefono) {
         items.push({
           id: "whatsapp",
           type: "warning",
           title: "Teléfono no configurado",
           message: "Completá tu número de teléfono para recibir notificaciones y recordatorios automáticos.",
-          action: () => router.push("/user"),
+          action: () => setShowProfileModal(true),
         })
       }
     }
