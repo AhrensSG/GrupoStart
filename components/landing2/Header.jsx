@@ -54,7 +54,7 @@ export default function Header({ onSubscribe }) {
           <div className="bg-[#0F1512] border-2 border-[#00F74C] rounded-2xl p-6 sm:p-8 max-w-md w-full text-center space-y-5 shadow-2xl shadow-[#00F74C]/20">
             <div className="text-5xl">⏰</div>
             <p className="text-white text-base sm:text-lg font-semibold leading-relaxed" style={{ fontFamily: "'Schibsted Grotesk', sans-serif" }}>
-              Adquirí tu sistema de seguimiento de leads por solo <span className="text-[#00F74C] font-black">$15.000 <span className="text-sm line-through text-[#B0B5BB]">$2.500/mes</span></span> ahora antes de que la oferta caduque
+              Adquirí tu sistema de seguimiento de leads por solo <span className="text-[#00F74C] font-black">$2.500 <span className="text-sm line-through text-[#B0B5BB]">$15.000/mes</span></span> ahora antes de que la oferta caduque
             </p>
             <button
               onClick={() => { setShowExpired(false); onSubscribe() }}

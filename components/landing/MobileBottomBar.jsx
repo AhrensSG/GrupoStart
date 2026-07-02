@@ -24,7 +24,7 @@ export function MobileBottomBar({
             className="flex-1 bg-brand-blue hover:bg-brand-blue-dark text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors"
           >
             <ShoppingCart className="w-5 h-5" />
-            Adquiere ahora
+            Adquirí ahora
           </button>
         </div>
       </div>

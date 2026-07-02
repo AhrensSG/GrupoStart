@@ -26,16 +26,16 @@ export default function ProblemSection({ onSubscribe }) {
         <div className="max-w-4xl mx-auto">
           <div className="mb-16 text-center space-y-6">
             <p className="text-lg md:text-xl text-[#B0B5BB] leading-relaxed" style={{ fontFamily: "'Lato', sans-serif" }}>
-              El <span className="text-[#00F74C] font-black text-2xl md:text-3xl">80%</span> se cierra entre el tercer y quinto contacto, no son números al azar, estudios que podes buscar por tu cuenta lo respaldan:
+              El <span className="text-[#00F74C] font-black text-2xl md:text-3xl">80%</span> de las ventas se cierra entre el tercer y quinto contacto, no son números al azar, estudios que podes buscar por tu cuenta lo respaldan:
             </p>
             <ul className="space-y-3 max-w-lg mx-auto">
               <li className="flex items-center justify-center gap-3 text-[#B0B5BB] font-semibold" style={{ fontFamily: "'Lato', sans-serif" }}>
                 <span className="w-2 h-2 bg-[#00F74C] rounded-full flex-shrink-0 shadow-[0_0_4px_#00F74C]" />
-                Efecto de Mera Exposición
+                Efecto de Mera Exposición (Robert Zajonc)
               </li>
               <li className="flex items-center justify-center gap-3 text-[#B0B5BB] font-semibold" style={{ fontFamily: "'Lato', sans-serif" }}>
                 <span className="w-2 h-2 bg-[#00F74C] rounded-full flex-shrink-0 shadow-[0_0_4px_#00F74C]" />
-                Mapeo del Viaje del Cliente
+                Mapeo del Viaje del Cliente (Chip Bell y Ron Zemke)
               </li>
               <li className="flex items-center justify-center gap-3 text-[#B0B5BB] font-semibold" style={{ fontFamily: "'Lato', sans-serif" }}>
                 <span className="w-2 h-2 bg-[#00F74C] rounded-full flex-shrink-0 shadow-[0_0_4px_#00F74C]" />

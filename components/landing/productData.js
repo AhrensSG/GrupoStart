@@ -66,6 +66,7 @@ export const productData = {
   ],
 
   features: [
+    "+2500 empresas ya lo usan",
     "Dashboard para agregar contactos de forma rápida y sencilla",
     "Fechas en Piloto Automático basadas en clasificación",
     "Alarmas visuales de seguimiento",
@@ -150,10 +151,16 @@ export const productData = {
       question: "¿Cuál es el costo?",
       answer: "Solo $2.500 mensuales. Un costo ridículamente bajo para tener el control total de tus leads, con recordatorios automáticos, copys sugeridos y estadísticas en tiempo real. Podés dar de baja cuando quieras.",
     },
+    {
+      id: "faq-7",
+      question: "¿Qué pasa si el sistema no me resulta útil?",
+      answer: "Podés dar de baja cuando quieras quitando la suscripción.",
+    },
   ],
 
   detailsContent: {
     whatYouGet: [
+      "+2500 empresas ya lo usan",
       "Dashboard para agregar contactos de forma rápida y sencilla",
       "Fechas en Piloto Automático basadas en clasificación",
       "Alarmas visuales de seguimiento",

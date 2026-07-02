@@ -9,7 +9,7 @@ export default function CTASection({ onSubscribe }) {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <h2 className="text-4xl md:text-5xl font-bold" style={{ fontFamily: "'Schibsted Grotesk', sans-serif", color: "#FFFFFF" }}>
-            Empezá hoy por solo <span className="text-[#00F74C]">$2.500/mes</span>
+            Empezá hoy por solo <span className="line-through text-[#B0B5BB] text-2xl">$15.000</span> <span className="text-[#00F74C]">$2.500/mes</span>
           </h2>
 
           <p className="text-lg text-[#B0B5BB]" style={{ fontFamily: "'Lato', sans-serif" }}>
@@ -19,7 +19,7 @@ export default function CTASection({ onSubscribe }) {
           <div className="bg-[#0F1512] border border-[#2A3035] rounded-2xl p-8 max-w-md mx-auto text-left space-y-4">
             <div className="text-center">
               <div className="text-5xl font-bold text-[#00F74C]" style={{ fontFamily: "'Schibsted Grotesk', sans-serif" }}>
-                $2.500
+                <span className="line-through text-[#B0B5BB] text-3xl">$15.000</span>{' '}$2.500
               </div>
               <p className="text-[#B0B5BB] text-sm mt-1">por mes</p>
             </div>

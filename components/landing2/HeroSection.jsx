@@ -52,7 +52,7 @@ export default function HeroSection({ onSubscribe }) {
           </div>
 
           <div className="pt-12 space-y-4 text-base sm:text-lg text-[#B0B5BB]" style={{ fontFamily: "'Lato', sans-serif" }}>
-            <p className="text-xl sm:text-2xl font-black text-[#00F74C]">💰 SOLO $2.500 ARS/MES</p>
+            <p className="text-xl sm:text-2xl font-black text-[#00F74C]">💰 <span className="line-through text-[#B0B5BB] text-lg">$15.000</span> POR SOLO $2.500 ARS/MES</p>
             <p className="font-semibold">✓ Dashboard para agregar contactos de forma rápida</p>
             <p className="font-semibold">✓ Fechas en piloto automático basadas en clasificación</p>
             <p className="font-semibold">✓ Estadísticas en tiempo real</p>

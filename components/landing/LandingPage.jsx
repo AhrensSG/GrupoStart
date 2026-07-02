@@ -11,6 +11,7 @@ import { ContentSection } from "./ContentSection";
 import { FAQSection } from "./FAQSection";
 import { TestimonialsSection } from "./TestimonialsSection";
 import { MobileBottomBar } from "./MobileBottomBar";
+import { CTAButton } from "./CTAButton";
 import { productData } from "./productData";
 
 export default function LandingPage() {
@@ -123,7 +124,14 @@ export default function LandingPage() {
             <ContentSection
               modules={productData.modules}
               detailsContent={detailsContent}
+              onSubscribe={handleSubscribe}
             />
+
+            <div className="pt-8">
+              <CTAButton variant="primary" size="lg" onClick={handleSubscribe}>
+                Adquirí ahora
+              </CTAButton>
+            </div>
 
             <FAQSection items={productData.faq} />
 

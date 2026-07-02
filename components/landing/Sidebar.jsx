@@ -21,7 +21,7 @@ export function Sidebar({
         </div>
 
         <CTAButton variant="primary" size="lg" className="w-full mb-4" onClick={onSubscribe}>
-          Adquiere ahora
+          Adquirí ahora
         </CTAButton>
 
         <div className="mb-6 pb-6 border-b border-gray-200">
@@ -35,10 +35,15 @@ export function Sidebar({
         <div className="space-y-3">
           <div className="flex items-center gap-3">
             <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
+            <span className="text-sm text-green-700 font-bold">+2500 empresas ya lo usan</span>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
             <span className="text-sm text-gray-700">{guarantee}</span>
           </div>
 
-          {features.map((feature, index) => (
+          {features.filter(f => f !== "+2500 empresas ya lo usan").map((feature, index) => (
             <div key={index} className="flex items-center gap-3">
               <Check className="w-5 h-5 text-green-600 flex-shrink-0" />
               <span className="text-sm text-gray-700">{feature}</span>

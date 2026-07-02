@@ -1,10 +1,12 @@
 "use client";
 
 import { ModuleCard } from "./ModuleCard";
+import { CTAButton } from "./CTAButton";
 
 export function ContentSection({
   modules,
   detailsContent,
+  onSubscribe,
 }) {
   return (
     <div>
@@ -24,6 +26,12 @@ export function ContentSection({
           </div>
         </div>
       </section>
+
+      <div className="flex justify-start pt-8 pb-4">
+        <CTAButton variant="primary" size="lg" onClick={onSubscribe}>
+          Adquirí ahora
+        </CTAButton>
+      </div>
 
       <section id="detalles" className="py-12 bg-white" data-section="detalles">
         <div className="container mx-auto px-4">
