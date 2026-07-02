@@ -89,10 +89,10 @@ export default function ToolsPage() {
 
   useEffect(() => {
     if (!user) return
-    fetch(`/api/tools/profile?uid=${user.id}`)
-      .then((r) => r.json())
-      .then((data) => setProfile(data))
-      .catch(() => {})
+    const cached = localStorage.getItem("subscribed_" + user.id)
+    if (cached === "true") {
+      setSubscribed(true)
+    }
   }, [user])
 
   useEffect(() => {
@@ -112,15 +112,25 @@ export default function ToolsPage() {
 
   useEffect(() => {
     if (!user) return
-    fetch(`/api/tools/subscription?uid=${user.id}&email=${encodeURIComponent(user.email || "")}`)
+    fetch(`/api/tools/init?uid=${user.id}&email=${encodeURIComponent(user.email || "")}`)
       .then((r) => r.json())
       .then((data) => {
+        setProfile(data.profile)
         setSubscribed(data.subscribed)
         setSubLoading(false)
+        if (data.subscribed && data.contacts?.length > 0) {
+          setContacts(data.contacts)
+          setFileName("Base de datos local")
+        }
+        if (data.subscribed) {
+          localStorage.setItem("subscribed_" + user.id, "true")
+        }
+        setPageLoading(false)
       })
       .catch(() => {
         setSubscribed(false)
         setSubLoading(false)
+        setPageLoading(false)
       })
   }, [user])
 
@@ -167,7 +177,7 @@ export default function ToolsPage() {
     }
   }
 
-  useEffect(() => { if (subscribed) fetchContacts() }, [subscribed])
+
 
   const handleFile = async (file) => {
     setError("")
