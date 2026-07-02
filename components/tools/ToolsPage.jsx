@@ -544,6 +544,32 @@ export default function ToolsPage() {
             <div className="flex items-center gap-1 sm:gap-2 min-w-0">
               <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain rounded shrink-0" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
               <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">{profile?.company_name || (!profile?.company_logo ? user?.email : "GrupoStart Tools")}</span>
+              <div className="hidden md:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
+                <button onClick={() => setViewMode("active")} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "active" ? "text-[#0051FF] bg-blue-50 font-semibold" : "text-gray-400 hover:text-[#0051FF] hover:bg-blue-50"}`}>
+                  Contactos
+                </button>
+                <Link href="/tools/estadistica" id="link-estadistica" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Estadística
+                </Link>
+                <Link href="/tools/tutoriales" data-tut="link-tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Tutoriales
+                </Link>
+                <Link href="/tools/copys" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <rect x="3" y="8" width="18" height="4" rx="1" />
+                    <path d="M12 8v13" />
+                    <path d="M19 12v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7" />
+                    <path d="M7.5 8a2.5 2.5 0 010-5A4.8 8 0 0112 8a4.8 8 0 014.5-5 2.5 2.5 0 010 5" />
+                  </svg>
+                  Copys
+                </Link>
+                <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                  Perfil
+                </Link>
+                <button onClick={() => { setViewMode("trash"); fetchTrash() }} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "trash" ? "text-red-500 bg-red-50 font-semibold" : "text-gray-400 hover:text-red-500 hover:bg-red-50"}`}>
+                  Papelera
+                </button>
+              </div>
             </div>
             <div className="flex items-center gap-1 sm:gap-2">
               {contacts && (
