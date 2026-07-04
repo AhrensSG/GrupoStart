@@ -15,6 +15,7 @@ export default function UploadZone({ onFile }) {
 
   return (
     <div
+      id="upload-zone"
       onDrop={handleDrop}
       onDragOver={(e) => { e.preventDefault(); setDragging(true) }}
       onDragLeave={() => setDragging(false)}

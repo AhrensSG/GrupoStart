@@ -5,33 +5,38 @@ import Link from "next/link"
 const STEPS = [
   {
     title: "Agregar un contacto",
-    desc: "Hacé clic en el botón naranja \"+ Nuevo contacto\" en la barra superior. Se abre un modal donde podés completar los datos del cliente: nombre, celular, email y red social. También registrás hasta 5 rondas de seguimiento con su clasificación.",
+    desc: "Hacé clic en el botón naranja \"+Agregar\" en la barra superior. Se abrirá un modal donde podés registrar los datos del cliente: nombre, celular, email, red social y el número de contacto, por defecto este será \"1\" pero si se trata de un contacto al que le estuviste haciendo seguimiento fuera de la planilla podés asignar otro número de ronda, por ejemplo si es tu tercer contacto con él asignale el \"3\". En la planilla te mostraremos los seguimientos desde el número asignado.",
     img: "add",
   },
   {
+    title: "Importar",
+    desc: "Usá esta alternativa de carga si ya tenés tus contactos en un archivo de excel (.xlsx), sin embargo para que esta herramienta funcione la planilla debe tener una estructura específica, usá las que te brindamos para que la herramienta no falle.",
+    img: "import",
+  },
+  {
+    title: "Configuración del perfil",
+    desc: "Usá la herramienta de configuración para darle personalidad a la planilla, desde este apartado podrás cargar el nombre de tu empresa, cargar tu logo (no debe pesar más de 500 kb), configurar tu horario laboral (usalo para que te demos alertas en esa franja elegida) y cargá tu número de teléfono para recibir alertas por WhatsApp.",
+    img: "profile",
+  },
+  {
     title: "Clasificar un contacto",
-    desc: "En cada ronda de seguimiento, seleccioná el estado del cliente: Interesado, Potencial cliente, Comprador, No interesado, No hubo respuesta o Pendiente. Esta clasificación es clave para el panel de estadísticas.",
+    desc: "En cada ronda de seguimiento, seleccioná el estado del cliente: Interesado, Potencial cliente, Comprador, No interesado, No hubo respuesta. Esta clasificación es clave para activar las siguientes fechas de re-contacto (ya que el sistema toma por defecto la fecha del día en el que realizaste una clasificación en la planilla) y el panel de estadísticas.",
     img: "classify",
   },
   {
-    title: "Seguimiento y próx. contacto",
-    desc: "El sistema calcula automáticamente la próxima fecha de contacto según la clasificación. Podés modificarla manualmente. Usá el campo \"Hora\" para agendar el recordatorio.",
+    title: "Próx. contacto y hora",
+    desc: "El sistema asigna automáticamente la próxima fecha de contacto según la clasificación de acuerdo a criterios pre-establecidos pero podés modificarla manualmente. El campo \"Hora\" usalo si pactaste una hora de re-contacto específica con el lead, si este campo no es rellenado el sistema te dará los recordatorios de acuerdo a los siguientes criterios: 1 - Hora de tu inicio de jornada laboral + 30 minutos. 2 - Si no completaste los campos de jornada laboral por defecto te avisaremos a las 10:00 am.",
     img: "followup",
   },
   {
     title: "Buscar y filtrar contactos",
-    desc: "Usá la barra de búsqueda para encontrar contactos por nombre, celular o email. Activá los filtros para ver por clasificación, período, cantidad de gestiones y ordenar por próx. contacto.",
+    desc: "Usá la barra de búsqueda para encontrar contactos por nombre, celular o email. Activá los filtros para ver por clasificación, período, cantidad de gestiones y ordenar por próx. contacto, también podés visualizar tu lista por orden alfabético o por fecha de carga, sin embargo siempre verás primeros independientemente de la clasificación que elijas a los contactos \"fijados\".",
     img: "filter",
   },
   {
-    title: "Panel de estadísticas",
-    desc: "Andá a la sección \"Estadística\" para ver métricas de rendimiento: ventas por mes, tasa de conversión, pipeline, motivos de pérdida y más. Ideal para ajustar tu estrategia comercial.",
-    img: "stats",
-  },
-  {
-    title: "Importar contactos",
-    desc: "Si ya tenés una base de datos, subí un archivo CSV o Excel desde la pantalla principal. El sistema detecta automáticamente las columnas y crea los contactos con sus rondas.",
-    img: "import",
+    title: "Pestañas",
+    desc: "1 - Contactos: Úsala para regresar a tu lista de contactos cuando estés fuera de ella. 2 - Estadísticas: Esta interfaz te mostrará de forma gráfica distintas métricas importantes de tus contactos. 3 - Tutoriales: Si tenés dudas sobre cómo usar tu planilla siempre podrás consultar las guías de uso: aquí podrás reactivar el \"recorrido de uso\", ver la guía en \"texto\" o el tutorial en \"video\". 4 - Copys: Desde ahí podrás inspirarte para la redacción de los mensajes de re-contacto a tus leads. 5 - Perfil: Te llevará a tu perfil general, allí podrás completar información detallada de tu empresa. 6 - Papelera: Desde ahí podrás gestionar tus eliminados y reincorporarlos a la lista general si lo deseas.",
+    img: "tabs",
   },
 ]
 
@@ -76,30 +81,6 @@ export default function TutorialesPage() {
           </p>
         </div>
 
-        <div className="bg-gradient-to-r from-[#0051FF] to-[#3b82f6] rounded-2xl p-6 sm:p-8 text-white shadow-md">
-          <div className="flex flex-col sm:flex-row items-center gap-5">
-            <div className="w-14 h-14 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div className="flex-1 text-center sm:text-left">
-              <h2 className="text-lg font-bold">Video tutorial</h2>
-              <p className="text-sm text-blue-100 mt-1">Mirá el video completo para ver el flujo de principio a fin.</p>
-            </div>
-            <a
-              href="#"
-              onClick={(e) => { e.preventDefault(); alert("Video tutorial próximamente.") }}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#0051FF] text-sm font-semibold rounded-xl hover:bg-blue-50 transition-colors shadow-sm shrink-0"
-            >
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-              Ver video
-            </a>
-          </div>
-        </div>
 
         <div className="bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 shadow-sm">
           <div className="flex items-center justify-between mb-6">
@@ -133,10 +114,8 @@ export default function TutorialesPage() {
                 <div className="flex-1 pb-2">
                   <h3 className="font-semibold text-gray-900 mb-1">{step.title}</h3>
                   <p className="text-sm text-gray-500 leading-relaxed">{step.desc}</p>
-                  <div className="mt-3 bg-gray-50 rounded-xl border border-gray-200 p-4 sm:p-6 flex items-center justify-center text-gray-300">
-                    <div className="flex flex-col items-center gap-2">
-                      <DemoImage type={step.img} />
-                    </div>
+                  <div className="mt-3 bg-gray-50 rounded-xl border border-gray-200 p-0 overflow-hidden">
+                    <DemoImage type={step.img} />
                   </div>
                 </div>
               </div>
@@ -167,56 +146,23 @@ export default function TutorialesPage() {
 
 function DemoImage({ type }) {
   const images = {
-    add: (
-      <>
-        <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-        </svg>
-        <span className="text-xs text-gray-400">Modal de nuevo contacto</span>
-      </>
-    ),
-    classify: (
-      <>
-        <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-        </svg>
-        <span className="text-xs text-gray-400">Selector de clasificación</span>
-      </>
-    ),
-    followup: (
-      <>
-        <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <span className="text-xs text-gray-400">Calendario de próx. contacto</span>
-      </>
-    ),
-    filter: (
-      <>
-        <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-        </svg>
-        <span className="text-xs text-gray-400">Panel de filtros</span>
-      </>
-    ),
-    stats: (
-      <>
-        <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <span className="text-xs text-gray-400">Gráficos de estadísticas</span>
-      </>
-    ),
-    import: (
-      <>
-        <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3" />
-        </svg>
-        <span className="text-xs text-gray-400">Subir archivo Excel / CSV</span>
-      </>
-    ),
+    add: "/tutoriales/1 - agregar contacto.jpg",
+    import: "/tutoriales/2 - importar.jpg",
+    profile: "/tutoriales/3 - Configuraciones.jpg",
+    classify: "/tutoriales/4 - clasificar.jpg",
+    followup: "/tutoriales/5 - dia y hora.jpg",
+    filter: "/tutoriales/6 - buscar.jpg",
+    tabs: "/tutoriales/7 - pestañas.jpg",
   }
-  return images[type] || null
+  const src = images[type]
+  if (!src) return null
+  return (
+    <img
+      src={src}
+      alt={`Imagen tutorial ${type}`}
+      className="w-full h-auto rounded-lg shadow-sm border border-gray-200"
+    />
+  )
 }
 
 function NavBar() {

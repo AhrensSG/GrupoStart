@@ -78,11 +78,12 @@ const NO_SALVABLE = new Set([
   "No interesado: Mala atención",
 ])
 
-function calcProximaFechaLocal(clasificacion, fechaBase) {
-  if (!clasificacion || NO_SALVABLE.has(clasificacion)) return ""
+function calcProximaFechaLocal(clasificacion, fechaBase, estado) {
+  const effective = clasificacion === "No interesado" && estado ? estado : clasificacion
+  if (!effective || NO_SALVABLE.has(effective)) return ""
   const date = parseFecha(fechaBase)
   if (!date) return ""
-  const days = PROXIMA_FECHA_DAYS[clasificacion]
+  const days = PROXIMA_FECHA_DAYS[effective]
   if (!days) return ""
   return formatFecha(addBusinessDays(date, days))
 }
@@ -94,7 +95,7 @@ function getNextContactInfo(contactos) {
   for (let j = contactos.length - 1; j >= 0; j--) {
     const r = contactos[j]
     if (!r.clasificacion || r.clasificacion === "Pendiente") continue
-    const prox = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase)
+    const prox = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase, r.estado)
     if (prox) return { roundIndex: j, date: prox }
   }
   return null
@@ -124,6 +125,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
   const [expanded, setExpanded] = useState(null)
   const [saving, setSaving] = useState({})
   const [localEdits, setLocalEdits] = useState({})
+  const [clasifEdits, setClasifEdits] = useState({})
   const [proxEdits, setProxEdits] = useState({})
   const [contactEdits, setContactEdits] = useState({})
   const [editingDateId, setEditingDateId] = useState(null)
@@ -136,7 +138,17 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
   }, [])
 
   const toggleExpand = (i) => {
+    const isOpening = expanded !== i
     setExpanded((prev) => prev === i ? null : i)
+    if (isOpening) {
+      setTimeout(() => {
+        const target = document.querySelectorAll("[data-contact-id]")[i]
+        if (target) {
+          const top = target.getBoundingClientRect().top + window.scrollY - 170
+          window.scrollTo({ top, behavior: "smooth" })
+        }
+      }, 50)
+    }
   }
 
   const saveRound = useCallback(async (contactId, roundIndex, field, value) => {
@@ -173,6 +185,17 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
         body: JSON.stringify({ contactos: updatedContactos }),
       })
       if (!res.ok) throw new Error()
+      if (contact.pinned && field === "clasificacion") {
+        const latestClasif = value
+        if (latestClasif === "Comprador") {
+          onPin?.(contactId)
+        }
+      }
+      if (contact.pinned && field === "estado") {
+        if (NO_SALVABLE.has(value)) {
+          onPin?.(contactId)
+        }
+      }
       onUpdate?.()
     } catch (err) {
       console.error("Error saving round:", err)
@@ -286,7 +309,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
         const desktopBadge = hasData ? renderStatusBadge(false) : null
 
         return (
-          <div key={id} className="group relative">
+          <div key={id} data-contact-id={id} className="group relative">
             <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => toggleExpand(i)}>
               <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
                 <button
@@ -302,7 +325,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
                   <p className="font-medium text-gray-900 text-sm sm:text-base truncate">{c.nombre}</p>
                   {c.celular && <p className="text-xs text-gray-400 truncate leading-tight">{c.celular}</p>}
                   <div className="flex items-center gap-2 mt-1.5 sm:hidden">
-                    {hasData && (<div className="flex items-center gap-1.5">{(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}</div>)}
+                    {hasData && (<div className="flex items-center gap-1.5">{(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase, r.estado); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}</div>)}
                     {!isExpanded && renderStatusBadge(true)}
                   </div>
                 </div>
@@ -310,7 +333,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
               <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0 ml-2">
                 {hasData && (
                   <div className="hidden sm:flex items-center gap-1 mr-1">
-                    {(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}
+                    {(function() { const start = getFirstDataIndex(c.contactos); const count = Math.min(5 - start, 5); return Array.from({ length: count }, (_, j) => { const idx = start + j; const r = c.contactos[idx] || {}; const fechaBase = c.contactos[0]?.fecha || ""; const proxFecha = r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, fechaBase, r.estado); const st = getRoundStatus(r.clasificacion, r.fecha, proxFecha); return (<span key={idx} className={`w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white ${getStatusDotColor(st.type, r.clasificacion)}`} title={`${ROUND_LABELS[idx]}: ${st.label || r.clasificacion || "—"}`}>{idx + 1}</span>) })})()}
                   </div>
                 )}
                 {hasData && <span className="text-xs text-gray-300 hidden sm:inline">{isExpanded ? "ocultar" : "detalle"}</span>}
@@ -345,22 +368,24 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
 
                     const saveKey = id ? `save-${id}-${idx}` : `save-${i}-${idx}`
                     const editKey = id ? `edit-${id}-${idx}` : `edit-${i}-${idx}`
+                    const clasifKey = id ? `clasif-${id}-${idx}` : `clasif-${i}-${idx}`
                     const isSaving = saving[saveKey]
                     const estadoValue = localEdits[editKey] ?? r.estado
                     const proxEditKey = id ? `prox-${id}-${idx}` : `prox-${i}-${idx}`
                     const fechaBase = c.contactos[0]?.fecha || ""
                     const proxFechaRaw = proxEdits[proxEditKey] ?? r.proxima_fecha
-                    const proxFecha = proxFechaRaw || calcProximaFechaLocal(r.clasificacion, fechaBase)
-                    const status = getRoundStatus(r.clasificacion, r.fecha, proxFecha)
-                    const noSalvable = NO_SALVABLE.has(r.clasificacion)
+                    const currentClasif = clasifEdits[clasifKey] ?? r.clasificacion
+                    const proxFecha = proxFechaRaw || calcProximaFechaLocal(currentClasif, fechaBase, r.estado)
+                    const status = getRoundStatus(currentClasif, r.fecha, proxFecha)
+                    const noSalvable = NO_SALVABLE.has(currentClasif)
 
                     return (
                       <div key={idx} className="grid grid-cols-1 md:grid-cols-[16px_32px_2fr_1fr_150px_100px_16px] gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 sm:py-2.5 bg-gray-50 rounded-xl items-start md:items-center">
                         <div className="flex items-center gap-2 md:block"><div className={`w-2 h-2 rounded-full shrink-0 ${getStatusDotColor(status.type, r.clasificacion)}`} title={status.label} /><span className="md:hidden text-[11px] text-gray-500">{status.label}</span></div>
                         <span className="text-[11px] sm:text-xs font-semibold text-gray-400">{ROUND_LABELS[idx]}</span>
-                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Clasificación</label>{id ? (<div className="flex gap-1"><select value={r.clasificacion} onChange={(e) => saveRound(id, idx, "clasificacion", e.target.value)} className="flex-1 min-w-0 px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]">{CLASIFICACIONES.map((opt) => (<option key={opt} value={opt}>{opt || "Sin clasificación"}</option>))}</select>{r.clasificacion === "No interesado" && (<select value={r.estado} onChange={(e) => saveRound(id, idx, "estado", e.target.value)} className="flex-1 min-w-0 px-2 py-1.5 rounded-lg text-xs border border-red-200 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-400"><option value="">Motivo</option>{NO_INTERESADO_REASONS.map((motivo) => (<option key={motivo} value={motivo}>{motivo.replace("No interesado: ", "")}</option>))}</select>)}</div>) : (r.clasificacion && <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getClasificacionColor(r.clasificacion)}`}>{r.clasificacion}</span>)}</div>
-                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Notas</label>{id ? (<input type="text" value={r.clasificacion === "No interesado" ? "" : estadoValue} onChange={(e) => { if (r.clasificacion !== "No interesado") handleEstadoChange(id, idx, e.target.value) }} onBlur={(e) => { if (r.clasificacion !== "No interesado") handleEstadoBlur(id, idx, e.target.value) }} placeholder={r.clasificacion === "No hubo respuesta" ? "Sin respuesta" : r.clasificacion === "No interesado" ? "" : "Agregar nota..."} className={`w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300 ${r.clasificacion === "No interesado" ? "bg-gray-100 text-gray-300 cursor-not-allowed" : "bg-white"} ${r.clasificacion ? getEstadoStyle(r.clasificacion) : ""}`} readOnly={r.clasificacion === "No interesado"} />) : (r.estado && <span className={`inline-block px-2 py-1 rounded-md text-xs border ${getEstadoStyle(r.clasificacion)}`}>{r.estado.length > 30 ? r.estado.slice(0, 30) + "…" : r.estado}</span>)}</div>
-                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Próx. contacto</label>{id ? (<input type="date" value={proxFecha ? proxFecha.split("/").reverse().join("-") : ""} onChange={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; handleProxFechaChange(id, idx, fechaStr) }} onBlur={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; handleProxFechaBlur(id, idx, fechaStr) }} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" title="Próximo contacto (manual)"/>) : (r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "")) ? (<span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-semibold bg-orange-50 text-orange-700 border border-orange-200"><span className="text-orange-400 font-normal">Próx.:</span> {r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "")}</span>) : (<span className="text-xs text-gray-300">—</span>)}</div>
+                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Clasificación</label>{id ? (<div className="flex gap-1"><select value={currentClasif} onChange={(e) => { setClasifEdits((prev) => ({ ...prev, [clasifKey]: e.target.value })); saveRound(id, idx, "clasificacion", e.target.value) }} className="flex-1 min-w-0 px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]">{CLASIFICACIONES.map((opt) => (<option key={opt} value={opt}>{opt || "Sin clasificación"}</option>))}</select>{currentClasif === "No interesado" && (<select value={r.estado} onChange={(e) => saveRound(id, idx, "estado", e.target.value)} className="flex-1 min-w-0 px-2 py-1.5 rounded-lg text-xs border border-red-200 bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-400"><option value="">Motivo</option>{NO_INTERESADO_REASONS.map((motivo) => (<option key={motivo} value={motivo}>{motivo.replace("No interesado: ", "")}</option>))}</select>)}</div>) : (r.clasificacion && <span className={`inline-block px-2 py-1 rounded-full text-xs font-medium ${getClasificacionColor(r.clasificacion)}`}>{r.clasificacion}</span>)}</div>
+                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Notas</label>{id ? (<input type="text" value={currentClasif === "No interesado" ? "" : estadoValue} onChange={(e) => { if (currentClasif !== "No interesado") handleEstadoChange(id, idx, e.target.value) }} onBlur={(e) => { if (currentClasif !== "No interesado") handleEstadoBlur(id, idx, e.target.value) }} placeholder={currentClasif === "No hubo respuesta" ? "Sin respuesta" : currentClasif === "No interesado" ? "" : "Agregar nota..."} className={`w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300 ${currentClasif === "No interesado" ? "bg-gray-100 text-gray-300 cursor-not-allowed" : "bg-white"} ${currentClasif ? getEstadoStyle(currentClasif) : ""}`} readOnly={currentClasif === "No interesado"} />) : (r.estado && <span className={`inline-block px-2 py-1 rounded-md text-xs border ${getEstadoStyle(r.clasificacion)}`}>{r.estado.length > 30 ? r.estado.slice(0, 30) + "…" : r.estado}</span>)}</div>
+                        <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Próx. contacto</label>{id ? (<input type="date" value={proxFecha ? proxFecha.split("/").reverse().join("-") : ""} onChange={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; handleProxFechaChange(id, idx, fechaStr) }} onBlur={(e) => { if (!e.target.value) return; const parts = e.target.value.split("-"); const fechaStr = `${parts[2]}/${parts[1]}/${parts[0]}`; handleProxFechaBlur(id, idx, fechaStr) }} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" title="Próximo contacto (manual)"/>) : (r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "", r.estado)) ? (<span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[11px] font-semibold bg-orange-50 text-orange-700 border border-orange-200"><span className="text-orange-400 font-normal">Próx.:</span> {r.proxima_fecha || calcProximaFechaLocal(r.clasificacion, c.contactos[0]?.fecha || "", r.estado)}</span>) : (<span className="text-xs text-gray-300">—</span>)}</div>
                         <div><label className="md:hidden text-[9px] font-semibold text-gray-400 uppercase mb-0.5 block">Hora</label>{idx > 0 && id ? (<input type="time" value={r.hora_proximo_contacto || ""} onChange={(e) => saveRound(id, idx, "hora_proximo_contacto", e.target.value)} className="w-full px-2 py-1.5 rounded-lg text-xs border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]" />) : (<span className="text-xs text-gray-300">—</span>)}</div>
                         <div className="flex items-center gap-1">{noSalvable && <span className="shrink-0 inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-red-50 text-red-700 border border-red-200">No salvable</span>}{isSaving && <svg className="w-3 h-3 animate-spin text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>}</div>
                       </div>

@@ -16,20 +16,31 @@ const STEPS = [
     ),
   },
   {
+    title: "Importar contactos",
+    desc: "Si ya tenés una base de datos, subí un archivo Excel o CSV desde esta zona. El sistema lo procesa automáticamente. También podés arrastrar el archivo directamente.",
+    target: "upload-zone",
+    side: "bottom",
+  },
+  {
     title: "Agregar un contacto",
-    desc: "Este botón naranja abre el formulario para cargar un nuevo contacto. Ahí podés ingresar nombre, datos de contacto y las rondas de seguimiento.",
+    desc: "Este botón naranja abre el formulario para cargar un nuevo contacto manualmente. Ahí podés ingresar nombre, datos de contacto y las rondas de seguimiento.",
     target: "btn-add-contact",
     side: "bottom",
   },
   {
-    title: "Importar contactos",
-    desc: "Si ya tenés una base de datos, usá este botón para subir un archivo Excel o CSV. El sistema lo procesa automáticamente.",
-    target: "btn-upload",
-    side: "bottom",
+    title: "Secciones de navegación",
+    desc: "Usá estas pestañas para moverte entre Contactos, Estadística (métricas y gráficos), Tutoriales (ayuda), Copys (textos de venta) y Perfil. También tenés la Papelera para recuperar contactos eliminados.",
+    target: null,
+    side: "center",
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    ),
   },
   {
     title: "Buscar contactos",
-    desc: "Escribí el nombre, celular o email de un contacto para encontrarlo al instante. La búsqueda es en tiempo real.",
+    desc: "Escribí el nombre, celular o email de un contacto para encontrarlo al instante. La búsqueda es en tiempo real mientras escribís.",
     target: "search-input",
     side: "bottom",
   },
@@ -40,16 +51,38 @@ const STEPS = [
     side: "bottom",
   },
   {
+    title: "Lista de contactos",
+    desc: "Cada contacto se muestra con su nombre y datos. Hacé clic para expandir y ver el detalle completo: clasificación, notas, y próx. contacto. Usá el pin para fijar hasta 3 contactos importantes. Los círculos numerados indican el estado de cada ronda de seguimiento.",
+    target: null,
+    side: "center",
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+  },
+  {
     title: "Estadísticas",
-    desc: "En la sección Estadística ves gráficos con métricas de rendimiento: ventas por mes, tasa de conversión, pipeline y más.",
+    desc: "En la sección Estadística ves gráficos con métricas de rendimiento: ventas por mes, tasa de conversión, pipeline, motivos de pérdida y más. Ideal para ajustar tu estrategia comercial.",
     target: "link-estadistica",
     side: "bottom",
   },
   {
     title: "Tutoriales",
-    desc: "Si necesitás ayuda, entrá a Tutoriales. Ahí encontrás la guía completa y podés reactivar este tutorial cuando quieras.",
+    desc: "Si necesitás ayuda, entrá a Tutoriales. Ahí encontrás la guía completa paso a paso y podés reactivar este tutorial cuando quieras.",
     target: "link-tutoriales",
     side: "bottom",
+  },
+  {
+    title: "Notificaciones",
+    desc: "Acá vas a ver alertas importantes: seguimientos vencidos, próximos contactos a realizar, y configuraciones pendientes como tu horario laboral o número de teléfono.",
+    target: null,
+    side: "center",
+    icon: (
+      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+      </svg>
+    ),
   },
   {
     title: "¡Todo listo!",
@@ -67,15 +100,23 @@ const STEPS = [
 export default function GuidedTutorial({ onComplete }) {
   const [step, setStep] = useState(0)
   const [position, setPosition] = useState({ top: 0, left: 0, width: 0, height: 0 })
+  const [found, setFound] = useState(true)
   const [visible, setVisible] = useState(true)
 
   const updatePosition = useCallback(() => {
     const s = STEPS[step]
-    if (!s.target || !visible) return
+    if (!s.target || !visible) { setFound(false); return }
     const el = document.getElementById(s.target) || document.querySelector(`[data-tut="${s.target}"]`)
     if (el) {
       const rect = el.getBoundingClientRect()
-      setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+      if (rect.width === 0 && rect.height === 0) {
+        setFound(false)
+      } else {
+        setFound(true)
+        setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+      }
+    } else {
+      setFound(false)
     }
   }, [step, visible])
 
@@ -106,7 +147,7 @@ export default function GuidedTutorial({ onComplete }) {
   const current = STEPS[step]
   if (!visible) return null
 
-  const isCenter = !current.target
+  const isCenter = !current.target || !found
   const isFirst = step === 0
   const isLast = step === STEPS.length - 1
 

@@ -60,8 +60,10 @@ export default function ToolsPage() {
   const [profile, setProfile] = useState(null)
   const [showTutorial, setShowTutorial] = useState(false)
   const [showNotifications, setShowNotifications] = useState(false)
+  const [sessionCompradores, setSessionCompradores] = useState(new Set())
   const filterRef = useRef(null)
   const notifRef = useRef(null)
+  const deletedContactIds = useRef(new Set())
 
   useEffect(() => {
     function handleClickOutside(e) {
@@ -77,13 +79,13 @@ export default function ToolsPage() {
   }, [])
 
   useEffect(() => {
-    if (!contacts || contacts.length === 0) return
+    if (pageLoading) return
     const status = localStorage.getItem("guidedTutorial")
     if (status === null || status === "pending") {
       const timer = setTimeout(() => setShowTutorial(true), 500)
       return () => clearTimeout(timer)
     }
-  }, [contacts])
+  }, [contacts, pageLoading])
 
   const user = state?.user
 
@@ -159,6 +161,11 @@ export default function ToolsPage() {
       if (data.length > 0) {
         setContacts(data)
         setFileName("Base de datos local")
+      }
+      if (data) {
+        setSessionCompradores((prev) => new Set([...prev, ...data.filter((c) =>
+          c.contactos.some((r) => r.clasificacion === "Comprador")
+        ).map((c) => c.id)]))
       }
     } catch {
     } finally {
@@ -251,6 +258,7 @@ export default function ToolsPage() {
       if (contacts) {
         setContacts(contacts.filter((c) => c.id !== id))
       }
+      deletedContactIds.current.add(id)
     } catch {
       setError("Error al eliminar contacto")
     }
@@ -328,7 +336,7 @@ export default function ToolsPage() {
 
     if (!clasifFilter) {
       result = result.filter((c) =>
-        !c.contactos.some((r) => r.clasificacion === "Comprador")
+        !c.contactos.some((r) => r.clasificacion === "Comprador") || sessionCompradores.has(c.id)
       )
     }
 
@@ -428,6 +436,7 @@ export default function ToolsPage() {
       let upcomingCount = 0
 
       for (const c of contacts) {
+        if (deletedContactIds.current.has(c.id)) continue
         for (const r of c.contactos) {
           if (!r.proxima_fecha) continue
           const parts = r.proxima_fecha.split("/")
@@ -716,7 +725,7 @@ export default function ToolsPage() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-28">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-36">
         {pageLoading && !contacts ? (
           <div className="max-w-xl mx-auto pt-16">
             <div className="text-center mb-8">
@@ -971,6 +980,7 @@ export default function ToolsPage() {
             )}
           </div>
         )}
+        <div className="h-24" />
       </main>
 
       {showAddModal && (
