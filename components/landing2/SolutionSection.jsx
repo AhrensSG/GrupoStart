@@ -38,7 +38,7 @@ export default function SolutionSection({ onSubscribe }) {
   ]
 
   return (
-    <section id="solucion" className="section-dark py-20 md:py-32">
+    <section id="solucion" className="section-dark py-4 md:py-12">
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-4" style={{ fontFamily: "'Schibsted Grotesk', sans-serif", color: "#FFFFFF" }}>
