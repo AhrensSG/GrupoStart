@@ -6,6 +6,7 @@ import { Context } from "@/app/context/GlobalContext"
 import Header from "./Header"
 import HeroSection from "./HeroSection"
 import ProblemSection from "./ProblemSection"
+import CarouselSection from "./CarouselSection"
 import SolutionSection from "./SolutionSection"
 import CTASection from "./CTASection"
 import MobileBottomBar from "./MobileBottomBar"
@@ -48,6 +49,7 @@ export default function Landing2Page() {
       <Header onSubscribe={handleSubscribe} />
       <HeroSection onSubscribe={handleSubscribe} />
       <ProblemSection onSubscribe={handleSubscribe} />
+      <CarouselSection />
       <SolutionSection onSubscribe={handleSubscribe} />
       <CTASection onSubscribe={handleSubscribe} />
       <MobileBottomBar onSubscribe={handleSubscribe} />

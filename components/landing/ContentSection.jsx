@@ -2,6 +2,7 @@
 
 import { ModuleCard } from "./ModuleCard";
 import { CTAButton } from "./CTAButton";
+import CarouselSection from "./CarouselSection";
 
 export function ContentSection({
   modules,
@@ -26,6 +27,8 @@ export function ContentSection({
           </div>
         </div>
       </section>
+
+      <CarouselSection />
 
       <div className="flex justify-start pt-8 pb-4">
         <CTAButton variant="primary" size="lg" onClick={onSubscribe}>
