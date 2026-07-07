@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
-import { getContactsPendingReminder, getUserProfile } from "@/lib/tools/db"
-import { sendWhatsAppReminder } from "@/lib/tools/whatsapp"
+import { getContactsPendingReminder, getUserProfile, getUserPhone } from "@/lib/tools/db"
 import { formatFecha, getDefaultReminderTime, parseTime } from "@/lib/tools/business-days"
+import { sendDueNowReminder } from "@/lib/tools/openwa"
 
 export async function GET(req) {
   try {
@@ -46,8 +46,9 @@ export async function POST(req) {
       return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
     }
     const profile = await getUserProfile(uid)
-    if (!profile?.whatsapp_api_url || !profile?.whatsapp_api_token) {
-      return NextResponse.json({ error: "WhatsApp API no configurada" }, { status: 400 })
+    const userPhone = await getUserPhone(uid)
+    if (!userPhone) {
+      return NextResponse.json({ error: "Teléfono del usuario no configurado" }, { status: 400 })
     }
 
     const today = formatFecha(new Date())
@@ -56,11 +57,10 @@ export async function POST(req) {
     const currentMin = now.getMinutes()
 
     const pending = await getContactsPendingReminder(uid)
-    let sent = 0
-    const errors = []
 
-    const defaultTime = getDefaultReminderTime(profile.hora_ingreso)
+    const defaultTime = getDefaultReminderTime(profile?.hora_ingreso)
 
+    const dueContactNames = []
     for (const c of pending) {
       const lastRound = [...c.contactos].reverse().find(
         (r) => r.clasificacion === "Pendiente" && r.proxima_fecha === today
@@ -71,18 +71,16 @@ export async function POST(req) {
       const parsed = parseTime(reminderTime)
 
       if (parsed && (parsed.hours < currentHour || (parsed.hours === currentHour && parsed.minutes <= currentMin))) {
-        const ok = await sendWhatsAppReminder(
-          c.celular,
-          c.nombre,
-          profile.whatsapp_api_url,
-          profile.whatsapp_api_token
-        )
-        if (ok) sent++
-        else errors.push(c.nombre)
+        dueContactNames.push(c.nombre)
       }
     }
 
-    return NextResponse.json({ sent, errors: errors.length > 0 ? errors : undefined })
+    if (dueContactNames.length === 0) {
+      return NextResponse.json({ sent: 0, message: "No hay recordatorios pendientes en este momento" })
+    }
+
+    const ok = await sendDueNowReminder(userPhone, dueContactNames)
+    return NextResponse.json({ sent: ok ? dueContactNames.length : 0, contacts: dueContactNames })
   } catch (err) {
     console.error(err)
     return NextResponse.json({ error: "Error al procesar recordatorios" }, { status: 500 })

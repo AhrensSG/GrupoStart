@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
-import { checkUserSubscribed, setUserSubscribed, getUserSubscriptions } from "@/lib/tools/db"
+import { checkUserSubscribed, setUserSubscribed, getUserSubscriptions, getUserPhone, getUserName, saveUserPhone } from "@/lib/tools/db"
+import { sendWelcomeMessage } from "@/lib/tools/openwa"
 
 export async function GET(req) {
   try {
@@ -30,6 +31,12 @@ export async function POST(req) {
       return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
     }
     await setUserSubscribed(uid, email || "", preapproval_id)
+    const phone = await getUserPhone(uid)
+    if (!phone) {
+      return NextResponse.json({ success: true, warning: "WhatsApp no configurado: falta número de teléfono" })
+    }
+    const name = await getUserName(uid) || "Usuario"
+    await sendWelcomeMessage(phone, name)
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error(err)
