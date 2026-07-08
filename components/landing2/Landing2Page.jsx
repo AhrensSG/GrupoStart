@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useContext } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useContext, useEffect, useRef } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import { Context } from "@/app/context/GlobalContext"
 import Header from "./Header"
 import HeroSection from "./HeroSection"
@@ -15,12 +15,14 @@ import Footer from "./Footer"
 export default function Landing2Page() {
   const { state } = useContext(Context)
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const subRef = useRef(false)
   const [loading, setLoading] = useState(false)
   const user = state?.user
 
   const handleSubscribe = async () => {
     if (!user) {
-      router.push("/login?redirect=/landing2")
+      router.push("/login?redirect=" + encodeURIComponent("/landing2?subscribe=1"))
       return
     }
 
@@ -43,6 +45,14 @@ export default function Landing2Page() {
       setLoading(false)
     }
   }
+
+  useEffect(() => {
+    if (searchParams.get("subscribe") === "1" && user && !subRef.current) {
+      subRef.current = true
+      window.history.replaceState({}, "", window.location.pathname)
+      handleSubscribe()
+    }
+  }, [searchParams, user])
 
   return (
     <div className="min-h-screen bg-[#050807]">
