@@ -562,7 +562,7 @@ export default function ToolsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 h-12 sm:h-14 flex items-center justify-between">
             <div className="flex items-center gap-1 sm:gap-2 min-w-0">
               <img src={profile?.company_logo || "/iconos/logoStartBlue.svg"} alt="" className="w-6 h-6 sm:w-7 sm:h-7 object-contain rounded shrink-0" onError={(e) => { e.target.src = "/iconos/logoStartBlue.svg"; e.target.onerror = null }} />
-              <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">{profile?.company_name || user?.name || user?.email || "GrupoStart Tools"}</span>
+              <span className="font-semibold text-gray-900 text-sm sm:text-base truncate">base de datos de {profile?.company_name || user?.name || user?.email || "GrupoStart Tools"}</span>
               <div className="hidden md:flex items-center gap-1 ml-4 pl-4 border-l border-gray-200">
                 <button onClick={() => setViewMode("active")} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "active" ? "text-[#0051FF] bg-blue-50 font-semibold" : "text-gray-400 hover:text-[#0051FF] hover:bg-blue-50"}`}>
                   Contactos
