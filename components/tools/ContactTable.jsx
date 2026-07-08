@@ -310,6 +310,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
 
         return (
           <div key={id} data-contact-id={id} className="group relative">
+            <div className={`transition-all duration-200 ${confirmDelete === id ? "blur-[2px] brightness-75 pointer-events-none select-none" : ""}`}>
             <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => toggleExpand(i)}>
               <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">
                 <button
@@ -338,7 +339,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
                 )}
                 {hasData && <span className="text-xs text-gray-300 hidden sm:inline">{isExpanded ? "ocultar" : "detalle"}</span>}
                 <button onClick={(e) => { e.stopPropagation(); toggleExpand(i) }} className={`p-1 text-gray-300 hover:text-gray-500 transition-transform ${isExpanded ? "rotate-180" : ""}`}><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7"/></svg></button>
-                {id && onDelete && (<div className="relative"><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(confirmDelete === id ? null : id) }} className="text-gray-400 hover:text-red-500 transition-all p-1"><svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>{confirmDelete === id && (<div className="absolute right-0 top-8 z-10 bg-white border border-gray-200 rounded-lg shadow-lg p-2 min-w-[120px]"><p className="text-xs text-gray-500 mb-2 px-1">¿Eliminar?</p><div className="flex gap-1"><button onClick={(e) => { e.stopPropagation(); onDelete(id); setConfirmDelete(null) }} className="px-3 py-1 bg-red-500 text-white text-xs rounded-md hover:bg-red-600">Sí</button><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(null) }} className="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-md hover:bg-gray-200">No</button></div></div>)}</div>)}
+                {id && onDelete && (<div className="relative"><button onClick={(e) => { e.stopPropagation(); setConfirmDelete(confirmDelete === id ? null : id) }} className="text-gray-400 hover:text-red-500 transition-all p-1"><svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button></div>)}
               </div>
             </div>
             {!isExpanded && desktopBadge && (
@@ -391,6 +392,23 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
                       </div>
                     )
                   })})()}
+                </div>
+              </div>
+            )}
+            </div>
+            {confirmDelete === id && (
+              <div className="absolute inset-0 z-20 flex items-center px-4 sm:px-6 bg-white/80 backdrop-blur-[1px] animate-slide-in-right">
+                <svg className="w-5 h-5 text-red-400 shrink-0 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                <span className="text-sm font-medium text-gray-700 truncate mr-3">¿Eliminar {c.nombre}?</span>
+                <div className="flex gap-2 ml-auto shrink-0">
+                  <button onClick={(e) => { e.stopPropagation(); setConfirmDelete(null) }} className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors">
+                    Cancelar
+                  </button>
+                  <button onClick={(e) => { e.stopPropagation(); onDelete(id); setConfirmDelete(null) }} className="px-3 py-1.5 text-xs font-medium text-white bg-red-500 rounded-md hover:bg-red-600 transition-colors">
+                    Eliminar
+                  </button>
                 </div>
               </div>
             )}

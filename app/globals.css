@@ -242,3 +242,11 @@ section {
   background: #0F1512;
   border: 1px solid #2A3035;
 }
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in-right {
+  animation: slideInRight 0.3s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
