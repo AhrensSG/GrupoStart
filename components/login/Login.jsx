@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { logInWithGoogle } from "@/firebase/logInWithGoogle";
@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { AnimatePresence, motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
+import { Context } from "@/app/context/GlobalContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -33,6 +34,14 @@ const Login = () => {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/user";
 
+  const { state } = useContext(Context);
+
+  useEffect(() => {
+    if (state?.user) {
+      router.push(redirect);
+    }
+  }, [state?.user, redirect, router]);
+
   const authUrl = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
 
   const handleEmailLogin = async () => {
@@ -41,7 +50,6 @@ const Login = () => {
       console.log(user.user);
       false;
       toast.success("Inicio de sesión exitoso!");
-      router.push(redirect);
     } catch (error) {
       console.log(error);
       toast.error("Error al iniciar sesión.");
@@ -52,7 +60,6 @@ const Login = () => {
     try {
       await logInWithGoogle();
       toast.success("Inicio de sesión exitoso!");
-      router.push(redirect);
     } catch (error) {
       console.log(error);
       toast.error("Error al iniciar sesión.");
@@ -64,7 +71,6 @@ const Login = () => {
       await logInWithFacebook();
       false;
       toast.success("Inicio de sesión exitoso!");
-      router.push(redirect);
     } catch (error) {
       console.log(error);
       toast.error("Error al iniciar sesión.");
@@ -143,7 +149,6 @@ const Login = () => {
       });
       false;
       toast.success("Registro exitoso!");
-      router.push(redirect);
     } catch (error) {
       console.log(error);
       toast.error("Error al registrar usuario.");
