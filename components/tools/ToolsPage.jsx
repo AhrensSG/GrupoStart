@@ -573,7 +573,7 @@ export default function ToolsPage() {
                 <Link href="/tools/tutoriales" data-tut="link-tutoriales" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Tutoriales
                 </Link>
-                <Link href="/tools/copys" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors flex items-center gap-1">
+                <Link href="/tools/copys" data-tut="link-copys" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <rect x="3" y="8" width="18" height="4" rx="1" />
                     <path d="M12 8v13" />
@@ -582,10 +582,10 @@ export default function ToolsPage() {
                   </svg>
                   Copys
                 </Link>
-                <Link href="/user" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
+                <Link href="/user" data-tut="link-perfil" className="px-2.5 py-1.5 text-xs text-gray-400 hover:text-[#0051FF] hover:bg-blue-50 rounded-lg transition-colors">
                   Perfil
                 </Link>
-                <button onClick={() => { setViewMode("trash"); fetchTrash() }} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "trash" ? "text-red-500 bg-red-50 font-semibold" : "text-gray-400 hover:text-red-500 hover:bg-red-50"}`}>
+                <button data-tut="link-papelera" onClick={() => { setViewMode("trash"); fetchTrash() }} className={`px-2.5 py-1.5 text-xs rounded-lg transition-colors ${viewMode === "trash" ? "text-red-500 bg-red-50 font-semibold" : "text-gray-400 hover:text-red-500 hover:bg-red-50"}`}>
                   Papelera
                 </button>
               </div>
@@ -626,6 +626,7 @@ export default function ToolsPage() {
                   </button>
                   <div className="relative" ref={notifRef}>
                     <button
+                      data-tut="btn-notificaciones"
                       onClick={() => setShowNotifications(!showNotifications)}
                       className="relative flex items-center justify-center w-8 h-8 text-gray-400 hover:text-[#0051FF] transition-colors"
                       title="Notificaciones"

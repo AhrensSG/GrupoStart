@@ -315,7 +315,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
         const desktopBadge = hasData ? renderStatusBadge(false) : null
 
         return (
-          <div key={id} data-contact-id={id} className="group relative">
+          <div key={id} data-contact-id={id} data-tut={i === 0 ? "contact-card" : undefined} className="group relative">
             <div className={`transition-all duration-200 ${confirmDelete === id ? "blur-[2px] brightness-75 pointer-events-none select-none" : ""}`}>
             <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 hover:bg-gray-50/50 transition-colors cursor-pointer" onClick={() => toggleExpand(i)}>
               <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1">

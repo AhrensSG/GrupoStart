@@ -23,20 +23,9 @@ const STEPS = [
   },
   {
     title: "Agregar un contacto",
-    desc: "Este botón naranja abre el formulario para cargar un nuevo contacto manualmente. Ahí podés ingresar nombre, datos de contacto y las rondas de seguimiento.",
+    desc: "Seleccioná el botón naranja para abrir el formulario y cargar un nuevo contacto manualmente. Ahí ingresás nombre, datos de contacto y las rondas de seguimiento.",
     target: "btn-add-contact",
     side: "bottom",
-  },
-  {
-    title: "Secciones de navegación",
-    desc: "Usá estas pestañas para moverte entre Contactos, Estadística (métricas y gráficos), Tutoriales (ayuda), Copys (textos de venta) y Perfil. También tenés la Papelera para recuperar contactos eliminados.",
-    target: null,
-    side: "center",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    ),
   },
   {
     title: "Buscar contactos",
@@ -46,47 +35,55 @@ const STEPS = [
   },
   {
     title: "Filtros avanzados",
-    desc: "Acá podés filtrar por clasificación (Interesado, Comprador, etc.), por fecha, por cantidad de gestiones y ordenar por próx. contacto.",
+    desc: "Filtrá por clasificación (Interesado, Comprador, etc.), por fecha, por cantidad de gestiones y ordená por próx. contacto.",
     target: "btn-filters",
     side: "bottom",
   },
   {
     title: "Lista de contactos",
-    desc: "Cada contacto se muestra con su nombre y datos. Hacé clic para expandir y ver el detalle completo: clasificación, notas, y próx. contacto. Usá el pin para fijar hasta 3 contactos importantes. Los círculos numerados indican el estado de cada ronda de seguimiento.",
-    target: null,
-    side: "center",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    ),
+    desc: "Seleccioná cualquier contacto para expandirlo y ver el detalle completo: clasificación, notas, próx. contacto, y hora de seguimiento. Los círculos de colores indican el estado de cada ronda.",
+    target: "contact-card",
+    side: "bottom",
   },
   {
     title: "Estadísticas",
-    desc: "En la sección Estadística ves gráficos con métricas de rendimiento: ventas por mes, tasa de conversión, pipeline, motivos de pérdida y más. Ideal para ajustar tu estrategia comercial.",
+    desc: "Seleccioná el botón de Estadísticas para ver gráficos con métricas de rendimiento: ventas por mes, tasa de conversión, pipeline, motivos de pérdida y más.",
     target: "link-estadistica",
     side: "bottom",
   },
   {
     title: "Tutoriales",
-    desc: "Si necesitás ayuda, entrá a Tutoriales. Ahí encontrás la guía completa paso a paso y podés reactivar este tutorial cuando quieras.",
+    desc: "Seleccioná el botón de Tutoriales para acceder a las guías de ayuda. Podés reactivar este tutorial cuando quieras desde esa sección.",
     target: "link-tutoriales",
     side: "bottom",
   },
   {
     title: "Notificaciones",
-    desc: "Acá vas a ver alertas importantes: seguimientos vencidos, próximos contactos a realizar, y configuraciones pendientes como tu horario laboral o número de teléfono.",
-    target: null,
-    side: "center",
-    icon: (
-      <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-      </svg>
-    ),
+    desc: "Seleccioná la campana de Notificaciones para ver alertas importantes: seguimientos vencidos, próximos contactos a realizar, y recordatorios de configuración.",
+    target: "btn-notificaciones",
+    side: "bottom",
+  },
+  {
+    title: "Copys",
+    desc: "Seleccioná el botón de Copys para acceder a plantillas de mensajes de venta pre-armadas. Copiá y pegá directamente en tu chat con el cliente.",
+    target: "link-copys",
+    side: "bottom",
+  },
+  {
+    title: "Perfil",
+    desc: "Seleccioná el botón de Perfil para configurar los datos de tu empresa, logo, horarios de trabajo y número de teléfono para recibir notificaciones.",
+    target: "link-perfil",
+    side: "bottom",
+  },
+  {
+    title: "Papelera",
+    desc: "Seleccioná el botón de Papelera para ver y recuperar contactos que hayas eliminado por error. Los contactos eliminados se guardan por un tiempo antes de borrarse definitivamente.",
+    target: "link-papelera",
+    side: "bottom",
   },
   {
     title: "¡Todo listo!",
-    desc: "Ya conocés lo básico. Empezá a cargar tus contactos y hacé seguimiento de tus leads. ¡Éxito en tus ventas!",
+    desc: "Ya conocés todo lo necesario. Empezá a cargar tus contactos y hacé seguimiento profesional de tus leads. ¡Éxito en tus ventas!",
     target: null,
     side: "center",
     icon: (
