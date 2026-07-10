@@ -103,18 +103,25 @@ export default function GuidedTutorial({ onComplete }) {
   const updatePosition = useCallback(() => {
     const s = STEPS[step]
     if (!s.target || !visible) { setFound(false); return }
-    const el = document.getElementById(s.target) || document.querySelector(`[data-tut="${s.target}"]`)
-    if (el) {
-      const rect = el.getBoundingClientRect()
-      if (rect.width === 0 && rect.height === 0) {
-        setFound(false)
-      } else {
-        setFound(true)
-        setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
-      }
-    } else {
-      setFound(false)
+    const byId = document.getElementById(s.target)
+    if (byId && byId.offsetParent !== null) {
+      const rect = byId.getBoundingClientRect()
+      setFound(true)
+      setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+      return
     }
+    const all = document.querySelectorAll(`[data-tut="${s.target}"]`)
+    for (const el of all) {
+      if (el.offsetParent !== null) {
+        const rect = el.getBoundingClientRect()
+        if (rect.width > 0 && rect.height > 0) {
+          setFound(true)
+          setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+          return
+        }
+      }
+    }
+    setFound(false)
   }, [step, visible])
 
   useEffect(() => {
