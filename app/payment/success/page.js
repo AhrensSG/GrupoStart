@@ -39,6 +39,7 @@ function PaymentSuccessContent() {
         .then((data) => {
           if (data.success) {
             setStatus("success")
+            router.push("/user?section=servicios")
           } else {
             setStatus("error")
             setErrorMsg("Error al activar la suscripción.")
