@@ -122,7 +122,7 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
   const fechaBase = rounds[selectedRound]?.fecha || ""
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-8 pb-8">
+    <div className="fixed inset-0 z-[10000] flex items-start justify-center pt-8 pb-8">
       <div className="fixed inset-0 bg-black/40 backdrop-blur-sm" onClick={onClose} />
       <div className="relative bg-white rounded-2xl shadow-xl border border-gray-100 w-full max-w-5xl max-h-[calc(100vh-4rem)] overflow-y-auto">
         <div className="sticky top-0 bg-white border-b border-gray-100 px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
