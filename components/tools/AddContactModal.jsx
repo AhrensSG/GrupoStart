@@ -51,7 +51,7 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
   const [email, setEmail] = useState("")
   const [redSocial, setRedSocial] = useState("WhatsApp")
   const [nombreUsuario, setNombreUsuario] = useState("")
-  const EMPTY_ROUND = { clasificacion: "", fecha: "", estado: "", hora_proximo_contacto: "" }
+  const EMPTY_ROUND = { clasificacion: "", fecha: "", estado: "", hora_proximo_contacto: "", proxima_fecha: "" }
   const [rounds, setRounds] = useState(Array.from({ length: 5 }, () => ({ ...EMPTY_ROUND })))
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState("")
@@ -74,10 +74,17 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
           const m = String(now.getMonth() + 1).padStart(2, "0")
           const y = now.getFullYear()
           next[i].fecha = `${d}/${m}/${y}`
+          const prox = calcProximaFecha(value, next[i].estado || "", next[i].fecha || "")
+          if (prox && !next[i].proxima_fecha) next[i].proxima_fecha = prox
         } else {
           next[i].fecha = ""
           next[i].estado = ""
+          next[i].proxima_fecha = ""
         }
+      }
+      if (field === "estado" && next[i].clasificacion === "No interesado") {
+        const prox = calcProximaFecha(next[i].clasificacion, value, fechaBase)
+        if (prox && !next[i].proxima_fecha) next[i].proxima_fecha = prox
       }
       return next
     })
@@ -173,8 +180,8 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
                     <div className="flex items-center gap-2 md:block"><span className={`inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold text-white shrink-0 ${r.clasificacion ? "bg-[#0051FF]" : "bg-gray-300"}`}>{i + 1}</span><span className="text-xs font-semibold text-gray-500 md:hidden">{ROUND_LABELS[i]}</span></div>
                     <div className="flex gap-1.5"><select value={r.clasificacion} onChange={(e) => updateRound(i, "clasificacion", e.target.value)} className="flex-1 px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]"><option value="">Clasificación</option>{CLASIFICACIONES.map((c) => (<option key={c} value={c}>{c}</option>))}</select><select value={r.estado} onChange={(e) => updateRound(i, "estado", e.target.value)} className={`flex-1 px-2.5 py-2 border border-red-200 rounded-lg text-sm bg-red-50 focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-400 ${r.clasificacion !== "No interesado" ? "hidden" : ""}`} style={{ display: r.clasificacion === "No interesado" ? "block" : "none" }}><option value="">Motivo</option>{NO_INTERESADO_REASONS.map((motivo) => (<option key={motivo} value={motivo}>{motivo.replace("No interesado: ", "")}</option>))}</select></div>
                     <div><input type="text" value={r.clasificacion === "No interesado" ? "" : r.estado} onChange={(e) => { if (r.clasificacion !== "No interesado") updateRound(i, "estado", e.target.value) }} placeholder={r.clasificacion === "No hubo respuesta" ? "Sin respuesta" : r.clasificacion === "No interesado" ? "" : "Notas del contacto"} className="w-full px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/></div>
-                    <div>{noSalvable ? (<span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 w-full">No salvable</span>) : prox ? (<span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-orange-50 text-orange-700 border border-orange-200 w-full">{prox}</span>) : (<span className="inline-flex items-center px-3 py-2 rounded-lg text-xs text-gray-400 bg-gray-100 w-full">—</span>)}</div>
-                    <div>{i > 0 ? (<input type="time" value={r.hora_proximo_contacto} onChange={(e) => updateRound(i, "hora_proximo_contacto", e.target.value)} className="w-full px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]"/>) : (<span className="inline-flex items-center px-3 py-2 text-xs text-gray-300 bg-gray-50 rounded-lg w-full">—</span>)}</div>
+                    <div>{noSalvable ? (<span className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-red-50 text-red-700 border border-red-200 w-full">No salvable</span>) : (<input type="text" value={r.proxima_fecha} onChange={(e) => updateRound(i, "proxima_fecha", e.target.value)} placeholder="dd/mm/aaaa" className="w-full px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"/>) }</div>
+                    <div><input type="time" value={r.hora_proximo_contacto} onChange={(e) => updateRound(i, "hora_proximo_contacto", e.target.value)} className="w-full px-2.5 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF]"/></div>
                   </div>
                 )
               })}
