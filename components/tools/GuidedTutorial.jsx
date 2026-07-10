@@ -17,8 +17,8 @@ const STEPS = [
   },
   {
     title: "Importar contactos",
-    desc: "Si ya tenés una base de datos, subí un archivo Excel o CSV desde esta zona. El sistema lo procesa automáticamente. También podés arrastrar el archivo directamente.",
-    target: "upload-zone",
+    desc: "Seleccioná el botón de Importar si ya tenés una base de datos en Excel o CSV. El sistema lo procesa automáticamente.",
+    target: "btn-upload",
     side: "bottom",
   },
   {
