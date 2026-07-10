@@ -263,7 +263,7 @@ export default function ContactTable({ contacts, userId, onDelete, onUpdate, onP
   const hasAnyRoundData = (c) => c.contactos.some((r) => r.clasificacion || r.fecha || r.estado)
 
   const getFirstDataIndex = (contactos) => {
-    const idx = contactos.findIndex((r) => r.clasificacion && r.clasificacion !== "Pendiente")
+    const idx = contactos.findIndex((r) => r.clasificacion)
     return idx >= 0 ? idx : 0
   }
 
