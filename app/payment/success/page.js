@@ -25,7 +25,7 @@ function PaymentSuccessContent() {
     const externalRef = searchParams.get("external_reference")
     const paymentStatus = searchParams.get("status")
 
-    if (paymentStatus === "success" || paymentStatus === "authorized") {
+    if (preapprovalId) {
       fetch("/api/tools/subscription", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,24 +38,17 @@ function PaymentSuccessContent() {
         .then((r) => r.json())
         .then((data) => {
           if (data.success) {
-            setStatus("success")
             router.push("/user?section=servicios")
           } else {
             setStatus("error")
-            setErrorMsg("Error al activar la suscripción.")
+            setErrorMsg(data.warning || "Error al activar la suscripción.")
           }
         })
         .catch(() => {
           setStatus("error")
           setErrorMsg("Error de conexión al activar la suscripción.")
         })
-    } else if (paymentStatus === "failure" || paymentStatus === "cancelled") {
-      setStatus("error")
-      setErrorMsg("El pago fue cancelado o rechazado.")
-    } else {
-      setStatus("error")
-      setErrorMsg("Estado de pago desconocido.")
-    }
+    } else if (paymentStatus === "success" || paymentStatus === "authorized") {
   }, [state?.isLoading, user, searchParams, router])
 
   if (status === "loading") {
