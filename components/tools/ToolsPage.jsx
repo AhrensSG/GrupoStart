@@ -99,7 +99,7 @@ export default function ToolsPage() {
 
   useEffect(() => {
     function handleScroll() {
-      setShowScrollBtn(window.scrollY > 100)
+      setShowScrollBtn(window.scrollY > 600)
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     handleScroll()
@@ -1023,14 +1023,13 @@ export default function ToolsPage() {
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         style={{ position: "fixed", bottom: "80px", right: "24px", zIndex: 9999 }}
-        className={`flex items-center gap-2 px-5 py-3 text-sm font-medium text-white bg-[#0051FF] rounded-xl shadow-lg hover:bg-[#0040CC] hover:shadow-xl transition-all duration-300 ease-out transform ${
+        className={`flex items-center justify-center w-10 h-10 rounded-full text-white bg-[#0051FF] shadow-lg hover:bg-[#0040CC] hover:shadow-xl transition-all duration-300 ease-out transform ${
           showScrollBtn ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-3 pointer-events-none"
         }`}
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
           <path d="M18 15l-6-6-6 6" />
         </svg>
-        Subir ↑
       </button>
 
       <footer className="fixed bottom-0 left-0 right-0 z-40 border-t border-gray-200 bg-white shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">

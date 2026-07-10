@@ -15,7 +15,7 @@ export default function SuggestModal({ onClose }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          to: "support@grupostart.com.ar",
+          to: "guillermoahrens@gmail.com",
           subject: "Sugerencia - GrupoStart Tools",
           text: message,
         }),
