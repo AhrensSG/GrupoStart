@@ -66,6 +66,10 @@ export default function AddContactModal({ userId, onClose, onCreated }) {
   const updateRound = (i, field, value) => {
     setRounds((prev) => {
       const next = [...prev]
+      if (field === "clasificacion" && value === "Pendiente") {
+        const hasLater = prev.slice(i + 1).some((r) => r.clasificacion && r.clasificacion !== "Pendiente")
+        if (hasLater) return prev
+      }
       next[i] = { ...next[i], [field]: value }
       if (field === "clasificacion") {
         if (value !== "" && value !== "Pendiente") {
