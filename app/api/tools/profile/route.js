@@ -31,6 +31,7 @@ export async function PUT(req) {
       whatsapp_api_token: body.whatsapp_api_token,
       company_name: body.company_name,
       company_logo: body.company_logo,
+      user_phone: body.user_phone,
     }, uid)
     return NextResponse.json({ success: true })
   } catch (err) {
