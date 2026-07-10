@@ -9,20 +9,27 @@ export const isUserLogged = async (dispatch) => {
         try {
             if (user) {
                 const info = {
+                    id: user.uid,
                     displayName: user.displayName,
                     email: user.email,
                     uid: user.uid,
-                };
-                const data = await axios.put(`${SERVER_URL_AUTH_ENDPOINT}`, info);
+                }
+                dispatch({ type: "LOGGED_IN_USER", payload: { info, isLoading: false } })
 
-                dispatch({ type: "LOGGED_IN_USER", payload: {info : data.data, isLoading: false} });
-                return true;
+                try {
+                    await axios.put(`${SERVER_URL_AUTH_ENDPOINT}`, {
+                        displayName: user.displayName,
+                        email: user.email,
+                        uid: user.uid,
+                    })
+                } catch (_) {}
+                return true
             } else {
-                dispatch({ type: "LOGGED_IN_USER", payload: {info : null, isLoading: false } });
-                return false;
+                dispatch({ type: "LOGGED_IN_USER", payload: { info: null, isLoading: false } })
+                return false
             }
         } catch (error) {
-            return error;
+            return error
         }
-    });
-};
+    })
+}
