@@ -418,13 +418,13 @@ export default function ToolsPage() {
           action: () => setShowProfileModal(true),
         })
       }
-      if (!user?.phone) {
+      if (!user?.phone && !profile?.user_phone) {
         items.push({
           id: "whatsapp",
           type: "warning",
           title: "Teléfono no configurado",
           message: "Completá tu número de teléfono para recibir notificaciones y recordatorios automáticos.",
-          action: () => router.push("/user"),
+          action: () => setShowProfileModal(true),
         })
       }
     }
