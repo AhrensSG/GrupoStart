@@ -48,7 +48,23 @@ function PaymentSuccessContent() {
           setStatus("error")
           setErrorMsg("Error de conexión al activar la suscripción.")
         })
-    } else if (paymentStatus === "success" || paymentStatus === "authorized") {
+      return
+    }
+
+    if (paymentStatus === "success" || paymentStatus === "authorized") {
+      setStatus("success")
+      router.push("/user?section=servicios")
+      return
+    }
+
+    if (paymentStatus === "failure" || paymentStatus === "cancelled") {
+      setStatus("error")
+      setErrorMsg("El pago fue cancelado o rechazado.")
+      return
+    }
+
+    setStatus("error")
+    setErrorMsg("Estado de pago desconocido.")
   }, [state?.isLoading, user, searchParams, router])
 
   if (status === "loading") {
