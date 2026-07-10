@@ -16,18 +16,6 @@ const STEPS = [
     ),
   },
   {
-    title: "Importar contactos",
-    desc: "Seleccioná el botón de Importar si ya tenés una base de datos en Excel o CSV. El sistema lo procesa automáticamente.",
-    target: "btn-upload",
-    side: "bottom",
-  },
-  {
-    title: "Agregar un contacto",
-    desc: "Seleccioná el botón naranja para abrir el formulario y cargar un nuevo contacto manualmente. Ahí ingresás nombre, datos de contacto y las rondas de seguimiento.",
-    target: "btn-add-contact",
-    side: "bottom",
-  },
-  {
     title: "Buscar contactos",
     desc: "Escribí el nombre, celular o email de un contacto para encontrarlo al instante. La búsqueda es en tiempo real mientras escribís.",
     target: "search-input",
@@ -46,6 +34,24 @@ const STEPS = [
     side: "bottom",
   },
   {
+    title: "Agregar un contacto",
+    desc: "Seleccioná el botón naranja para abrir el formulario y cargar un nuevo contacto manualmente. Ahí ingresás nombre, datos de contacto y las rondas de seguimiento.",
+    target: "btn-add-contact",
+    side: "bottom",
+  },
+  {
+    title: "Importar contactos",
+    desc: "Seleccioná el botón de Importar si ya tenés una base de datos en Excel o CSV. El sistema lo procesa automáticamente.",
+    target: "btn-upload",
+    side: "bottom",
+  },
+  {
+    title: "Notificaciones",
+    desc: "Seleccioná la campana de Notificaciones para ver alertas importantes: seguimientos vencidos, próximos contactos a realizar, y recordatorios de configuración.",
+    target: "btn-notificaciones",
+    side: "bottom",
+  },
+  {
     title: "Estadísticas",
     desc: "Seleccioná el botón de Estadísticas para ver gráficos con métricas de rendimiento: ventas por mes, tasa de conversión, pipeline, motivos de pérdida y más.",
     target: "link-estadistica",
@@ -55,12 +61,6 @@ const STEPS = [
     title: "Tutoriales",
     desc: "Seleccioná el botón de Tutoriales para acceder a las guías de ayuda. Podés reactivar este tutorial cuando quieras desde esa sección.",
     target: "link-tutoriales",
-    side: "bottom",
-  },
-  {
-    title: "Notificaciones",
-    desc: "Seleccioná la campana de Notificaciones para ver alertas importantes: seguimientos vencidos, próximos contactos a realizar, y recordatorios de configuración.",
-    target: "btn-notificaciones",
     side: "bottom",
   },
   {
