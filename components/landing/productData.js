@@ -15,7 +15,7 @@ export const productData = {
   category: "Educación y Negocios",
   language: "Español",
 
-  videoEmbed: `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/u5t2eXbEx-4?si=_esiXICDxf9b-nn5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
+  videoEmbed: `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/ncWCQJLvFJE?si=W6nqQKua5lsGcQDF" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`,
 
   modules: [
     {
