@@ -13,7 +13,7 @@ import {
   sendUpcomingReminder,
   sendDueNowReminder,
   sendOverdueReminder,
-} from "@/lib/tools/openwa"
+} from "@/lib/tools/whatsapp-cloud"
 
 export async function GET(req) {
   try {

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server"
 import { getContactsPendingReminder, getUserProfile, getUserPhone } from "@/lib/tools/db"
 import { formatFecha, getDefaultReminderTime, parseTime } from "@/lib/tools/business-days"
-import { sendDueNowReminder } from "@/lib/tools/openwa"
+import { sendDueNowReminder } from "@/lib/tools/whatsapp-cloud"
 
 export async function GET(req) {
   try {

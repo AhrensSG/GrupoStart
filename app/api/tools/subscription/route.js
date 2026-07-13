@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { checkUserSubscribed, setUserSubscribed, getUserSubscriptions, getUserPhone, getUserName, saveUserPhone } from "@/lib/tools/db"
-import { sendWelcomeMessage } from "@/lib/tools/openwa"
+import { sendWelcomeMessage } from "@/lib/tools/whatsapp-cloud"
 
 export async function GET(req) {
   try {
