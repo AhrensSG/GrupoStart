@@ -44,6 +44,19 @@ export async function POST(req) {
           },
           to: email,
           subject: "¡Suscripción activada — GrupoStart Tools!",
+          text: `¡Tu suscripción a GrupoStart Tools está activa!
+
+Ya podés gestionar tus contactos, hacer seguimiento profesional, ver estadísticas y recibir notificaciones por WhatsApp.
+
+Accedé ahora: https://grupostart.com.ar/tools
+
+Detalles del plan:
+- Plan mensual: $2.500 ARS por mes
+- Débito automático cada mes
+- Cancelá cuando quieras desde MercadoPago
+
+GrupoStart · Formosa, Argentina
+grupostart.ok@gmail.com`,
           html: `<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:600px;margin:0 auto;background:#f8f9fc">
             <div style="background:linear-gradient(135deg,#0051FF,#0039cc);padding:40px 20px;text-align:center">
               <h1 style="color:#fff;margin:0;font-size:26px;font-weight:700">Grupo<span style="color:#FB8A00">Start</span></h1>
