@@ -10,6 +10,7 @@ export const isUserLogged = async (dispatch) => {
             if (user) {
                 const info = {
                     id: user.uid,
+                    name: user.displayName,
                     displayName: user.displayName,
                     email: user.email,
                     uid: user.uid,
