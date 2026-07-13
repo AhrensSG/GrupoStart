@@ -50,7 +50,7 @@ export async function POST(req) {
             <p>Ya podés empezar a gestionar tus contactos y hacer seguimiento profesional.</p>
             <div style="background:#f5f7ff;border-radius:12px;padding:20px;margin:20px 0">
               <p style="margin:0 0 8px"><strong>Accedé ahora:</strong></p>
-              <a href="https://grupostart.com.ar/user?section=servicios" style="display:inline-block;background:#0051FF;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">Ir a Mis Servicios</a>
+              <a href="https://grupostart.com.ar/tools" style="display:inline-block;background:#0051FF;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:bold">Ir a Tools</a>
             </div>
             <p style="color:#666;font-size:13px">El pago de $2.500 ARS/mes se debitará automáticamente. Podés cancelar cuando quieras desde MercadoPago.</p>
           </div>`,
