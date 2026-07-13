@@ -22,7 +22,7 @@ export default function Landing2Page() {
 
   const handleSubscribe = async () => {
     if (!user) {
-      router.push("/login?redirect=" + encodeURIComponent("/landing2?subscribe=1"))
+      router.push("/login?redirect=" + encodeURIComponent("/sistema-seguimiento-clientes?subscribe=1"))
       return
     }
 

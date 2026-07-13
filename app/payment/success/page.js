@@ -90,7 +90,7 @@ function PaymentSuccessContent() {
           <h1 className="text-xl font-bold text-gray-900 mb-2">Algo salió mal</h1>
           <p className="text-sm text-gray-500 mb-6">{errorMsg || "No se pudo procesar el pago."}</p>
           <Link
-            href="/landing"
+            href="/gestion-de-leads"
             className="inline-flex items-center px-6 py-3 bg-[#0051FF] text-white text-sm font-medium rounded-lg hover:bg-[#0040cc] transition-colors"
           >
             Volver al inicio

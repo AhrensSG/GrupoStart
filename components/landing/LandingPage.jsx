@@ -24,7 +24,7 @@ export default function LandingPage() {
 
   const handleSubscribe = async () => {
     if (!user) {
-      router.push("/login?redirect=" + encodeURIComponent("/landing?subscribe=1"));
+      router.push("/login?redirect=" + encodeURIComponent("/gestion-de-leads?subscribe=1"));
       return;
     }
 
