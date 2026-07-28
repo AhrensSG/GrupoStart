@@ -592,107 +592,105 @@ export default function ToolsPage() {
             </div>
             <div className="flex items-center gap-1 sm:gap-2">
               {contacts && (
-                <>
-                  <button
-                    id="btn-add-contact"
-                    onClick={() => setShowAddModal(true)}
-                    className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-[#FB8A00] text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
-                  >
-                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    <span className="hidden sm:inline">Agregar</span>
-                  </button>
-                  <button
-                    id="btn-upload"
-                    onClick={() => setShowUploadModal(true)}
-                    className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-3 sm:py-2 border border-gray-200 text-gray-500 sm:text-gray-600 text-sm rounded-lg hover:border-[#0051FF] hover:text-[#0051FF] transition-colors"
-                    title="Importar archivo"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                    </svg>
-                    <span className="hidden sm:inline ml-1.5">Importar</span>
-                  </button>
-                  <button
-                    onClick={() => setShowProfileModal(true)}
-                    className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-2 text-gray-400 hover:text-[#0051FF] transition-colors"
-                    title="Configuración de perfil"
-                  >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  </button>
-                  <div className="relative" ref={notifRef}>
-                    <button
-                      data-tut="btn-notificaciones"
-                      onClick={() => setShowNotifications(!showNotifications)}
-                      className="relative flex items-center justify-center w-8 h-8 text-gray-400 hover:text-[#0051FF] transition-colors"
-                      title="Notificaciones"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                      </svg>
-                      {notifications.length > 0 && (
-                        <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full flex items-center justify-center">
-                          <span className="text-[8px] font-bold text-white leading-none">{notifications.length}</span>
-                        </span>
-                      )}
-                    </button>
+                <button
+                  id="btn-add-contact"
+                  onClick={() => setShowAddModal(true)}
+                  className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1.5 sm:py-2 bg-[#FB8A00] text-white text-xs sm:text-sm font-medium rounded-lg hover:bg-[#e07a00] transition-colors shadow-sm"
+                >
+                  <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                  </svg>
+                  <span className="hidden sm:inline">Agregar</span>
+                </button>
+              )}
+              <button
+                id="btn-upload"
+                onClick={() => setShowUploadModal(true)}
+                className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-3 sm:py-2 border border-gray-200 text-gray-500 sm:text-gray-600 text-sm rounded-lg hover:border-[#0051FF] hover:text-[#0051FF] transition-colors"
+                title="Importar archivo"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                <span className="hidden sm:inline ml-1.5">Importar</span>
+              </button>
+              <button
+                onClick={() => setShowProfileModal(true)}
+                className="flex items-center justify-center w-8 h-8 sm:w-auto sm:px-2 text-gray-400 hover:text-[#0051FF] transition-colors"
+                title="Configuración de perfil"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <div className="relative" ref={notifRef}>
+                <button
+                  data-tut="btn-notificaciones"
+                  onClick={() => setShowNotifications(!showNotifications)}
+                  className="relative flex items-center justify-center w-8 h-8 text-gray-400 hover:text-[#0051FF] transition-colors"
+                  title="Notificaciones"
+                >
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                  </svg>
+                  {notifications.length > 0 && (
+                    <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 bg-red-500 border-2 border-white rounded-full flex items-center justify-center">
+                      <span className="text-[8px] font-bold text-white leading-none">{notifications.length}</span>
+                    </span>
+                  )}
+                </button>
 
-                    {showNotifications && (
-                      <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden">
-                        <div className="px-4 py-3 border-b border-gray-100">
-                          <p className="text-sm font-bold text-gray-900">Notificaciones</p>
-                        </div>
-                        {notifications.length === 0 ? (
-                          <div className="px-4 py-8 text-center">
-                            <svg className="w-8 h-8 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                            <p className="text-sm text-gray-400">No hay notificaciones</p>
-                          </div>
-                        ) : (
-                          <div className="max-h-80 overflow-y-auto">
-                            {notifications.map((n) => (
-                              <button
-                                key={n.id}
-                                onClick={() => { n.action?.(); setShowNotifications(false) }}
-                                className={`w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors last:border-b-0 ${
-                                  n.action ? "cursor-pointer" : "cursor-default"
-                                }`}
-                              >
-                                <div className="flex items-start gap-3">
-                                  <span className="mt-0.5 shrink-0">
-                                    {n.type === "danger" ? (
-                                      <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                                      </svg>
-                                    ) : n.type === "warning" ? (
-                                      <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                      </svg>
-                                    ) : (
-                                      <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                      </svg>
-                                    )}
-                                  </span>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-semibold text-gray-900">{n.title}</p>
-                                    <p className="text-xs text-gray-500 mt-0.5">{n.message}</p>
-                                  </div>
-                                </div>
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                {showNotifications && (
+                  <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-gray-100">
+                      <p className="text-sm font-bold text-gray-900">Notificaciones</p>
+                    </div>
+                    {notifications.length === 0 ? (
+                      <div className="px-4 py-8 text-center">
+                        <svg className="w-8 h-8 text-gray-300 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <p className="text-sm text-gray-400">No hay notificaciones</p>
+                      </div>
+                    ) : (
+                      <div className="max-h-80 overflow-y-auto">
+                        {notifications.map((n) => (
+                          <button
+                            key={n.id}
+                            onClick={() => { n.action?.(); setShowNotifications(false) }}
+                            className={`w-full text-left px-4 py-3 border-b border-gray-50 hover:bg-gray-50 transition-colors last:border-b-0 ${
+                              n.action ? "cursor-pointer" : "cursor-default"
+                            }`}
+                          >
+                            <div className="flex items-start gap-3">
+                              <span className="mt-0.5 shrink-0">
+                                {n.type === "danger" ? (
+                                  <svg className="w-4 h-4 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                                  </svg>
+                                ) : n.type === "warning" ? (
+                                  <svg className="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                ) : (
+                                  <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                  </svg>
+                                )}
+                              </span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-gray-900">{n.title}</p>
+                                <p className="text-xs text-gray-500 mt-0.5">{n.message}</p>
+                              </div>
+                            </div>
+                          </button>
+                        ))}
                       </div>
                     )}
                   </div>
-                </>
-              )}
+                )}
+              </div>
             </div>
           </div>
           <div className="md:hidden border-t border-gray-100 overflow-x-auto scrollbar-none">

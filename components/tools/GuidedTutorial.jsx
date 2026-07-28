@@ -100,28 +100,35 @@ export default function GuidedTutorial({ onComplete }) {
   const [found, setFound] = useState(true)
   const [visible, setVisible] = useState(true)
 
+  const [flip, setFlip] = useState(false)
+  const TOOLTIP_H = 260
+
   const updatePosition = useCallback(() => {
     const s = STEPS[step]
     if (!s.target || !visible) { setFound(false); return }
+    let rect
     const byId = document.getElementById(s.target)
     if (byId && byId.offsetParent !== null) {
-      const rect = byId.getBoundingClientRect()
-      setFound(true)
-      setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
-      return
-    }
-    const all = document.querySelectorAll(`[data-tut="${s.target}"]`)
-    for (const el of all) {
-      if (el.offsetParent !== null) {
-        const rect = el.getBoundingClientRect()
-        if (rect.width > 0 && rect.height > 0) {
-          setFound(true)
-          setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
-          return
+      rect = byId.getBoundingClientRect()
+    } else {
+      const all = document.querySelectorAll(`[data-tut="${s.target}"]`)
+      for (const el of all) {
+        if (el.offsetParent !== null) {
+          const r = el.getBoundingClientRect()
+          if (r.width > 0 && r.height > 0) { rect = r; break }
         }
       }
     }
-    setFound(false)
+    if (rect) {
+      setFound(true)
+      setPosition({ top: rect.top, left: rect.left, width: rect.width, height: rect.height })
+      const spaceBelow = window.innerHeight - (rect.top + rect.height + 16)
+      const spaceAbove = rect.top - 16
+      const shouldFlip = spaceBelow < TOOLTIP_H && spaceAbove > TOOLTIP_H
+      setFlip(shouldFlip)
+    } else {
+      setFound(false)
+    }
   }, [step, visible])
 
   useEffect(() => {
@@ -181,7 +188,7 @@ export default function GuidedTutorial({ onComplete }) {
         style={
           !isCenter
             ? {
-                top: position.top + position.height + 16,
+                top: flip ? position.top - 16 - TOOLTIP_H : position.top + position.height + 16,
                 left: Math.max(16, Math.min(position.left + position.width / 2 - 180, window.innerWidth - 376)),
               }
             : {}
