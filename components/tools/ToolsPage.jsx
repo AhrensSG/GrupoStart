@@ -725,6 +725,132 @@ export default function ToolsPage() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-6 pb-36">
+        {viewMode === "active" && (
+        <div className="bg-white rounded-2xl border border-gray-100 p-3 sm:p-4 mb-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="relative flex-1 min-w-[200px]">
+              <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                id="search-input"
+                type="text"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                placeholder="Buscar por nombre, teléfono o email…"
+                className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"
+              />
+            </div>
+
+            <div className="relative" ref={filterRef}>
+              <button
+                id="btn-filters"
+                onClick={() => setShowFilters(!showFilters)}
+                className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-colors bg-[#0051FF] border-[#0051FF] text-white shadow-sm ${
+                  activeFilters ? "" : "opacity-80 hover:opacity-100"
+                }`}
+              >
+                <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <circle cx="9" cy="6" r="2" fill="currentColor" stroke="none" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <circle cx="15" cy="12" r="2" fill="currentColor" stroke="none" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                  <circle cx="7" cy="18" r="2" fill="currentColor" stroke="none" />
+                </svg>
+                <span className="hidden sm:inline">Filtros</span>
+                {activeFilters && (
+                  <span className="w-2 h-2 rounded-full bg-white inline-block" />
+                )}
+              </button>
+
+              {showFilters && (
+                <div className="fixed sm:absolute left-4 sm:left-auto right-4 sm:right-auto top-auto sm:top-full mt-2 z-50 sm:w-72 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 space-y-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Clasificación</label>
+                    <select
+                      value={clasifFilter}
+                      onChange={(e) => setClasifFilter(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                    >
+                      <option value="">Todas las clasificaciones</option>
+                      <option value="Interesado">Interesados</option>
+                      <option value="Potencial cliente">Potenciales clientes</option>
+                      <option value="Comprador">Compradores</option>
+                      <option value="Pendiente">Pendientes</option>
+                      <option value="No interesado">No interesados</option>
+                      <option value="No hubo respuesta">Sin respuesta</option>
+                      <option value="No interesado: por razones económicas">No interesado: económico</option>
+                      <option value="No interesado: tiene una mejor oferta">No interesado: mejor oferta</option>
+                      <option value="No interesado: demora al responder">No interesado: demora</option>
+                      <option value="No interesado: La oferta no es lo que buscaba">No interesado: no buscaba</option>
+                      <option value="No interesado: Mala atención">No interesado: mala atención</option>
+                      <option value="No interesado: Otras razones">No interesado: otras razones</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Fecha</label>
+                    <select
+                      value={periodFilter}
+                      onChange={(e) => setPeriodFilter(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                    >
+                      <option value="">Cualquier fecha</option>
+                      <option value="week">Última semana</option>
+                      <option value="month">Último mes</option>
+                      <option value="quarter">Últimos 3 meses</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Gestión</label>
+                    <select
+                      value={minRoundsFilter}
+                      onChange={(e) => setMinRoundsFilter(Number(e.target.value))}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                    >
+                      <option value={0}>Cualquier gestión</option>
+                      <option value={1}>1+ gestiones</option>
+                      <option value={2}>2+ gestiones</option>
+                      <option value={3}>3+ gestiones</option>
+                      <option value={4}>4+ gestiones</option>
+                      <option value={5}>5 gestiones</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Ordenar</label>
+                    <select
+                      value={sortOrder}
+                      onChange={(e) => setSortOrder(e.target.value)}
+                      className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
+                    >
+                      <option value="">Sin orden</option>
+                      <option value="az">A → Z</option>
+                      <option value="proxima">Próx. contacto</option>
+                      <option value="carga">Fecha de carga</option>
+                    </select>
+                  </div>
+
+                  {activeFilters && (
+                    <button
+                      onClick={() => { setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortOrder(""); setShowFilters(false) }}
+                      className="w-full px-3 py-2 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center gap-1 border-t border-gray-100 pt-3"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                      Limpiar filtros
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        )}
+
         {pageLoading && !contacts ? (
           <div className="max-w-xl mx-auto pt-16">
             <div className="text-center mb-8">
@@ -733,7 +859,7 @@ export default function ToolsPage() {
             </div>
           </div>
         ) : !contacts ? (
-          <div className="max-w-xl mx-auto pt-12">
+          <div className="max-w-xl mx-auto pt-6">
             <div className="text-center mb-8">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#0051FF]/10 to-[#FB8A00]/10 flex items-center justify-center mx-auto mb-5">
                 <svg className="w-8 h-8 text-[#0051FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -774,132 +900,6 @@ export default function ToolsPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {viewMode === "active" && (
-            <div className="bg-white rounded-2xl border border-gray-100 p-3 sm:p-4">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <div className="relative flex-1 min-w-[200px]">
-                  <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  <input
-                    id="search-input"
-                    type="text"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    placeholder="Buscar por nombre, teléfono o email…"
-                    className="w-full pl-9 pr-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] placeholder:text-gray-300"
-                  />
-                </div>
-
-                <div className="relative" ref={filterRef}>
-                  <button
-                    id="btn-filters"
-                    onClick={() => setShowFilters(!showFilters)}
-                    className={`flex items-center gap-1.5 px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border transition-colors bg-[#0051FF] border-[#0051FF] text-white shadow-sm ${
-                      activeFilters ? "" : "opacity-80 hover:opacity-100"
-                    }`}
-                  >
-                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="3" y1="6" x2="21" y2="6" />
-                      <circle cx="9" cy="6" r="2" fill="currentColor" stroke="none" />
-                      <line x1="3" y1="12" x2="21" y2="12" />
-                      <circle cx="15" cy="12" r="2" fill="currentColor" stroke="none" />
-                      <line x1="3" y1="18" x2="21" y2="18" />
-                      <circle cx="7" cy="18" r="2" fill="currentColor" stroke="none" />
-                    </svg>
-                    <span className="hidden sm:inline">Filtros</span>
-                    {activeFilters && (
-                      <span className="w-2 h-2 rounded-full bg-white inline-block" />
-                    )}
-                  </button>
-
-                  {showFilters && (
-                    <div className="fixed sm:absolute left-4 sm:left-auto right-4 sm:right-auto top-auto sm:top-full mt-2 z-50 sm:w-72 bg-white border border-gray-200 rounded-2xl shadow-xl p-4 space-y-4">
-                      <div>
-                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Clasificación</label>
-                        <select
-                          value={clasifFilter}
-                          onChange={(e) => setClasifFilter(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                        >
-                          <option value="">Todas las clasificaciones</option>
-                          <option value="Interesado">Interesados</option>
-                          <option value="Potencial cliente">Potenciales clientes</option>
-                          <option value="Comprador">Compradores</option>
-                          <option value="Pendiente">Pendientes</option>
-                          <option value="No interesado">No interesados</option>
-                          <option value="No hubo respuesta">Sin respuesta</option>
-                          <option value="No interesado: por razones económicas">No interesado: económico</option>
-                          <option value="No interesado: tiene una mejor oferta">No interesado: mejor oferta</option>
-                          <option value="No interesado: demora al responder">No interesado: demora</option>
-                          <option value="No interesado: La oferta no es lo que buscaba">No interesado: no buscaba</option>
-                          <option value="No interesado: Mala atención">No interesado: mala atención</option>
-                          <option value="No interesado: Otras razones">No interesado: otras razones</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Fecha</label>
-                        <select
-                          value={periodFilter}
-                          onChange={(e) => setPeriodFilter(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                        >
-                          <option value="">Cualquier fecha</option>
-                          <option value="week">Última semana</option>
-                          <option value="month">Último mes</option>
-                          <option value="quarter">Últimos 3 meses</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Gestión</label>
-                        <select
-                          value={minRoundsFilter}
-                          onChange={(e) => setMinRoundsFilter(Number(e.target.value))}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                        >
-                          <option value={0}>Cualquier gestión</option>
-                          <option value={1}>1+ gestiones</option>
-                          <option value={2}>2+ gestiones</option>
-                          <option value={3}>3+ gestiones</option>
-                          <option value={4}>4+ gestiones</option>
-                          <option value={5}>5 gestiones</option>
-                        </select>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Ordenar</label>
-                        <select
-                          value={sortOrder}
-                          onChange={(e) => setSortOrder(e.target.value)}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-[#0051FF]/20 focus:border-[#0051FF] appearance-none pr-8"
-                        >
-                          <option value="">Sin orden</option>
-                          <option value="az">A → Z</option>
-                          <option value="proxima">Próx. contacto</option>
-                          <option value="carga">Fecha de carga</option>
-                        </select>
-                      </div>
-
-                      {activeFilters && (
-                        <button
-                          onClick={() => { setClasifFilter(""); setPeriodFilter(""); setMinRoundsFilter(0); setSortOrder(""); setShowFilters(false) }}
-                          className="w-full px-3 py-2 text-sm text-gray-400 hover:text-red-500 transition-colors flex items-center justify-center gap-1 border-t border-gray-100 pt-3"
-                        >
-                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                          Limpiar filtros
-                        </button>
-                      )}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-            )}
-
             {viewMode === "trash" ? (
               <>
                 <div className="flex items-center justify-between">
