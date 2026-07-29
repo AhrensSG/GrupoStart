@@ -119,33 +119,6 @@ export async function POST(req) {
                 { model: company },
             ],
         });
-
-        await sendMail({
-            to: updatedUser.email,
-            subject: "¡Bienvenido a Grupo Start!",
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center;">
-                    <h2 style="color: #333;">¡Bienvenido a Grupo Start!</h2>
-                    <p style="font-size: 16px; color: #555;">
-                        Hola <strong>${updatedUser.name}</strong>,
-                    </p>
-                    <p style="font-size: 16px; color: #555;">
-                        ¡Gracias por registrarte! Estamos emocionados de que formes parte de nuestra comunidad.
-                        En <strong>Grupo Start</strong> nos especializamos en impulsar el crecimiento de emprendedores
-                        y empresarios de todos los niveles.
-                    </p>
-                    <p style="font-size: 16px; color: #555;">
-                        Pronto recibirás más información y recursos para ayudarte a alcanzar tus objetivos.
-                        ¡Estamos aquí para apoyarte en cada paso del camino!
-                    </p>
-                    <a href="https://grupostart.com.ar/user" 
-                        style="display: inline-block; padding: 12px 24px; margin-top: 20px; font-size: 16px;
-                            background-color: #ff6600; color: white; text-decoration: none; border-radius: 5px;">
-                        Ir a mi perfil
-                    </a>
-                </div>
-            `,
-        });
         return Response.json(updatedUser);
     } catch (error) {
         console.log(error);

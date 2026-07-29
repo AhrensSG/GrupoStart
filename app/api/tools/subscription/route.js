@@ -1,9 +1,7 @@
 import { NextResponse } from "next/server"
 import { checkUserSubscribed, setUserSubscribed, getUserSubscriptions, getUserPhone, getUserName, saveUserPhone } from "@/lib/tools/db"
 import { sendWelcomeMessage } from "@/lib/tools/whatsapp-cloud"
-import sendGrid from "@sendgrid/mail"
-
-sendGrid.setApiKey(process.env.SENDGRID_API_KEY)
+import { sendMail } from "@/app/api/routes/send_mail/sendMail"
 
 export async function GET(req) {
   try {
@@ -37,11 +35,7 @@ export async function POST(req) {
 
     if (email) {
       try {
-        await sendGrid.send({
-          from: {
-            name: "Grupo Start",
-            email: process.env.SENDGRID_FROM_EMAIL,
-          },
+        await sendMail({
           to: email,
           subject: "¡Suscripción activada — GrupoStart Tools!",
           text: `¡Tu suscripción a GrupoStart Tools está activa!
@@ -90,7 +84,9 @@ grupostart.ok@gmail.com`,
             </div>
           </div>`,
         })
-      } catch (_) {}
+      } catch (err) {
+        console.error("Error sending subscription email:", err)
+      }
     }
 
     const phone = await getUserPhone(uid)
