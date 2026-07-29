@@ -6,11 +6,21 @@ import { sendMail } from "../../send_mail/sendMail";
 export async function POST(req) {
     try {
         const searchParams = req.nextUrl.searchParams;
-        const type = searchParams.get("type");
-        const id = searchParams.get("data.id");
+        const topic = searchParams.get("topic");
+        const queryId = searchParams.get("id");
 
-        if (id && type && type === "payment") {
-            const data = await payment.get({ id });
+        let body = null
+        try {
+            body = await req.json()
+        } catch {
+            body = null
+        }
+
+        const notificationType = body?.type || topic
+        const notificationId = body?.data?.id || queryId
+
+        if (notificationId && notificationType === "payment") {
+            const data = await payment.get({ id: notificationId });
             if (
                 !data ||
                 !data.metadata ||

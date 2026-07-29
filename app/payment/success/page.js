@@ -1,6 +1,6 @@
 "use client"
 
-import { Suspense, useEffect, useState, useContext } from "react"
+import { Suspense, useEffect, useState, useContext, useCallback, useRef } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Context } from "@/app/context/GlobalContext"
 import Link from "next/link"
@@ -11,22 +11,19 @@ function PaymentSuccessContent() {
   const searchParams = useSearchParams()
   const [status, setStatus] = useState("loading")
   const [errorMsg, setErrorMsg] = useState("")
+  const activatedRef = useRef(false)
 
   const user = state?.user
 
-  useEffect(() => {
-    if (!state?.isLoading && !user) {
-      router.push("/login?redirect=/payment/success")
-      return
-    }
-    if (!user) return
+  const preapprovalId = searchParams.get("preapproval_id")
+  const externalRef = searchParams.get("external_reference")
+  const paymentStatus = searchParams.get("status")
 
-    const preapprovalId = searchParams.get("preapproval_id")
-    const externalRef = searchParams.get("external_reference")
-    const paymentStatus = searchParams.get("status")
-
-    if (preapprovalId) {
-      fetch("/api/tools/subscription", {
+  const activateSubscription = useCallback(async () => {
+    if (!user || !preapprovalId || activatedRef.current) return
+    activatedRef.current = true
+    try {
+      const res = await fetch("/api/tools/subscription", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -35,25 +32,35 @@ function PaymentSuccessContent() {
           preapproval_id: preapprovalId,
         }),
       })
-        .then((r) => r.json())
-        .then((data) => {
-          if (data.success) {
-            router.push("/user?section=servicios")
-          } else {
-            setStatus("error")
-            setErrorMsg(data.warning || "Error al activar la suscripción.")
-          }
-        })
-        .catch(() => {
-          setStatus("error")
-          setErrorMsg("Error de conexión al activar la suscripción.")
-        })
+      const data = await res.json()
+      if (data.success) {
+        router.push("/user?section=servicios")
+      } else {
+        setStatus("error")
+        setErrorMsg(data.warning || "Error al activar la suscripción.")
+      }
+    } catch {
+      setStatus("error")
+      setErrorMsg("Error de conexión al activar la suscripción.")
+    }
+  }, [user, preapprovalId, externalRef, router])
+
+  useEffect(() => {
+    if (!state?.isLoading && !user) {
+      const currentParams = searchParams.toString()
+      const redirectPath = "/payment/success" + (currentParams ? "?" + currentParams : "")
+      router.push("/login?redirect=" + encodeURIComponent(redirectPath))
+      return
+    }
+    if (!user) return
+
+    if (preapprovalId) {
+      activateSubscription()
       return
     }
 
     if (paymentStatus === "success" || paymentStatus === "authorized") {
       setStatus("success")
-      router.push("/user?section=servicios")
       return
     }
 
@@ -63,9 +70,14 @@ function PaymentSuccessContent() {
       return
     }
 
+    if (!preapprovalId && !paymentStatus) {
+      setStatus("loading")
+      return
+    }
+
     setStatus("error")
     setErrorMsg("Estado de pago desconocido.")
-  }, [state?.isLoading, user, searchParams, router])
+  }, [state?.isLoading, user, preapprovalId, externalRef, paymentStatus, router, activateSubscription, searchParams])
 
   if (status === "loading") {
     return (
