@@ -5,14 +5,14 @@ const PREAPPROVAL_WEBHOOK_URL = process.env.SERVER_ENDPOINT_PREAPPROVAL_NOTIFICA
 export async function POST(req) {
     try {
         const body = await req.json()
-        const { uid, email } = body
+        const { uid } = body
         if (!uid) {
             return Response.json({ error: "uid es requerido para crear la suscripción" }, { status: 400 })
         }
         const host = req.headers.get("host") || ""
         const protocol = req.headers.get("x-forwarded-proto") || "https"
         const isLocal = host.includes("localhost") || host.includes("127.0.0.1")
-        const publicHost = isLocal ? "grupo-start.vercel.app" : host
+        const publicHost = isLocal ? "grupostart.com.ar" : host
         const backUrl = `${protocol}://${publicHost}/payment/success`
         const notificationUrl = PREAPPROVAL_WEBHOOK_URL || `${protocol}://${publicHost}/api/routes/preapproval/webhook`
 
@@ -28,7 +28,6 @@ export async function POST(req) {
                 currency_id: "ARS",
             },
         }
-        if (email) preapprovalBody.payer_email = email
 
         const response = await preApproval.create({ body: preapprovalBody })
         return Response.json(response)
