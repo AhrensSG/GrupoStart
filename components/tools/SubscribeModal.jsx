@@ -41,10 +41,15 @@ export default function SubscribeModal({ user, onClose }) {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-            <p className="text-xs text-blue-700">
-              <strong>Importante:</strong> El email debe coincidir con el de tu cuenta de Mercado Pago.
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4 space-y-2">
+            <p className="text-xs text-amber-800">
+              <strong>Requisito de Mercado Pago:</strong> El email debe coincidir con el de tu cuenta de Mercado Pago.
               Si usás uno diferente, actualizalo antes de continuar.
+            </p>
+            <p className="text-xs text-amber-800">
+              <strong>Medios de pago aceptados:</strong> Podés pagar con <strong>dinero en cuenta</strong> de Mercado Pago
+              o con <strong>tarjeta de crédito</strong>. Las tarjetas de <strong>débito</strong> solo funcionan si
+              primero las asociás a tu cuenta de Mercado Pago y las seleccionás desde allí al pagar.
             </p>
           </div>
 
