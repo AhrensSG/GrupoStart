@@ -62,10 +62,8 @@ const Login = () => {
     setLoading(true);
     try {
       await logInWithGoogle();
-      toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
-    } finally {
       setLoading(false);
     }
   };
@@ -74,11 +72,8 @@ const Login = () => {
     setLoading(true);
     try {
       await logInWithFacebook();
-      toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
-      toast.error("Error al iniciar sesión.");
-    } finally {
       setLoading(false);
     }
   };
