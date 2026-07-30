@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext, useEffect, useRef } from "react";
+import { useState, useContext, useEffect, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Context } from "@/app/context/GlobalContext";
 import { Header } from "./Header";
@@ -13,40 +13,23 @@ import { TestimonialsSection } from "./TestimonialsSection";
 import { MobileBottomBar } from "./MobileBottomBar";
 import { CTAButton } from "./CTAButton";
 import { productData } from "./productData";
+import SubscribeModal from "@/components/tools/SubscribeModal";
 
 export default function LandingPage() {
   const { state } = useContext(Context);
   const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const [showSubscribeModal, setShowSubscribeModal] = useState(false);
   const user = state?.user;
   const searchParams = useSearchParams();
   const subRef = useRef(false);
 
-  const handleSubscribe = async () => {
+  const handleSubscribe = useCallback(() => {
     if (!user) {
       router.push("/login?redirect=" + encodeURIComponent("/gestion-de-leads?subscribe=1"));
       return;
     }
-
-    setLoading(true);
-    try {
-      const res = await fetch("/api/routes/preapproval/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: user.id, email: user.email }),
-      });
-      const data = await res.json();
-      if (data.init_point) {
-        window.location.href = data.init_point;
-      } else {
-        alert(data.error ? `Error: ${data.error}` : "Error al generar la suscripción. Intentalo de nuevo.");
-      }
-    } catch {
-      alert("Error al conectar con el sistema de pagos.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    setShowSubscribeModal(true);
+  }, [user, router]);
 
   useEffect(() => {
     if (searchParams.get("subscribe") === "1" && user && !subRef.current) {
@@ -159,14 +142,8 @@ export default function LandingPage() {
       />
 
       <Footer />
-      {loading && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-          <div className="bg-white rounded-2xl p-8 text-center max-w-sm mx-4 shadow-2xl">
-            <div className="w-12 h-12 border-4 border-brand-blue border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-gray-900 font-semibold">Procesando suscripción...</p>
-            <p className="text-gray-600 text-sm mt-2">Redirigiendo a Mercado Pago</p>
-          </div>
-        </div>
+      {showSubscribeModal && (
+        <SubscribeModal user={user} onClose={() => setShowSubscribeModal(false)} />
       )}
     </div>
   );

@@ -11,46 +11,29 @@ import SolutionSection from "./SolutionSection"
 import CTASection from "./CTASection"
 import MobileBottomBar from "./MobileBottomBar"
 import Footer from "./Footer"
+import SubscribeModal from "@/components/tools/SubscribeModal"
 
 export default function Landing2Page() {
   const { state } = useContext(Context)
   const router = useRouter()
   const searchParams = useSearchParams()
   const subRef = useRef(false)
-  const [loading, setLoading] = useState(false)
+  const [showSubscribeModal, setShowSubscribeModal] = useState(false)
   const user = state?.user
 
-  const handleSubscribe = async () => {
+  const handleSubscribe = () => {
     if (!user) {
       router.push("/login?redirect=" + encodeURIComponent("/sistema-seguimiento-clientes?subscribe=1"))
       return
     }
-
-    setLoading(true)
-    try {
-      const res = await fetch("/api/routes/preapproval/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: user.id, email: user.email }),
-      })
-      const data = await res.json()
-      if (data.init_point) {
-        window.location.href = data.init_point
-      } else {
-        alert("Error al generar la suscripción. Intentalo de nuevo.")
-      }
-    } catch {
-      alert("Error al conectar con el sistema de pagos.")
-    } finally {
-      setLoading(false)
-    }
+    setShowSubscribeModal(true)
   }
 
   useEffect(() => {
     if (searchParams.get("subscribe") === "1" && user && !subRef.current) {
       subRef.current = true
       window.history.replaceState({}, "", window.location.pathname)
-      handleSubscribe()
+      setShowSubscribeModal(true)
     }
   }, [searchParams, user])
 
@@ -64,14 +47,8 @@ export default function Landing2Page() {
       <CTASection onSubscribe={handleSubscribe} />
       <MobileBottomBar onSubscribe={handleSubscribe} />
       <Footer />
-      {loading && (
-        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
-          <div className="bg-[#0F1512] border border-[#00F74C] rounded-2xl p-8 text-center max-w-sm mx-4 shadow-2xl shadow-[#00F74C]/20">
-            <div className="w-12 h-12 border-4 border-[#00F74C] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-            <p className="text-white font-semibold" style={{ fontFamily: "'Schibsted Grotesk', sans-serif" }}>Procesando suscripción...</p>
-            <p className="text-[#B0B5BB] text-sm mt-2" style={{ fontFamily: "'Lato', sans-serif" }}>Redirigiendo a Mercado Pago</p>
-          </div>
-        </div>
+      {showSubscribeModal && (
+        <SubscribeModal user={user} onClose={() => setShowSubscribeModal(false)} />
       )}
     </div>
   )

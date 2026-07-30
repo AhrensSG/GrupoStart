@@ -11,6 +11,7 @@ import AddContactModal from "./AddContactModal"
 import UploadModal from "./UploadModal"
 import ProfileModal from "./ProfileModal"
 import SuggestModal from "./SuggestModal"
+import SubscribeModal from "./SubscribeModal"
 import GuidedTutorial from "./GuidedTutorial"
 import { parseSheet } from "@/lib/tools/parser"
 
@@ -45,6 +46,7 @@ export default function ToolsPage() {
   const [showUploadModal, setShowUploadModal] = useState(false)
   const [showProfileModal, setShowProfileModal] = useState(false)
   const [showSuggestModal, setShowSuggestModal] = useState(false)
+  const [showSubscribeModal, setShowSubscribeModal] = useState(false)
   const [viewMode, setViewMode] = useState("active")
   const [trashContacts, setTrashContacts] = useState(null)
   const [subscribed, setSubscribed] = useState(null)
@@ -269,25 +271,8 @@ export default function ToolsPage() {
     fetchContacts()
   }
 
-  const handleSubscribe = async () => {
-    setLoading(true)
-    try {
-      const res = await fetch("/api/routes/preapproval/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ uid: user.id, email: user.email }),
-      })
-      const data = await res.json()
-      if (data.init_point) {
-        window.location.href = data.init_point
-      } else {
-        alert("Error al generar la suscripción. Intentalo de nuevo.")
-      }
-    } catch {
-      alert("Error al conectar con el sistema de pagos.")
-    } finally {
-      setLoading(false)
-    }
+  const handleSubscribe = () => {
+    setShowSubscribeModal(true)
   }
 
   const { stats, noInteresados } = useMemo(() => {
@@ -1013,6 +998,9 @@ export default function ToolsPage() {
 
       {showSuggestModal && (
         <SuggestModal onClose={() => setShowSuggestModal(false)} />
+      )}
+      {showSubscribeModal && (
+        <SubscribeModal user={user} onClose={() => setShowSubscribeModal(false)} />
       )}
 
       {showTutorial && (
