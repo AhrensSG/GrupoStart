@@ -29,6 +29,7 @@ const Login = () => {
   const [resetEmail, setResetEmail] = useState("");
   const [codeSent, setCodeSent] = useState(false);
   const [codeVerified, setCodeVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const searchParams = useSearchParams();
@@ -45,39 +46,45 @@ const Login = () => {
   const authUrl = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
 
   const handleEmailLogin = async () => {
+    setLoading(true);
     try {
-      const user = await signInWithEmailAndPassword(auth, email, password);
-      console.log(user.user);
-      false;
+      await signInWithEmailAndPassword(auth, email, password);
       toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
       toast.error("Error al iniciar sesión.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
       await logInWithGoogle();
       toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
-      toast.error("Error al iniciar sesión.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleFacebookLogin = async () => {
+    setLoading(true);
     try {
       await logInWithFacebook();
-      false;
       toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
       toast.error("Error al iniciar sesión.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleForgotPassword = async () => {
+    setLoading(true);
     try {
       await sendPasswordResetEmail(auth, resetEmail);
       setIsForgotPassword(false);
@@ -86,10 +93,11 @@ const Login = () => {
       toast.success("Correo de restablecimiento enviado!", {
         description: "Sigue las instrucciónes enviadas por correo.",
       });
-      // setCodeSent(true);
     } catch (error) {
       console.log(error);
       toast.error("Error al enviar correo de restablecimiento.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -129,6 +137,7 @@ const Login = () => {
   };
 
   const handleRegister = async () => {
+    setLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -147,11 +156,12 @@ const Login = () => {
         password: password,
         phone: phone,
       });
-      false;
       toast.success("Registro exitoso!");
     } catch (error) {
       console.log(error);
       toast.error("Error al registrar usuario.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -234,8 +244,9 @@ const Login = () => {
                     {!isForgotPassword && (
                       <>
                         <button
-                          className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white"
-                          onClick={handleGoogleLogin}>
+                          className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                          onClick={handleGoogleLogin}
+                          disabled={loading}>
                           <svg
                             width="25"
                             height="25"
@@ -257,8 +268,9 @@ const Login = () => {
                           </svg>
                         </button>
                         <button
-                          className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white"
-                          onClick={handleFacebookLogin}>
+                          className="p-2 w-10 flex justify-center items-center rounded-full mx-2 bg-white disabled:opacity-50 disabled:cursor-not-allowed"
+                          onClick={handleFacebookLogin}
+                          disabled={loading}>
                           <svg viewBox="0 0 1024 1024" id="facebook">
                             <path
                               fill="#1877f2"
@@ -410,8 +422,9 @@ const Login = () => {
                   <br />
                   <div className="flex items-center justify-center w-full">
                     <button
-                      className="bg-orange-500 hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full max-w-52"
+                      className="bg-orange-500 hover:bg-orange-700 disabled:bg-orange-300 text-white font-semibold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full max-w-52"
                       type="button"
+                      disabled={loading && !isForgotPassword}
                       onClick={
                         isForgotPassword
                           ? codeSent
@@ -455,6 +468,14 @@ const Login = () => {
           </div>
         </div>
       </aside>
+      {loading && (
+        <div className="fixed inset-0 z-[100] bg-black/60 flex items-center justify-center">
+          <div className="bg-white rounded-2xl p-8 flex flex-col items-center gap-4 shadow-2xl">
+            <div className="w-12 h-12 border-4 border-[#0051FF] border-t-transparent rounded-full animate-spin" />
+            <p className="text-sm font-medium text-gray-600">Iniciando sesión...</p>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

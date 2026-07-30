@@ -94,7 +94,12 @@ export default function MembershipSection({ user }) {
                   {sub.email && <>{sub.email} · </>}
                   Desde el {formatDate(sub.created_at)}
                 </p>
-                {sub.cancelled_at && (
+                {sub.status === "active" && sub.expires_at && (
+                  <p className="text-sm text-gray-400">
+                    Vence el {formatDate(sub.expires_at)}
+                  </p>
+                )}
+                {sub.status === "cancelled" && (
                   <p className="text-sm text-gray-400">
                     Cancelada el {formatDate(sub.updated_at)}
                   </p>

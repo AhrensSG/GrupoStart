@@ -34,6 +34,7 @@ function PaymentSuccessContent() {
       })
       const data = await res.json()
       if (data.success) {
+        try { localStorage.removeItem("pending_preapproval_" + (externalRef || user.id)) } catch {}
         router.push("/user?section=servicios")
       } else {
         setStatus("error")

@@ -18,6 +18,8 @@ export async function POST(req) {
     const notificationType = body?.type || topic
     const notificationId = body?.data?.id || queryId
 
+    console.log(`Webhook received: type=${notificationType}, id=${notificationId}, topic=${topic}, queryId=${queryId}`)
+
     if (!notificationId) {
       return NextResponse.json({ message: "No id provided" }, { status: 400 })
     }
@@ -31,17 +33,25 @@ export async function POST(req) {
 
         const uid = mpPreapproval.external_reference
         const email = mpPreapproval.payer_email || ""
-        const status = mpPreapproval.status
+        const mpStatus = mpPreapproval.status
 
-        if (status === "approved" || status === "authorized" || status === "pending") {
+        console.log(`Preapproval fetched: uid=${uid}, status=${mpStatus}, email=${email}`)
+
+        if (mpStatus === "approved" || mpStatus === "authorized" || mpStatus === "pending") {
           if (uid) {
             await setUserSubscribed(uid, email, notificationId)
             console.log(`Subscription activated via webhook for uid=${uid}, preapproval_id=${notificationId}`)
+          } else {
+            console.warn("Webhook: preapproval has no external_reference (uid)", notificationId)
           }
+        } else {
+          console.log(`Webhook: preapproval ${notificationId} status is ${mpStatus}, skipping activation`)
         }
       } catch (mpErr) {
         console.error("Error fetching preapproval from MP:", mpErr)
       }
+    } else {
+      console.log(`Webhook: notification type ${notificationType} not handled`)
     }
 
     return NextResponse.json({ message: "OK" }, { status: 200 })

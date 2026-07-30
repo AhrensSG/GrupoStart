@@ -52,6 +52,8 @@ export default function ToolsPage() {
   const [subscribed, setSubscribed] = useState(null)
   const [subLoading, setSubLoading] = useState(true)
 
+  const [verifying, setVerifying] = useState(false)
+  const [verifyMsg, setVerifyMsg] = useState("")
   const [searchText, setSearchText] = useState("")
   const [clasifFilter, setClasifFilter] = useState("")
   const [periodFilter, setPeriodFilter] = useState("")
@@ -128,6 +130,7 @@ export default function ToolsPage() {
         }
         if (data.subscribed) {
           localStorage.setItem("subscribed_" + user.id, "true")
+          localStorage.removeItem("pending_preapproval_" + user.id)
         }
         setPageLoading(false)
       })
@@ -475,6 +478,40 @@ export default function ToolsPage() {
 
   if (!user) return null
 
+  const handleVerifyPayment = async () => {
+    const stored = localStorage.getItem("pending_preapproval_" + user.id)
+    if (!stored) {
+      setVerifyMsg("No encontramos un pago pendiente. Si ya te suscribiste, esperá unos minutos y recargá la página.")
+      return
+    }
+    let preapprovalId
+    try {
+      preapprovalId = JSON.parse(stored).id
+    } catch {
+      preapprovalId = stored
+    }
+    setVerifying(true)
+    setVerifyMsg("")
+    try {
+      const res = await fetch("/api/tools/subscription/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ uid: user.id, preapproval_id: preapprovalId }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        localStorage.removeItem("pending_preapproval_" + user.id)
+        window.location.reload()
+      } else {
+        setVerifyMsg(data.message || "No se pudo verificar el pago.")
+      }
+    } catch {
+      setVerifyMsg("Error de conexión al verificar el pago.")
+    } finally {
+      setVerifying(false)
+    }
+  }
+
   if (!subscribed) {
     return (
       <div className="min-h-screen bg-[#f8f8f8] flex items-center justify-center">
@@ -496,6 +533,21 @@ export default function ToolsPage() {
           >
             {loading ? "PROCESANDO..." : "SUSCRIBIRME AHORA"}
           </button>
+
+          <div className="mt-6 pt-6 border-t border-gray-200">
+            <p className="text-xs text-gray-400 mb-3">¿Ya pagaste y no se activa?</p>
+            <button
+              onClick={handleVerifyPayment}
+              disabled={verifying}
+              className="w-full py-3 px-4 border-2 border-[#0051FF] text-[#0051FF] hover:bg-blue-50 disabled:opacity-50 font-semibold text-sm rounded-xl transition-colors"
+            >
+              {verifying ? "VERIFICANDO..." : "VERIFICAR MI PAGO"}
+            </button>
+            {verifyMsg && (
+              <p className="text-xs text-gray-500 mt-3">{verifyMsg}</p>
+            )}
+          </div>
+
           <p className="text-xs text-gray-400 mt-4">
             Podés dar de baja cuando quieras. Pago procesado por Mercado Pago.
           </p>
