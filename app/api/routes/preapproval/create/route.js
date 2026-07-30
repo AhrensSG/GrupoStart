@@ -5,7 +5,7 @@ const PREAPPROVAL_WEBHOOK_URL = process.env.SERVER_ENDPOINT_PREAPPROVAL_NOTIFICA
 export async function POST(req) {
     try {
         const body = await req.json()
-        const { uid } = body
+        const { uid, email } = body
         if (!uid) {
             return Response.json({ error: "uid es requerido para crear la suscripción" }, { status: 400 })
         }
@@ -28,6 +28,7 @@ export async function POST(req) {
                 currency_id: "ARS",
             },
         }
+        if (email) preapprovalBody.payer_email = email
 
         const response = await preApproval.create({ body: preapprovalBody })
         return Response.json(response)
