@@ -9,6 +9,7 @@ import {
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "@/firebase/config";
 import { toast } from "sonner";
@@ -42,6 +43,13 @@ const Login = () => {
       router.push(redirect);
     }
   }, [state?.user, redirect, router]);
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (user) setLoading(false);
+    });
+    return () => unsub();
+  }, []);
 
   const authUrl = process.env.NEXT_PUBLIC_SERVER_AUTH_ENDPOINT;
 
