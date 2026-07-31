@@ -24,6 +24,11 @@ const AdminPage = () => {
       return;
     }
 
+    if (user.role !== "admin") {
+      router.replace("/user");
+      return;
+    }
+
     fetch(`/api/admin/users?admin_uid=${user.id}`)
       .then((res) => {
         if (res.status === 403) {

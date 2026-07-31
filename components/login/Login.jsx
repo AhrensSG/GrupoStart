@@ -40,7 +40,9 @@ const Login = () => {
 
   useEffect(() => {
     if (state?.user) {
-      router.push(redirect);
+      const isAdmin = state.user.role === "admin";
+      const target = isAdmin && redirect === "/user" ? "/admin" : redirect;
+      router.push(target);
     }
   }, [state?.user, redirect, router]);
 

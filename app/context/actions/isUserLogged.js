@@ -8,12 +8,19 @@ export const isUserLogged = async (dispatch) => {
     onAuthStateChanged(auth, async (user) => {
         try {
             if (user) {
+                let role = "user";
+                try {
+                    const res = await axios.get(`/api/routes/users/role?uid=${user.uid}`);
+                    role = res.data?.role || "user";
+                } catch (_) {}
+
                 const info = {
                     id: user.uid,
                     name: user.displayName,
                     displayName: user.displayName,
                     email: user.email,
                     uid: user.uid,
+                    role,
                 }
                 dispatch({ type: "LOGGED_IN_USER", payload: { info, isLoading: false } })
 
