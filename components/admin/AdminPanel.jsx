@@ -57,9 +57,9 @@ const AdminPanel = ({ user }) => {
   const renderSectionContent = () => {
     switch (selectedSection) {
       case "usuarios":
-        return <UsersSection adminUid={adminUid} onError={showModal} />;
+        return <UsersSection adminUid={adminUid} />;
       case "suscripciones":
-        return <SubscriptionsSection adminUid={adminUid} onError={showModal} />;
+        return <SubscriptionsSection adminUid={adminUid} />;
       default:
         return null;
     }
