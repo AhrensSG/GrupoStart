@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import { formatFecha } from "@/lib/tools/business-days"
+import { getArgentinaNow, addDaysToFecha } from "@/lib/tools/business-days"
 import {
   getAllActiveSubscribedUsers,
   getUserPhone,
@@ -36,10 +36,9 @@ export async function POST() {
 }
 
 async function processNotifications(preview) {
-  const today = formatFecha(new Date())
-  const tomorrow = new Date()
-  tomorrow.setDate(tomorrow.getDate() + 1)
-  const tomorrowStr = formatFecha(tomorrow)
+  const now = getArgentinaNow()
+  const today = now.fecha
+  const tomorrowStr = addDaysToFecha(today, 1)
 
   const users = await getAllActiveSubscribedUsers()
   const fullSummary = []
@@ -85,8 +84,7 @@ async function processNotifications(preview) {
         }
         return { h: 10, m: 0 }
       })()
-      const now = new Date()
-      const currentMin = now.getHours() * 60 + now.getMinutes()
+      const currentMin = now.hora * 60 + now.minuto
       const shouldSend = dueNow.some((c) => {
         const t = c.hora_proximo_contacto ? c.hora_proximo_contacto.split(":").map(Number) : [defaultTime.h, defaultTime.m]
         return currentMin >= t[0] * 60 + t[1]

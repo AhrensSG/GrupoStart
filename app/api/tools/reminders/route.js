@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server"
 import { getContactsPendingReminder, getUserProfile, getUserPhone } from "@/lib/tools/db"
-import { formatFecha, getDefaultReminderTime, parseTime } from "@/lib/tools/business-days"
+import { getDefaultReminderTime, parseTime, getArgentinaNow } from "@/lib/tools/business-days"
 import { sendDueNowReminder } from "@/lib/tools/whatsapp-cloud"
 
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url)
     const uid = searchParams.get("uid") || ""
-    const today = formatFecha(new Date())
+    const today = getArgentinaNow().fecha
     if (!uid) {
       return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
     }
@@ -51,10 +51,10 @@ export async function POST(req) {
       return NextResponse.json({ error: "Teléfono del usuario no configurado" }, { status: 400 })
     }
 
-    const today = formatFecha(new Date())
-    const now = new Date()
-    const currentHour = now.getHours()
-    const currentMin = now.getMinutes()
+    const now = getArgentinaNow()
+    const today = now.fecha
+    const currentHour = now.hora
+    const currentMin = now.minuto
 
     const pending = await getContactsPendingReminder(uid)
 
