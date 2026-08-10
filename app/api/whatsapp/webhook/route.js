@@ -1,4 +1,10 @@
 import { NextResponse } from "next/server"
+import {
+  saveWaIncomingMessage,
+  updateWaMessageStatus,
+} from "@/lib/tools/db"
+
+const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || "grupostart_webhook_2026"
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url)
@@ -6,19 +12,77 @@ export async function GET(req) {
   const token = searchParams.get("hub.verify_token")
   const challenge = searchParams.get("hub.challenge")
 
-  if (mode === "subscribe" && token === "grupostart_webhook_2026") {
+  if (mode === "subscribe" && token === VERIFY_TOKEN) {
     return new Response(challenge, { status: 200 })
   }
 
   return NextResponse.json({ error: "Verification failed" }, { status: 403 })
 }
 
+function describeMessage(msg) {
+  const type = msg?.type || "text"
+  const mediaUrl = ""
+  switch (type) {
+    case "text":
+      return { type, body: msg.text?.body || "", mediaUrl }
+    case "image":
+      return { type, body: msg.image?.caption || "[📷 Imagen]", mediaUrl }
+    case "video":
+      return { type, body: msg.video?.caption || "[🎬 Video]", mediaUrl }
+    case "audio":
+      return { type, body: msg.audio?.caption || "[🎤 Audio]", mediaUrl }
+    case "voice":
+      return { type, body: "[🎤 Nota de voz]", mediaUrl }
+    case "document":
+      return { type, body: msg.document?.filename || "[📄 Documento]", mediaUrl }
+    case "sticker":
+      return { type, body: "[✨ Sticker]", mediaUrl }
+    case "location":
+      return { type, body: "[📍 Ubicación]", mediaUrl }
+    case "contacts":
+      return { type, body: "[👤 Contacto]", mediaUrl }
+    case "button":
+      return { type, body: msg.button?.text || "[🔘 Botón]", mediaUrl }
+    default:
+      return { type, body: `[${type}]`, mediaUrl }
+  }
+}
+
 export async function POST(req) {
   try {
     const body = await req.json()
-    console.log("[WhatsApp Webhook]", JSON.stringify(body))
-    return NextResponse.json({ success: true })
-  } catch {
+    const entries = body?.entry || []
+    let saved = 0
+
+    for (const entry of entries) {
+      for (const change of entry.changes || []) {
+        const value = change.value || {}
+
+        for (const msg of value.messages || []) {
+          const { type, body: text, mediaUrl } = describeMessage(msg)
+          const name = value.contacts?.[0]?.profile?.name || ""
+          await saveWaIncomingMessage({
+            from: msg.from,
+            name,
+            body: text,
+            type,
+            mediaUrl,
+            waMessageId: msg.id,
+          })
+          saved++
+        }
+
+        for (const status of value.statuses || []) {
+          if (status?.id && status?.status) {
+            await updateWaMessageStatus(status.id, status.status)
+          }
+        }
+      }
+    }
+
+    return NextResponse.json({ success: true, saved })
+  } catch (err) {
+    console.error("[WhatsApp Webhook] Error:", err)
     return NextResponse.json({ error: "Invalid body" }, { status: 400 })
   }
 }
