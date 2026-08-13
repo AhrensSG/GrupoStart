@@ -1,17 +1,17 @@
 import { Company, Order, OrderProducts, User } from "@/db/models/models";
 import { sendMail } from "../send_mail/sendMail";
-import crypto from "crypto";
-import company from "@/db/models/company";
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server";
 
 export async function PUT(req) {
     try {
-        const { displayName, email, uid } = await req.json();
-
-        if (!uid || !email) {
-            return Response.json("UID / DISPLAYNAME / EMAIL ARE required", {
-                status: 400,
-            });
+        const authUser = await requireUser(req);
+        if (!authUser) {
+            return unauthorizedResponse();
         }
+
+        const { displayName, email } = await req.json();
+        const uid = authUser.uid;
+        const verifiedEmail = authUser.email || email;
 
         const user = await User.findOne({
             where: { id: uid },
@@ -24,9 +24,9 @@ export async function PUT(req) {
         if (!user) {
             const newUser = await User.create({
                 id: uid,
-                name: displayName,
+                name: displayName || authUser.name || "",
                 surname: "",
-                email: email,
+                email: verifiedEmail || email || "",
             });
 
             const updatedUser = await User.findOne({
@@ -34,7 +34,7 @@ export async function PUT(req) {
                 include: [{ model: Order }],
             });
 
-            if (displayName) {
+            if (updatedUser?.email) {
                 await sendMail({
                     to: updatedUser.email,
                     subject: "¡Bienvenido a Grupo Start!",
@@ -60,7 +60,7 @@ export async function PUT(req) {
                             </a>
                         </div>
                     `,
-                });
+                }).catch((err) => console.error("Error sending welcome email:", err));
             }
 
             return Response.json(updatedUser);
@@ -73,50 +73,46 @@ export async function PUT(req) {
     }
 }
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 export async function POST(req) {
     try {
-        const { id, name, surname, email, password, phone } = await req.json();
+        const authUser = await requireUser(req);
+        if (!authUser) {
+            return unauthorizedResponse();
+        }
 
-        if (!id || !name || !surname || !email) {
-            return Response.json("Missing Data / All fields are required", {
+        const { name, surname, email, phone } = await req.json();
+        const uid = authUser.uid;
+
+        if (!name) {
+            return Response.json("Missing Data / Name is required", {
                 status: 400,
             });
         }
 
-        const passwordEncrypted = crypto
-            .createHash("sha256")
-            .update(password)
-            .digest("hex");
-        await delay(3000);
-        const existingUser = await User.findOne({
-            where: { id },
-        });
+        const existingUser = await User.findOne({ where: { id: uid } });
 
         if (existingUser) {
             await existingUser.update({
                 name,
-                surname,
-                phone,
-                password: passwordEncrypted,
+                surname: surname || "",
+                phone: phone || "",
+                email: email || authUser.email || existingUser.email,
             });
         } else {
             await User.create({
-                id,
+                id: uid,
                 name,
-                surname,
-                email,
-                phone,
-                password: passwordEncrypted,
+                surname: surname || "",
+                email: email || authUser.email || "",
+                phone: phone || "",
             });
         }
 
         const updatedUser = await User.findOne({
-            where: { id },
+            where: { id: uid },
             include: [
                 { model: Order, include: [{ model: OrderProducts }] },
-                { model: company },
+                { model: Company },
             ],
         });
         return Response.json(updatedUser);

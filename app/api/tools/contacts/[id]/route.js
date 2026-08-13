@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server"
 import { getContact, deleteContact, updateContactWithRounds } from "@/lib/tools/db"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req, { params }) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
     const { id } = await params
     const contact = await getContact(Number(id), uid)
     if (!contact) {
@@ -22,11 +23,11 @@ export async function GET(req, { params }) {
 
 export async function PUT(req, { params }) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
     const { id } = await params
     const body = await req.json()
     const contactId = Number(id)
@@ -53,11 +54,11 @@ export async function PUT(req, { params }) {
 
 export async function DELETE(req, { params }) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
     const { id } = await params
     await deleteContact(Number(id), uid)
     return NextResponse.json({ success: true })

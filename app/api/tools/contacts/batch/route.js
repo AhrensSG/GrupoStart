@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server"
 import { createContact } from "@/lib/tools/db"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function POST(req) {
   try {
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
+    }
+    const uid = authUser.uid
     const body = await req.json()
     if (!body.contacts || !Array.isArray(body.contacts)) {
       return NextResponse.json({ error: "Se esperaba un objeto con un array 'contacts'" }, { status: 400 })
     }
-    const { uid, contacts } = body
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
-    }
+    const { contacts } = body
 
     const results = []
     for (const contact of contacts) {

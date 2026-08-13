@@ -1,7 +1,13 @@
-const { Order, User, OrderProducts } = require("@/db/models/models");
+import { Order, User, OrderProducts } from "@/db/models/models";
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server";
 
 export async function POST(req) {
     try {
+        const authUser = await requireUser(req);
+        if (!authUser) {
+            return unauthorizedResponse();
+        }
+
         const { orderId, products } = await req.json();
 
         if (!orderId || !products || !Array.isArray(products) || products.length === 0) {
@@ -15,6 +21,10 @@ export async function POST(req) {
             });
         }
 
+        if (order.UserId !== authUser.uid) {
+            return Response.json("No autorizado", { status: 403 });
+        }
+
         for (const productInfo of products) {
             const { id } = productInfo;
             if (!id) {
@@ -23,7 +33,7 @@ export async function POST(req) {
                 });
             }
 
-            const product = await OrderProducts.create({
+            await OrderProducts.create({
                 status: "Pending",
                 name: productInfo.name,
                 price: productInfo.price,

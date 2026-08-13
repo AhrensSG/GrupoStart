@@ -1,13 +1,13 @@
 import { User } from "@/db/models/models";
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server";
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url);
-    const uid = searchParams.get("uid");
-    if (!uid) {
-      return Response.json({ error: "uid requerido" }, { status: 400 });
+    const authUser = await requireUser(req);
+    if (!authUser) {
+      return unauthorizedResponse();
     }
-    const user = await User.findByPk(uid, { attributes: ["role"] });
+    const user = await User.findByPk(authUser.uid, { attributes: ["role"] });
     return Response.json({ role: user?.role || "user" });
   } catch (error) {
     console.error(error);

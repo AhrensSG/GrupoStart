@@ -34,7 +34,8 @@ const Login = () => {
   const router = useRouter();
 
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect") || "/user";
+  const rawRedirect = searchParams.get("redirect") || "/user";
+  const redirect = rawRedirect.startsWith("/") && !rawRedirect.startsWith("//") ? rawRedirect : "/user";
 
   const { state } = useContext(Context);
 
@@ -58,11 +59,20 @@ const Login = () => {
   const handleEmailLogin = async () => {
     setLoading(true);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      await signInWithEmailAndPassword(auth, email.trim(), password);
       toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
-      toast.error("Error al iniciar sesión.");
+      const code = error?.code || "";
+      if (code.includes("invalid-credential") || code.includes("wrong-password") || code.includes("user-not-found")) {
+        toast.error("Correo o contraseña incorrectos.");
+      } else if (code.includes("too-many-requests")) {
+        toast.error("Demasiados intentos. Esperá unos minutos y probá de nuevo.");
+      } else if (code.includes("network")) {
+        toast.error("Error de conexión. Revisá tu internet.");
+      } else {
+        toast.error("Error al iniciar sesión.");
+      }
     } finally {
       setLoading(false);
     }
@@ -71,9 +81,18 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setLoading(true);
     try {
-      await logInWithGoogle();
+      const result = await logInWithGoogle();
+      if (result) toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
+      const code = error?.code || "";
+      if (code.includes("popup-closed") || code.includes("cancelled")) {
+        toast.info("Inicio de sesión cancelado.");
+      } else if (code.includes("popup-blocked")) {
+        toast.error("El navegador bloqueó la ventana. Permití popups e intentá de nuevo.");
+      } else {
+        toast.error("Error al iniciar sesión con Google.");
+      }
       setLoading(false);
     }
   };
@@ -81,9 +100,18 @@ const Login = () => {
   const handleFacebookLogin = async () => {
     setLoading(true);
     try {
-      await logInWithFacebook();
+      const result = await logInWithFacebook();
+      if (result) toast.success("Inicio de sesión exitoso!");
     } catch (error) {
       console.log(error);
+      const code = error?.code || "";
+      if (code.includes("popup-closed") || code.includes("cancelled")) {
+        toast.info("Inicio de sesión cancelado.");
+      } else if (code.includes("popup-blocked")) {
+        toast.error("El navegador bloqueó la ventana. Permití popups e intentá de nuevo.");
+      } else {
+        toast.error("Error al iniciar sesión con Facebook.");
+      }
       setLoading(false);
     }
   };
@@ -147,24 +175,35 @@ const Login = () => {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
         email,
-        password,
-        nombreUser,
-        apellidoUser
+        password
       );
       const user = userCredential.user;
 
+      const token = await user.getIdToken();
+      const { setAuthToken } = await import("@/lib/auth/token");
+      setAuthToken(token);
+
       await axios.post(authUrl, {
-        id: user.uid,
         name: nombreUser,
         surname: apellidoUser,
         email: email,
-        password: password,
         phone: phone,
       });
       toast.success("Registro exitoso!");
     } catch (error) {
       console.log(error);
-      toast.error("Error al registrar usuario.");
+      const code = error?.code || "";
+      if (code.includes("email-already-in-use")) {
+        toast.error("Ya existe una cuenta con ese correo.");
+      } else if (code.includes("weak-password")) {
+        toast.error("La contraseña debe tener al menos 6 caracteres.");
+      } else if (code.includes("invalid-email")) {
+        toast.error("El correo ingresado no es válido.");
+      } else if (code.includes("network")) {
+        toast.error("Error de conexión. Revisá tu internet.");
+      } else {
+        toast.error("Error al registrar usuario.");
+      }
     } finally {
       setLoading(false);
     }

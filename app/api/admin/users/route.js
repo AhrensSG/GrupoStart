@@ -1,17 +1,11 @@
 import { User } from "@/db/models/models"
-
-async function checkAdmin(requesterId) {
-  if (!requesterId) return false
-  const user = await User.findByPk(requesterId)
-  return user?.role === "admin"
-}
+import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const requesterId = searchParams.get("admin_uid")
-    if (!(await checkAdmin(requesterId))) {
-      return Response.json({ error: "No autorizado" }, { status: 403 })
+    const admin = await requireAdmin(req)
+    if (!admin) {
+      return unauthorizedResponse()
     }
 
     const users = await User.findAll({
@@ -27,10 +21,11 @@ export async function GET(req) {
 
 export async function PUT(req) {
   try {
-    const { admin_uid, id, role } = await req.json()
-    if (!(await checkAdmin(admin_uid))) {
-      return Response.json({ error: "No autorizado" }, { status: 403 })
+    const admin = await requireAdmin(req)
+    if (!admin) {
+      return unauthorizedResponse()
     }
+    const { id, role } = await req.json()
     if (!id || !["user", "admin"].includes(role)) {
       return Response.json({ error: "Datos inválidos" }, { status: 400 })
     }

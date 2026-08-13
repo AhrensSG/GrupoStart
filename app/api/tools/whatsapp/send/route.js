@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server"
 import { sendTextViaWhatsApp } from "@/lib/tools/whatsapp-cloud"
 import { saveWaOutgoingMessage } from "@/lib/tools/db"
-import { isAdmin } from "@/lib/tools/admin"
+import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function POST(req) {
   try {
-    const { admin_uid, to, body } = await req.json()
-    if (!(await isAdmin(admin_uid))) {
-      return NextResponse.json({ error: "No autorizado" }, { status: 403 })
+    if (!(await requireAdmin(req))) {
+      return unauthorizedResponse()
     }
+    const { to, body } = await req.json()
     if (!to || !body || typeof body !== "string" || !body.trim()) {
       return NextResponse.json({ error: "El destinatario y el mensaje son requeridos" }, { status: 400 })
     }

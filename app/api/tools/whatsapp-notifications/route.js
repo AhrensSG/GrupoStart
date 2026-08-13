@@ -14,9 +14,19 @@ import {
   sendDueNowReminder,
   sendOverdueReminder,
 } from "@/lib/tools/whatsapp-cloud"
+import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
+
+const CRON_SECRET = process.env.CRON_SECRET
+
+function isAuthorizedCron(req) {
+  return CRON_SECRET && req.headers.get("x-cron-secret") === CRON_SECRET
+}
 
 export async function GET(req) {
   try {
+    if (!(await requireAdmin(req))) {
+      return unauthorizedResponse()
+    }
     const { searchParams } = new URL(req.url)
     const preview = searchParams.get("preview") === "true"
     return await processNotifications(preview)
@@ -26,8 +36,12 @@ export async function GET(req) {
   }
 }
 
-export async function POST() {
+export async function POST(req) {
   try {
+    const isAdmin = !!(await requireAdmin(req))
+    if (!isAuthorizedCron(req) && !isAdmin) {
+      return unauthorizedResponse()
+    }
     return await processNotifications(false)
   } catch (err) {
     console.error(err)

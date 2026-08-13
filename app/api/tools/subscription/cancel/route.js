@@ -1,20 +1,25 @@
 import { NextResponse } from "next/server"
 import { cancelSubscriptionByUid, getUserSubscriptions } from "@/lib/tools/db"
 import { preApproval } from "@/payment/mp"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function POST(req) {
   try {
-    const { uid } = await req.json()
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
 
     const subs = await getUserSubscriptions(uid)
     const active = subs.find(s => s.status === "active")
 
     if (active && active.preapproval_id) {
       try {
-        await preApproval.cancel({ id: active.preapproval_id })
+        await preApproval.update({
+          id: active.preapproval_id,
+          body: { status: "cancelled" },
+        })
       } catch (mpErr) {
         console.error("Error cancelando en MP:", mpErr)
       }

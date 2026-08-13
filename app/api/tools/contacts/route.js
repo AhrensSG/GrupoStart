@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server"
 import { getAllContacts, createContact } from "@/lib/tools/db"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
     const contacts = await getAllContacts(uid)
     return NextResponse.json(contacts)
   } catch (err) {
@@ -18,12 +19,14 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const body = await req.json()
-    const { uid, nombre, celular, email, red_social, nombre_usuario, contactos } = body
-
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
+    const body = await req.json()
+    const { nombre, celular, email, red_social, nombre_usuario, contactos } = body
+
     if (!nombre || typeof nombre !== "string" || !nombre.trim()) {
       return NextResponse.json({ error: "El nombre es requerido" }, { status: 400 })
     }

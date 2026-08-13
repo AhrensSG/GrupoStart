@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server"
 import { getUserProfile, updateUserProfile } from "@/lib/tools/db"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
     const profile = await getUserProfile(uid)
     return NextResponse.json(profile || { hora_ingreso: "09:00", hora_salida: "18:00", horario_ranges: "" })
   } catch (err) {
@@ -18,11 +19,12 @@ export async function GET(req) {
 
 export async function PUT(req) {
   try {
-    const body = await req.json()
-    const uid = body.uid
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
+    const body = await req.json()
     await updateUserProfile({
       hora_ingreso: body.hora_ingreso,
       hora_salida: body.hora_salida,

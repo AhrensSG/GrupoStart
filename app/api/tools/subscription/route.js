@@ -1,17 +1,20 @@
 import { NextResponse } from "next/server"
-import { checkUserSubscribed, setUserSubscribed, getUserSubscriptions, getUserPhone, getUserName, saveUserPhone } from "@/lib/tools/db"
+import { checkUserSubscribed, setUserSubscribed, getUserSubscriptions, getUserPhone, getUserName } from "@/lib/tools/db"
 import { sendWelcomeMessage } from "@/lib/tools/whatsapp-cloud"
 import { sendMail } from "@/app/api/routes/send_mail/sendMail"
+import { preApproval } from "@/payment/mp"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    const email = searchParams.get("email")
-    const list = searchParams.get("list")
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
+    const email = authUser.email || ""
+    const { searchParams } = new URL(req.url)
+    const list = searchParams.get("list")
     if (list === "true") {
       const subscriptions = await getUserSubscriptions(uid)
       return NextResponse.json({ subscriptions })
@@ -26,17 +29,45 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const body = await req.json()
-    const { uid, email, preapproval_id } = body
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
-    await setUserSubscribed(uid, email || "", preapproval_id)
+    const uid = authUser.uid
+    const email = authUser.email || ""
+    const body = await req.json()
+    const { preapproval_id } = body
+    if (!preapproval_id) {
+      return NextResponse.json({ error: "preapproval_id es requerido" }, { status: 400 })
+    }
 
-    if (email) {
+    const alreadySubscribed = await checkUserSubscribed(uid, "")
+    if (alreadySubscribed) {
+      return NextResponse.json({ success: true, message: "Ya estás suscripto" })
+    }
+
+    let mpPreapproval
+    try {
+      mpPreapproval = await preApproval.get({ id: preapproval_id })
+    } catch (mpErr) {
+      console.error("Error verificando preapproval en MP:", mpErr)
+      return NextResponse.json({ success: false, message: "No se pudo verificar el pago en Mercado Pago. Intentalo más tarde." })
+    }
+    if (!mpPreapproval || mpPreapproval.external_reference !== uid) {
+      return NextResponse.json({ success: false, message: "La suscripción no corresponde a tu cuenta." })
+    }
+    const mpStatus = mpPreapproval?.status
+    if (mpStatus !== "authorized" && mpStatus !== "approved") {
+      return NextResponse.json({ success: false, message: `La suscripción en Mercado Pago no está activa (estado: ${mpStatus || "desconocido"})` })
+    }
+
+    const subscriptionEmail = mpPreapproval.payer_email || email
+    await setUserSubscribed(uid, subscriptionEmail, preapproval_id)
+
+    if (subscriptionEmail) {
       try {
         await sendMail({
-          to: email,
+          to: subscriptionEmail,
           subject: "¡Suscripción activada — GrupoStart Tools!",
           text: `¡Tu suscripción a GrupoStart Tools está activa!
 

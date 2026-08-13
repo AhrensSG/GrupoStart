@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server"
 import { parseSheet } from "@/lib/tools/parser"
 import { replaceAllContacts } from "@/lib/tools/db"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function POST(req) {
   try {
-    const body = await req.json()
-    const { url, uid } = body
-
-    if (!uid) {
-      return NextResponse.json({ error: "Usuario no autenticado" }, { status: 401 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
+    const body = await req.json()
+    const { url } = body
 
     const sheetUrl = url || "https://docs.google.com/spreadsheets/d/1GGX_VNpL7XIDDxqI0Cx1YE0eaVXrCXbxsncWqOpr-2A/export?format=csv&gid=1574587249"
 

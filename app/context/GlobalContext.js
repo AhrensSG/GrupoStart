@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useReducer } from "react";
 import { reducer } from "./reducer";
 import { isUserLogged } from "./actions/isUserLogged";
+import "@/lib/auth/client";
 
 export const Context = createContext();
 
@@ -12,14 +13,8 @@ const GlobalContext = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        await isUserLogged(dispatch);
-      } catch (error) {
-        return error;
-      }
-    };
-    getData();
+    const unsubscribe = isUserLogged(dispatch);
+    return () => unsubscribe();
   }, []);
 
   return (

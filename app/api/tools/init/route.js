@@ -1,15 +1,15 @@
 import { NextResponse } from "next/server"
 import { getUserProfile, checkUserSubscribed, getAllContacts } from "@/lib/tools/db"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid")
-    const email = searchParams.get("email")
-
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
+    const email = authUser.email || ""
 
     const [profile, subscribed, contacts] = await Promise.all([
       getUserProfile(uid).catch(() => null),

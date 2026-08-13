@@ -1,18 +1,11 @@
-import { User } from "@/db/models/models"
 import { getAllSubscriptions, setUserSubscribed, cancelSubscriptionByUid } from "@/lib/tools/db"
-
-async function checkAdmin(requesterId) {
-  if (!requesterId) return false
-  const user = await User.findByPk(requesterId)
-  return user?.role === "admin"
-}
+import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const requesterId = searchParams.get("admin_uid")
-    if (!(await checkAdmin(requesterId))) {
-      return Response.json({ error: "No autorizado" }, { status: 403 })
+    const admin = await requireAdmin(req)
+    if (!admin) {
+      return unauthorizedResponse()
     }
     const subscriptions = await getAllSubscriptions()
     return Response.json({ subscriptions })
@@ -24,10 +17,11 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { admin_uid, uid, email, action } = await req.json()
-    if (!(await checkAdmin(admin_uid))) {
-      return Response.json({ error: "No autorizado" }, { status: 403 })
+    const admin = await requireAdmin(req)
+    if (!admin) {
+      return unauthorizedResponse()
     }
+    const { uid, email, action } = await req.json()
     if (!uid) {
       return Response.json({ error: "uid es requerido" }, { status: 400 })
     }

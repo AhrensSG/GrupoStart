@@ -1,14 +1,16 @@
 import { preApproval } from "@/payment/mp";
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server";
 
 const PREAPPROVAL_WEBHOOK_URL = process.env.SERVER_ENDPOINT_PREAPPROVAL_NOTIFICATION_URL
 
 export async function POST(req) {
     try {
-        const body = await req.json()
-        const { uid, payer_email } = body
-        if (!uid) {
-            return Response.json({ error: "uid es requerido para crear la suscripción" }, { status: 400 })
+        const authUser = await requireUser(req)
+        if (!authUser) {
+            return unauthorizedResponse()
         }
+        const uid = authUser.uid
+
         const host = req.headers.get("host") || ""
         const protocol = req.headers.get("x-forwarded-proto") || "https"
         const isLocal = host.includes("localhost") || host.includes("127.0.0.1")
@@ -24,11 +26,12 @@ export async function POST(req) {
             auto_recurring: {
                 frequency: 1,
                 frequency_type: "months",
-                transaction_amount: 2500,
-                currency_id: "ARS",
+                transaction_amount: Number(process.env.TOOLS_PLAN_AMOUNT || 2500),
+                currency_id: process.env.TOOLS_PLAN_CURRENCY || "ARS",
             },
         }
-        if (payer_email) preapprovalBody.payer_email = payer_email
+        const payerEmail = authUser.email || ""
+        if (payerEmail) preapprovalBody.payer_email = payerEmail
 
         const response = await preApproval.create({ body: preapprovalBody })
         return Response.json(response)

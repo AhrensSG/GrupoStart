@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server"
 import { getWaMessages, markWaConversationRead } from "@/lib/tools/db"
-import { isAdmin } from "@/lib/tools/admin"
+import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req, { params }) {
   try {
-    const { searchParams } = new URL(req.url)
-    if (!(await isAdmin(searchParams.get("admin_uid")))) {
-      return NextResponse.json({ error: "No autorizado" }, { status: 403 })
+    if (!(await requireAdmin(req))) {
+      return unauthorizedResponse()
     }
+    const { searchParams } = new URL(req.url)
     const { phone } = await params
     const limit = Number(searchParams.get("limit") || 200)
     const [messages] = await Promise.all([

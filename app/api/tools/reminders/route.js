@@ -2,15 +2,16 @@ import { NextResponse } from "next/server"
 import { getContactsPendingReminder, getUserProfile, getUserPhone } from "@/lib/tools/db"
 import { getDefaultReminderTime, parseTime, getArgentinaNow } from "@/lib/tools/business-days"
 import { sendDueNowReminder } from "@/lib/tools/whatsapp-cloud"
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid") || ""
-    const today = getArgentinaNow().fecha
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
+    const today = getArgentinaNow().fecha
     const profile = await getUserProfile(uid)
     const pending = await getContactsPendingReminder(uid)
 
@@ -40,11 +41,11 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
-    const { searchParams } = new URL(req.url)
-    const uid = searchParams.get("uid") || ""
-    if (!uid) {
-      return NextResponse.json({ error: "uid es requerido" }, { status: 400 })
+    const authUser = await requireUser(req)
+    if (!authUser) {
+      return unauthorizedResponse()
     }
+    const uid = authUser.uid
     const profile = await getUserProfile(uid)
     const userPhone = await getUserPhone(uid)
     if (!userPhone) {

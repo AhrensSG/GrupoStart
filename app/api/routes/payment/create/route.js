@@ -1,9 +1,15 @@
 import { preference } from "@/payment/mp";
+import { requireUser, unauthorizedResponse } from "@/lib/auth/server";
 
 const SERVER_URL_PAYMENT_NOTIFICATION = process.env.SERVER_ENDPOINT_PAYMENT_NOTIFICATION_URL;
 
 export async function POST(req) {
     try {
+        const authUser = await requireUser(req);
+        if (!authUser) {
+            return unauthorizedResponse();
+        }
+
         const { items, payer, orderId, deliveryCost } = await req.json();
         const formattedItems = items.map((item) => {
             return {
@@ -43,14 +49,14 @@ export async function POST(req) {
                     mode: "not_specified",
                 },
                 payer: {
-                    email: payer.email,
-                    name: payer.name,
-                    surname: payer.surname,
+                    email: authUser.email || payer?.email,
+                    name: payer?.name,
+                    surname: payer?.surname,
                     phone: {
-                        number: payer.phone,
+                        number: payer?.phone,
                     },
                     address: {
-                        zip_code: payer.postalCode,
+                        zip_code: payer?.postalCode,
                     },
                 },
                 back_urls: {
@@ -65,7 +71,7 @@ export async function POST(req) {
                 metadata: {
                     order: orderId,
                     payer: {
-                        id: payer.id,
+                        id: authUser.uid,
                     },
                     items: bodyItems,
                 },
