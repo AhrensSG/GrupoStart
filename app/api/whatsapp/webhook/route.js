@@ -6,7 +6,7 @@ import {
   getWaMessages,
   getWaAiPaused,
 } from "@/lib/tools/db"
-import { sendTextViaWhatsApp } from "@/lib/tools/whatsapp-cloud"
+import { sendTextViaWhatsApp, sendMeetingNotification } from "@/lib/tools/whatsapp-cloud"
 import { generateReply } from "@/lib/ai/assistant"
 import { AI_CONFIG } from "@/lib/ai/config"
 
@@ -134,15 +134,12 @@ async function handleAiReply({ phone, name }) {
     })
 
     if (meeting && AI_CONFIG.adminPhone) {
-      const summary = [
-        "📅 *Reunión pactada por WhatsApp*",
-        `👤 Cliente: ${meeting.name || name || "—"}`,
-        `📱 Tel: ${meeting.phone || phone || "—"}`,
-        `🗓️ Cuándo: ${meeting.when || "—"}`,
-        `🎥 Modalidad: ${meeting.mode || "—"}`,
-        `💼 Necesidad: ${meeting.summary || "—"}`,
-      ].join("\n")
-      const ok = await sendTextViaWhatsApp(AI_CONFIG.adminPhone, summary)
+      const ok = await sendMeetingNotification(AI_CONFIG.adminPhone, {
+        name: meeting.name || name,
+        when: meeting.when,
+        mode: meeting.mode,
+        summary: meeting.summary,
+      })
       if (!ok) {
         console.error("[WhatsApp AI] No se pudo notificar al admin sobre la reunión")
       }

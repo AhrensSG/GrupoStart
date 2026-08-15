@@ -19,9 +19,9 @@ jobs:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USER }}
         key: ${{ secrets.VPS_SSH_KEY }}
-        port: 5754
+        port: 5385
         script: |
-          cd /root/grupostart
+          cd /root/GrupoStart
           git pull origin master
           npm install
           npm run build
