@@ -2,9 +2,18 @@ import { NextResponse } from "next/server"
 import {
   saveWaIncomingMessage,
   updateWaMessageStatus,
+  saveWaOutgoingMessage,
+  getWaMessages,
+  getWaAiPaused,
 } from "@/lib/tools/db"
+import { sendTextViaWhatsApp } from "@/lib/tools/whatsapp-cloud"
+import { generateReply } from "@/lib/ai/assistant"
+import { AI_CONFIG } from "@/lib/ai/config"
 
 const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || "grupostart_webhook_2026"
+
+// Teléfonos que ya tienen una respuesta IA en curso (evita respuestas superpuestas).
+const inFlight = new Set()
 
 export async function GET(req) {
   const { searchParams } = new URL(req.url)
@@ -61,7 +70,7 @@ export async function POST(req) {
         for (const msg of value.messages || []) {
           const { type, body: text, mediaUrl } = describeMessage(msg)
           const name = value.contacts?.[0]?.profile?.name || ""
-          await saveWaIncomingMessage({
+          const result = await saveWaIncomingMessage({
             from: msg.from,
             name,
             body: text,
@@ -69,7 +78,16 @@ export async function POST(req) {
             mediaUrl,
             waMessageId: msg.id,
           })
-          saved++
+          if (result) saved++
+
+          if (result?.isNew && AI_CONFIG.enabled && type === "text") {
+            const digits = result.phone
+            const isAdminNumber = AI_CONFIG.adminPhone && digits === AI_CONFIG.adminPhone
+            if (!isAdminNumber) {
+              // Fire-and-forget: respondemos por atrás sin bloquear el webhook.
+              void handleAiReply({ phone: digits, name })
+            }
+          }
         }
 
         for (const status of value.statuses || []) {
@@ -84,5 +102,54 @@ export async function POST(req) {
   } catch (err) {
     console.error("[WhatsApp Webhook] Error:", err)
     return NextResponse.json({ error: "Invalid body" }, { status: 400 })
+  }
+}
+
+async function handleAiReply({ phone, name }) {
+  if (inFlight.has(phone)) return
+  inFlight.add(phone)
+  try {
+    const pausedUntil = await getWaAiPaused(phone)
+    if (pausedUntil && new Date(pausedUntil).getTime() > Date.now()) return
+
+    // Simula el tiempo de respuesta de una persona.
+    const ms = AI_CONFIG.delayMinMs + Math.random() * (AI_CONFIG.delayMaxMs - AI_CONFIG.delayMinMs)
+    await new Promise((r) => setTimeout(r, ms))
+
+    const history = await getWaMessages(phone, AI_CONFIG.historyLimit)
+    const { reply, meeting } = await generateReply({ history, customerName: name })
+
+    if (!reply) return
+
+    const waMessageId = await sendTextViaWhatsApp(phone, reply)
+    if (!waMessageId) return
+
+    await saveWaOutgoingMessage({
+      to: phone,
+      body: reply,
+      waMessageId: String(waMessageId),
+      status: "sent",
+      source: "ai",
+      isBot: true,
+    })
+
+    if (meeting && AI_CONFIG.adminPhone) {
+      const summary = [
+        "📅 *Reunión pactada por WhatsApp*",
+        `👤 Cliente: ${meeting.name || name || "—"}`,
+        `📱 Tel: ${meeting.phone || phone || "—"}`,
+        `🗓️ Cuándo: ${meeting.when || "—"}`,
+        `🎥 Modalidad: ${meeting.mode || "—"}`,
+        `💼 Necesidad: ${meeting.summary || "—"}`,
+      ].join("\n")
+      const ok = await sendTextViaWhatsApp(AI_CONFIG.adminPhone, summary)
+      if (!ok) {
+        console.error("[WhatsApp AI] No se pudo notificar al admin sobre la reunión")
+      }
+    }
+  } catch (err) {
+    console.error("[WhatsApp AI] Error al responder:", err)
+  } finally {
+    inFlight.delete(phone)
   }
 }
