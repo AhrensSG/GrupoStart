@@ -31,18 +31,18 @@ export const isUserLogged = (dispatch) => {
                     uid: user.uid,
                     role: undefined,
                 };
-                dispatch({ type: "LOGGED_IN_USER", payload: { info, isLoading: false } });
+                dispatch({ type: "LOGGED_IN_USER", payload: { info, isLoading: true } });
 
+                let role = "user";
                 try {
                     const res = await axios.get("/api/routes/users/role");
-                    dispatch({
-                        type: "LOGGED_IN_USER",
-                        payload: {
-                            info: { ...info, role: res.data?.role || "user" },
-                            isLoading: false,
-                        },
-                    });
+                    role = res.data?.role || "user";
                 } catch (_) {}
+
+                dispatch({
+                    type: "LOGGED_IN_USER",
+                    payload: { info: { ...info, role }, isLoading: false },
+                });
 
                 try {
                     await axios.put(`${SERVER_URL_AUTH_ENDPOINT}`, {

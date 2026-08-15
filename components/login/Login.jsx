@@ -40,12 +40,12 @@ const Login = () => {
   const { state } = useContext(Context);
 
   useEffect(() => {
-    if (state?.user) {
+    if (state?.user && !state.isLoading) {
       const isAdmin = state.user.role === "admin";
       const target = isAdmin && redirect === "/user" ? "/admin" : redirect;
       router.push(target);
     }
-  }, [state?.user, redirect, router]);
+  }, [state?.user, state.isLoading, redirect, router]);
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {

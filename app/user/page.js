@@ -20,6 +20,8 @@ const UserPage = () => {
       const redirectTo = `${baseUrl}${fullPath}`;
 
       router.push(`/login?redirect=${encodeURIComponent(redirectTo)}`);
+    } else if (user?.role === "admin") {
+      router.replace("/admin");
     }
   }, [user, isLoading, pathname, router]);
 
