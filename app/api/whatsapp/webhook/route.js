@@ -149,7 +149,11 @@ async function handleAiReply({ phone, name }) {
     }
     if (stageUpdate) nextState.stage = stageUpdate
     if (outcome) nextState.outcome = outcome
+    let meetingKind = null
     if (action?.type === "meeting_request") {
+      const prev = state.proposedMeeting
+      if (!prev) meetingKind = "nueva"
+      else if (prev.when !== action.when || prev.mode !== action.mode) meetingKind = "modificada"
       nextState.proposedMeeting = { when: action.when, mode: action.mode }
       nextState.outcome = outcome || "reunion_propuesta"
     }
@@ -159,12 +163,13 @@ async function handleAiReply({ phone, name }) {
     }
     await saveWaAiState(phone, nextState)
 
-    if (action?.type === "meeting_request" && AI_CONFIG.adminPhone) {
+    if (meetingKind && AI_CONFIG.adminPhone) {
       const ok = await sendMeetingNotification(AI_CONFIG.adminPhone, {
         name: nextState.profile?.nombre || name,
         when: action.when,
         mode: action.mode,
         summary: nextState.profile?.objetivo || nextState.profile?.negocio || "",
+        kind: meetingKind,
       })
       if (!ok) {
         console.error("[WhatsApp AI] No se pudo notificar al admin sobre la reunión")
