@@ -1,15 +1,37 @@
 import "./load-env.js"
 import { generateReply } from "../lib/ai/assistant.js"
 
-const history = [
-  { direction: "in", body: "Hola! Vi la web de GrupoStart y quiero saber cómo me pueden ayudar con las redes de mi negocio" },
-  { direction: "out", body: "¡Hola! Con gusto te cuento. ¿A qué se dedica tu negocio y qué te gustaría lograr?" },
-  { direction: "in", body: "Tengo una tienda de ropa y quiero tener más presencia en Instagram" },
+const turnos = [
+  {
+    history: [{ direction: "in", body: "Hola" }],
+    state: {},
+    label: "Turno 1 - primer contacto",
+  },
+  {
+    history: [
+      { direction: "in", body: "Hola" },
+      {
+        direction: "out",
+        body: "Hola 👋 mucho gusto, soy Sofi IA, agente de Grupo Start. Me gustaría hacerte solo unas pocas preguntas bien sencillas y después puedo darte curso con un representante humano. ¿Comenzamos?",
+      },
+      { direction: "in", body: "Dale, adelante" },
+    ],
+    state: { stage: "consentimiento", profile: {} },
+    label: "Turno 2 - consentimiento dado",
+  },
 ]
 
-const { reply, meeting } = await generateReply({ history, customerName: "Cliente de prueba" })
-
-console.log("\n=== RESPUESTA DEL BOT ===\n")
-console.log(reply || "(sin respuesta)")
-console.log("\n=== REUNIÓN DETECTADA ===\n")
-console.log(meeting || "(sin reunión aún)")
+let state = {}
+for (const turno of turnos) {
+  console.log(`\n=== ${turno.label} ===`)
+  const { reply, stageUpdate, profileUpdates, action, outcome } = await generateReply({
+    history: turno.history,
+    customerName: "Cliente de prueba",
+    state: turno.state,
+  })
+  console.log("REPLY:", reply || "(sin respuesta)")
+  console.log("STAGE:", stageUpdate)
+  console.log("PROFILE_UPDATES:", JSON.stringify(profileUpdates))
+  console.log("ACTION:", JSON.stringify(action))
+  console.log("OUTCOME:", outcome)
+}

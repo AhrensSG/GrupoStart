@@ -5,6 +5,8 @@ import {
   saveWaOutgoingMessage,
   getWaMessages,
   getWaAiPaused,
+  getWaAiState,
+  saveWaAiState,
 } from "@/lib/tools/db"
 import { sendTextViaWhatsApp, sendMeetingNotification } from "@/lib/tools/whatsapp-cloud"
 import { generateReply } from "@/lib/ai/assistant"
@@ -116,8 +118,15 @@ async function handleAiReply({ phone, name }) {
     const ms = AI_CONFIG.delayMinMs + Math.random() * (AI_CONFIG.delayMaxMs - AI_CONFIG.delayMinMs)
     await new Promise((r) => setTimeout(r, ms))
 
-    const history = await getWaMessages(phone, AI_CONFIG.historyLimit)
-    const { reply, meeting } = await generateReply({ history, customerName: name })
+    const [history, state] = await Promise.all([
+      getWaMessages(phone, AI_CONFIG.historyLimit),
+      getWaAiState(phone),
+    ])
+    const { reply, stageUpdate, profileUpdates, action, outcome } = await generateReply({
+      history,
+      customerName: name,
+      state,
+    })
 
     if (!reply) return
 
@@ -133,15 +142,44 @@ async function handleAiReply({ phone, name }) {
       isBot: true,
     })
 
-    if (meeting && AI_CONFIG.adminPhone) {
+    const nextState = {
+      ...state,
+      profile: { ...(state.profile || {}), ...profileUpdates },
+      updatedAt: new Date().toISOString(),
+    }
+    if (stageUpdate) nextState.stage = stageUpdate
+    if (outcome) nextState.outcome = outcome
+    if (action?.type === "meeting_request") {
+      nextState.proposedMeeting = { when: action.when, mode: action.mode }
+      nextState.outcome = outcome || "reunion_propuesta"
+    }
+    if (action?.type === "handoff") {
+      nextState.handoff = { reason: action.reason, at: new Date().toISOString() }
+      nextState.outcome = outcome || "interesado"
+    }
+    await saveWaAiState(phone, nextState)
+
+    if (action?.type === "meeting_request" && AI_CONFIG.adminPhone) {
       const ok = await sendMeetingNotification(AI_CONFIG.adminPhone, {
-        name: meeting.name || name,
-        when: meeting.when,
-        mode: meeting.mode,
-        summary: meeting.summary,
+        name: nextState.profile?.nombre || name,
+        when: action.when,
+        mode: action.mode,
+        summary: nextState.profile?.objetivo || nextState.profile?.negocio || "",
       })
       if (!ok) {
         console.error("[WhatsApp AI] No se pudo notificar al admin sobre la reunión")
+      }
+    }
+
+    if (action?.type === "handoff" && AI_CONFIG.adminPhone) {
+      const ok = await sendMeetingNotification(AI_CONFIG.adminPhone, {
+        name: nextState.profile?.nombre || name,
+        when: `Derivar a humano: ${action.reason}`,
+        mode: "-",
+        summary: nextState.profile?.negocio || "",
+      })
+      if (!ok) {
+        console.error("[WhatsApp AI] No se pudo notificar al admin sobre el handoff")
       }
     }
   } catch (err) {
