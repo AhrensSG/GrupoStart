@@ -8,7 +8,7 @@ import {
   getWaAiState,
   saveWaAiState,
 } from "@/lib/tools/db"
-import { sendTextViaWhatsApp, sendMeetingNotification } from "@/lib/tools/whatsapp-cloud"
+import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification } from "@/lib/tools/whatsapp-cloud"
 import { generateReply } from "@/lib/ai/assistant"
 import { AI_CONFIG } from "@/lib/ai/config"
 
@@ -54,6 +54,10 @@ function describeMessage(msg) {
       return { type, body: "[👤 Contacto]", mediaUrl }
     case "button":
       return { type, body: msg.button?.text || "[🔘 Botón]", mediaUrl }
+    case "interactive": {
+      const reply = msg.interactive?.button_reply || msg.interactive?.list_reply
+      return { type, body: reply?.title || "[🔘 Opción]", mediaUrl, rawInteractive: reply }
+    }
     default:
       return { type, body: `[${type}]`, mediaUrl }
   }
@@ -82,7 +86,7 @@ export async function POST(req) {
           })
           if (result) saved++
 
-          if (result?.isNew && AI_CONFIG.enabled && type === "text") {
+          if (result?.isNew && AI_CONFIG.enabled && (type === "text" || type === "interactive")) {
             const digits = result.phone
             const isAdminNumber = AI_CONFIG.adminPhone && digits === AI_CONFIG.adminPhone
             if (!isAdminNumber) {
@@ -122,7 +126,7 @@ async function handleAiReply({ phone, name }) {
       getWaMessages(phone, AI_CONFIG.historyLimit),
       getWaAiState(phone),
     ])
-    const { reply, stageUpdate, profileUpdates, action, outcome } = await generateReply({
+    const { reply, stageUpdate, profileUpdates, action, outcome, ui } = await generateReply({
       history,
       customerName: name,
       state,
@@ -130,7 +134,14 @@ async function handleAiReply({ phone, name }) {
 
     if (!reply) return
 
-    const waMessageId = await sendTextViaWhatsApp(phone, reply)
+    let waMessageId
+    if (ui?.type === "buttons") {
+      waMessageId = await sendButtonMessage(phone, reply, ui.options)
+    } else if (ui?.type === "list") {
+      waMessageId = await sendListMessage(phone, reply, ui.buttonText, ui.options)
+    } else {
+      waMessageId = await sendTextViaWhatsApp(phone, reply)
+    }
     if (!waMessageId) return
 
     await saveWaOutgoingMessage({
