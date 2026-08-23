@@ -10,6 +10,7 @@ import {
 } from "@/lib/tools/db"
 import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification } from "@/lib/tools/whatsapp-cloud"
 import { generateReply } from "@/lib/ai/assistant"
+import { normalizeProfileUpdates } from "@/lib/ai/flow"
 import { AI_CONFIG } from "@/lib/ai/config"
 
 const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || "grupostart_webhook_2026"
@@ -155,7 +156,7 @@ async function handleAiReply({ phone, name }) {
 
     const nextState = {
       ...state,
-      profile: { ...(state.profile || {}), ...profileUpdates },
+      profile: { ...normalizeProfileUpdates(state.profile), ...profileUpdates },
       updatedAt: new Date().toISOString(),
     }
     if (stageUpdate) nextState.stage = stageUpdate
