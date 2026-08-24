@@ -64,6 +64,16 @@ function describeMessage(msg) {
   }
 }
 
+function buildConversationContext(history, reply) {
+  const lines = (history || []).map((message) => {
+    const role = message.direction === "in" ? "Cliente" : "Sofi IA"
+    return `${role}: ${String(message.body || "").slice(0, 500)}`
+  })
+  if (reply) lines.push(`Sofi IA: ${reply.slice(0, 500)}`)
+  const context = lines.slice(-50).join("\n")
+  return `🧾 *Contexto de la conversación*\n\n${context}`.slice(0, 4000)
+}
+
 export async function POST(req) {
   try {
     const body = await req.json()
@@ -124,7 +134,7 @@ async function handleAiReply({ phone, name }) {
     await new Promise((r) => setTimeout(r, ms))
 
     const [history, state] = await Promise.all([
-      getWaMessages(phone, AI_CONFIG.historyLimit),
+      getWaMessages(phone, Math.max(AI_CONFIG.historyLimit, 100)),
       getWaAiState(phone),
     ])
     const { reply, stageUpdate, profileUpdates, action, outcome, ui } = await generateReply({
@@ -185,6 +195,10 @@ async function handleAiReply({ phone, name }) {
       })
       if (!ok) {
         console.error("[WhatsApp AI] No se pudo notificar al admin sobre la reunión")
+      }
+      const contextSent = await sendTextViaWhatsApp(AI_CONFIG.adminPhone, buildConversationContext(history, reply))
+      if (!contextSent) {
+        console.error("[WhatsApp AI] No se pudo enviar el contexto de la conversación al admin")
       }
     }
 
