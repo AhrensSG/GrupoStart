@@ -134,7 +134,7 @@ async function handleAiReply({ phone, name }) {
     await new Promise((r) => setTimeout(r, ms))
 
     const [history, state] = await Promise.all([
-      getWaMessages(phone, Math.max(AI_CONFIG.historyLimit, 100)),
+      getWaMessages(phone, 500),
       getWaAiState(phone),
     ])
     const { reply, stageUpdate, profileUpdates, action, outcome, ui } = await generateReply({
@@ -190,7 +190,7 @@ async function handleAiReply({ phone, name }) {
         name: nextState.profile?.nombre || name,
         when: action.when,
         mode: action.mode,
-        summary: nextState.profile?.objetivo || nextState.profile?.negocio || "",
+        summary: nextState.profile?.objetivo || nextState.profile?.objetivo_marketing || nextState.profile?.negocio || "",
         kind: meetingKind,
       })
       if (!ok) {
