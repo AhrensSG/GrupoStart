@@ -57,21 +57,11 @@ function describeMessage(msg) {
       return { type, body: msg.button?.text || "[🔘 Botón]", mediaUrl }
     case "interactive": {
       const reply = msg.interactive?.button_reply || msg.interactive?.list_reply
-      return { type, body: reply?.title || "[🔘 Opción]", mediaUrl, rawInteractive: reply }
+      return { type, body: reply?.title || "[🔘 Opción]", mediaUrl }
     }
     default:
       return { type, body: `[${type}]`, mediaUrl }
   }
-}
-
-function buildConversationContext(history, reply) {
-  const lines = (history || []).map((message) => {
-    const role = message.direction === "in" ? "Cliente" : "Sofi IA"
-    return `${role}: ${String(message.body || "").slice(0, 500)}`
-  })
-  if (reply) lines.push(`Sofi IA: ${reply.slice(0, 500)}`)
-  const context = lines.slice(-50).join("\n")
-  return `🧾 *Contexto de la conversación*\n\n${context}`.slice(0, 4000)
 }
 
 export async function POST(req) {
@@ -133,26 +123,16 @@ async function handleAiReply({ phone, name }) {
     const ms = AI_CONFIG.delayMinMs + Math.random() * (AI_CONFIG.delayMaxMs - AI_CONFIG.delayMinMs)
     await new Promise((r) => setTimeout(r, ms))
 
-    const [history, state] = await Promise.all([
-      getWaMessages(phone, 500),
-      getWaAiState(phone),
-    ])
-    const { reply, stageUpdate, profileUpdates, action, outcome, ui } = await generateReply({
-      history,
-      customerName: name,
-      state,
-    })
+    const [history, state] = await Promise.all([getWaMessages(phone, 500), getWaAiState(phone)])
+    const { reply, stageUpdate, profileUpdates, action, outcome, ui } = await generateReply({ history, customerName: name, state })
 
     if (!reply) return
 
-    let waMessageId
-    if (ui?.type === "buttons") {
-      waMessageId = await sendButtonMessage(phone, reply, ui.options)
-    } else if (ui?.type === "list") {
-      waMessageId = await sendListMessage(phone, reply, ui.buttonText, ui.options)
-    } else {
-      waMessageId = await sendTextViaWhatsApp(phone, reply)
-    }
+    const waMessageId = ui?.type === "buttons"
+      ? await sendButtonMessage(phone, reply, ui.options)
+      : ui?.type === "list"
+        ? await sendListMessage(phone, reply, ui.buttonText, ui.options)
+        : await sendTextViaWhatsApp(phone, reply)
     if (!waMessageId) return
 
     await saveWaOutgoingMessage({
@@ -166,52 +146,32 @@ async function handleAiReply({ phone, name }) {
 
     const nextState = {
       ...state,
+      stage: stageUpdate || state.stage || "inicio",
       profile: { ...normalizeProfileUpdates(state.profile), ...profileUpdates },
+      outcome: outcome || state.outcome || null,
       updatedAt: new Date().toISOString(),
     }
-    if (stageUpdate) nextState.stage = stageUpdate
-    if (outcome) nextState.outcome = outcome
-    let meetingKind = null
     if (action?.type === "meeting_request") {
-      const prev = state.proposedMeeting
-      if (!prev) meetingKind = "nueva"
-      else if (prev.when !== action.when || prev.mode !== action.mode) meetingKind = "modificada"
       nextState.proposedMeeting = { when: action.when, mode: action.mode }
       nextState.outcome = outcome || "reunion_propuesta"
     }
-    if (action?.type === "handoff") {
-      nextState.handoff = { reason: action.reason, at: new Date().toISOString() }
-      nextState.outcome = outcome || "interesado"
-    }
+    if (action?.type === "handoff") nextState.handoff = { reason: action.reason, at: new Date().toISOString() }
     await saveWaAiState(phone, nextState)
 
-    if (meetingKind && AI_CONFIG.adminPhone) {
+    if (action?.type === "meeting_request" && AI_CONFIG.adminPhone) {
       const ok = await sendMeetingNotification(AI_CONFIG.adminPhone, {
         name: nextState.profile?.nombre || name,
         when: action.when,
         mode: action.mode,
         summary: nextState.profile?.objetivo || nextState.profile?.objetivo_marketing || nextState.profile?.negocio || "",
-        kind: meetingKind,
+        kind: state.proposedMeeting ? "modificada" : "nueva",
       })
       if (!ok) {
         console.error("[WhatsApp AI] No se pudo notificar al admin sobre la reunión")
       }
-      const contextSent = await sendTextViaWhatsApp(AI_CONFIG.adminPhone, buildConversationContext(history, reply))
-      if (!contextSent) {
-        console.error("[WhatsApp AI] No se pudo enviar el contexto de la conversación al admin")
-      }
     }
-
     if (action?.type === "handoff" && AI_CONFIG.adminPhone) {
-      const ok = await sendMeetingNotification(AI_CONFIG.adminPhone, {
-        name: nextState.profile?.nombre || name,
-        when: `Derivar a humano: ${action.reason}`,
-        mode: "-",
-        summary: nextState.profile?.negocio || "",
-      })
-      if (!ok) {
-        console.error("[WhatsApp AI] No se pudo notificar al admin sobre el handoff")
-      }
+      await sendMeetingNotification(AI_CONFIG.adminPhone, { name: nextState.profile?.nombre || name, when: `Derivar a humano: ${action.reason}`, mode: "-", summary: nextState.profile?.negocio || "" })
     }
   } catch (err) {
     console.error("[WhatsApp AI] Error al responder:", err)
