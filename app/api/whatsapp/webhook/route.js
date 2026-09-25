@@ -8,10 +8,20 @@ import {
   getWaAiState,
   saveWaAiState,
 } from "@/lib/tools/db"
-import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification } from "@/lib/tools/whatsapp-cloud"
+import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification, sendHandoffNotification } from "@/lib/tools/whatsapp-cloud"
 import { generateReply } from "@/lib/ai/assistant"
-import { normalizeProfileUpdates } from "@/lib/ai/flow"
+import { getFlowUi, getNextStage, normalizeProfileUpdates, normalizeStage } from "@/lib/ai/flow"
 import { AI_CONFIG } from "@/lib/ai/config"
+import {
+  CIERRE_SI,
+  DESPEDIDA,
+  ETAPAS_TERMINALES,
+  MENSAJE_DERIVACION,
+  NUMEROS_DERIVACION,
+  PRESENTACION_GRUPO_START,
+  PREGUNTA_COMENZAMOS,
+  matchPreguntaMotorVentas,
+} from "@/lib/ai/motor-ventas"
 
 const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || "grupostart_webhook_2026"
 
@@ -112,6 +122,43 @@ export async function POST(req) {
   }
 }
 
+function humanDelay() {
+  const ms = AI_CONFIG.delayMinMs + Math.random() * (AI_CONFIG.delayMaxMs - AI_CONFIG.delayMinMs)
+  return new Promise((r) => setTimeout(r, ms))
+}
+
+async function botSay(phone, body) {
+  if (!body) return false
+  const id = await sendTextViaWhatsApp(phone, body)
+  if (!id) return false
+  await saveWaOutgoingMessage({ to: phone, body, waMessageId: String(id), status: "sent", source: "ai", isBot: true })
+  return true
+}
+
+async function saveStage(phone, state, patch) {
+  await saveWaAiState(phone, { ...state, ...patch, updatedAt: new Date().toISOString() })
+}
+
+async function sendComenzamos(phone) {
+  const ui = getFlowUi("comenzamos")
+  const id = await sendButtonMessage(phone, PREGUNTA_COMENZAMOS, ui.options)
+  if (!id) return false
+  await saveWaOutgoingMessage({ to: phone, body: PREGUNTA_COMENZAMOS, waMessageId: String(id), status: "sent", source: "ai", isBot: true })
+  return true
+}
+
+async function notificarDerivacion(phone, consulta) {
+  if (!NUMEROS_DERIVACION.length) return
+  for (const destino of NUMEROS_DERIVACION) {
+    try {
+      const ok = await sendHandoffNotification(destino, { numero: phone, consulta })
+      if (!ok) console.error("[WhatsApp AI] No se pudo notificar la derivación a", destino)
+    } catch (err) {
+      console.error("[WhatsApp AI] Error al notificar la derivación a", destino, err)
+    }
+  }
+}
+
 async function handleAiReply({ phone, name }) {
   if (inFlight.has(phone)) return
   inFlight.add(phone)
@@ -119,12 +166,58 @@ async function handleAiReply({ phone, name }) {
     const pausedUntil = await getWaAiPaused(phone)
     if (pausedUntil && new Date(pausedUntil).getTime() > Date.now()) return
 
-    // Simula el tiempo de respuesta de una persona.
-    const ms = AI_CONFIG.delayMinMs + Math.random() * (AI_CONFIG.delayMaxMs - AI_CONFIG.delayMinMs)
-    await new Promise((r) => setTimeout(r, ms))
+    let history = await getWaMessages(phone, 500)
+    let state = await getWaAiState(phone)
+    const ultimo = () => [...history].reverse().find((m) => m?.direction === "in")?.body || ""
+    // Una conversación cerrada se reinicia: el cliente puede volver a preguntar.
+    const stage = ETAPAS_TERMINALES.includes(state.stage) ? "motor_ventas" : normalizeStage(state.stage)
 
-    const [history, state] = await Promise.all([getWaMessages(phone, 500), getWaAiState(phone)])
-    const { reply, stageUpdate, profileUpdates, action, outcome, ui } = await generateReply({ history, customerName: name, state })
+    // Cliente parado en "¿Comenzamos?": se resuelve sin llamar a la IA.
+    if (stage === "comenzamos") {
+      const next = getNextStage("comenzamos", ultimo())
+      await humanDelay()
+      if (next === "despedida") {
+        await botSay(phone, DESPEDIDA)
+        await saveStage(phone, state, { stage: "despedida" })
+        return
+      }
+      if (next === "fin") {
+        await botSay(phone, CIERRE_SI)
+        await saveStage(phone, state, { stage: "fin" })
+        return
+      }
+      // No entendió: se vuelve a preguntar.
+      await sendComenzamos(phone)
+      return
+    }
+
+    // Es una de las 4 preguntas predefinidas: primero la presentación, sin esperar.
+    const esPreguntaPredefinida = matchPreguntaMotorVentas(ultimo()) >= 0
+    if (esPreguntaPredefinida) {
+      await botSay(phone, PRESENTACION_GRUPO_START)
+      history = await getWaMessages(phone, 500)
+    }
+
+    // Cualquier otra consulta pasa por la IA.
+    await humanDelay()
+    const { reply, stageUpdate, profileUpdates, action, mode, outcome, ui } = await generateReply({
+      history,
+      customerName: name,
+      state: { ...state, stage: "motor_ventas" },
+    })
+
+    if (mode === "motor_ventas") {
+      if (action?.type === "derivacion") {
+        await botSay(phone, MENSAJE_DERIVACION)
+        await saveStage(phone, state, { stage: "derivado", profile: { ...normalizeProfileUpdates(state.profile), ...profileUpdates } })
+        await notificarDerivacion(phone, ultimo())
+        return
+      }
+      if (reply) await botSay(phone, reply)
+      await sendComenzamos(phone)
+      await saveStage(phone, state, { stage: stageUpdate || "comenzamos", profile: { ...normalizeProfileUpdates(state.profile), ...profileUpdates } })
+      return
+    }
 
     if (!reply) return
 
@@ -146,14 +239,14 @@ async function handleAiReply({ phone, name }) {
 
     const nextState = {
       ...state,
-      stage: stageUpdate || state.stage || "inicio",
+      stage: stageUpdate || state.stage || "motor_ventas",
       profile: { ...normalizeProfileUpdates(state.profile), ...profileUpdates },
       outcome: outcome || state.outcome || null,
       updatedAt: new Date().toISOString(),
     }
     if (action?.type === "meeting_request") {
       nextState.proposedMeeting = { when: action.when, mode: action.mode }
-      nextState.outcome = outcome || "reunion_propuesta"
+      nextState.outcome = "reunion_propuesta"
     }
     if (action?.type === "handoff") nextState.handoff = { reason: action.reason, at: new Date().toISOString() }
     await saveWaAiState(phone, nextState)
