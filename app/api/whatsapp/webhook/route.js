@@ -8,7 +8,7 @@ import {
   getWaAiState,
   saveWaAiState,
 } from "@/lib/tools/db"
-import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification, sendHandoffNotification } from "@/lib/tools/whatsapp-cloud"
+import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification, sendHandoffNotification, sendVideoTemplate } from "@/lib/tools/whatsapp-cloud"
 import { sendVideoMessage } from "@/lib/tools/whatsapp-media"
 import { generateReply } from "@/lib/ai/assistant"
 import { getFlowUi, getNextStage, normalizeProfileUpdates, normalizeStage } from "@/lib/ai/flow"
@@ -17,6 +17,7 @@ import {
   CIERRE_SI,
   DESPEDIDA,
   ETAPAS_TERMINALES,
+  matchPreguntaMotorVentas,
   MENSAJE_DERIVACION,
   NUMEROS_DERIVACION,
   PRESENTACION_GRUPO_START,
@@ -148,9 +149,14 @@ async function sendComenzamos(phone) {
   return true
 }
 
-// El video es un extra: si falla (no está en el servidor, supera 16 MB, la API
-// rechaza) el flujo sigue igual con el texto de la presentación.
+// El video va como plantilla de WhatsApp: no depende de la ventana de 24 hs y además
+// la reabre, así que la respuesta de la IA y el nodo 1 se pueden mandar como texto libre.
+// Si la plantilla falla y hay un archivo local configurado, se sube ese como respaldo.
 async function botSendVideo(phone) {
+  if (await sendVideoTemplate(phone)) {
+    await saveWaOutgoingMessage({ to: phone, body: "[🎬 Video de presentación]", status: "sent", source: "ai", isBot: true })
+    return true
+  }
   if (!VIDEO_PATH) return false
   try {
     const id = await sendVideoMessage(phone, { filePath: VIDEO_PATH })
@@ -207,13 +213,23 @@ async function handleAiReply({ phone, name }) {
       return
     }
 
-    // Toda consulta nueva arranca con la presentación y el video, antes de que
-    // la IA Analice lo que escribió el cliente.
+    // Toda consulta arranca con la presentación y el video, antes de que la IA
+    // Analice lo que escribió el cliente.
     await botSay(phone, PRESENTACION_GRUPO_START)
     await botSendVideo(phone)
     history = await getWaMessages(phone, 500)
 
-    // La IA analiza la consulta.
+    // Una de las 4 preguntas predefinidas: va directo al nodo 1 (¿Comenzamos? - Sí/No)
+    // sin llamar a la IA. De abajo queda el último mensaje del cliente.
+    if (matchPreguntaMotorVentas(ultimo()) !== -1) {
+      await humanDelay()
+      await sendComenzamos(phone)
+      await saveStage(phone, state, { stage: "comenzamos" })
+      return
+    }
+
+    // Cualquier otra cosa: la IA responde con la base de conocimientos y cierra en
+    // el nodo 1. Si no encuentra la respuesta, deriva a un humano.
     await humanDelay()
     const { reply, stageUpdate, profileUpdates, action, mode, outcome, ui } = await generateReply({
       history,
