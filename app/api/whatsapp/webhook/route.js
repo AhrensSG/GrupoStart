@@ -9,6 +9,7 @@ import {
   saveWaAiState,
 } from "@/lib/tools/db"
 import { sendTextViaWhatsApp, sendButtonMessage, sendListMessage, sendMeetingNotification, sendHandoffNotification } from "@/lib/tools/whatsapp-cloud"
+import { sendVideoMessage } from "@/lib/tools/whatsapp-media"
 import { generateReply } from "@/lib/ai/assistant"
 import { getFlowUi, getNextStage, normalizeProfileUpdates, normalizeStage } from "@/lib/ai/flow"
 import { AI_CONFIG } from "@/lib/ai/config"
@@ -20,6 +21,7 @@ import {
   NUMEROS_DERIVACION,
   PRESENTACION_GRUPO_START,
   PREGUNTA_COMENZAMOS,
+  VIDEO_PATH,
   matchPreguntaMotorVentas,
 } from "@/lib/ai/motor-ventas"
 
@@ -147,6 +149,21 @@ async function sendComenzamos(phone) {
   return true
 }
 
+// El video es un extra: si falla (no está en el servidor, supera 16 MB, la API
+// rechaza) el flujo sigue igual con el texto de la presentación.
+async function botSendVideo(phone) {
+  if (!VIDEO_PATH) return false
+  try {
+    const id = await sendVideoMessage(phone, { filePath: VIDEO_PATH })
+    if (!id) return false
+    await saveWaOutgoingMessage({ to: phone, body: "[🎬 Video de presentación]", waMessageId: String(id), status: "sent", source: "ai", isBot: true })
+    return true
+  } catch (err) {
+    console.error("[WhatsApp AI] No se pudo enviar el video:", err)
+    return false
+  }
+}
+
 async function notificarDerivacion(phone, consulta) {
   if (!NUMEROS_DERIVACION.length) return
   for (const destino of NUMEROS_DERIVACION) {
@@ -195,6 +212,7 @@ async function handleAiReply({ phone, name }) {
     const esPreguntaPredefinida = matchPreguntaMotorVentas(ultimo()) >= 0
     if (esPreguntaPredefinida) {
       await botSay(phone, PRESENTACION_GRUPO_START)
+      await botSendVideo(phone)
       history = await getWaMessages(phone, 500)
     }
 
