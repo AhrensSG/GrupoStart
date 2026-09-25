@@ -22,7 +22,6 @@ import {
   PRESENTACION_GRUPO_START,
   PREGUNTA_COMENZAMOS,
   VIDEO_PATH,
-  matchPreguntaMotorVentas,
 } from "@/lib/ai/motor-ventas"
 
 const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || "grupostart_webhook_2026"
@@ -208,15 +207,13 @@ async function handleAiReply({ phone, name }) {
       return
     }
 
-    // Es una de las 4 preguntas predefinidas: primero la presentación, sin esperar.
-    const esPreguntaPredefinida = matchPreguntaMotorVentas(ultimo()) >= 0
-    if (esPreguntaPredefinida) {
-      await botSay(phone, PRESENTACION_GRUPO_START)
-      await botSendVideo(phone)
-      history = await getWaMessages(phone, 500)
-    }
+    // Toda consulta nueva arranca con la presentación y el video, antes de que
+    // la IA Analice lo que escribió el cliente.
+    await botSay(phone, PRESENTACION_GRUPO_START)
+    await botSendVideo(phone)
+    history = await getWaMessages(phone, 500)
 
-    // Cualquier otra consulta pasa por la IA.
+    // La IA analiza la consulta.
     await humanDelay()
     const { reply, stageUpdate, profileUpdates, action, mode, outcome, ui } = await generateReply({
       history,
