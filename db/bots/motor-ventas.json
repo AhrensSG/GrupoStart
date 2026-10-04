@@ -1,0 +1,729 @@
+{
+  "bot": {
+    "name": "Motor de Ventas - Grupo Start",
+    "type": "whatsapp_automated_bot",
+    "uses_ai": false,
+    "version": "1.0",
+    "language": "es_AR"
+  },
+  "triggers": [
+    {
+      "id": "trigger_info",
+      "message": "Hola quiero más información del programa “Motor de Ventas”",
+      "match_type": "exact",
+      "response_flow": "respuesta_inicial"
+    },
+    {
+      "id": "trigger_instalacion",
+      "message": "Hola, en cuanto tiempo instalan el programa ¿motor de ventas?",
+      "match_type": "exact",
+      "response_flow": "respuesta_inicial"
+    },
+    {
+      "id": "trigger_contratar",
+      "message": "Hola, quiero contratar el \"Motor de ventas\"",
+      "match_type": "exact",
+      "response_flow": "respuesta_inicial"
+    },
+    {
+      "id": "trigger_costo",
+      "message": "Hola, qué costo tiene el sistema \"Motor de ventas\"",
+      "match_type": "exact",
+      "response_flow": "respuesta_inicial"
+    }
+  ],
+  "flows": {
+    "respuesta_inicial": {
+      "id": "respuesta_inicial",
+      "type": "message",
+      "text": "Hola 👋🏻\n\nMucho gusto, somos Grupo Start 🚀\n\nMás de 10 años de experiencia y +100 clientes satisfechos en Argentina y Europa nos respaldan.\n\nPara que nos conozcas te cuento un poco sobre nosotros:\n\n🏁 Somos una agencia de marketing completa\n\n📲 Integramos todos los procesos importantes en un solo lugar\n\n🧩 Contenidos, publicidad en Meta Ads, Chat Bot, e-commerce\n\n🔍 Primero te conocemos, luego proponemos 👉🏻 Vení a visitarnos 📍 Hipólito Yrigoyen 342, ciudad de Formosa 👉🏻 o agendemos una reunión por videollamada 👨🏻‍💻",
+      "next_flow": "comenzamos"
+    },
+    "comenzamos": {
+      "id": "comenzamos",
+      "type": "buttons",
+      "text": "¿Querés que comencemos?",
+      "buttons": [
+        {
+          "text": "Sí",
+          "value": "Sí",
+          "next_flow": "respuesta_si"
+        },
+        {
+          "text": "No",
+          "value": "No",
+          "next_flow": "respuesta_no"
+        }
+      ]
+    },
+    "respuesta_si": {
+      "id": "respuesta_si",
+      "type": "message",
+      "text": "Excelente! 😊\n\nPara comenzar, ¿podrías escribir tu correo en el chat?",
+      "next_flow": "capturar_correo"
+    },
+    "respuesta_no": {
+      "id": "respuesta_no",
+      "type": "message",
+      "text": "Comprendo, si necesitas algo más no dudes en decírmelo. Mientras, voy a avisar a un representante humano para que pronto se ponga en contacto contigo.",
+      "actions": [
+        {
+          "id": "handoff_representante",
+          "type": "handoff",
+          "department": "representante_humano"
+        }
+      ],
+      "end_flow": true
+    },
+    "capturar_correo": {
+      "id": "capturar_correo",
+      "type": "input",
+      "input_type": "email",
+      "save_as": "correo_cliente",
+      "validation": {
+        "required": true,
+        "format": "email"
+      },
+      "on_valid": {
+        "actions": [
+          {
+            "type": "database_save",
+            "collection": "clientes",
+            "field": "email",
+            "value": "{{correo_cliente}}"
+          }
+        ],
+        "next_flow": "pregunta_equipo_comercial"
+      },
+      "on_invalid": {
+        "type": "message",
+        "text": "Parece que el correo no tiene un formato válido. ¿Podrías revisarlo y escribirlo nuevamente?",
+        "retry_flow": "capturar_correo"
+      }
+    },
+    "pregunta_equipo_comercial": {
+      "id": "pregunta_equipo_comercial",
+      "type": "buttons",
+      "text": "Muchas gracias! seguro vamos a estar en contacto por ahí.\n\nTe cuento, nuestra agencia instala \"Motor de Ventas\" únicamente en empresas que tienen capacidad para atender y convertir las oportunidades que generamos. 🔍\n\nActualmente cuantas personas forman parte de tu equipo comercial? 🤔",
+      "buttons": [
+        {
+          "text": "Soy solo yo",
+          "value": "1",
+          "next_flow": "respuesta_solo_yo"
+        },
+        {
+          "text": "2 personas",
+          "value": "2",
+          "next_flow": "guardar_equipo_comercial"
+        },
+        {
+          "text": "5 personas o más",
+          "value": "5+",
+          "next_flow": "guardar_equipo_comercial"
+        }
+      ]
+    },
+    "guardar_equipo_comercial": {
+      "id": "guardar_equipo_comercial",
+      "type": "action",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "cantidad_equipo_comercial",
+          "value": "{{button_value}}"
+        }
+      ],
+      "next_flow": "siguiente_paso"
+    },
+    "respuesta_solo_yo": {
+      "id": "respuesta_solo_yo",
+      "type": "buttons",
+      "text": "Muy bien, instalar un motor de ventas que funcione siempre requerirá de un agente humano al final del camino. 👤\n\nTenes personas que se ocupen de otras áreas \"clave de tu empresa\" y vos estas encargado de la parte comercial? 🤔",
+      "buttons": [
+        {
+          "text": "Sí, somos varios",
+          "value": "Sí, somos varios",
+          "next_flow": "respuesta_somos_varios"
+        },
+        {
+          "text": "NO, soy solo yo",
+          "value": "NO, soy solo yo",
+          "next_flow": "solo_yo_no"
+        }
+      ]
+    },
+    "solo_yo_no": {
+      "id": "solo_yo_no",
+      "type": "message",
+      "text": "Comprendo, instalar un motor de ventas que funcione siempre requerirá de un agente humano al final del camino.\n\nNo podremos instalar nuestro sistema ya que no podrá funcionar sin una estructura que lo respalde, pero vamos a estar en contacto a través del correo que nos brindaste, tal vez un poco más adelante si podamos trabajar juntos ✈️",
+      "end_flow": true
+    },
+    "respuesta_somos_varios": {
+      "id": "respuesta_somos_varios",
+      "type": "message",
+      "text": "Ahora permíteme preguntarte\n\n¿Cuál es la figura legal de tu empresa? 🤔",
+      "next_flow": "figura_legal"
+    },
+    "figura_legal": {
+      "id": "figura_legal",
+      "type": "buttons",
+      "text": "Seleccioná la figura legal de tu empresa:",
+      "buttons": [
+        {
+          "text": "Monotributista",
+          "value": "Monotributista",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "Responsable inscripto",
+          "value": "Responsable inscripto",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "Persona humana",
+          "value": "Persona humana",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "Sociedad de Responsabilidad Limitada (SRL)",
+          "value": "Sociedad de Responsabilidad Limitada (SRL)",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "Sociedad Anónima (SA)",
+          "value": "Sociedad Anónima (SA)",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "SAS",
+          "value": "SAS",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "Negocio sin inscripción formal",
+          "value": "Negocio sin inscripción formal",
+          "next_flow": "guardar_figura_legal"
+        },
+        {
+          "text": "Otras sociedades",
+          "value": "Otras sociedades",
+          "next_flow": "guardar_figura_legal"
+        }
+      ]
+    },
+    "guardar_figura_legal": {
+      "id": "guardar_figura_legal",
+      "type": "action",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "figura_legal",
+          "value": "{{button_value}}"
+        }
+      ],
+      "next_flow": "facturacion_mensual"
+    },
+    "facturacion_mensual": {
+      "id": "facturacion_mensual",
+      "type": "buttons",
+      "text": "Actualmente aproximadamente cuando factura tu empresa al mes 🤔",
+      "buttons": [
+        {
+          "text": "Menos de USD 1.000",
+          "value": "Menos de USD 1.000 al mes",
+          "next_flow": "respuesta_menos_1000"
+        },
+        {
+          "text": "USD 1.000 a 5.000",
+          "value": "Entre USD 1.000 a USD 5.000 al mes",
+          "next_flow": "guardar_facturacion"
+        },
+        {
+          "text": "Más de USD 5.000",
+          "value": "Más de USD 5.000 al mes",
+          "next_flow": "guardar_facturacion"
+        }
+      ]
+    },
+    "guardar_facturacion": {
+      "id": "guardar_facturacion",
+      "type": "action",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "facturacion_mensual",
+          "value": "{{button_value}}"
+        }
+      ],
+      "next_flow": "siguiente_paso"
+    },
+    "respuesta_menos_1000": {
+      "id": "respuesta_menos_1000",
+      "type": "buttons",
+      "text": "Muy bien 🔍\n\nganando menos de USD 1.000 al mes tu prioridad hoy no será la implementación de un sistema como está pensado \"Motor de Ventas\"\n\nya que este busca atraer oportunidades de ventas a gran escala. 📈\n\nsin embargo creo que podemos intentar algo alternativo pero a menor escala de complejidad\n\nTe gustaría que te ofrezca una solución alternativa? 🤔",
+      "buttons": [
+        {
+          "text": "Sí",
+          "value": "Sí",
+          "next_flow": "solucion_alternativa_si"
+        },
+        {
+          "text": "No",
+          "value": "No",
+          "next_flow": "solucion_alternativa_no"
+        }
+      ]
+    },
+    "solucion_alternativa_si": {
+      "id": "solucion_alternativa_si",
+      "type": "buttons",
+      "text": "Muy bien, puedo armarte un plan de marketing que te impulse contemplando tu facturación actual para que pronto podamos instalar \"motor de ventas\" en tu proyecto. 🚀\n\n¿Cual de estos objetivos asociado al marketing de redes sociales es el que mas te interesa en este momento? 🤔",
+      "buttons": [
+        {
+          "text": "Aumentar la facturación",
+          "value": "Aumentar la facturación",
+          "next_flow": "respuesta_aumentar_facturacion"
+        },
+        {
+          "text": "Crecer en seguidores",
+          "value": "Crecer en seguidores",
+          "next_flow": "respuesta_crecer_seguidores"
+        },
+        {
+          "text": "Mejorar la interacción con mi comunidad",
+          "value": "Mejorar la interacción con mi comunidad",
+          "next_flow": "respuesta_mejorar_interaccion"
+        },
+        {
+          "text": "Desarrollar mi marca personal",
+          "value": "Desarrollar mi marca personal",
+          "next_flow": "respuesta_marca_personal"
+        }
+      ]
+    },
+    "respuesta_aumentar_facturacion": {
+      "id": "respuesta_aumentar_facturacion",
+      "type": "buttons",
+      "text": "Muy bien 🚀\n\npara ello necesitaremos apalancarnos principalmente de \"anuncios\" para que puedas obtener resultados a corto plazo que luego te permitan adquirir mas recursos de marketing para seguir posicionando tu marca, dime con cual de estos montos de inversión inicial te sentís mas comodo? 🤔",
+      "buttons": [
+        {
+          "text": "Menos de $100.000",
+          "value": "Menos de $100.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        },
+        {
+          "text": "$200.000 a $300.000",
+          "value": "Entre $200.000 a $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        },
+        {
+          "text": "Más de $300.000",
+          "value": "Algo más de $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        }
+      ]
+    },
+    "respuesta_crecer_seguidores": {
+      "id": "respuesta_crecer_seguidores",
+      "type": "buttons",
+      "text": "Muy bien, hagámoslo!  🚀\n\nPara que crezcas en seguidores requerirás un plan en el que podamos publicar la mayor cantidad de videos posibles a la semana, y campañas publicitarias con objetivo de trafico a tu perfil de Instagram para aumentar tu alcance. 📈 dime con cual de estos montos de inversión inicial te sentís mas comodo?",
+      "buttons": [
+        {
+          "text": "Menos de $100.000",
+          "value": "Menos de $100.000 (pesos argentinos)",
+          "next_flow": "crecer_seguidores_monto_bajo"
+        },
+        {
+          "text": "$200.000 a $300.000",
+          "value": "Entre $200.000 a $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        },
+        {
+          "text": "Más de $300.000",
+          "value": "Algo más de $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        }
+      ]
+    },
+    "crecer_seguidores_monto_bajo": {
+      "id": "crecer_seguidores_monto_bajo",
+      "type": "buttons",
+      "text": "Muy bien, revise en el sistema, encontré algo 🔍\n\npodemos hacer un plan de 1 videos al mes + publicidad básica en meta ads por 10 días por $106.125, creo que un asesor comercial humano podría autorizar un descuento y que lo dejemos en $100.000 fijos al mes ✅\n\nTe gustaría que intente conseguirte el descuento y que un agente humano tome tu caso? 🤔",
+      "buttons": [
+        {
+          "text": "Sí",
+          "value": "Sí",
+          "next_flow": "descuento_si"
+        },
+        {
+          "text": "No",
+          "value": "No",
+          "next_flow": "descuento_no"
+        }
+      ]
+    },
+    "descuento_si": {
+      "id": "descuento_si",
+      "type": "buttons",
+      "text": "Cuenta con ello, intentaré conseguirte un descuento. 💪🏻\n\npor ultimo podrías elegir una de las siguientes opciones (con la que te sientas mas comodo/a, claro) 🤔",
+      "buttons": [
+        {
+          "text": "Solo información",
+          "value": "Solo quiero información, aún no estoy listo para contratar",
+          "next_flow": "disposicion_frio"
+        },
+        {
+          "text": "Ligeramente listo",
+          "value": "Estoy ligeramente listo para contratar",
+          "next_flow": "disposicion_tibio"
+        },
+        {
+          "text": "Listo para contratar",
+          "value": "Estoy listo para contratar",
+          "next_flow": "disposicion_caliente"
+        }
+      ]
+    },
+    "disposicion_frio": {
+      "id": "disposicion_frio",
+      "type": "message",
+      "text": "Perfecto 😊\n\nTe dejo toda la información del plan y de \"Motor de Ventas\" para que lo vayas viendo con calma.\n\nCuando quieras dar el paso, escribinos y lo retomamos.",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "inversion_inicial",
+          "value": "Menos de $100.000 (pesos argentinos)"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "objetivo_marketing",
+          "value": "Crecer en seguidores"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "disposicion_contratacion",
+          "value": "{{button_value}}"
+        }
+      ],
+      "end_flow": true
+    },
+    "disposicion_tibio": {
+      "id": "disposicion_tibio",
+      "type": "message",
+      "text": "Genial, hay buen interés de tu parte 🙌\n\nVoy a dejar tu caso cargado en el sistema para que un asesor te muestre cómo funciona el plan y resuelva tus dudas.",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "inversion_inicial",
+          "value": "Menos de $100.000 (pesos argentinos)"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "objetivo_marketing",
+          "value": "Crecer en seguidores"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "disposicion_contratacion",
+          "value": "{{button_value}}"
+        },
+        {
+          "id": "handoff_asesor_tibio",
+          "type": "handoff",
+          "department": "representante_humano"
+        }
+      ],
+      "end_flow": true
+    },
+    "disposicion_caliente": {
+      "id": "disposicion_caliente",
+      "type": "message",
+      "text": "¡Excelente! 🎉\n\nVoy a derivar tu caso con prioridad para que un asesor comercial te escriba hoy mismo y dejamos el plan confirmado.",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "inversion_inicial",
+          "value": "Menos de $100.000 (pesos argentinos)"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "objetivo_marketing",
+          "value": "Crecer en seguidores"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "disposicion_contratacion",
+          "value": "{{button_value}}"
+        },
+        {
+          "id": "handoff_asesor_caliente",
+          "type": "handoff",
+          "department": "representante_humano"
+        }
+      ],
+      "end_flow": true
+    },
+    "descuento_no": {
+      "id": "descuento_no",
+      "type": "message",
+      "text": "Comprendo 😊\n\nEntonces dejamos el plan de $106.125 tal cual está. Un representante de nuestro equipo se pondrá en contacto contigo para coordinar la reunión y contarte los detalles.\n\nSi más adelante querés revisar la inversión, podés volver a contactarnos.",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "inversion_inicial",
+          "value": "Entre $100.001 y $110.000 (pesos argentinos)"
+        },
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "objetivo_marketing",
+          "value": "Crecer en seguidores"
+        },
+        {
+          "id": "handoff_asesor_sin_descuento",
+          "type": "handoff",
+          "department": "representante_humano"
+        }
+      ],
+      "end_flow": true
+    },
+    "respuesta_mejorar_interaccion": {
+      "id": "respuesta_mejorar_interaccion",
+      "type": "buttons",
+      "text": "Muy bien, para ello necesitaremos crear una estrategia que despierte el deseo de interactuar con tu marca.\n\nEso se logra publicando con frecuencia contenido que humanice tu perfil variando formatos.\n\ndime con cual de estos montos de inversión inicial te sentís mas comodo? 🤔",
+      "buttons": [
+        {
+          "text": "Menos de $100.000",
+          "value": "Menos de $100.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        },
+        {
+          "text": "$200.000 a $300.000",
+          "value": "Entre $200.000 a $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        },
+        {
+          "text": "Más de $300.000",
+          "value": "Algo más de $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_inicial"
+        }
+      ]
+    },
+    "respuesta_marca_personal": {
+      "id": "respuesta_marca_personal",
+      "type": "buttons",
+      "text": "Muy bien, excelente objetivo 😊\n\nhacerlo te permitirá ofrecer todo tipo de productos/servicios asociados a tu nombre 🚀\n\n¿cual es tu profesión? 👤",
+      "buttons": [
+        {
+          "text": "Legal y contable",
+          "value": "Legal y contable",
+          "next_flow": "guardar_profesion"
+        },
+        {
+          "text": "Escritor literario",
+          "value": "Escritor literario",
+          "next_flow": "guardar_profesion"
+        },
+        {
+          "text": "Otros",
+          "value": "Otros",
+          "next_flow": "guardar_profesion"
+        }
+      ]
+    },
+    "guardar_profesion": {
+      "id": "guardar_profesion",
+      "type": "action",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "profesion",
+          "value": "{{button_value}}"
+        }
+      ],
+      "next_flow": "agendar_reunion_marca_personal"
+    },
+    "agendar_reunion_marca_personal": {
+      "id": "agendar_reunion_marca_personal",
+      "type": "buttons",
+      "text": "Super, voy a agendar una reunión con un representante humano, les encantará conocerte. 😊\n\n🗓️ Voy a agendarte una reunión para que uno de nuestros representantes te pueda armar un plan a medida.\n\npor ultimo, podrías elegir una de las siguientes opciones (con la que te sientas mas comodo/a, claro) 🤔",
+      "buttons": [
+        {
+          "text": "Menos de $100.000",
+          "value": "Menos de $100.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_final"
+        },
+        {
+          "text": "$200.000 a $300.000",
+          "value": "Entre $200.000 a $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_final"
+        },
+        {
+          "text": "Más de $300.000",
+          "value": "Algo más de $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_final"
+        }
+      ]
+    },
+    "guardar_inversion_final": {
+      "id": "guardar_inversion_final",
+      "type": "action",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "inversion_inicial",
+          "value": "{{button_value}}"
+        }
+      ],
+      "next_flow": "finalizar_agendamiento"
+    },
+    "finalizar_agendamiento": {
+      "id": "finalizar_agendamiento",
+      "type": "message",
+      "text": "Perfecto 😊\n\nYa tenemos toda la información necesaria. Un representante de nuestro equipo se pondrá en contacto contigo para coordinar la reunión y conocer más sobre tu proyecto.",
+      "actions": [
+        {
+          "id": "handoff_representante_final",
+          "type": "handoff",
+          "department": "representante_humano"
+        }
+      ],
+      "end_flow": true
+    },
+    "guardar_inversion_inicial": {
+      "id": "guardar_inversion_inicial",
+      "type": "action",
+      "actions": [
+        {
+          "type": "database_save",
+          "collection": "clientes",
+          "field": "inversion_inicial",
+          "value": "{{button_value}}"
+        }
+      ],
+      "next_flow": "finalizar_agendamiento"
+    },
+    "solucion_alternativa_no": {
+      "id": "solucion_alternativa_no",
+      "type": "message",
+      "text": "Comprendo 😊\n\nSi más adelante querés trabajar en una estrategia de marketing para hacer crecer tu proyecto, podés volver a contactarnos.\n\nMientras, voy a avisar a un representante humano para que pueda tener tus datos y ponerse en contacto contigo.",
+      "actions": [
+        {
+          "id": "handoff_alternativa_no",
+          "type": "handoff",
+          "department": "representante_humano"
+        }
+      ],
+      "end_flow": true
+    },
+    "siguiente_paso": {
+      "id": "siguiente_paso",
+      "type": "buttons",
+      "text": "Muy bien 😊\n\nPor lo que nos contaste, podemos avanzar para conocer mejor tu proyecto y evaluar cómo podemos ayudarte con \"Motor de Ventas\".\n\n¿Querés que un representante de nuestro equipo se ponga en contacto con vos para coordinar una reunión? 🤝",
+      "buttons": [
+        {
+          "text": "Sí",
+          "value": "Sí",
+          "next_flow": "agendar_reunion"
+        },
+        {
+          "text": "No",
+          "value": "No",
+          "next_flow": "no_agendar_reunion"
+        }
+      ]
+    },
+    "agendar_reunion": {
+      "id": "agendar_reunion",
+      "type": "message",
+      "text": "Super, voy a agendar una reunión con un representante humano, les encantará conocerte. 😊\n\n🗓️ Voy a agendarte una reunión para que uno de nuestros representantes te pueda armar un plan a medida.\n\npor ultimo, podrías elegir una de las siguientes opciones (con la que te sientas mas comodo/a, claro) 🤔",
+      "next_flow": "seleccionar_inversion_reunion"
+    },
+    "seleccionar_inversion_reunion": {
+      "id": "seleccionar_inversion_reunion",
+      "type": "buttons",
+      "text": "Elegí una de las siguientes opciones:",
+      "buttons": [
+        {
+          "text": "Menos de $100.000",
+          "value": "Menos de $100.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_final"
+        },
+        {
+          "text": "$200.000 a $300.000",
+          "value": "Entre $200.000 a $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_final"
+        },
+        {
+          "text": "Más de $300.000",
+          "value": "Algo más de $300.000 (pesos argentinos)",
+          "next_flow": "guardar_inversion_final"
+        }
+      ]
+    },
+    "no_agendar_reunion": {
+      "id": "no_agendar_reunion",
+      "type": "message",
+      "text": "Comprendo 😊\n\nSi más adelante querés conocer más sobre \"Motor de Ventas\", podés volver a contactarnos.",
+      "end_flow": true
+    }
+  },
+  "database": {
+    "collection": "clientes",
+    "fields": {
+      "email": {
+        "type": "string",
+        "required": true
+      },
+      "cantidad_equipo_comercial": {
+        "type": "string",
+        "required": true
+      },
+      "figura_legal": {
+        "type": "string",
+        "required": false
+      },
+      "facturacion_mensual": {
+        "type": "string",
+        "required": false
+      },
+      "objetivo_marketing": {
+        "type": "string",
+        "required": false
+      },
+      "profesion": {
+        "type": "string",
+        "required": false
+      },
+      "inversion_inicial": {
+        "type": "string",
+        "required": false
+      },
+      "disposicion_contratacion": {
+        "type": "string",
+        "required": false
+      }
+    }
+  },
+  "global_settings": {
+    "uses_ai_for_conversation": false,
+    "human_handoff_enabled": true,
+    "email_validation_enabled": true,
+    "database_storage_enabled": true
+  }
+}

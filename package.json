@@ -11,7 +11,7 @@
     "start": "next start",
     "lint": "next lint",
     "migrate": "node db/migrate.mjs",
-    "test-ai": "node --experimental-detect-module scripts/test-ai.js"
+    "seed": "node db/seed.mjs"
   },
   "dependencies": {
     "@icons-pack/react-simple-icons": "^10.0.0",

@@ -28,7 +28,6 @@ export async function POST(req) {
       to,
       body: body.trim(),
       waMessageId: typeof waMessageId === "string" ? waMessageId : "",
-      source: "manual",
     })
     return NextResponse.json({ success: true })
   } catch (err) {
