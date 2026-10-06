@@ -250,10 +250,6 @@ VALUES
    'Elegí una opción', NULL, 'disposicion', FALSE, FALSE, FALSE, 15,
    '{}', FALSE, NULL, NULL, NULL, 3, NULL, NULL),
 
-  ('n10_b_m2', 'frio', 'Solo información', 'Solo quiero información, aun no estoy listo para contratar', 'n10_b_m2_agenda', 0),
-  ('n10_b_m2', 'tibio', 'Ligeramente listo', 'Estoy ligeramente listo para contratar', 'n10_b_m2_agenda_tibio', 1),
-  ('n10_b_m2', 'caliente', 'Listo + precisiones', 'Estoy listo para contratar, solo quiero mas precisiones', 'n10_b_m2_agenda_caliente', 2),
-
   -- Agendas para n10_b_m2
   ('n10_b_m2_agenda', 'agenda',
    E'Bien , lo comprendo, tengo estas fechas disponibles para la reunión con uno de nuestros representantes ¿cual te queda mejor? 🤔',
@@ -281,10 +277,6 @@ VALUES
    E'Muy bien 😊\n\nEncontré una alternativa potente para escalar tu cuenta: 8 videos al mes (dos a la semana) + campañas publicitarias con objetivo de alcance por 30 días, por solo $374.250 💪🏻\n\n\nTe voy a agendar una reunión con un agente humano, para que pueda explicarte mas detalles.\n\n\npor ultimo podrías elegir una de las siguientes opciones (con la que te sientas mas comodo/a, claro) 🤔',
    'Elegí una opción', NULL, 'disposicion', FALSE, FALSE, FALSE, 20,
    '{}', FALSE, NULL, NULL, NULL, 3, NULL, NULL),
-
-  ('n10_b_m3', 'frio', 'Solo información', 'Solo quiero información, aun no estoy listo para contratar', 'n10_b_m3_agenda', 0),
-  ('n10_b_m3', 'tibio', 'Ligeramente listo', 'Estoy ligeramente listo para contratar', 'n10_b_m3_agenda_tibio', 1),
-  ('n10_b_m3', 'caliente', 'Listo + precisiones', 'Estoy listo para contratar, solo quiero mas precisiones', 'n10_b_m3_agenda_caliente', 2),
 
   -- N10_b: inversión para "Crecer en seguidores".
   ('n10_b', 'buttons',
@@ -416,14 +408,27 @@ WHERE kind = 'agenda';
 UPDATE bot_steps SET
   calendar_min_business_days = 3,
   updated_at = NOW()
-WHERE step_key IN ('n10_a_m2_agenda_tibio', 'n8_meeting_agenda_tibio', 'n10_a_m3_agenda_tibio');
+WHERE step_key IN (
+  'n10_a_m2_agenda_tibio',
+  'n8_meeting_agenda_tibio',
+  'n10_a_m3_agenda_tibio',
+  'n10_b_m2_agenda_tibio',
+  'n10_b_m3_agenda_tibio'
+);
 
 -- El camino "caliente" puede agendar al día hábil siguiente: ya está listo para
 -- contratar y no tiene sentido pedirle que espere.
 UPDATE bot_steps SET
   calendar_min_business_days = 1,
   updated_at = NOW()
-WHERE step_key IN ('n8_meeting_agenda_caliente', 'n8_prioridades_agenda', 'n10_a_m3_agenda_caliente', 'n10_a_m2_agenda_caliente');
+WHERE step_key IN (
+  'n8_meeting_agenda_caliente',
+  'n8_prioridades_agenda',
+  'n10_a_m3_agenda_caliente',
+  'n10_a_m2_agenda_caliente',
+  'n10_b_m2_agenda_caliente',
+  'n10_b_m3_agenda_caliente'
+);
 
 -- Opciones de una versión anterior: N8_prioridades quedó como nodo de texto y sus
 -- botones se movieron a N8_prioridades_frases. Si quedan cargadas, el motor las
@@ -512,6 +517,14 @@ VALUES
   -- N10_b_m1: oferta con descuento.
   ('n10_b_m1', 'si', 'Sí', NULL, 'n11_disposicion', 0),
   ('n10_b_m1', 'no', 'No', NULL, 'fin_no', 1),
+
+  -- N10_b_m2 y N10_b_m3: disposición que deriva a agendas con distinto margen.
+  ('n10_b_m2', 'frio', 'Solo información', 'Solo quiero información, aun no estoy listo para contratar', 'n10_b_m2_agenda', 0),
+  ('n10_b_m2', 'tibio', 'Ligeramente listo', 'Estoy ligeramente listo para contratar', 'n10_b_m2_agenda_tibio', 1),
+  ('n10_b_m2', 'caliente', 'Listo + precisiones', 'Estoy listo para contratar, solo quiero más precisiones', 'n10_b_m2_agenda_caliente', 2),
+  ('n10_b_m3', 'frio', 'Solo información', 'Solo quiero información, aun no estoy listo para contratar', 'n10_b_m3_agenda', 0),
+  ('n10_b_m3', 'tibio', 'Ligeramente listo', 'Estoy ligeramente listo para contratar', 'n10_b_m3_agenda_tibio', 1),
+  ('n10_b_m3', 'caliente', 'Listo + precisiones', 'Estoy listo para contratar, solo quiero más precisiones', 'n10_b_m3_agenda_caliente', 2),
 
   -- N11_disposicion: 3 opciones, títulos cortos + texto completo en description.
   ('n11_disposicion', 'frio', 'Solo información', 'Solo quiero información, aun no estoy listo para contratar', 'pendiente_definir', 0),
