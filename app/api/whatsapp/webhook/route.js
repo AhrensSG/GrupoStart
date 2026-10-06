@@ -72,11 +72,10 @@ export async function POST(req) {
           // isNew filtra los reintentos de Meta: el mismo mensaje no se procesa dos veces.
           if (result?.isNew) {
             saved++
-            try {
-              await handleBotMessage({ phone: result.phone, name, text, type, optionId })
-            } catch (err) {
+            // Fire-and-forget: Meta espera un 200 rapido y no hay que bloquear el webhook.
+            void handleBotMessage({ phone: result.phone, name, text, type, optionId }).catch((err) =>
               console.error("[WhatsApp Webhook] Error en el bot:", err)
-            }
+            )
           }
         }
 
