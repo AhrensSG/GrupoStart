@@ -35,6 +35,7 @@ const PHONES = {
 process.env.WHATSAPP_ADMIN_PHONE = ADMIN_PHONE
 process.env.BOT_DELAY_MS = "0"
 process.env.BOT_STACK_DELAY_MS = "0"
+process.env.BOT_AI_FALLBACK_ENABLED = "false"
 process.env.WHATSAPP_CLOUD_TOKEN = "token-de-prueba"
 process.env.WHATSAPP_CLOUD_PHONE_ID = "phone-de-prueba"
 
