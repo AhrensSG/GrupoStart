@@ -80,7 +80,7 @@ VALUES
 
   ('fin_solo_yo', 'text',
    E'Comprendo, instalar un motor de ventas que funcione siempre requerirá de un agente humano al final del camino. \n\n\nno podremos instalar nuestro sistema ya que no podrá funcionar sin una estructura que lo respalde, pero vamos a estar en contacto a través del correo que nos brindaste, tal vez un poco mas adelante si podamos trabajar juntos ✈️',
-   NULL, NULL, NULL, FALSE, FALSE, TRUE, 7,
+   NULL, NULL, NULL, TRUE, FALSE, TRUE, 7,
    '{}', FALSE, NULL, NULL, NULL, 3, NULL, NULL),
 
   -- N6: figura legal. Solo las 3 más frecuentes (WhatsApp tops los botones en 3).
