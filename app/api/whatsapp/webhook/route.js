@@ -72,10 +72,11 @@ export async function POST(req) {
           // isNew filtra los reintentos de Meta: el mismo mensaje no se procesa dos veces.
           if (result?.isNew) {
             saved++
-            // Fire-and-forget: Meta espera un 200 rápido.
-            void handleBotMessage({ phone: result.phone, name, text, type, optionId }).catch((err) =>
+            try {
+              await handleBotMessage({ phone: result.phone, name, text, type, optionId })
+            } catch (err) {
               console.error("[WhatsApp Webhook] Error en el bot:", err)
-            )
+            }
           }
         }
 
@@ -93,4 +94,3 @@ export async function POST(req) {
     return NextResponse.json({ error: "Invalid body" }, { status: 400 })
   }
 }
-
