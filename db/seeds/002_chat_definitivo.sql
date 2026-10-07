@@ -30,7 +30,7 @@ INSERT INTO bot_steps (step_key, kind, body, button_text, next_step_key, collect
 VALUES
   -- N1: presentación. Los 4 disparadores devuelven este mismo texto.
   ('n1', 'text',
-   E'Hola 👋🏻\n\nMucho gusto, somos Grupo Start 🚀\n\nMás de 10 años de experiencia y +100 clientes satisfechos en Argentina y Europa nos respaldan.\n\nPara que nos conozcas te cuento un poco sobre nosotros:\n\n🏁 Somos una agencia de marketing completa\n\n📲 Integramos todos los procesos importantes en un solo lugar\n\n🧩 Contenidos, publicidad en Meta Ads, Chatbot y eCommerce\n\n🔍 Primero te conocemos, luego proponemos 👉🏻 Vení a visitarnos: 📍Hipólito Yrigoyen 342, Formosa 👉🏻 o agendemos una videollamada 👨🏻‍💻',
+   E'Hola 👋🏻\n\nMucho gusto, somos Grupo Start 🚀\n\n\nMás de 10 años de experiencia y  +100 clientes satisfechos en Argentina y Europa nos respaldan.\n\n\nPara que nos conozcas te cuento un poco sobre nosotros:\n\n\n🏁 Somos una agencia de marketing completa \n\n\n📲 Integamos todos los procesos importantes en un solo lugar \n\n\n🧩 Contenidos, publicidad en meta ads, Chat Bot, e-comerce \n\n\n\n\n🔍 Primero te conoces, luego proponemos 👉🏻 Vení a visitarnos📍Hipólito Yrigoyen 342, ciudad de Formosa 👉🏻 o agendemos una reunión por videollamada 👨🏻‍💻',
    NULL, 'n1b', NULL, FALSE, TRUE, FALSE, 0,
    ARRAY[
      'Hola quiero más información del programa "Motor de Ventas"',
