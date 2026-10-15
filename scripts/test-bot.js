@@ -21,6 +21,7 @@ const PHONES = {
   baja: "5491111111114",
   apilado: "5491111111115",
   agenda: "5491111111117",
+  agendaCustom: "5491111111126",
   agendaTibio: "5491111111118",
   alto: "5491111111119",
   factAlta: "5491111111120",
@@ -338,6 +339,27 @@ check(consultaAviso.includes("carla@mail.com"), "el aviso al administrador lleva
 check(consultaAviso.includes("horario_texto"), "el aviso al administrador lleva el horario elegido")
 check(sent.filter((m) => m.to === `+${PHONES.agenda}`).at(-1)?.body === out[1]?.body, "no manda mensajes de más al cliente")
 
+console.log("\n=== Agenda: elegir otro día ===\n")
+
+out = await advanceTo("agendaCustom", PHONES.agendaCustom, ["si", "texto:carla2@mail.com", "dos", "monotributista", "bajo_1000", "si", "aumentar_facturacion", "medio_300k"])
+out = await say('toca "Solo quiero información" (agenda custom)', tap("frio"), PHONES.agendaCustom)
+check(last(out)?.body.includes("fechas disponibles"), "agenda custom: ofrece horarios")
+check(last(out)?.buttons.includes("agenda_custom_day"), "agenda custom: ofrece botón de elegir otro día")
+
+out = await say('toca "Elegir otro día"', tap("agenda_custom_day"), PHONES.agendaCustom)
+check(out.length === 1, "al elegir otro día solo pregunta la fecha")
+check(out[0]?.body.includes("¿Qué día te gustaría agendar?"), "pregunta la fecha deseada")
+
+out = await say("escribe la fecha", { text: "03/11/2026", type: "text" }, PHONES.agendaCustom)
+check(out.length === 1, "al escribir la fecha pide que el cliente escriba el horario")
+check(out[0]?.body.includes("disponibilidad a las"), "muestra horarios del día elegido en texto")
+check(!out[0]?.buttons.length, "no manda botones de horario en custom day")
+
+out = await say("escribe el segundo horario del día", { text: "13:30", type: "text" }, PHONES.agendaCustom)
+check(out.length === 2, "al elegir el horario del día salen 2 mensajes de confirmación")
+check(out[0]?.body === "🗓️Muy bien, voy a agendar la reunión, dame un minuto... ", "mensaje 1: aviso de agenda en custom day")
+check(out[1]?.body.includes("Reunión confirmada el 03/11/2026 a las 13:30"), "mensaje 2: confirma el horario exactamente elegido por el cliente")
+
 console.log("\n=== Facturación alta: más de usd 5000 ===\n")
 
 out = await advanceTo("factAlta", PHONES.factAlta, ["si", "texto:rosa@mail.com", "dos", "monotributista"])
@@ -352,15 +374,15 @@ check(last(out)?.titles.length === 3, "3 opciones de disposición")
 
 // Las 3 opciones son las de siempre, con el texto largo completo.
 check(
-  last(out)?.titles[0] === "Solo información | Solo quiero información, aun no estoy listo para contratar",
+  last(out)?.titles[0] === "Solo información | aún no estoy listo para contratar",
   "opción 1 con su texto largo"
 )
 check(
-  last(out)?.titles[1] === "Ligeramente listo | Estoy ligeramente listo para contratar",
+  last(out)?.titles[1] === "Ligeramente listo | Busco un poco mas de detalles",
   "opción 2 con su texto largo"
 )
 check(
-  last(out)?.titles[2] === "Listo + precisiones | Estoy listo para contratar, solo quiero mas precisiones",
+  last(out)?.titles[2] === "Listo para contratar | Busco mas precisiones",
   "opción 3 con su texto largo"
 )
 
@@ -426,7 +448,7 @@ globalThis.fetch = (url, init) => {
 }
 
 out = await advanceTo("caliente", PHONES.caliente, ["si", "texto:marcos@mail.com", "cinco_mas", "srl", "mas_5000"])
-out = await say('toca "Listo + precisiones"', tap("caliente"), PHONES.caliente)
+out = await say('toca "Listo para contratar"', tap("caliente"), PHONES.caliente)
 check(
   last(out)?.body === "Bien , lo comprendo, tengo estas fechas disponibles para la reunión con uno de nuestros representantes ¿cual te queda mejor? 🤔",
   "el caliente de facturación alta ofrece la agenda"
@@ -506,7 +528,7 @@ check(last(out)?.interactive === "list", "las 3 opciones de disposición salen c
 check(last(out)?.buttons.join(",") === "frio,tibio,caliente", "las 3 opciones de disposición")
 check(
   last(out)?.descriptions?.join(" | ") ===
-    "Solo quiero información, aun no estoy listo para contratar | Estoy ligeramente listo para contratar | Estoy listo para contratar, solo quiero mas precisiones",
+    "aún no estoy listo para contratar | Busco un poco mas de detalles | Busco mas precisiones",
   "los textos de cada opción son los esperados"
 )
 

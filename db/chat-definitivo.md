@@ -345,9 +345,9 @@ te voy a agendar una reunión con un representante, por ultimo podrías elegir u
 
 | Botón | Título en el menú | Siguiente |
 |-------|-------------------|-----------|
-| `Solo quiero información, aun no estoy listo para contratar` | Solo información | `N8_meeting_agenda` |
-| `Estoy ligeramente listo para contratar` | Ligeramente listo | `N8_meeting_agenda_tibio` |
-| `Estoy listo para contratar, solo quiero mas precisiones` | Listo + precisiones | `N8_meeting_agenda_caliente` |
+| `frio` | Solo información | `N8_meeting_agenda` |
+| `tibio` | Ligeramente listo | `N8_meeting_agenda_tibio` |
+| `caliente` | Listo para contratar | `N8_meeting_agenda_caliente` |
 
 > Las opciones van como lista porque el texto completo no entra en un botón de 20 caracteres.
 >
@@ -678,9 +678,9 @@ Te voy a agendar una reunión con un agente humano, por ultimo podrías elegir u
 
 | Botón | Valor guardado | Siguiente |
 |-------|----------------|-----------|
-| `Solo quiero información, aun no estoy listo para contratar` | `Solo quiero información, aun no estoy listo para contratar` | `N10a_m2_frio` |
-| `Estoy ligeramente listo para contratar` | `Estoy ligeramente listo para contratar` | `N10a_m2_tibio` |
-| `Estoy listo para contratar, solo quiero más precisiones` | `Estoy listo para contratar, solo quiero más precisiones` | `N10a_m2_agenda_caliente` |
+| `frio` | `aún no estoy listo para contratar` | `N10a_m2_frio` |
+| `tibio` | `Busco un poco mas de detalles` | `N10a_m2_tibio` |
+| `caliente` | `Busco mas precisiones` | `N10a_m2_agenda_caliente` |
 
 > Es un solo nodo: el texto ya anuncia la reunión con un agente humano, así que no hace falta un nodo intermedio de agendar.
 > Las opciones van como lista porque no entran en botones de 20 caracteres.
@@ -813,9 +813,9 @@ por ultimo podrías elegir una de las siguientes opciones (con la que te sientas
 
 | Botón | Texto en el menú | Siguiente |
 |-------|-------------------|-----------|
-| Solo información | Solo quiero información, aun no estoy listo para contratar | `N10a_m3_agenda` |
-| Ligeramente listo | Estoy ligeramente listo para contratar | `N10a_m3_agenda_tibio` |
-| Listo + precisiones | Estoy listo para contratar, solo quiero mas precisiones | `N10a_m3_agenda_caliente` |
+| Solo información | aún no estoy listo para contratar | `N10a_m3_agenda` |
+| Ligeramente listo | Busco un poco mas de detalles | `N10a_m3_agenda_tibio` |
+| Listo para contratar | Busco mas precisiones | `N10a_m3_agenda_caliente` |
 
 > Los 3 destinos son nodos de agenda aparte, con el mismo texto que las demás agendas. Los márgenes van por camino: el frío ofrece desde 5 días hábiles, el tibio desde 3 y el caliente desde 1.
 

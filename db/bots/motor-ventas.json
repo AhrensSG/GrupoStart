@@ -372,17 +372,17 @@
       "buttons": [
         {
           "text": "Solo información",
-          "value": "Solo quiero información, aún no estoy listo para contratar",
+          "value": "aún no estoy listo para contratar",
           "next_flow": "disposicion_frio"
         },
         {
           "text": "Ligeramente listo",
-          "value": "Estoy ligeramente listo para contratar",
+          "value": "Busco un poco mas de detalles",
           "next_flow": "disposicion_tibio"
         },
         {
           "text": "Listo para contratar",
-          "value": "Estoy listo para contratar",
+          "value": "Busco mas precisiones",
           "next_flow": "disposicion_caliente"
         }
       ]
