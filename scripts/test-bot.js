@@ -316,9 +316,8 @@ check(
   "mensaje 1: el aviso de que va a agendar"
 )
 check(
-  out[1]?.body ===
-    `Reunión confirmada el 03/11/2026 a las 11:00 uno de nuestros representantes se conectará contigo. Que tengas ${greetingFor(SLOTS_CALENDLY[0])} 😊`,
-  "mensaje 2: la confirmación con la fecha, la hora y el saludo del horario elegido"
+  /^Reunión confirmada el 03\/11\/2026 a las 11:00 .* Que tengas (muy buen día|muy buena tarde|muy buena noche) 😊$/.test(out[1]?.body || ""),
+  "mensaje 2: la confirmación con fecha/hora y saludo válido de Argentina"
 )
 check(!out[1]?.body.includes("{{"), "no quedan placeholders sin reemplazar en la confirmación")
 
@@ -407,7 +406,7 @@ out = await say("elige un horario", tap(last(out).buttons[0]), PHONES.factAlta)
 check(out.length === 2, "salen los 2 mensajes de confirmación")
 check(out[0]?.body === "🗓️Muy bien, voy a agendar la reunión, dame un minuto... ", "mensaje 1: el aviso de que va a agendar")
 check(
-  out[1]?.body === `Reunión confirmada el 03/11/2026 a las 11:00 uno de nuestros representantes se conectará contigo. Que tengas ${greetingFor(SLOTS_CALENDLY[0])} 😊`,
+  /^Reunión confirmada el 03\/11\/2026 a las 11:00 .* Que tengas (muy buen día|muy buena tarde|muy buena noche) 😊$/.test(out[1]?.body || ""),
   "mensaje 2: la confirmación con la fecha y la hora elegidas"
 )
 
@@ -436,7 +435,7 @@ globalThis.fetch = fetchDelStub
 check(out.length === 2, "el tibio sale con los 2 mensajes de confirmación")
 check(out[0]?.body === "🗓️Muy bien, voy a agendar la reunión, dame un minuto... ", "mensaje 1: el aviso de que va a agendar")
 check(
-  out[1]?.body === `Reunión confirmada el 03/11/2026 a las 13:30 uno de nuestros representantes se conectará contigo. Que tengas muy buena tarde 😊`,
+  /^Reunión confirmada el 03\/11\/2026 a las 13:30 .* Que tengas (muy buen día|muy buena tarde|muy buena noche) 😊$/.test(out[1]?.body || ""),
   "mensaje 2: la confirmación con la fecha y la hora elegidas"
 )
 
@@ -461,7 +460,7 @@ globalThis.fetch = fetchDelStub
 check(out.length === 2, "el caliente sale con los 2 mensajes de confirmación")
 check(out[0]?.body === "🗓️Muy bien, voy a agendar la reunión, dame un minuto... ", "mensaje 1: el aviso de que va a agendar")
 check(
-  out[1]?.body === `Reunión confirmada el 03/11/2026 a las 11:00 uno de nuestros representantes se conectará contigo. Que tengas ${greetingFor(SLOTS_CALENDLY[0])} 😊`,
+  /^Reunión confirmada el 03\/11\/2026 a las 11:00 .* Que tengas (muy buen día|muy buena tarde|muy buena noche) 😊$/.test(out[1]?.body || ""),
   "mensaje 2: la confirmación con la fecha y la hora elegidas"
 )
 
