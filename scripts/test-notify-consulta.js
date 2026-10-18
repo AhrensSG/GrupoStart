@@ -100,3 +100,10 @@ async function probar(label, consulta) {
 
 await probar("HANDOFF (1 línea)", handoffConsulta)
 await probar("AGENDA (multilínea)", agendaConsulta)
+
+// Tercera prueba: usa la función real del bot (que ya sanitiza). Debe salir OK.
+const { sendHandoffNotification } = await import("../lib/tools/whatsapp-cloud.js")
+console.log("--- LIBRARY sendHandoffNotification (agenda multilínea, sanitizado) ---")
+const ok = await sendHandoffNotification(numeros[0], { numero: "5490000000000", consulta: agendaConsulta })
+console.log(ok ? "OK ✅" : "ERROR ❌")
+console.log("")
