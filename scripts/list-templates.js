@@ -19,17 +19,22 @@ if (!token) {
 const filtro = (process.argv[2] || "").toLowerCase()
 
 async function main() {
-  const url = `https://graph.facebook.com/v22.0/${wabaId}/message_templates?limit=200&fields=name,status,language,category`
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
-  const data = await res.json().catch(() => ({}))
+  let url = `https://graph.facebook.com/v22.0/${wabaId}/message_templates?limit=200&fields=name,status,language,category`
+  const templates = []
 
-  if (!res.ok) {
-    console.log("ERROR ❌ HTTP", res.status)
-    console.log(JSON.stringify(data, null, 2))
-    return
+  // Meta pagina de a 10: hay que seguir paging.next para traerlas todas.
+  while (url) {
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } })
+    const data = await res.json().catch(() => ({}))
+    if (!res.ok) {
+      console.log("ERROR ❌ HTTP", res.status)
+      console.log(JSON.stringify(data, null, 2))
+      return
+    }
+    for (const t of data.data || []) templates.push(t)
+    url = data.paging?.next || null
   }
 
-  const templates = data.data || []
   console.log(`WABA ${wabaId} — ${templates.length} plantillas`)
   console.log("")
 
@@ -40,7 +45,7 @@ async function main() {
   }
 
   for (const t of filtradas) {
-    console.log(`${t.status.padEnd(10)} | ${t.language.padEnd(6)} | ${t.name}`)
+    console.log(`${String(t.status).padEnd(10)} | ${String(t.language).padEnd(6)} | ${t.name}`)
   }
 }
 
