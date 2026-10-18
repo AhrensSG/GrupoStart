@@ -737,7 +737,7 @@ Reunión confirmada el {{fecha}} a las {{hora}} uno de nuestros representantes s
 |-------------|---------|--------------|
 | `{{fecha}}` | `03/11/2026` | Del horario elegido |
 | `{{hora}}` | `11:00` | Del horario elegido |
-| `{{saludo}}` | `muy buen día` | Según la hora: antes de las 12, `muy buena tarde` hasta las 19, `muy buena noche` después |
+| `{{saludo}}` | `muy buen día` | Según la hora (AR): de 05:00 a 11:59, `muy buena tarde` de 12:00 a 18:59, `muy buena noche` de 19:00 a 04:59 |
 
 > Cuando se integre la reserva real, este es el nodo que confirma. El texto no dice "quedó agendado" en Calendarly todavía, así que conviene conectarlo antes de mandarlo a producción.
 
