@@ -11,7 +11,7 @@ import "./load-env.js"
 
 const token = process.env.WHATSAPP_CLOUD_TOKEN || ""
 const wabaId = process.env.WHATSAPP_BUSINESS_ACCOUNT_ID || process.env.WHATSAPP_WABA_ID || "1331263012003802"
-const nombre = process.env.WHATSAPP_TEMPLATE_DERIVACION || "gs_derivacion_ia"
+const nombre = process.env.WHATSAPP_TEMPLATE_DERIVACION || "gs_derivacion_ia_v2"
 const idioma = process.env.WHATSAPP_TEMPLATE_LANGUAGE || "es"
 
 if (!token) {
@@ -27,9 +27,9 @@ const body = {
     {
       type: "BODY",
       text:
-        "Hola soy Sofi IA, el número {{1}} consultó {{2}}. " +
-        "Busqué en mis conocimientos y no logré encontrar la respuesta a esa consulta. " +
-        "¿Me podrías ayudar? El usuario espera atención humana.",
+        "Actualización del asistente Sofi IA: el cliente {{1}} hizo una consulta que no " +
+        "pude resolver. La consulta fue: {{2}}. Necesita que un asesor humano lo contacte " +
+        "a la brevedad.",
     },
   ],
 }
