@@ -32,6 +32,46 @@ function DoubleCheck({ read }) {
   )
 }
 
+function mediaKind(m) {
+  if (!m?.media_url) return ""
+  if (m.type === "sticker") return "image"
+  if (m.type === "voice") return "audio"
+  if (["image", "video", "audio", "document"].includes(m.type)) return m.type
+  return ""
+}
+
+function MessageMedia({ m }) {
+  const kind = mediaKind(m)
+  if (!kind) return null
+  const url = m.media_url
+  if (kind === "image") {
+    return (
+      <a href={url} target="_blank" rel="noopener noreferrer" className="block mb-1">
+        <img src={url} alt="Imagen" className="rounded-md max-h-72 w-auto max-w-full" />
+      </a>
+    )
+  }
+  if (kind === "video") {
+    return <video src={url} controls className="rounded-md max-h-72 w-auto max-w-full mb-1" />
+  }
+  if (kind === "audio") {
+    return <audio src={url} controls className="mb-1 w-56 max-w-full" />
+  }
+  return (
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex items-center gap-2 bg-black/5 rounded-md px-2.5 py-2 mb-1 hover:bg-black/10"
+    >
+      <svg className="w-6 h-6 text-gray-500 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M14 3v4a1 1 0 001 1h4M5 3h9l5 5v11a1 1 0 01-1 1H6a1 1 0 01-1-1V3z" />
+      </svg>
+      <span className="text-[13px] text-gray-800 truncate">{m.body || "Documento"}</span>
+    </a>
+  )
+}
+
 export default function WhatsappInbox() {
   const { state } = useContext(Context)
   const router = useRouter()
@@ -42,11 +82,15 @@ export default function WhatsappInbox() {
   const [activePhone, setActivePhone] = useState("")
   const [messages, setMessages] = useState([])
   const [search, setSearch] = useState("")
+  const [manualPhone, setManualPhone] = useState("")
   const [draft, setDraft] = useState("")
   const [loading, setLoading] = useState(true)
   const [sending, setSending] = useState(false)
+  const [startingFlow, setStartingFlow] = useState(false)
+  const [startFlowInfo, setStartFlowInfo] = useState("")
   const [sendError, setSendError] = useState("")
 
+  const fileInputRef = useRef(null)
   const activePhoneRef = useRef("")
   const prevLenRef = useRef(0)
   const messagesEndRef = useRef(null)
@@ -120,6 +164,23 @@ export default function WhatsappInbox() {
     activePhoneRef.current = ""
   }
 
+  const reload = useCallback(async () => {
+    const phone = activePhoneRef.current
+    const uid = adminUidRef.current
+    if (!phone) return
+    const [mres, cres] = await Promise.all([
+      fetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(uid)}`),
+      fetch(`/api/tools/whatsapp/conversations?admin_uid=${encodeURIComponent(uid)}`),
+    ])
+    if (mres.ok) {
+      const data = await mres.json()
+      setMessages(data)
+      prevLenRef.current = data.length
+      scrollToBottom()
+    }
+    if (cres.ok) setConversations(await cres.json())
+  }, [scrollToBottom])
+
   const handleSend = async () => {
     const text = draft.trim()
     if (!text || sending || !activePhone) return
@@ -137,21 +198,68 @@ export default function WhatsappInbox() {
         return
       }
       setDraft("")
-      const [mres, cres] = await Promise.all([
-        fetch(`/api/tools/whatsapp/conversations/${activePhone}?admin_uid=${encodeURIComponent(adminUid)}`),
-        fetch(`/api/tools/whatsapp/conversations?admin_uid=${encodeURIComponent(adminUid)}`),
-      ])
-      if (mres.ok) {
-        const data2 = await mres.json()
-        setMessages(data2)
-        prevLenRef.current = data2.length
-        scrollToBottom()
-      }
-      if (cres.ok) setConversations(await cres.json())
+      await reload()
     } catch {
       setSendError("Error de conexión. Intentalo de nuevo.")
     } finally {
       setSending(false)
+    }
+  }
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0]
+    e.target.value = ""
+    if (!file || sending || !activePhoneRef.current) return
+    setSending(true)
+    setSendError("")
+    try {
+      const form = new FormData()
+      form.append("to", activePhoneRef.current)
+      form.append("file", file)
+      if (draft.trim()) form.append("caption", draft.trim())
+      const res = await fetch("/api/tools/whatsapp/send-media", { method: "POST", body: form })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSendError(data.error || "Error al enviar el archivo")
+        return
+      }
+      setDraft("")
+      await reload()
+    } catch {
+      setSendError("Error de conexión. Intentalo de nuevo.")
+    } finally {
+      setSending(false)
+    }
+  }
+
+  const handleStartFlow = async () => {
+    const phone = manualPhone.replace(/\D/g, "")
+    if (!phone || startingFlow) return
+    setStartingFlow(true)
+    setSendError("")
+    setStartFlowInfo("")
+    try {
+      const res = await fetch("/api/tools/whatsapp/start-flow", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ phone, reset: true }),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setSendError(data.error || "No se pudo iniciar el flujo")
+        return
+      }
+
+      setStartFlowInfo(`Flujo iniciado en ${data.phone}`)
+      setManualPhone("")
+      setActivePhone(data.phone)
+      activePhoneRef.current = data.phone
+      prevLenRef.current = 0
+      await reload()
+    } catch {
+      setSendError("Error de conexión. Intentalo de nuevo.")
+    } finally {
+      setStartingFlow(false)
     }
   }
 
@@ -203,6 +311,31 @@ export default function WhatsappInbox() {
                 className="flex-1 bg-transparent text-sm text-gray-900 outline-none placeholder:text-gray-400"
               />
             </div>
+
+            <div className="mt-2 flex items-center gap-2">
+              <input
+                value={manualPhone}
+                onChange={(e) => setManualPhone(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault()
+                    handleStartFlow()
+                  }
+                }}
+                placeholder="549... iniciar flujo"
+                className="flex-1 bg-white border border-gray-200 rounded-lg px-3 py-2 text-xs text-gray-900 outline-none focus:ring-2 focus:ring-[#25D366]/30"
+              />
+              <button
+                type="button"
+                onClick={handleStartFlow}
+                disabled={!manualPhone.trim() || startingFlow}
+                className="px-2.5 py-2 rounded-lg bg-[#25D366] text-white text-xs font-semibold disabled:opacity-50 hover:bg-[#1fb959]"
+              >
+                {startingFlow ? "Iniciando..." : "Iniciar"}
+              </button>
+            </div>
+            {startFlowInfo && <p className="mt-1 text-[11px] text-green-700">{startFlowInfo}</p>}
+            {sendError && <p className="mt-1 text-[11px] text-red-600">{sendError}</p>}
           </div>
 
           <div className="flex-1 min-h-0 overflow-y-auto">
@@ -303,32 +436,42 @@ export default function WhatsappInbox() {
                       Sin mensajes todavía. Envía el primero 👋
                     </div>
                   ) : (
-                    messages.map((m) => (
-                      <div key={m.id} className={`flex ${m.direction === "in" ? "justify-start" : "justify-end"}`}>
-                        <div
-                          className={`max-w-[78%] sm:max-w-[60%] mb-1.5 rounded-lg px-2.5 py-1.5 shadow-sm relative ${
-                            m.direction === "in"
-                              ? "bg-white rounded-tl-none"
-                              : "bg-[#d9fdd3] rounded-tr-none"
-                          }`}
-                        >
-                          <p className="text-[14.5px] leading-snug whitespace-pre-wrap break-words text-gray-900 pr-14">
-                            {m.body}
-                          </p>
-                          <span className="absolute bottom-1 right-1.5 text-[10px] text-gray-400 flex items-center gap-0.5">
-                            {formatTime(m.created_at)}
-                            {m.direction === "out" &&
-                              (m.status === "read" ? (
-                                <DoubleCheck read />
-                              ) : m.status === "delivered" ? (
-                                <DoubleCheck />
-                              ) : (
-                                <SingleCheck />
-                              ))}
-                          </span>
+                    messages.map((m) => {
+                      const kind = mediaKind(m)
+                      const text = m.body || ""
+                      const isPlaceholder = /^\[[^\]]*\]$/.test(text.trim())
+                      const showText = Boolean(text) && !isPlaceholder && !(kind === "document")
+                      return (
+                        <div key={m.id} className={`flex ${m.direction === "in" ? "justify-start" : "justify-end"}`}>
+                          <div
+                            className={`max-w-[78%] sm:max-w-[60%] mb-1.5 rounded-lg px-2.5 py-1.5 shadow-sm relative ${
+                              m.direction === "in"
+                                ? "bg-white rounded-tl-none"
+                                : "bg-[#d9fdd3] rounded-tr-none"
+                            }`}
+                          >
+                            <MessageMedia m={m} />
+                            {showText && (
+                              <p className="text-[14.5px] leading-snug whitespace-pre-wrap break-words text-gray-900 pr-14">
+                                {text}
+                              </p>
+                            )}
+                            {!showText && <span className="block h-3" />}
+                            <span className="absolute bottom-1 right-1.5 text-[10px] text-gray-400 flex items-center gap-0.5">
+                              {formatTime(m.created_at)}
+                              {m.direction === "out" &&
+                                (m.status === "read" ? (
+                                  <DoubleCheck read />
+                                ) : m.status === "delivered" ? (
+                                  <DoubleCheck />
+                                ) : (
+                                  <SingleCheck />
+                                ))}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    ))
+                      )
+                    })
                   )}
                   <div ref={messagesEndRef} />
                 </div>
@@ -342,6 +485,29 @@ export default function WhatsappInbox() {
 
               <div className="bg-[#f0f2f5] px-3 sm:px-4 py-2.5 shrink-0">
                 <div className="max-w-3xl mx-auto flex items-center gap-2">
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip"
+                    onChange={handleFileChange}
+                    className="hidden"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={sending}
+                    className="w-10 h-10 sm:w-11 sm:h-11 rounded-full text-gray-500 hover:text-[#25D366] hover:bg-gray-200 flex items-center justify-center disabled:opacity-40 transition-colors shrink-0"
+                    aria-label="Adjuntar archivo"
+                  >
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={1.9}
+                        d="M21.44 11.05l-8.49 8.49a5.5 5.5 0 01-7.78-7.78l8.49-8.49a3.5 3.5 0 014.95 4.95l-8.49 8.49a1.5 1.5 0 01-2.12-2.12l7.78-7.78"
+                      />
+                    </svg>
+                  </button>
                   <input
                     value={draft}
                     onChange={(e) => setDraft(e.target.value)}

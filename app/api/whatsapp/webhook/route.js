@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
-import { saveWaIncomingMessage, updateWaMessageStatus } from "@/lib/tools/db"
+import { saveWaIncomingMessage, updateWaMessageStatus, saveWaMedia, updateWaMessageMedia } from "@/lib/tools/db"
 import { handleBotMessage } from "@/lib/bot/engine"
+import { downloadWhatsAppMedia } from "@/lib/tools/whatsapp-cloud"
 
 const VERIFY_TOKEN = process.env.WHATSAPP_WEBHOOK_VERIFY_TOKEN || "grupostart_webhook_2026"
 
@@ -23,17 +24,23 @@ function describeMessage(msg) {
     case "text":
       return { type, body: msg.text?.body || "", optionId: "" }
     case "image":
-      return { type, body: msg.image?.caption || "[📷 Imagen]", optionId: "" }
+      return { type, body: msg.image?.caption || "[📷 Imagen]", optionId: "", mediaId: msg.image?.id || "" }
     case "video":
-      return { type, body: msg.video?.caption || "[🎬 Video]", optionId: "" }
+      return { type, body: msg.video?.caption || "[🎬 Video]", optionId: "", mediaId: msg.video?.id || "" }
     case "audio":
-      return { type, body: msg.audio?.caption || "[🎤 Audio]", optionId: "" }
+      return { type, body: msg.audio?.caption || "[🎤 Audio]", optionId: "", mediaId: msg.audio?.id || "" }
     case "voice":
-      return { type, body: "[🎤 Nota de voz]", optionId: "" }
+      return { type, body: "[🎤 Nota de voz]", optionId: "", mediaId: msg.voice?.id || "" }
     case "document":
-      return { type, body: msg.document?.filename || "[📄 Documento]", optionId: "" }
+      return {
+        type,
+        body: msg.document?.filename || "[📄 Documento]",
+        optionId: "",
+        mediaId: msg.document?.id || "",
+        filename: msg.document?.filename || "",
+      }
     case "sticker":
-      return { type, body: "[✨ Sticker]", optionId: "" }
+      return { type, body: "[✨ Sticker]", optionId: "", mediaId: msg.sticker?.id || "" }
     case "location":
       return { type, body: "[📍 Ubicación]", optionId: "" }
     case "contacts":
@@ -50,6 +57,15 @@ function describeMessage(msg) {
   }
 }
 
+/** Descarga el adjunto entrante y lo guarda (fire-and-forget). */
+async function attachIncomingMedia({ mediaId, messageId, filename }) {
+  if (!mediaId || !messageId) return
+  const media = await downloadWhatsAppMedia(mediaId)
+  if (!media) return
+  const stored = await saveWaMedia({ mimeType: media.mimeType, filename, buffer: media.buffer })
+  if (stored) await updateWaMessageMedia(messageId, stored)
+}
+
 export async function POST(req) {
   try {
     const body = await req.json()
@@ -60,7 +76,7 @@ export async function POST(req) {
         const value = change.value || {}
 
         for (const msg of value.messages || []) {
-          const { type, body: text, optionId } = describeMessage(msg)
+          const { type, body: text, optionId, mediaId, filename } = describeMessage(msg)
           const name = value.contacts?.[0]?.profile?.name || ""
           const result = await saveWaIncomingMessage({
             from: msg.from,
@@ -73,6 +89,11 @@ export async function POST(req) {
           if (result?.isNew) {
             saved++
             // Fire-and-forget: Meta espera un 200 rapido y no hay que bloquear el webhook.
+            if (mediaId) {
+              void attachIncomingMedia({ mediaId, messageId: result.messageId, filename }).catch((err) =>
+                console.error("[WhatsApp Webhook] Error guardando media:", err)
+              )
+            }
             void handleBotMessage({ phone: result.phone, name, text, type, optionId }).catch((err) =>
               console.error("[WhatsApp Webhook] Error en el bot:", err)
             )
