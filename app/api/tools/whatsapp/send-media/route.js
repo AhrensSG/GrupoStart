@@ -5,7 +5,7 @@ import {
   mediaKindForMime,
 } from "@/lib/tools/whatsapp-cloud"
 import { convertToOggOpus } from "@/lib/tools/audio-convert"
-import { saveWaMedia, saveWaOutgoingMessage } from "@/lib/tools/db"
+import { saveWaMedia, saveWaOutgoingMessage, getLastInboundAt } from "@/lib/tools/db"
 import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
 // Límites de la API de WhatsApp Cloud.
@@ -46,23 +46,30 @@ export async function POST(req) {
       return NextResponse.json({ error: "El texto no puede superar los 1024 caracteres." }, { status: 400 })
     }
 
+    const lastInbound = await getLastInboundAt(to)
+    if (!lastInbound || Date.now() - new Date(lastInbound).getTime() >= 24 * 60 * 60 * 1000) {
+      return NextResponse.json(
+        { error: "La ventana de 24 h está cerrada. El cliente debe escribir primero para poder enviar archivos." },
+        { status: 400 }
+      )
+    }
+
     // Permite forzar "document" (p. ej. videos de más de 16 MB).
     let kind = voice
       ? "audio"
       : ALLOWED_KINDS.has(requestedKind)
         ? requestedKind
         : mediaKindForMime(file.type, file.name)
-    let mimeType = file.type || ""
+    // Meta rechaza MIME con parámetros (p. ej. "audio/ogg; codecs=opus").
+    let mimeType = String(file.type || "").split(";")[0].trim().toLowerCase()
     let filename = file.name || "archivo"
     let buffer = Buffer.from(await file.arrayBuffer())
 
-    // Las notas de voz de WhatsApp tienen que ir en OGG/Opus. Chrome graba webm,
-    // así que lo convertimos en el servidor.
+    // Las notas de voz de WhatsApp tienen que ser OGG/Opus reales. Aunque el
+    // navegador entregue "audio/ogg", el contenedor puede no ser compatible, así
+    // que toda nota de voz se reconvierte con ffmpeg para garantizar el formato.
     if (kind === "audio") {
-      const baseMime = String(file.type || "").split(";")[0].trim().toLowerCase()
-      // Las notas de voz solo aceptan OGG/Opus; los audios comunes aceptan
-      // ogg/mpeg/mp4/aac/amr. Si no cumple, convertimos con ffmpeg.
-      const needsConvert = !ACCEPTED_AUDIO_MIMES.has(baseMime) || (voice && baseMime !== "audio/ogg")
+      const needsConvert = voice || !ACCEPTED_AUDIO_MIMES.has(mimeType)
       if (needsConvert) {
         try {
           buffer = await convertToOggOpus(buffer)

@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 import { sendTextViaWhatsApp } from "@/lib/tools/whatsapp-cloud"
-import { saveWaOutgoingMessage } from "@/lib/tools/db"
+import { saveWaOutgoingMessage, getLastInboundAt } from "@/lib/tools/db"
 import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
 export async function POST(req) {
@@ -14,6 +14,14 @@ export async function POST(req) {
     }
     if (body.length > 4096) {
       return NextResponse.json({ error: "El mensaje no puede superar los 4096 caracteres" }, { status: 400 })
+    }
+
+    const lastInbound = await getLastInboundAt(to)
+    if (!lastInbound || Date.now() - new Date(lastInbound).getTime() >= 24 * 60 * 60 * 1000) {
+      return NextResponse.json(
+        { error: "La ventana de 24 h está cerrada. El cliente debe escribir primero para poder enviar mensajes libres." },
+        { status: 400 }
+      )
     }
 
     const waMessageId = await sendTextViaWhatsApp(to, body.trim())
