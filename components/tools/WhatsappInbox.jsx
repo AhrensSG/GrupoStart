@@ -10,7 +10,7 @@ function formatTime(iso) {
   const d = new Date(iso)
   const now = new Date()
   if (d.toDateString() === now.toDateString()) {
-    return d.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })
+    return d.toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit", hour12: false })
   }
   return d.toLocaleDateString("es-AR", { day: "2-digit", month: "2-digit" })
 }
@@ -603,7 +603,7 @@ export default function WhatsappInbox() {
                           >
                             <MessageMedia m={m} />
                             {showText && (
-                              <p className="text-[14.5px] leading-snug whitespace-pre-wrap break-words text-gray-900 pr-14">
+                              <p className="text-[14.5px] leading-snug whitespace-pre-wrap break-words text-gray-900 pr-20 pb-3">
                                 {text}
                               </p>
                             )}
