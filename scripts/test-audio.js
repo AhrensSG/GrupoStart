@@ -58,13 +58,13 @@ if (!token || !phoneId) {
 
 let buffer = await readFile(filePath)
 let filename = path.basename(filePath)
-let mimeType = guessMime(filename)
+let mimeType = process.env.AUDIO_MIME || guessMime(filename)
 
 if (mode === "voice") {
   const { convertToOggOpus } = await import("../lib/tools/audio-convert.js")
   try {
     buffer = await convertToOggOpus(buffer)
-    mimeType = "audio/ogg"
+    mimeType = process.env.AUDIO_MIME || "audio/ogg"
     filename = "test.ogg"
     console.log("convertido a ogg/opus:", buffer.length, "bytes")
   } catch (err) {
