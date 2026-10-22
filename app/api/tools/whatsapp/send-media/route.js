@@ -4,7 +4,7 @@ import {
   sendMediaViaWhatsApp,
   mediaKindForMime,
 } from "@/lib/tools/whatsapp-cloud"
-import { convertToOggOpus } from "@/lib/tools/audio-convert"
+import { convertToM4a } from "@/lib/tools/audio-convert"
 import { saveWaMedia, saveWaOutgoingMessage, getLastInboundAt } from "@/lib/tools/db"
 import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
@@ -35,7 +35,7 @@ export async function POST(req) {
     const form = await req.formData()
     const to = form.get("to")
     const file = form.get("file")
-    const voice = String(form.get("voice") || "") === "true"
+    let voice = String(form.get("voice") || "") === "true"
     const requestedKind = String(form.get("kind") || "").trim().toLowerCase()
     const caption = String(form.get("caption") || "").trim()
 
@@ -65,16 +65,17 @@ export async function POST(req) {
     let filename = file.name || "archivo"
     let buffer = Buffer.from(await file.arrayBuffer())
 
-    // Las notas de voz de WhatsApp tienen que ser OGG/Opus reales. Aunque el
-    // navegador entregue "audio/ogg", el contenedor puede no ser compatible, así
-    // que toda nota de voz se reconvierte con ffmpeg para garantizar el formato.
+    // Meta tiene roto el procesamiento de OGG/Opus (error 131053, incluso con
+    // notas de voz reales de WhatsApp). Convertimos a M4A/AAC, que sí acepta.
     if (kind === "audio") {
-      const needsConvert = voice || !ACCEPTED_AUDIO_MIMES.has(mimeType)
+      const needsConvert = voice || !ACCEPTED_AUDIO_MIMES.has(mimeType) || mimeType === "audio/ogg"
       if (needsConvert) {
         try {
-          buffer = await convertToOggOpus(buffer)
-          mimeType = "audio/ogg; codecs=opus"
-          filename = `${filename.replace(/\.[^.]+$/, "") || "audio"}.ogg`
+          buffer = await convertToM4a(buffer)
+          mimeType = "audio/mp4"
+          filename = `${filename.replace(/\.[^.]+$/, "") || "audio"}.m4a`
+          // M4A no admite la marca de "nota de voz"; va como audio normal.
+          if (voice) voice = false
         } catch (err) {
           console.error("[WhatsApp media] Error convirtiendo audio:", err.message)
           return NextResponse.json(
@@ -84,8 +85,6 @@ export async function POST(req) {
         }
       }
     }
-
-    if (kind === "audio" && mimeType === "audio/ogg") mimeType = "audio/ogg; codecs=opus"
 
     if (buffer.length > (MAX_BYTES[kind] || MAX_BYTES.document)) {
       return NextResponse.json(
