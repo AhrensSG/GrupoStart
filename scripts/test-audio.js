@@ -9,7 +9,7 @@ import path from "node:path"
 // Muestra la respuesta cruda de Meta (sirve para ver el error exacto).
 
 const [filePath, phone, rawMode] = process.argv.slice(2)
-const mode = rawMode === "file" ? "file" : "voice"
+const mode = ["file", "voice-file"].includes(rawMode) ? rawMode : "voice"
 
 if (!filePath || !phone) {
   console.error("Uso: node scripts/test-audio.js <archivo> <telefono> [voice|file]")
@@ -92,7 +92,7 @@ const sendBody = {
   messaging_product: "whatsapp",
   to,
   type: "audio",
-  audio: { id: upData.id, ...(mode === "voice" ? { voice: true } : {}) },
+  audio: { id: upData.id, ...(mode === "voice" || mode === "voice-file" ? { voice: true } : {}) },
 }
 console.log("enviando a:", to)
 const sendRes = await fetch(`https://graph.facebook.com/v22.0/${phoneId}/messages`, {
