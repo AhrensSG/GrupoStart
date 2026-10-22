@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useContext, useCallback } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Context } from "@/app/context/GlobalContext"
+import { authFetch } from "@/lib/auth/client"
 
 function formatTime(iso) {
   if (!iso) return ""
@@ -182,7 +183,7 @@ export default function WhatsappInbox() {
     const tick = async () => {
       try {
         const uid = adminUidRef.current
-        const res = await fetch(`/api/tools/whatsapp/conversations?admin_uid=${encodeURIComponent(uid)}`)
+        const res = await authFetch(`/api/tools/whatsapp/conversations?admin_uid=${encodeURIComponent(uid)}`)
         if (res.status === 403) {
           router.push("/user")
           return
@@ -193,7 +194,7 @@ export default function WhatsappInbox() {
         setConversations(data)
         const phone = activePhoneRef.current
         if (phone) {
-          const mres = await fetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(uid)}`)
+          const mres = await authFetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(uid)}`)
           if (mres.ok) setMessages(await mres.json())
         }
       } catch {}
@@ -219,7 +220,7 @@ export default function WhatsappInbox() {
     prevLenRef.current = 0
     setConversations((prev) => prev.map((c) => (c.phone === phone ? { ...c, unread_count: 0 } : c)))
     try {
-      const res = await fetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(adminUid)}`)
+      const res = await authFetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(adminUid)}`)
       if (res.ok) {
         const data = await res.json()
         setMessages(data)
@@ -242,8 +243,8 @@ export default function WhatsappInbox() {
     const uid = adminUidRef.current
     if (!phone) return
     const [mres, cres] = await Promise.all([
-      fetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(uid)}`),
-      fetch(`/api/tools/whatsapp/conversations?admin_uid=${encodeURIComponent(uid)}`),
+      authFetch(`/api/tools/whatsapp/conversations/${phone}?admin_uid=${encodeURIComponent(uid)}`),
+      authFetch(`/api/tools/whatsapp/conversations?admin_uid=${encodeURIComponent(uid)}`),
     ])
     if (mres.ok) {
       const data = await mres.json()
@@ -260,7 +261,7 @@ export default function WhatsappInbox() {
     setSending(true)
     setSendError("")
     try {
-      const res = await fetch("/api/tools/whatsapp/send", {
+      const res = await authFetch("/api/tools/whatsapp/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ admin_uid: adminUid, to: activePhone, body: text }),
@@ -334,7 +335,7 @@ export default function WhatsappInbox() {
       if (draft.trim()) form.append("caption", draft.trim())
       if (item.voice) form.append("voice", "true")
       if (item.sendKind) form.append("kind", item.sendKind)
-      const res = await fetch("/api/tools/whatsapp/send-media", { method: "POST", body: form })
+      const res = await authFetch("/api/tools/whatsapp/send-media", { method: "POST", body: form })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
         setSendError(data.error || "Error al enviar el archivo")
@@ -417,7 +418,7 @@ export default function WhatsappInbox() {
     setSendError("")
     setStartFlowInfo("")
     try {
-      const res = await fetch("/api/tools/whatsapp/start-flow", {
+      const res = await authFetch("/api/tools/whatsapp/start-flow", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ phone, reset: true }),
