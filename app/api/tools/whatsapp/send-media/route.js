@@ -4,6 +4,7 @@ import {
   sendMediaViaWhatsApp,
   mediaKindForMime,
 } from "@/lib/tools/whatsapp-cloud"
+import { convertToOggOpus } from "@/lib/tools/audio-convert"
 import { saveWaMedia, saveWaOutgoingMessage } from "@/lib/tools/db"
 import { requireAdmin, unauthorizedResponse } from "@/lib/auth/server"
 
@@ -22,6 +23,8 @@ const PLACEHOLDER = {
   document: "[📄 Documento]",
 }
 
+const ACCEPTED_AUDIO_MIMES = new Set(["audio/ogg", "audio/mpeg", "audio/mp4", "audio/aac", "audio/amr"])
+
 export async function POST(req) {
   try {
     if (!(await requireAdmin(req))) {
@@ -31,24 +34,51 @@ export async function POST(req) {
     const form = await req.formData()
     const to = form.get("to")
     const file = form.get("file")
+    const voice = String(form.get("voice") || "") === "true"
     const caption = String(form.get("caption") || "").trim()
 
     if (!to || !file || typeof file === "string") {
       return NextResponse.json({ error: "El destinatario y el archivo son requeridos" }, { status: 400 })
     }
+    if (caption.length > 1024) {
+      return NextResponse.json({ error: "El texto no puede superar los 1024 caracteres." }, { status: 400 })
+    }
 
-    const kind = mediaKindForMime(file.type, file.name)
-    if (file.size > (MAX_BYTES[kind] || MAX_BYTES.document)) {
+    let kind = voice ? "audio" : mediaKindForMime(file.type, file.name)
+    let mimeType = file.type || ""
+    let filename = file.name || "archivo"
+    let buffer = Buffer.from(await file.arrayBuffer())
+
+    // Las notas de voz de WhatsApp tienen que ir en OGG/Opus. Chrome graba webm,
+    // así que lo convertimos en el servidor.
+    if (kind === "audio") {
+      const baseMime = String(file.type || "").split(";")[0].trim().toLowerCase()
+      // Las notas de voz solo aceptan OGG/Opus; los audios comunes aceptan
+      // ogg/mpeg/mp4/aac/amr. Si no cumple, convertimos con ffmpeg.
+      const needsConvert = !ACCEPTED_AUDIO_MIMES.has(baseMime) || (voice && baseMime !== "audio/ogg")
+      if (needsConvert) {
+        try {
+          buffer = await convertToOggOpus(buffer)
+          mimeType = "audio/ogg"
+          filename = `${filename.replace(/\.[^.]+$/, "") || "audio"}.ogg`
+        } catch (err) {
+          console.error("[WhatsApp media] Error convirtiendo audio:", err.message)
+          return NextResponse.json(
+            { error: "No se pudo convertir el audio a un formato válido. Verificá que ffmpeg esté instalado en el servidor." },
+            { status: 500 }
+          )
+        }
+      }
+    }
+
+    if (buffer.length > (MAX_BYTES[kind] || MAX_BYTES.document)) {
       return NextResponse.json(
         { error: `El archivo supera el máximo permitido para ${kind} (${Math.round((MAX_BYTES[kind] || MAX_BYTES.document) / (1024 * 1024))} MB).` },
         { status: 400 }
       )
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer())
-    const filename = file.name || "archivo"
-
-    const metaMediaId = await uploadWhatsAppMedia(buffer, file.type, filename)
+    const metaMediaId = await uploadWhatsAppMedia(buffer, mimeType, filename)
     if (!metaMediaId) {
       return NextResponse.json({ error: "No se pudo subir el archivo a WhatsApp." }, { status: 502 })
     }
@@ -58,6 +88,7 @@ export async function POST(req) {
       mediaId: metaMediaId,
       caption,
       filename,
+      voice: voice && kind === "audio",
     })
     if (!sentId) {
       return NextResponse.json(
@@ -66,7 +97,7 @@ export async function POST(req) {
       )
     }
 
-    const storedId = await saveWaMedia({ mimeType: file.type, filename, buffer })
+    const storedId = await saveWaMedia({ mimeType, filename, buffer })
     await saveWaOutgoingMessage({
       to,
       body: caption || PLACEHOLDER[kind] || "[adjunto]",

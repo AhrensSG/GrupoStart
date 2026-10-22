@@ -14,7 +14,9 @@ const nextConfig = {
   experimental: {
     // Reduce workers durante build (usa menos RAM pero tarda más)
     workerThreads: false,
-    cpus: 1
+    cpus: 1,
+    // ffmpeg-static trae un binario; no hay que empaquetarlo con webpack.
+    serverComponentsExternalPackages: ["ffmpeg-static"]
   },
   // Deshabilitar minificación de SWC si causa problemas de memoria
   swcMinify: true,

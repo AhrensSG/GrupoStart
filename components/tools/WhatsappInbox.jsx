@@ -40,6 +40,40 @@ function mediaKind(m) {
   return ""
 }
 
+function kindFromFile(file) {
+  const type = String(file?.type || "").toLowerCase()
+  const ext = String(file?.name || "").toLowerCase().split(".").pop()
+  if (type.startsWith("image/") || ["jpg", "jpeg", "png", "webp", "gif"].includes(ext)) return "image"
+  if (type.startsWith("video/") || ["mp4", "3gp", "mov"].includes(ext)) return "video"
+  if (type.startsWith("audio/") || ["ogg", "mp3", "m4a", "aac", "amr", "opus", "wav", "webm"].includes(ext)) return "audio"
+  return "document"
+}
+
+function audioRecordingMime() {
+  if (typeof MediaRecorder === "undefined") return ""
+  const options = ["audio/ogg;codecs=opus", "audio/mp4", "audio/webm;codecs=opus", "audio/webm"]
+  return options.find((type) => {
+    try {
+      return MediaRecorder.isTypeSupported(type)
+    } catch {
+      return false
+    }
+  }) || ""
+}
+
+function formatDuration(totalSeconds) {
+  const minutes = Math.floor(totalSeconds / 60)
+  const seconds = totalSeconds % 60
+  return `${minutes}:${String(seconds).padStart(2, "0")}`
+}
+
+function formatBytes(bytes) {
+  if (!bytes) return ""
+  if (bytes < 1024) return `${bytes} B`
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`
+}
+
 function MessageMedia({ m }) {
   const kind = mediaKind(m)
   if (!kind) return null
@@ -89,16 +123,44 @@ export default function WhatsappInbox() {
   const [startingFlow, setStartingFlow] = useState(false)
   const [startFlowInfo, setStartFlowInfo] = useState("")
   const [sendError, setSendError] = useState("")
+  const [pending, setPending] = useState(null)
+  const [recording, setRecording] = useState(false)
+  const [recordSeconds, setRecordSeconds] = useState(0)
 
   const fileInputRef = useRef(null)
   const activePhoneRef = useRef("")
   const prevLenRef = useRef(0)
   const messagesEndRef = useRef(null)
   const adminUidRef = useRef(adminUid)
+  const pendingRef = useRef(null)
+  const recorderRef = useRef(null)
+  const chunksRef = useRef([])
+  const recordTimerRef = useRef(null)
+  const discardRecordingRef = useRef(false)
+
+  const setPendingAttachment = useCallback((next) => {
+    if (pendingRef.current?.url) URL.revokeObjectURL(pendingRef.current.url)
+    pendingRef.current = next
+    setPending(next)
+  }, [])
 
   useEffect(() => {
     adminUidRef.current = adminUid
   }, [adminUid])
+
+  useEffect(() => {
+    return () => {
+      if (pendingRef.current?.url) URL.revokeObjectURL(pendingRef.current.url)
+      if (recordTimerRef.current) clearInterval(recordTimerRef.current)
+      const rec = recorderRef.current
+      if (rec && rec.state !== "inactive") {
+        discardRecordingRef.current = true
+        try {
+          rec.stop()
+        } catch {}
+      }
+    }
+  }, [])
 
   const scrollToBottom = useCallback((smooth = true) => {
     setTimeout(() => {
@@ -144,6 +206,11 @@ export default function WhatsappInbox() {
   }, [user, router])
 
   const selectConversation = async (phone) => {
+    if (phone !== activePhoneRef.current) {
+      if (recorderRef.current) stopRecording(true)
+      setPendingAttachment(null)
+      setSendError("")
+    }
     setActivePhone(phone)
     activePhoneRef.current = phone
     prevLenRef.current = 0
@@ -160,6 +227,9 @@ export default function WhatsappInbox() {
   }
 
   const goBack = () => {
+    if (recorderRef.current) stopRecording(true)
+    setPendingAttachment(null)
+    setSendError("")
     setActivePhone("")
     activePhoneRef.current = ""
   }
@@ -206,29 +276,108 @@ export default function WhatsappInbox() {
     }
   }
 
-  const handleFileChange = async (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files?.[0]
     e.target.value = ""
-    if (!file || sending || !activePhoneRef.current) return
+    if (!file || sending || recording || !activePhoneRef.current) return
+    setSendError("")
+    setPendingAttachment({
+      file,
+      kind: kindFromFile(file),
+      url: URL.createObjectURL(file),
+      voice: false,
+    })
+  }
+
+  const cancelPending = () => {
+    if (sending) return
+    setPendingAttachment(null)
+  }
+
+  const sendPending = async () => {
+    const item = pendingRef.current
+    if (!item || sending || !activePhoneRef.current) return
     setSending(true)
     setSendError("")
     try {
       const form = new FormData()
       form.append("to", activePhoneRef.current)
-      form.append("file", file)
+      form.append("file", item.file, item.file.name || `adjunto.${item.kind}`)
       if (draft.trim()) form.append("caption", draft.trim())
+      if (item.voice) form.append("voice", "true")
       const res = await fetch("/api/tools/whatsapp/send-media", { method: "POST", body: form })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
         setSendError(data.error || "Error al enviar el archivo")
         return
       }
+      setPendingAttachment(null)
       setDraft("")
       await reload()
     } catch {
       setSendError("Error de conexión. Intentalo de nuevo.")
     } finally {
       setSending(false)
+    }
+  }
+
+  const stopRecording = useCallback((discard = false) => {
+    discardRecordingRef.current = discard
+    if (recordTimerRef.current) {
+      clearInterval(recordTimerRef.current)
+      recordTimerRef.current = null
+    }
+    setRecording(false)
+    const rec = recorderRef.current
+    recorderRef.current = null
+    if (rec && rec.state !== "inactive") {
+      try {
+        rec.stop()
+      } catch {}
+    }
+  }, [])
+
+  const startRecording = async () => {
+    if (recording || sending || pendingRef.current) return
+    if (typeof navigator === "undefined" || !navigator.mediaDevices?.getUserMedia) {
+      setSendError("Tu navegador no permite grabar audio.")
+      return
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+      const mime = audioRecordingMime()
+      const rec = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream)
+      chunksRef.current = []
+      rec.ondataavailable = (ev) => {
+        if (ev.data?.size) chunksRef.current.push(ev.data)
+      }
+      rec.onstop = () => {
+        stream.getTracks().forEach((track) => track.stop())
+        if (recordTimerRef.current) {
+          clearInterval(recordTimerRef.current)
+          recordTimerRef.current = null
+        }
+        if (discardRecordingRef.current) {
+          discardRecordingRef.current = false
+          chunksRef.current = []
+          return
+        }
+        const blob = new Blob(chunksRef.current, { type: rec.mimeType || mime || "audio/webm" })
+        chunksRef.current = []
+        if (!blob.size) return
+        const type = blob.type || "audio/webm"
+        const ext = type.includes("ogg") ? "ogg" : type.includes("mp4") ? "m4a" : type.includes("mpeg") ? "mp3" : "webm"
+        const file = new File([blob], `nota-de-voz.${ext}`, { type })
+        setPendingAttachment({ file, kind: "audio", url: URL.createObjectURL(blob), voice: true })
+      }
+      recorderRef.current = rec
+      rec.start()
+      setSendError("")
+      setRecordSeconds(0)
+      setRecording(true)
+      recordTimerRef.current = setInterval(() => setRecordSeconds((s) => s + 1), 1000)
+    } catch {
+      setSendError("No se pudo acceder al micrófono.")
     }
   }
 
@@ -252,6 +401,8 @@ export default function WhatsappInbox() {
 
       setStartFlowInfo(`Flujo iniciado en ${data.phone}`)
       setManualPhone("")
+      if (recorderRef.current) stopRecording(true)
+      setPendingAttachment(null)
       setActivePhone(data.phone)
       activePhoneRef.current = data.phone
       prevLenRef.current = 0
@@ -484,6 +635,46 @@ export default function WhatsappInbox() {
               )}
 
               <div className="bg-[#f0f2f5] px-3 sm:px-4 py-2.5 shrink-0">
+                {pending && (
+                  <div className="max-w-3xl mx-auto mb-2 flex items-center gap-3 bg-white border border-gray-200 rounded-lg p-2 shadow-sm">
+                    <div className="shrink-0 flex items-center justify-center">
+                      {pending.kind === "image" ? (
+                        <img src={pending.url} alt="Vista previa" className="w-16 h-16 object-cover rounded-md" />
+                      ) : pending.kind === "video" ? (
+                        <video src={pending.url} className="w-24 h-16 object-cover rounded-md bg-black" muted preload="metadata" />
+                      ) : pending.kind === "audio" ? (
+                        <audio src={pending.url} controls className="h-9 w-48 max-w-full" />
+                      ) : (
+                        <div className="w-16 h-16 rounded-md bg-gray-100 flex items-center justify-center">
+                          <svg className="w-7 h-7 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M14 3v4a1 1 0 001 1h4M5 3h9l5 5v11a1 1 0 01-1 1H6a1 1 0 01-1-1V3z" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-[13px] font-medium text-gray-800 truncate">
+                        {pending.voice ? "Nota de voz" : pending.file.name || "Archivo"}
+                      </p>
+                      <p className="text-[11px] text-gray-500">
+                        {pending.voice ? formatDuration(recordSeconds) : formatBytes(pending.file.size)}
+                        {draft.trim() ? " · con texto" : ""}
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={cancelPending}
+                      disabled={sending}
+                      className="w-8 h-8 rounded-full text-gray-500 hover:text-red-600 hover:bg-gray-100 flex items-center justify-center disabled:opacity-40 shrink-0"
+                      aria-label="Cancelar envío"
+                      title="Cancelar envío"
+                    >
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                )}
                 <div className="max-w-3xl mx-auto flex items-center gap-2">
                   <input
                     ref={fileInputRef}
@@ -495,7 +686,7 @@ export default function WhatsappInbox() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    disabled={sending}
+                    disabled={sending || recording}
                     className="w-10 h-10 sm:w-11 sm:h-11 rounded-full text-gray-500 hover:text-[#25D366] hover:bg-gray-200 flex items-center justify-center disabled:opacity-40 transition-colors shrink-0"
                     aria-label="Adjuntar archivo"
                   >
@@ -508,22 +699,53 @@ export default function WhatsappInbox() {
                       />
                     </svg>
                   </button>
-                  <input
-                    value={draft}
-                    onChange={(e) => setDraft(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" && !e.shiftKey) {
-                        e.preventDefault()
-                        handleSend()
-                      }
-                    }}
-                    placeholder="Escribe un mensaje"
-                    maxLength={4096}
-                    className="flex-1 bg-white rounded-full px-4 py-2.5 text-[15px] text-gray-900 outline-none focus:ring-2 focus:ring-[#25D366]/40 shadow-sm placeholder:text-gray-400"
-                  />
+                  {recording ? (
+                    <div className="flex-1 bg-white rounded-full px-4 py-2.5 text-[15px] text-red-600 flex items-center gap-2 shadow-sm">
+                      <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse shrink-0" />
+                      <span className="truncate">Grabando {formatDuration(recordSeconds)}</span>
+                    </div>
+                  ) : (
+                    <input
+                      value={draft}
+                      onChange={(e) => setDraft(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault()
+                          if (pendingRef.current) sendPending()
+                          else handleSend()
+                        }
+                      }}
+                      placeholder={pending ? "Texto para acompañar (opcional)" : "Escribe un mensaje"}
+                      maxLength={4096}
+                      className="flex-1 bg-white rounded-full px-4 py-2.5 text-[15px] text-gray-900 outline-none focus:ring-2 focus:ring-[#25D366]/40 shadow-sm placeholder:text-gray-400"
+                    />
+                  )}
                   <button
-                    onClick={handleSend}
-                    disabled={!draft.trim() || sending}
+                    type="button"
+                    onClick={recording ? () => stopRecording() : startRecording}
+                    disabled={sending || Boolean(pending)}
+                    className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center disabled:opacity-40 transition-colors shrink-0 ${
+                      recording
+                        ? "bg-red-500 text-white hover:bg-red-600"
+                        : "text-gray-500 hover:text-[#25D366] hover:bg-gray-200"
+                    }`}
+                    aria-label={recording ? "Detener grabación" : "Grabar audio"}
+                    title={recording ? "Detener grabación" : "Grabar audio"}
+                  >
+                    {recording ? (
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                        <rect x="6" y="6" width="12" height="12" rx="2" />
+                      </svg>
+                    ) : (
+                      <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.9} d="M12 3a3 3 0 013 3v6a3 3 0 01-6 0V6a3 3 0 013-3z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.9} d="M5 11a7 7 0 0014 0M12 18v3" />
+                      </svg>
+                    )}
+                  </button>
+                  <button
+                    onClick={pending ? sendPending : handleSend}
+                    disabled={sending || recording || (!pending && !draft.trim())}
                     className="w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-[#25D366] text-white flex items-center justify-center disabled:opacity-40 hover:bg-[#1fb959] transition-colors shrink-0"
                     aria-label="Enviar"
                   >
