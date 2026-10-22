@@ -30,12 +30,12 @@ function normalizePhone(value) {
 function guessMime(name) {
   const ext = String(name || "").toLowerCase().split(".").pop()
   const map = {
-    ogg: "audio/ogg",
+    ogg: "audio/ogg; codecs=opus",
     mp3: "audio/mpeg",
     m4a: "audio/mp4",
     aac: "audio/aac",
     amr: "audio/amr",
-    opus: "audio/ogg",
+    opus: "audio/ogg; codecs=opus",
     wav: "audio/wav",
     webm: "audio/webm",
   }
@@ -64,7 +64,7 @@ if (mode === "voice") {
   const { convertToOggOpus } = await import("../lib/tools/audio-convert.js")
   try {
     buffer = await convertToOggOpus(buffer)
-    mimeType = process.env.AUDIO_MIME || "audio/ogg"
+    mimeType = process.env.AUDIO_MIME || "audio/ogg; codecs=opus"
     filename = "test.ogg"
     console.log("convertido a ogg/opus:", buffer.length, "bytes")
   } catch (err) {

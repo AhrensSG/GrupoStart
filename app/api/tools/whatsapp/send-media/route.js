@@ -73,7 +73,7 @@ export async function POST(req) {
       if (needsConvert) {
         try {
           buffer = await convertToOggOpus(buffer)
-          mimeType = "audio/ogg"
+          mimeType = "audio/ogg; codecs=opus"
           filename = `${filename.replace(/\.[^.]+$/, "") || "audio"}.ogg`
         } catch (err) {
           console.error("[WhatsApp media] Error convirtiendo audio:", err.message)
@@ -84,6 +84,8 @@ export async function POST(req) {
         }
       }
     }
+
+    if (kind === "audio" && mimeType === "audio/ogg") mimeType = "audio/ogg; codecs=opus"
 
     if (buffer.length > (MAX_BYTES[kind] || MAX_BYTES.document)) {
       return NextResponse.json(
