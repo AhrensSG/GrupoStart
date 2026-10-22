@@ -24,6 +24,7 @@ const PLACEHOLDER = {
 }
 
 const ACCEPTED_AUDIO_MIMES = new Set(["audio/ogg", "audio/mpeg", "audio/mp4", "audio/aac", "audio/amr"])
+const ALLOWED_KINDS = new Set(["image", "video", "audio", "document"])
 
 export async function POST(req) {
   try {
@@ -35,6 +36,7 @@ export async function POST(req) {
     const to = form.get("to")
     const file = form.get("file")
     const voice = String(form.get("voice") || "") === "true"
+    const requestedKind = String(form.get("kind") || "").trim().toLowerCase()
     const caption = String(form.get("caption") || "").trim()
 
     if (!to || !file || typeof file === "string") {
@@ -44,7 +46,12 @@ export async function POST(req) {
       return NextResponse.json({ error: "El texto no puede superar los 1024 caracteres." }, { status: 400 })
     }
 
-    let kind = voice ? "audio" : mediaKindForMime(file.type, file.name)
+    // Permite forzar "document" (p. ej. videos de más de 16 MB).
+    let kind = voice
+      ? "audio"
+      : ALLOWED_KINDS.has(requestedKind)
+        ? requestedKind
+        : mediaKindForMime(file.type, file.name)
     let mimeType = file.type || ""
     let filename = file.name || "archivo"
     let buffer = Buffer.from(await file.arrayBuffer())

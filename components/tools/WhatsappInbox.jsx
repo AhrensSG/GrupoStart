@@ -40,6 +40,9 @@ function mediaKind(m) {
   return ""
 }
 
+// Límites de la API de WhatsApp Cloud (en MB).
+const MEDIA_LIMITS_MB = { image: 5, video: 16, audio: 16, document: 100 }
+
 function kindFromFile(file) {
   const type = String(file?.type || "").toLowerCase()
   const ext = String(file?.name || "").toLowerCase().split(".").pop()
@@ -280,10 +283,35 @@ export default function WhatsappInbox() {
     const file = e.target.files?.[0]
     e.target.value = ""
     if (!file || sending || recording || !activePhoneRef.current) return
+
+    const kind = kindFromFile(file)
+    const sizeMb = file.size / (1024 * 1024)
+    let sendKind = kind
+    let note = ""
+
+    // Los videos de WhatsApp no pueden superar 16 MB. Si es más grande,
+    // lo mandamos como documento (hasta 100 MB) para no bloquear al usuario.
+    if (kind === "video" && sizeMb > MEDIA_LIMITS_MB.video) {
+      if (sizeMb > MEDIA_LIMITS_MB.document) {
+        setSendError(`El video supera los ${MEDIA_LIMITS_MB.document} MB. Comprimilo antes de enviarlo.`)
+        return
+      }
+      sendKind = "document"
+      note = "Los videos por WhatsApp no pueden superar 16 MB. Se enviará como documento."
+    }
+
+    const limit = MEDIA_LIMITS_MB[sendKind] || MEDIA_LIMITS_MB.document
+    if (sizeMb > limit) {
+      setSendError(`El archivo supera el máximo de ${limit} MB para ${sendKind}.`)
+      return
+    }
+
     setSendError("")
     setPendingAttachment({
       file,
-      kind: kindFromFile(file),
+      kind,
+      sendKind,
+      note,
       url: URL.createObjectURL(file),
       voice: false,
     })
@@ -305,6 +333,7 @@ export default function WhatsappInbox() {
       form.append("file", item.file, item.file.name || `adjunto.${item.kind}`)
       if (draft.trim()) form.append("caption", draft.trim())
       if (item.voice) form.append("voice", "true")
+      if (item.sendKind) form.append("kind", item.sendKind)
       const res = await fetch("/api/tools/whatsapp/send-media", { method: "POST", body: form })
       const data = await res.json().catch(() => ({}))
       if (!res.ok) {
@@ -611,7 +640,11 @@ export default function WhatsappInbox() {
                             <span className="absolute bottom-1 right-1.5 text-[10px] text-gray-400 flex items-center gap-0.5">
                               {formatTime(m.created_at)}
                               {m.direction === "out" &&
-                                (m.status === "read" ? (
+                                (m.status === "failed" ? (
+                                  <span className="text-red-500 font-bold leading-none" title="No se pudo entregar">
+                                    !
+                                  </span>
+                                ) : m.status === "read" ? (
                                   <DoubleCheck read />
                                 ) : m.status === "delivered" ? (
                                   <DoubleCheck />
@@ -660,6 +693,9 @@ export default function WhatsappInbox() {
                         {pending.voice ? formatDuration(recordSeconds) : formatBytes(pending.file.size)}
                         {draft.trim() ? " · con texto" : ""}
                       </p>
+                      {pending.note && (
+                        <p className="text-[11px] text-amber-600 leading-tight">{pending.note}</p>
+                      )}
                     </div>
                     <button
                       type="button"

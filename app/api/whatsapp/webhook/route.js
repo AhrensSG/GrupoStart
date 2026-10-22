@@ -102,6 +102,13 @@ export async function POST(req) {
 
         for (const status of value.statuses || []) {
           if (status?.id && status?.status) {
+            if (status.status === "failed") {
+              console.error(
+                "[WhatsApp Webhook] Mensaje fallido",
+                status.id,
+                JSON.stringify(status.errors || [])
+              )
+            }
             await updateWaMessageStatus(status.id, status.status)
           }
         }
